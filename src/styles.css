@@ -142,4 +142,18 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+
+  @keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+  }
+
+  @keyframes pulse-premium {
+    0% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+    50% { transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234, 29, 44, 0.4); border-color: #EA1D2C; }
+    100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+  }
 }
