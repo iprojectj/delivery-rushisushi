@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { CATALOG } from "@/lib/constants";
-import { Product, Category } from "@/lib/types";
+import { Product, Category, Addon } from "@/lib/types";
 import { CategoryNav } from "@/components/CategoryNav";
 import { ProductCard } from "@/components/ProductCard";
-import { Star, ChevronRight, Handshake, Ticket, Clock, MessageSquare, Plus, ShoppingBag } from "lucide-react";
+import { ProductModal } from "@/components/ProductModal";
+import { Star, ChevronRight, Handshake, MessageSquare } from "lucide-react";
 import { useCart } from "@/lib/store";
-import { motion, AnimatePresence } from "framer-motion";
 import { formatCurrency } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -28,24 +28,46 @@ const CATEGORIES: Category[] = [
 function Index() {
   const [activeCategory, setActiveCategory] = useState("destaques");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   
   const cart = useCart();
   const total = cart.total();
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1200);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => setLoading(false), 800);
+    
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 120;
+      
+      for (const cat of CATEGORIES) {
+        const element = document.getElementById(cat.id);
+        if (element) {
+          const top = element.offsetTop;
+          const height = element.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveCategory(cat.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
   };
 
-  const handleAddToCart = (product: Product) => {
-    cart.addItem(product, 1);
-    setSelectedProduct(null);
+  const handleConfirmProduct = (quantity: number, selectedAddons: Addon[], observations: string) => {
+    if (selectedProduct) {
+      cart.addItem(selectedProduct, quantity, selectedAddons, observations);
+      setSelectedProduct(null);
+    }
   };
 
   if (loading) {
@@ -61,7 +83,7 @@ function Index() {
   }
 
   return (
-    <div className="pb-24 bg-[#f7f7f7] min-h-screen">
+    <div className="pb-32 bg-[#f7f7f7] min-h-screen">
       <header className="w-full relative bg-[#f7f7f7]">
         <div className="h-40 w-full relative">
           <img src="/images/background.webp" className="w-full h-full object-cover" alt="Banner" />
@@ -89,10 +111,6 @@ function Index() {
                 <div className="flex items-center gap-2">
                   <Star className="w-3 h-3 text-[#fbbf24] fill-[#fbbf24]" />
                   <span className="text-[#3e3e3e] font-bold text-sm">4.8 <span className="text-gray-400 font-normal ml-0.5">(3.248 avaliações)</span></span>
-                  <div className="flex items-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left">
-                    <Star className="w-2 h-2 fill-white" />
-                    <span className="text-[9px] font-black uppercase tracking-tighter">Super</span>
-                  </div>
                 </div>
                 <ChevronRight className="w-3 h-3 text-gray-300" />
               </div>
@@ -129,14 +147,28 @@ function Index() {
         </div>
       </div>
 
-      <CategoryNav
-        categories={CATEGORIES}
-        activeCategory={activeCategory}
-        onCategoryClick={(id) => {
-          setActiveCategory(id);
-          document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-        }}
-      />
+      <div className="mt-4">
+        <CategoryNav
+          categories={CATEGORIES}
+          activeCategory={activeCategory}
+          onCategoryClick={(id) => {
+            setActiveCategory(id);
+            const element = document.getElementById(id);
+            if (element) {
+              const offset = 80; // Adjusted for sticky header
+              const bodyRect = document.body.getBoundingClientRect().top;
+              const elementRect = element.getBoundingClientRect().top;
+              const elementPosition = elementRect - bodyRect;
+              const offsetPosition = elementPosition - offset;
+
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+              });
+            }
+          }}
+        />
+      </div>
 
       <main className="p-4 space-y-8">
         {CATEGORIES.map((cat) => {
@@ -187,10 +219,10 @@ function Index() {
 
       {/* Cart Summary Bar */}
       {cart.items.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 z-40">
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/80 backdrop-blur-md border-t border-gray-100 z-40">
           <button
             onClick={() => window.location.href = "/pedido"}
-            className="w-full bg-[#EA1D2C] text-white rounded-xl py-4 px-6 flex items-center justify-between font-bold shadow-lg shadow-red-200"
+            className="w-full bg-[#EA1D2C] text-white rounded-xl py-4 px-6 flex items-center justify-between font-bold shadow-lg shadow-red-200 active:scale-[0.98] transition-all"
           >
             <div className="flex items-center gap-3">
               <div className="bg-white/20 px-2 py-1 rounded text-xs">
@@ -204,54 +236,11 @@ function Index() {
       )}
 
       {/* Product Modal */}
-      <AnimatePresence>
-        {selectedProduct && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedProduct(null)}
-              className="fixed inset-0 bg-black/50 z-[100]"
-            />
-            <motion.div
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-[101] max-h-[90vh] overflow-y-auto"
-            >
-              <div className="relative">
-                <img src={selectedProduct.img} className="w-full h-64 object-cover" alt={selectedProduct.name} />
-                <button
-                  onClick={() => setSelectedProduct(null)}
-                  className="absolute top-4 right-4 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center"
-                >
-                  ✕
-                </button>
-              </div>
-              <div className="p-6">
-                <h2 className="text-2xl font-black text-gray-800 mb-2">{selectedProduct.name}</h2>
-                <p className="text-gray-500 text-sm leading-relaxed mb-6">{selectedProduct.desc}</p>
-                <div className="flex items-center justify-between border-t border-gray-100 pt-6">
-                  <div className="flex flex-col">
-                    <span className="text-[#05a65a] text-2xl font-black">{formatCurrency(selectedProduct.price)}</span>
-                    {selectedProduct.oldPrice && (
-                      <span className="text-gray-400 text-sm line-through">{formatCurrency(selectedProduct.oldPrice)}</span>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => handleAddToCart(selectedProduct)}
-                    className="bg-[#EA1D2C] text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2"
-                  >
-                    <Plus className="w-5 h-5" /> Adicionar
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <ProductModal
+        product={selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+        onConfirm={handleConfirmProduct}
+      />
     </div>
   );
 }

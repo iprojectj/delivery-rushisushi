@@ -79,13 +79,6 @@ function Pagamento() {
 
   return (
     <div className="pb-10 bg-[#f7f7f7] min-h-screen">
-      {/* Desktop Warning (Matching original logic) */}
-      <div className="hidden lg:flex fixed inset-0 bg-[#ea1d2c] z-[99999] flex-col items-center justify-center color-white text-center p-6 text-white">
-        <Smartphone className="w-20 h-20 mb-4" />
-        <h1 className="text-3xl font-bold mb-2">Finalize pelo Celular</h1>
-        <p className="text-lg opacity-90">Para sua segurança, o pagamento deve ser feito via dispositivo móvel.</p>
-      </div>
-
       <header className="bg-white p-4 flex items-center justify-between sticky top-0 z-30 shadow-sm">
         <button onClick={() => navigate({ to: "/pedido" })} className="text-[#EA1D2C]">
           <ChevronLeft />
@@ -147,47 +140,6 @@ function Pagamento() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-red-100 p-4 flex items-center gap-4 relative overflow-hidden">
-          <div className="absolute right-0 top-0 bg-[#EA1D2C] w-1 h-full"></div>
-          <div className="w-12 h-12 shrink-0 bg-gray-50 rounded-full flex items-center justify-center p-2 border border-gray-100">
-            <img src="/images/ifood-avatar.png" className="w-full h-full object-contain" alt="iFood" />
-          </div>
-          <div>
-            <h3 className="font-bold text-[#3e3e3e] text-sm flex items-center gap-1">
-              Entrega Garantida
-              <ShieldCheck className="w-3 h-3 text-[#05a65a]" />
-            </h3>
-            <p className="text-xs text-gray-500 leading-tight mt-1">Sua entrega é monitorada e operada pelos parceiros oficiais do <strong>iFood</strong>.</p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h3 className="font-bold text-[#3e3e3e] text-base mb-6">Status do Pedido</h3>
-          <div className="relative pl-4 space-y-8">
-            <div className="absolute left-[19px] top-2 bottom-4 w-0.5 bg-gray-100 -z-0"></div>
-            
-            <div className="relative flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-white border-2 border-[#EA1D2C] text-[#EA1D2C] flex items-center justify-center shrink-0 z-10 shadow-sm">
-                <Receipt className="w-4 h-4" />
-              </div>
-              <div className="pt-1">
-                <h4 className="font-bold text-[#3e3e3e] text-sm">Aguardando Pagamento</h4>
-                <span className="text-xs text-gray-400 block mt-1">Aprovação imediata via QR Code.</span>
-              </div>
-            </div>
-
-            <div className="relative flex items-start gap-4 opacity-40">
-              <div className="w-10 h-10 rounded-full bg-white border-2 border-gray-200 text-gray-300 flex items-center justify-center shrink-0 z-10">
-                <Clock className="w-4 h-4" />
-              </div>
-              <div className="pt-1">
-                <h4 className="font-bold text-[#3e3e3e] text-sm">Em Preparo</h4>
-                <span className="text-xs text-gray-400 block mt-1">Cozinha oficial Rūshī Sushi.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <button
             onClick={() => setShowResumo(!showResumo)}
@@ -202,13 +154,28 @@ function Pagamento() {
             <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${showResumo ? "rotate-180" : ""}`} />
           </button>
           {showResumo && (
-            <div className="px-5 pb-5 bg-gray-50 border-t border-gray-100 text-sm text-gray-600 space-y-3 pt-4">
-              {data.items?.map((item: any, idx: number) => (
-                <div key={idx} className="flex justify-between">
-                  <span>{item.quantity}x {item.name}</span>
-                  <span className="font-bold">{formatCurrency(item.unitPrice * item.quantity)}</span>
-                </div>
-              ))}
+            <div className="px-5 pb-5 bg-gray-50 border-t border-gray-100 text-sm text-gray-600 space-y-4 pt-4">
+              {data.items?.map((item: any, idx: number) => {
+                const addonsTotal = item.selectedAddons?.reduce((acc: number, a: any) => acc + a.price, 0) || 0;
+                return (
+                  <div key={idx} className="flex flex-col border-b border-gray-200/50 last:border-0 pb-3 last:pb-0">
+                    <div className="flex justify-between">
+                      <span className="font-bold text-gray-800">{item.quantity}x {item.name}</span>
+                      <span className="font-black text-gray-900">{formatCurrency((item.unitPrice + addonsTotal) * item.quantity)}</span>
+                    </div>
+                    {item.selectedAddons?.length > 0 && (
+                      <span className="text-[10px] text-gray-400 mt-1 uppercase font-bold tracking-tighter">
+                        + {item.selectedAddons.map((a: any) => a.name).join(", ")}
+                      </span>
+                    )}
+                    {item.observations && (
+                      <span className="text-[10px] text-red-400 italic mt-1 font-medium bg-red-50 p-1 rounded">
+                        Obs: {item.observations}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

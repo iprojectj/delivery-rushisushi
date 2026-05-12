@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useCart } from "@/lib/store";
 import { formatCurrency } from "@/lib/utils";
-import { ChevronLeft, Info, Lock, MapPin, Truck } from "lucide-react";
+import { ChevronLeft, Info, Lock, MapPin, Truck, Trash2, Edit2 } from "lucide-react";
 import { createPix } from "@/lib/payments.functions";
 import { useServerFn } from "@tanstack/react-start";
 
@@ -49,7 +49,6 @@ function Pedido() {
       });
 
       if (res.success) {
-        // Save payment data for the next page
         localStorage.setItem("nobre_pix_data", JSON.stringify({
           id: res.transactionId,
           code: res.pixCopiaECola,
@@ -94,6 +93,55 @@ function Pedido() {
       </header>
 
       <main className="p-4 max-w-md mx-auto space-y-4">
+        {/* Shopping Cart Summary */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <h3 className="font-bold text-[#3e3e3e] mb-4 flex items-center gap-2">
+            <Truck className="w-4 h-4 text-[#EA1D2C]" /> Sua Sacola
+          </h3>
+          <div className="space-y-4">
+            {cart.items.map((item) => (
+              <div key={item.cartItemId} className="flex flex-col gap-1 pb-4 border-b border-gray-50 last:border-0 last:pb-0">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <h4 className="text-sm font-bold text-gray-800">{item.quantity}x {item.name}</h4>
+                    {item.selectedAddons.length > 0 && (
+                      <p className="text-[10px] text-gray-500 mt-1">
+                        + {item.selectedAddons.map(a => a.name).join(", ")}
+                      </p>
+                    )}
+                    {item.observations && (
+                      <p className="text-[10px] text-red-500 italic mt-1">
+                        Obs: {item.observations}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                    <span className="text-sm font-black text-gray-900">
+                      {formatCurrency((item.unitPrice + item.selectedAddons.reduce((acc, a) => acc + a.price, 0)) * item.quantity)}
+                    </span>
+                    <button 
+                      onClick={() => cart.removeItem(item.cartItemId)}
+                      className="text-gray-300 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+            
+            <div className="flex justify-between text-sm pt-2">
+              <span className="text-gray-500">Entrega</span>
+              <span className="text-[#05a65a] font-bold uppercase">Grátis</span>
+            </div>
+            
+            <div className="flex justify-between items-center bg-gray-50 p-4 rounded-xl mt-4">
+              <span className="font-bold text-gray-500 uppercase text-xs">Total</span>
+              <span className="text-2xl font-black text-[#EA1D2C]">{formatCurrency(total)}</span>
+            </div>
+          </div>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <h3 className="font-bold text-[#3e3e3e] mb-4 flex items-center gap-2">
@@ -188,32 +236,6 @@ function Pedido() {
                   />
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h3 className="font-bold text-[#3e3e3e] mb-4 flex items-center gap-2">
-              <Truck className="w-4 h-4 text-[#EA1D2C]" /> Resumo da Compra
-            </h3>
-            <div className="space-y-2 mb-4">
-              {cart.items.map((item) => (
-                <div key={item.id} className="flex justify-between text-sm">
-                  <span className="text-gray-600">
-                    {item.quantity}x {item.name}
-                  </span>
-                  <span className="font-bold text-gray-800">
-                    {formatCurrency(item.unitPrice * item.quantity)}
-                  </span>
-                </div>
-              ))}
-              <div className="flex justify-between text-sm pt-2 border-t border-gray-50">
-                <span className="text-gray-500">Entrega</span>
-                <span className="text-[#05a65a] font-bold uppercase">Grátis</span>
-              </div>
-            </div>
-            <div className="flex justify-between items-center bg-gray-50 p-4 rounded-xl">
-              <span className="font-bold text-gray-500 uppercase text-xs">Total</span>
-              <span className="text-2xl font-black text-[#EA1D2C]">{formatCurrency(total)}</span>
             </div>
           </div>
 

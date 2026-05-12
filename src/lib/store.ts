@@ -1,12 +1,13 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { CartItem, Product } from "./types";
+import { CartItem, Product, Addon } from "./types";
+import { v4 as uuidv4 } from "uuid";
 
 interface CartStore {
   items: CartItem[];
-  addItem: (product: Product, quantity: number, addons?: string[]) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  addItem: (product: Product, quantity: number, selectedAddons: Addon[], observations?: string) => void;
+  removeItem: (cartItemId: string) => void;
+  updateQuantity: (cartItemId: string, quantity: number) => void;
   clearCart: () => void;
   total: () => number;
 }
@@ -15,44 +16,53 @@ export const useCart = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
-      addItem: (product, quantity, addons) => {
+      addItem: (product, quantity, selectedAddons, observations) => {
         set((state) => {
-          const existingItem = state.items.find((i) => i.id === product.id);
-          if (existingItem) {
-            return {
-              items: state.items.map((i) =>
-                i.id === product.id
-                  ? { ...i, quantity: i.quantity + quantity }
-                  : i
-              ),
-            };
+          // Check if exactly same product with same addons and observations exists
+          const existingItemIndex = state.items.findIndex((i) => 
+            i.id === product.id && 
+            JSON.stringify(i.selectedAddons) === JSON.stringify(selectedAddons) &&
+            i.observations === observations
+          );
+
+          if (existingItemIndex > -1) {
+            const newItems = [...state.items];
+            newItems[existingItemIndex].quantity += quantity;
+            return { items: newItems };
           }
+
+          const newItem: CartItem = {
+            ...product,
+            cartItemId: uuidv4(),
+            quantity,
+            unitPrice: product.price,
+            selectedAddons,
+            observations
+          };
+
           return {
-            items: [
-              ...state.items,
-              { ...product, quantity, unitPrice: product.price, addons },
-            ],
+            items: [...state.items, newItem],
           };
         });
       },
-      removeItem: (productId) => {
+      removeItem: (cartItemId) => {
         set((state) => ({
-          items: state.items.filter((i) => i.id !== productId),
+          items: state.items.filter((i) => i.cartItemId !== cartItemId),
         }));
       },
-      updateQuantity: (productId, quantity) => {
+      updateQuantity: (cartItemId, quantity) => {
         set((state) => ({
           items: state.items.map((i) =>
-            i.id === productId ? { ...i, quantity } : i
+            i.cartItemId === cartItemId ? { ...i, quantity } : i
           ),
         }));
       },
       clearCart: () => set({ items: [] }),
       total: () => {
-        return get().items.reduce(
-          (acc, item) => acc + item.unitPrice * item.quantity,
-          0
-        );
+        return get().items.reduce((acc, item) => {
+          const addonsTotal = item.selectedAddons.reduce((sum, addon) => sum + addon.price, 0);
+          return acc + (item.unitPrice + addonsTotal) * item.quantity;
+        }, 0);
       },
     }),
     {

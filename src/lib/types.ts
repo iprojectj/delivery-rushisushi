@@ -11,10 +11,19 @@ export interface Product {
   isBait?: boolean;
 }
 
+export interface Addon {
+  id: string;
+  name: string;
+  price: number;
+  img?: string;
+}
+
 export interface CartItem extends Product {
+  cartItemId: string; // Unique ID for each entry in the cart (same product can have different addons)
   quantity: number;
   unitPrice: number;
-  addons?: string[];
+  selectedAddons: Addon[];
+  observations?: string;
 }
 
 export interface Category {
