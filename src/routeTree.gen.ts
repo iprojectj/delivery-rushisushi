@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PedidoRouteImport } from './routes/pedido'
+import { Route as PagamentoRouteImport } from './routes/pagamento'
 import { Route as IndexRouteImport } from './routes/index'
 
 const PedidoRoute = PedidoRouteImport.update({
   id: '/pedido',
   path: '/pedido',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PagamentoRoute = PagamentoRouteImport.update({
+  id: '/pagamento',
+  path: '/pagamento',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/pagamento': typeof PagamentoRoute
   '/pedido': typeof PedidoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pagamento': typeof PagamentoRoute
   '/pedido': typeof PedidoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/pagamento': typeof PagamentoRoute
   '/pedido': typeof PedidoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/pedido'
+  fullPaths: '/' | '/pagamento' | '/pedido'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/pedido'
-  id: '__root__' | '/' | '/pedido'
+  to: '/' | '/pagamento' | '/pedido'
+  id: '__root__' | '/' | '/pagamento' | '/pedido'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PagamentoRoute: typeof PagamentoRoute
   PedidoRoute: typeof PedidoRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/pedido'
       fullPath: '/pedido'
       preLoaderRoute: typeof PedidoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pagamento': {
+      id: '/pagamento'
+      path: '/pagamento'
+      fullPath: '/pagamento'
+      preLoaderRoute: typeof PagamentoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,8 +87,19 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PagamentoRoute: PagamentoRoute,
   PedidoRoute: PedidoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
