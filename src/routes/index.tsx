@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { CATALOG } from "@/lib/constants";
-import { Product, Category } from "@/lib/types";
+import { Product, Category, Addon } from "@/lib/types";
 import { CategoryNav } from "@/components/CategoryNav";
 import { ProductCard } from "@/components/ProductCard";
+import { ProductModal } from "@/components/ProductModal";
 import { Star, ChevronRight, Handshake, Ticket, Clock, MessageSquare, Plus, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/store";
 import { motion, AnimatePresence } from "framer-motion";
@@ -43,9 +44,11 @@ function Index() {
     setSelectedProduct(product);
   };
 
-  const handleAddToCart = (product: Product) => {
-    cart.addItem(product, 1);
-    setSelectedProduct(null);
+  const handleConfirmProduct = (quantity: number, selectedAddons: Addon[], observations: string) => {
+    if (selectedProduct) {
+      cart.addItem(selectedProduct, quantity, selectedAddons, observations);
+      setSelectedProduct(null);
+    }
   };
 
   if (loading) {

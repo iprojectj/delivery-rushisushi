@@ -1,20 +1,18 @@
-export interface Product {
+import { Product } from "./types";
+
+export interface Addon {
   id: string;
-  category: string;
   name: string;
-  desc: string;
   price: number;
-  oldPrice?: number;
-  img: string;
-  badge?: string;
-  hasAddons?: boolean;
-  isBait?: boolean;
+  img?: string;
 }
 
 export interface CartItem extends Product {
+  cartItemId: string; // Unique ID for each entry in the cart (same product can have different addons)
   quantity: number;
   unitPrice: number;
-  addons?: string[];
+  selectedAddons: Addon[];
+  observations?: string;
 }
 
 export interface Category {
