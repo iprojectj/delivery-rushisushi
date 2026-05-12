@@ -38,12 +38,14 @@ function Pedido() {
     setLoading(true);
     try {
       const res = await createPixFn({
-        valorTotal: total,
-        nome: form.nome,
-        whatsapp: form.whatsapp,
-        cep: form.cep,
-        products: cart.items,
-        trackingParameters: {}, // TODO: get tracking params from URL/localstorage
+        data: {
+          valorTotal: total,
+          nome: form.nome,
+          whatsapp: form.whatsapp,
+          cep: form.cep,
+          products: cart.items,
+          trackingParameters: {},
+        }
       });
 
       if (res.success) {
