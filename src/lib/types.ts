@@ -1,4 +1,15 @@
-import { Product } from "./types";
+export interface Product {
+  id: string;
+  category: string;
+  name: string;
+  desc: string;
+  price: number;
+  oldPrice?: number;
+  img: string;
+  badge?: string;
+  hasAddons?: boolean;
+  isBait?: boolean;
+}
 
 export interface Addon {
   id: string;
