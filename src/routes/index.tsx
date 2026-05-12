@@ -237,7 +237,7 @@ function Index() {
                   <div className="flex flex-col">
                     <span className="text-[#05a65a] text-2xl font-black">{formatCurrency(selectedProduct.price)}</span>
                     {selectedProduct.oldPrice && (
-                      <span className="text-gray-400 text-sm line-through">{formatCurrency(selectedProduct.oldProduct.oldPrice)}</span>
+                      <span className="text-gray-400 text-sm line-through">{formatCurrency(selectedProduct.oldPrice)}</span>
                     )}
                   </div>
                   <button
