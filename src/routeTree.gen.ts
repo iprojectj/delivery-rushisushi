@@ -13,6 +13,7 @@ import { Route as PedidoRouteImport } from './routes/pedido'
 import { Route as PagamentoRouteImport } from './routes/pagamento'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicWebhookRouteImport } from './routes/api.public.webhook'
 
 const PedidoRoute = PedidoRouteImport.update({
   id: '/pedido',
@@ -34,18 +35,25 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicWebhookRoute = ApiPublicWebhookRouteImport.update({
+  id: '/api/public/webhook',
+  path: '/api/public/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/obrigado': typeof ObrigadoRoute
   '/pagamento': typeof PagamentoRoute
   '/pedido': typeof PedidoRoute
+  '/api/public/webhook': typeof ApiPublicWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/obrigado': typeof ObrigadoRoute
   '/pagamento': typeof PagamentoRoute
   '/pedido': typeof PedidoRoute
+  '/api/public/webhook': typeof ApiPublicWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,25 @@ export interface FileRoutesById {
   '/obrigado': typeof ObrigadoRoute
   '/pagamento': typeof PagamentoRoute
   '/pedido': typeof PedidoRoute
+  '/api/public/webhook': typeof ApiPublicWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/obrigado' | '/pagamento' | '/pedido'
+  fullPaths:
+    | '/'
+    | '/obrigado'
+    | '/pagamento'
+    | '/pedido'
+    | '/api/public/webhook'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/obrigado' | '/pagamento' | '/pedido'
-  id: '__root__' | '/' | '/obrigado' | '/pagamento' | '/pedido'
+  to: '/' | '/obrigado' | '/pagamento' | '/pedido' | '/api/public/webhook'
+  id:
+    | '__root__'
+    | '/'
+    | '/obrigado'
+    | '/pagamento'
+    | '/pedido'
+    | '/api/public/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +87,7 @@ export interface RootRouteChildren {
   ObrigadoRoute: typeof ObrigadoRoute
   PagamentoRoute: typeof PagamentoRoute
   PedidoRoute: typeof PedidoRoute
+  ApiPublicWebhookRoute: typeof ApiPublicWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +120,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/webhook': {
+      id: '/api/public/webhook'
+      path: '/api/public/webhook'
+      fullPath: '/api/public/webhook'
+      preLoaderRoute: typeof ApiPublicWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,7 +135,18 @@ const rootRouteChildren: RootRouteChildren = {
   ObrigadoRoute: ObrigadoRoute,
   PagamentoRoute: PagamentoRoute,
   PedidoRoute: PedidoRoute,
+  ApiPublicWebhookRoute: ApiPublicWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
