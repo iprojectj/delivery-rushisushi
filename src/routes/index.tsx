@@ -35,7 +35,28 @@ function Index() {
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(timer);
+    
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 120;
+      
+      for (const cat of CATEGORIES) {
+        const element = document.getElementById(cat.id);
+        if (element) {
+          const top = element.offsetTop;
+          const height = element.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveCategory(cat.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const handleProductClick = (product: Product) => {
@@ -126,14 +147,28 @@ function Index() {
         </div>
       </div>
 
-      <CategoryNav
-        categories={CATEGORIES}
-        activeCategory={activeCategory}
-        onCategoryClick={(id) => {
-          setActiveCategory(id);
-          document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-        }}
-      />
+      <div className="mt-4">
+        <CategoryNav
+          categories={CATEGORIES}
+          activeCategory={activeCategory}
+          onCategoryClick={(id) => {
+            setActiveCategory(id);
+            const element = document.getElementById(id);
+            if (element) {
+              const offset = 80; // Adjusted for sticky header
+              const bodyRect = document.body.getBoundingClientRect().top;
+              const elementRect = element.getBoundingClientRect().top;
+              const elementPosition = elementRect - bodyRect;
+              const offsetPosition = elementPosition - offset;
+
+              window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+              });
+            }
+          }}
+        />
+      </div>
 
       <main className="p-4 space-y-8">
         {CATEGORIES.map((cat) => {
