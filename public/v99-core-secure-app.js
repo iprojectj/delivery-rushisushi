@@ -968,11 +968,25 @@
             }
         }
 
-        function scrollToCat(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        function scrollToCat(id, ev) {
+            ev = ev || window.event;
+            const btn = ev && ev.currentTarget ? ev.currentTarget : (ev && ev.target);
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            event.target.classList.add('active');
-            event.target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            if (btn) btn.classList.add('active');
+
+            const section = document.getElementById(id);
+            if (section) {
+                const tabsBar = document.querySelector('.cat-tabs-wrap');
+                const offset = tabsBar ? tabsBar.getBoundingClientRect().height : 0;
+                const y = section.getBoundingClientRect().top + window.pageYOffset - offset - 8;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+
+            if (btn && btn.parentElement) {
+                const wrap = btn.parentElement;
+                const targetLeft = btn.offsetLeft - (wrap.clientWidth / 2) + (btn.clientWidth / 2);
+                wrap.scrollTo({ left: targetLeft, behavior: 'smooth' });
+            }
         }
 
         window.openProductModal = function(id) {
