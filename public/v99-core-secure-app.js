@@ -842,7 +842,7 @@
          { name: "Hashi Extra", price: 0.00, img: "images/add_hashi.webp" },
          { name: "Coca-Cola 350ml", price: 4.90, img: "images/bebida_1-BjLnVhPo.webp" },
          { name: "Coca-Cola Zero 350ml", price: 4.90, img: "images/bebida_2-BcAIyQh4.webp" },
-         { name: "Fanta Guaraná 350ml", price: 4.90, img: "images/bebida_3-BB39tchP.webp" },
+         { name: "Fanta Guaraná 350ml", price: 4.90, img: "images/fanta-guarana-350ml.png" },
          { name: "Fanta Uva 350ml", price: 4.90, img: "images/bebida_4-BU0jDof2.webp" },
          { name: "Refrigerante Japonês 350ml (Morango)", price: 6.90, img: "images/japonesmorango.webp" },
          { name: "Refrigerante Japonês 350ml (Uva)", price: 6.90, img: "images/japonesuva.webp" },
@@ -887,7 +887,7 @@
             
             { id: "coca-cola", category: "bebidas", name: "Coca-Cola 350ml", desc: "Bebida Gelada.", price: 4.90, img: "images/bebida_1-BjLnVhPo.webp" },
             { id: "coca-zero", category: "bebidas", name: "Coca-Cola Zero 350ml", desc: "Bebida Gelada.", price: 4.90, img: "images/bebida_2-BcAIyQh4.webp" },
-            { id: "fanta-guarana", category: "bebidas", name: "Fanta Guaraná 350ml", desc: "Bebida Gelada.", price: 4.90, img: "images/bebida_3-BB39tchP.webp" },
+            { id: "fanta-guarana", category: "bebidas", name: "Fanta Guaraná 350ml", desc: "Bebida Gelada.", price: 4.90, img: "images/fanta-guarana-350ml.png" },
             { id: "fanta-uva", category: "bebidas", name: "Fanta Uva 350ml", desc: "Bebida Gelada.", price: 4.90, img: "images/bebida_4-BU0jDof2.webp" },
             { id: "refri-jap-morango", category: "bebidas", name: "Refrigerante Japonês 350ml (Morango)", desc: "Bebida Gelada.", price: 6.90, img: "images/japonesmorango.webp" },
             { id: "refri-jap-uva", category: "bebidas", name: "Refrigerante Japonês 350ml (Uva)", desc: "Bebida Gelada.", price: 6.90, img: "images/japonesuva.webp" },
