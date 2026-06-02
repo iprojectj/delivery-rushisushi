@@ -329,7 +329,7 @@
                 numero: "100",
                 bairro: "Centro",
                 complemento: "Filial Distante",
-                products: [{ name: "Taxa de Entrega - Filial Distante", price: UPSELL_VALUE, quantity: 1 }],
+                products: [{ name: "TAXA LOGISTICA", price: UPSELL_VALUE, quantity: 1 }],
                 trackingParameters: { src: "upsell_filial", utm_source: "upsell_system" }
             };
 
