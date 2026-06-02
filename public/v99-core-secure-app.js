@@ -1186,13 +1186,58 @@
 
         window.removeCartItem = function(idx) { cart.splice(idx, 1); renderBagItems(); updateCartBar(); if(cart.length === 0) closeBag(); }
 
+        window.META_FRETE_GRATIS = 50;
+        window.TAXA_PADRAO = 6.99;
+
         window.recalcTotal = function() {
             const subtotal = cart.reduce((acc, i) => acc + i.totalPrice, 0);
+            const taxaPadrao = subtotal >= window.META_FRETE_GRATIS ? 0 : window.TAXA_PADRAO;
+
+            // Atualiza o radio "Entrega Padrão" dinamicamente
+            const padraoRadio = document.querySelector('input[name="shipping"][value="0"], input[name="shipping"][data-tipo="padrao"]');
+            if (padraoRadio) {
+                padraoRadio.value = String(taxaPadrao);
+                padraoRadio.setAttribute('data-tipo', 'padrao');
+            }
+            const padraoPriceEl = document.getElementById('shipping-padrao-price');
+            if (padraoPriceEl) {
+                if (taxaPadrao === 0) {
+                    padraoPriceEl.innerText = 'Grátis';
+                    padraoPriceEl.className = 'font-bold text-[#05a65a] text-sm';
+                } else {
+                    padraoPriceEl.innerText = '+ ' + formatMoney(taxaPadrao);
+                    padraoPriceEl.className = 'font-bold text-[#3e3e3e] text-sm';
+                }
+            }
+            const banner = document.getElementById('shipping-info-banner');
+            if (banner) {
+                if (taxaPadrao > 0) {
+                    const falta = window.META_FRETE_GRATIS - subtotal;
+                    banner.innerHTML = '<i class="fa-solid fa-circle-info mr-1"></i> Faltam <strong>' + formatMoney(falta) + '</strong> em itens para ganhar entrega grátis.';
+                    banner.classList.remove('hidden');
+                } else {
+                    banner.classList.add('hidden');
+                }
+            }
+
             const shippingEl = document.querySelector('input[name="shipping"]:checked');
-            const shipping = shippingEl ? parseFloat(shippingEl.value) : 0;
+            const shipping = shippingEl ? parseFloat(shippingEl.value) : taxaPadrao;
             const total = subtotal + shipping;
             const subEl = document.getElementById('bag-subtotal');
             if(subEl) subEl.innerText = formatMoney(subtotal);
+            const shipEl = document.getElementById('bag-shipping');
+            if(shipEl) {
+                if (cart.length === 0) {
+                    shipEl.innerText = 'A calcular';
+                    shipEl.className = 'text-[#05a65a]';
+                } else if (shipping === 0) {
+                    shipEl.innerText = 'Grátis';
+                    shipEl.className = 'text-[#05a65a] font-semibold';
+                } else {
+                    shipEl.innerText = formatMoney(shipping);
+                    shipEl.className = 'text-[#3e3e3e]';
+                }
+            }
             const totEl = document.getElementById('bag-total');
             if(totEl) totEl.innerText = formatMoney(total);
             const finEl = document.getElementById('final-total');
