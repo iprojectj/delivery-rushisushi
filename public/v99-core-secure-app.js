@@ -147,7 +147,7 @@
                     <div class="flex items-center justify-between w-full py-2 cursor-pointer active:bg-gray-50 transition rounded-lg text-left">
                                     <div class="flex items-center gap-2">
                                           <i class="fa-solid fa-star text-[#fbbf24] text-xs"></i>
-                                          <span class="text-[#3e3e3e] font-bold text-sm">4.8 <span class="text-gray-400 font-normal ml-0.5">(3.248 avaliações)</span></span>
+                                          <span class="text-[#3e3e3e] font-bold text-sm">4.9 <span class="text-gray-400 font-normal ml-0.5">(7.478 avaliações)</span></span>
                                           <div class="flex items-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left">
                                                 <i class="fa-solid fa-star text-[8px]"></i>
                                                 <span class="text-[9px] font-black uppercase tracking-tighter">Super</span>
@@ -361,7 +361,7 @@
                 <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-gray-50 text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Trocas</button>
             </div>
             <div class="flex justify-center gap-4 mb-8">
-                <div class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100"><i class="fa-brands fa-instagram text-lg"></i></div>
+                <a href="https://www.instagram.com/rushisushioficial/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
             </div>
             <div class="text-[10px] text-gray-400 border-t border-gray-100 pt-6">
                 <p>&copy; 2026 Rūshī Sushi Delivery.</p>
