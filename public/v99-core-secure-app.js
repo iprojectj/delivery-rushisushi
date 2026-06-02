@@ -61,7 +61,12 @@
         html, body { overflow-y: auto !important; height: auto !important; }
         .no-scroll::-webkit-scrollbar { display: none; }
         .no-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-        .nav-item.active { color: var(--food-red); border-bottom: 2px solid var(--food-red); }
+        .cat-tabs-wrap { position: relative; }
+        .cat-tabs-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 24px; background: linear-gradient(to left, #ffffff, rgba(255,255,255,0)); pointer-events: none; }
+        .nav-item { position: relative; padding: 14px 4px; margin-right: 22px; font-size: 14px; font-weight: 600; color: #717171; background: transparent; border: none; white-space: nowrap; transition: color .2s ease; }
+        .nav-item:last-child { margin-right: 16px; }
+        .nav-item.active { color: var(--food-red); font-weight: 700; }
+        .nav-item.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--food-red); border-radius: 3px 3px 0 0; }
         .sheet-overlay { transition: opacity 0.3s ease; opacity: 0; pointer-events: none; }
         .sheet-overlay.visible { opacity: 1; pointer-events: auto; }
         .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -4px 30px rgba(0,0,0,0.15); }
@@ -183,40 +188,32 @@
     </header>
 
     <div class="px-4 mt-5">
-    <div class="relative bg-white rounded-xl border border-[#EA1D2C]/20 overflow-hidden shadow-sm">
-      <div class="absolute top-0 left-0 right-0 h-0.5 bg-[#EA1D2C]"></div>
-      
-      <div class="px-3 py-2.5 flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-lg bg-[#fff5f5] flex items-center justify-center shrink-0 border border-[#EA1D2C]/10">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2.5 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-[#fff1f2] flex items-center justify-center shrink-0">
           <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
         </div>
-        
-        <div class="flex items-center gap-2 min-w-0 flex-1">
-          <div class="flex flex-col min-w-0">
-            <span class="text-xs font-bold text-[#EA1D2C] truncate">Parceiro Oficial iFood</span>
-            <span class="text-[10px] text-gray-500 truncate">Cupom de Boas-Vindas Liberado</span>
+        <div class="flex flex-col min-w-0 flex-1">
+          <div class="flex items-center gap-1.5">
+            <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
+            <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[11px]"></i>
           </div>
+          <span class="text-[11px] text-gray-500 truncate">Cupom de boas-vindas liberado</span>
         </div>
-        
-        <div class="flex items-center gap-1 bg-[#EA1D2C] text-white text-[9px] font-black px-2 py-1 rounded-full shrink-0">
-          <span class="w-1 h-1 rounded-full bg-white animate-pulse"></span>
-          CUPOM ATIVO
-        </div>
+        <span class="text-[10px] font-bold text-[#EA1D2C] bg-[#fff1f2] px-2 py-1 rounded-full shrink-0">ATIVO</span>
       </div>
     </div>
-  </div>
 
-    <div class="sticky top-0 bg-[#f7f7f7] z-30 shadow-sm border-b border-gray-200 pb-2 mt-6">
+    <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
         <div class="flex overflow-x-auto no-scroll px-4">
-            <button onclick="scrollToCat('destaques')" class="nav-item active whitespace-nowrap px-4 py-2 mr-2 text-sm font-bold text-[#3e3e3e] bg-white rounded-full shadow-sm border border-gray-100">Destaques</button>
-            <button onclick="scrollToCat('entradas')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Entradas</button>
-            <button onclick="scrollToCat('temakis')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Temakis</button>
-            <button onclick="scrollToCat('familia')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Família</button>
-            <button onclick="scrollToCat('classicos')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Clássicos</button>
-            <button onclick="scrollToCat('hot-rolls')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Quentes</button>
-            <button onclick="scrollToCat('yakisobas')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Yakisobas</button>
-            <button onclick="scrollToCat('sobremesas')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Sobremesas</button>
-            <button onclick="scrollToCat('bebidas')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Bebidas</button>
+            <button onclick="scrollToCat('destaques')" class="nav-item active">Destaques</button>
+            <button onclick="scrollToCat('entradas')" class="nav-item">Entradas</button>
+            <button onclick="scrollToCat('temakis')" class="nav-item">Temakis</button>
+            <button onclick="scrollToCat('familia')" class="nav-item">Família</button>
+            <button onclick="scrollToCat('classicos')" class="nav-item">Clássicos</button>
+            <button onclick="scrollToCat('hot-rolls')" class="nav-item">Quentes</button>
+            <button onclick="scrollToCat('yakisobas')" class="nav-item">Yakisobas</button>
+            <button onclick="scrollToCat('sobremesas')" class="nav-item">Sobremesas</button>
+            <button onclick="scrollToCat('bebidas')" class="nav-item">Bebidas</button>
         </div>
     </div>
 
@@ -973,8 +970,9 @@
 
         function scrollToCat(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active', 'text-[#EA1D2C]'));
-            event.target.classList.add('active', 'text-[#EA1D2C]');
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+            event.target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         }
 
         window.openProductModal = function(id) {
