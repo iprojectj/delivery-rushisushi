@@ -1059,7 +1059,16 @@
                 const data = await response.json();
                 if(data.success) {
                     localStorage.setItem('user_cache_nome', nomeCliente); localStorage.setItem('user_cache_zap', zapCliente);
-                    localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, validity: new Date().getTime() + 600000 }));
+                    const enderecoEntrega = {
+                        cep: document.getElementById('cust-cep').value,
+                        rua: document.getElementById('cust-street').value,
+                        numero: document.getElementById('cust-number').value,
+                        bairro: document.getElementById('cust-hood').value,
+                        complemento: document.getElementById('cust-comp').value,
+                        cidade: localStorage.getItem('localCidade') || '',
+                        estado: localStorage.getItem('localEstado') || ''
+                    };
+                    localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, endereco: enderecoEntrega, validity: new Date().getTime() + 600000 }));
                     
                     // Alterado de 'CompletePayment' para 'AddPaymentInfo' para evitar conversão falsa
                     if(window.ttq) { 
