@@ -495,7 +495,8 @@
                     <div class="checkout-step hidden" data-cstep="3">
                         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-4">
                             <h3 class="font-bold text-[#3e3e3e] mb-3 text-sm uppercase"><i class="fa-solid fa-motorcycle mr-2"></i> Entrega</h3>
-                            <label class="flex items-center justify-between p-3 border border-green-200 bg-green-50 rounded-lg cursor-pointer mb-2">
+                            <div id="shipping-info-banner" class="hidden text-[11px] bg-[#fff3f0] border border-[#ffd9d2] text-[#EA1D2C] rounded-md px-3 py-2 mb-3 font-semibold"></div>
+                            <label id="shipping-padrao-label" class="flex items-center justify-between p-3 border border-green-200 bg-green-50 rounded-lg cursor-pointer mb-2">
                                 <div class="flex items-center gap-2">
                                     <input type="radio" name="shipping" value="0" checked onchange="recalcTotal()">
                                     <div class="flex flex-col">
@@ -503,7 +504,7 @@
                                         <span class="text-xs text-gray-500">30-45 min</span>
                                     </div>
                                 </div>
-                                <span class="font-bold text-[#05a65a] text-sm">Grátis</span>
+                                <span id="shipping-padrao-price" class="font-bold text-[#05a65a] text-sm">Grátis</span>
                             </label>
                             <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer mb-2">
                                 <div class="flex items-center gap-2">
