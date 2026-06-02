@@ -318,6 +318,12 @@
             const itemsToRender = data.items || data.itens || data.products || data.carrinho || [];
             populateResumo(itemsToRender, data.total);
             initDeliveryMap(data.endereco);
+
+            const tempoEntrega = data.shippingType === 'rapida' ? '~20 min' : '~40 min';
+            const deliveryTimeEl = document.getElementById('delivery-time');
+            if (deliveryTimeEl) {
+                deliveryTimeEl.innerHTML = '<i class="fa-regular fa-clock text-gray-400"></i> ' + tempoEntrega;
+            }
         });
 
         function initDeliveryMap(endereco) {
