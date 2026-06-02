@@ -205,15 +205,15 @@
 
     <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
         <div class="flex overflow-x-auto no-scroll px-4">
-            <button onclick="scrollToCat('destaques')" class="nav-item active">Destaques</button>
-            <button onclick="scrollToCat('entradas')" class="nav-item">Entradas</button>
-            <button onclick="scrollToCat('temakis')" class="nav-item">Temakis</button>
-            <button onclick="scrollToCat('familia')" class="nav-item">Família</button>
-            <button onclick="scrollToCat('classicos')" class="nav-item">Clássicos</button>
-            <button onclick="scrollToCat('hot-rolls')" class="nav-item">Quentes</button>
-            <button onclick="scrollToCat('yakisobas')" class="nav-item">Yakisobas</button>
-            <button onclick="scrollToCat('sobremesas')" class="nav-item">Sobremesas</button>
-            <button onclick="scrollToCat('bebidas')" class="nav-item">Bebidas</button>
+            <button onclick="scrollToCat('destaques', event)" class="nav-item active">Destaques</button>
+            <button onclick="scrollToCat('entradas', event)" class="nav-item">Entradas</button>
+            <button onclick="scrollToCat('temakis', event)" class="nav-item">Temakis</button>
+            <button onclick="scrollToCat('familia', event)" class="nav-item">Família</button>
+            <button onclick="scrollToCat('classicos', event)" class="nav-item">Clássicos</button>
+            <button onclick="scrollToCat('hot-rolls', event)" class="nav-item">Quentes</button>
+            <button onclick="scrollToCat('yakisobas', event)" class="nav-item">Yakisobas</button>
+            <button onclick="scrollToCat('sobremesas', event)" class="nav-item">Sobremesas</button>
+            <button onclick="scrollToCat('bebidas', event)" class="nav-item">Bebidas</button>
         </div>
     </div>
 
