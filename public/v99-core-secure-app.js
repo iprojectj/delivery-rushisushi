@@ -1050,8 +1050,8 @@
             const lbl = document.getElementById('bar-count-label');
             if (lbl) lbl.innerText = count + (count === 1 ? ' item' : ' itens');
 
-            // Progresso entrega grátis (meta R$ 50,00)
-            const META = 50;
+            // Progresso entrega grátis
+            const META = (window.META_FRETE_GRATIS || 32.80);
             const pct = Math.min(100, Math.round((total / META) * 100));
             const fill = document.getElementById('cart-progress-fill');
             const txt = document.getElementById('cart-progress-text');
