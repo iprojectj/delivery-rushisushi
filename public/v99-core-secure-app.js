@@ -71,7 +71,7 @@
         .sheet-overlay.visible { opacity: 1; pointer-events: auto; }
         .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -4px 30px rgba(0,0,0,0.15); }
         .bottom-sheet.open { transform: translateY(0); }
-        .input-group { background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }
+        .input-group { background-color: #fafafa; border: 1px solid #ececec; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }
         .input-group:focus-within { background-color: #fff; border-color: #EA1D2C; box-shadow: 0 0 0 2px rgba(234, 29, 44, 0.1); }
         .input-label { font-size: 11px; color: #717171; font-weight: 600; display: block; margin-bottom: 2px; text-transform: uppercase; }
         .input-field { width: 100%; background: transparent; border: none; font-size: 14px; color: #3e3e3e; font-weight: 500; outline: none; }
