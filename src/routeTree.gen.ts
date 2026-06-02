@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WebhookParadiseRouteImport } from './routes/webhook-paradise'
-import { Route as Upsell2RouteImport } from './routes/upsell2'
 import { Route as PedidoRouteImport } from './routes/pedido'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as CriarPixRouteImport } from './routes/criar-pix'
@@ -20,11 +19,6 @@ import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status
 const WebhookParadiseRoute = WebhookParadiseRouteImport.update({
   id: '/webhook-paradise',
   path: '/webhook-paradise',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const Upsell2Route = Upsell2RouteImport.update({
-  id: '/upsell2',
-  path: '/upsell2',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PedidoRoute = PedidoRouteImport.update({
@@ -58,7 +52,6 @@ export interface FileRoutesByFullPath {
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
-  '/upsell2': typeof Upsell2Route
   '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
@@ -67,7 +60,6 @@ export interface FileRoutesByTo {
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
-  '/upsell2': typeof Upsell2Route
   '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
@@ -77,7 +69,6 @@ export interface FileRoutesById {
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
-  '/upsell2': typeof Upsell2Route
   '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
@@ -88,7 +79,6 @@ export interface FileRouteTypes {
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
-    | '/upsell2'
     | '/webhook-paradise'
     | '/verificar-status/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -97,7 +87,6 @@ export interface FileRouteTypes {
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
-    | '/upsell2'
     | '/webhook-paradise'
     | '/verificar-status/$id'
   id:
@@ -106,7 +95,6 @@ export interface FileRouteTypes {
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
-    | '/upsell2'
     | '/webhook-paradise'
     | '/verificar-status/$id'
   fileRoutesById: FileRoutesById
@@ -116,7 +104,6 @@ export interface RootRouteChildren {
   CriarPixRoute: typeof CriarPixRoute
   ObrigadoRoute: typeof ObrigadoRoute
   PedidoRoute: typeof PedidoRoute
-  Upsell2Route: typeof Upsell2Route
   WebhookParadiseRoute: typeof WebhookParadiseRoute
   VerificarStatusIdRoute: typeof VerificarStatusIdRoute
 }
@@ -128,13 +115,6 @@ declare module '@tanstack/react-router' {
       path: '/webhook-paradise'
       fullPath: '/webhook-paradise'
       preLoaderRoute: typeof WebhookParadiseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/upsell2': {
-      id: '/upsell2'
-      path: '/upsell2'
-      fullPath: '/upsell2'
-      preLoaderRoute: typeof Upsell2RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pedido': {
@@ -180,20 +160,9 @@ const rootRouteChildren: RootRouteChildren = {
   CriarPixRoute: CriarPixRoute,
   ObrigadoRoute: ObrigadoRoute,
   PedidoRoute: PedidoRoute,
-  Upsell2Route: Upsell2Route,
   WebhookParadiseRoute: WebhookParadiseRoute,
   VerificarStatusIdRoute: VerificarStatusIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
