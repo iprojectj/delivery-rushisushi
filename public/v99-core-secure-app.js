@@ -1271,6 +1271,13 @@
             if(totEl) totEl.innerText = formatMoney(total);
             const finEl = document.getElementById('final-total');
             if(finEl) finEl.innerText = formatMoney(total);
+            const finSub = document.getElementById('final-subtotal');
+            if(finSub) finSub.innerText = formatMoney(subtotal);
+            const finShip = document.getElementById('final-shipping');
+            if(finShip) {
+                if (shipping === 0) { finShip.innerText = 'Grátis'; finShip.className = 'text-[#05a65a] font-semibold'; }
+                else { finShip.innerText = formatMoney(shipping); finShip.className = 'text-[#3e3e3e]'; }
+            }
             const footEl = document.getElementById('footer-total-display');
             if(footEl) footEl.innerText = formatMoney(total);
         }
