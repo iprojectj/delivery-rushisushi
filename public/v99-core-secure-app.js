@@ -491,8 +491,73 @@
                     <div class="checkout-step hidden" data-cstep="4">
                         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-4">
                             <h3 class="font-bold text-[#3e3e3e] mb-3 text-sm uppercase"><i class="fa-regular fa-credit-card mr-2"></i> Pagamento</h3>
-                            <div class="border border-[#05a65a] bg-[#f0fff4] p-4 rounded-lg flex justify-between items-center shadow-sm"><div class="flex items-center gap-3"><i class="fa-brands fa-pix text-[#05a65a] text-xl"></i><div class="flex flex-col"><span class="font-bold text-sm text-[#3e3e3e]">Pix</span><span class="text-xs text-[#05a65a] font-bold">Aprovação Imediata</span></div></div><i class="fa-solid fa-check-circle text-[#05a65a]"></i></div>
+                            
+                            <!-- PIX Ativo -->
+                            <div class="border border-[#05a65a] bg-[#f0fff4] p-4 rounded-lg flex justify-between items-center shadow-sm mb-3 cursor-pointer" onclick="selectPayment('PIX')">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-brands fa-pix text-[#05a65a] text-xl"></i>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-[#3e3e3e]">Pix</span>
+                                        <span class="text-xs text-[#05a65a] font-bold">Aprovação Imediata</span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-check-circle text-[#05a65a]" id="check-pay-PIX"></i>
+                            </div>
+                            
+                            <!-- Cartão de Crédito (manutenção) -->
+                            <div class="border border-gray-200 bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-3 opacity-70">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-regular fa-credit-card text-gray-400 text-xl"></i>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-gray-400">Cartão de Crédito</span>
+                                        <span class="text-xs text-gray-400 font-medium">Em manutenção</span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
+                            </div>
+                            
+                            <!-- Nupay (manutenção) -->
+                            <div class="border border-gray-200 bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-3 opacity-70">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-wallet text-gray-400 text-xl"></i>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-gray-400">NuPay</span>
+                                        <span class="text-xs text-gray-400 font-medium">Em manutenção</span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
+                            </div>
+                            
+                            <!-- Google Pay (manutenção) -->
+                            <div class="border border-gray-200 bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-3 opacity-70">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-brands fa-google text-gray-400 text-xl"></i>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-gray-400">Google Pay</span>
+                                        <span class="text-xs text-gray-400 font-medium">Em manutenção</span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
+                            </div>
+                            
+                            <!-- Apple Pay (manutenção) -->
+                            <div class="border border-gray-200 bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-3 opacity-70">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-brands fa-apple text-gray-400 text-xl"></i>
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-gray-400">Apple Pay</span>
+                                        <span class="text-xs text-gray-400 font-medium">Em manutenção</span>
+                                    </div>
+                                </div>
+                                <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
+                            </div>
+                            
                             <input type="hidden" id="cust-payment" value="PIX">
+                            
+                            <div class="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3 mt-2">
+                                <i class="fa-solid fa-circle-info text-amber-500 text-sm"></i>
+                                <p class="text-xs text-amber-700 leading-snug">No momento estamos aceitando apenas <strong>PIX</strong> para garantir a aprovação imediata do seu pedido. As demais formas de pagamento retornarão em breve.</p>
+                            </div>
                         </div>
                         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
                             <div class="flex justify-between text-lg font-bold text-[#3e3e3e]"><span>Total Final</span><span id="final-total" class="text-[#05a65a]">R$ 0,00</span></div>
@@ -1033,7 +1098,14 @@
             if(checkoutStep < 4) { setCheckoutStep(checkoutStep + 1); return; }
             submitOrder();
         };
-        window.prevCheckoutStep = function() {
+        window.selectPayment = function(method) {
+            document.getElementById('cust-payment').value = method;
+            var checks = document.querySelectorAll('[id^="check-pay-"]');
+            checks.forEach(function(el){ el.className = 'fa-regular fa-circle text-gray-400'; });
+            var active = document.getElementById('check-pay-' + method);
+            if(active) active.className = 'fa-solid fa-check-circle text-[#05a65a]';
+        };
+
             if(checkoutStep > 1) setCheckoutStep(checkoutStep - 1);
             else prevBagStep();
         };
