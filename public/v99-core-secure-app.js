@@ -61,7 +61,12 @@
         html, body { overflow-y: auto !important; height: auto !important; }
         .no-scroll::-webkit-scrollbar { display: none; }
         .no-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-        .nav-item.active { color: var(--food-red); border-bottom: 2px solid var(--food-red); }
+        .cat-tabs-wrap { position: relative; }
+        .cat-tabs-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 24px; background: linear-gradient(to left, #ffffff, rgba(255,255,255,0)); pointer-events: none; }
+        .nav-item { position: relative; padding: 14px 4px; margin-right: 22px; font-size: 14px; font-weight: 600; color: #717171; background: transparent; border: none; white-space: nowrap; transition: color .2s ease; }
+        .nav-item:last-child { margin-right: 16px; }
+        .nav-item.active { color: var(--food-red); font-weight: 700; }
+        .nav-item.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--food-red); border-radius: 3px 3px 0 0; }
         .sheet-overlay { transition: opacity 0.3s ease; opacity: 0; pointer-events: none; }
         .sheet-overlay.visible { opacity: 1; pointer-events: auto; }
         .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -4px 30px rgba(0,0,0,0.15); }
