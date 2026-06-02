@@ -361,10 +361,10 @@
                 <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">CNPJ: 57.272.601/0001-12</p>
             </div>
             <div class="flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto">
-                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Sobre Nós</button>
-                <button onclick="openInstitucional('privacidade')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Privacidade</button>
-                <button onclick="openInstitucional('termos')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Termos</button>
-                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Trocas</button>
+                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Sobre Nós</button>
+                <button onclick="openInstitucional('privacidade')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Privacidade</button>
+                <button onclick="openInstitucional('termos')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Termos</button>
+                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Trocas</button>
             </div>
             <div class="flex justify-center gap-4 mb-8">
                 <a href="https://www.instagram.com/rushisushioficial/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
@@ -478,7 +478,7 @@
 
                     <div class="p-4">
                     <div class="checkout-step" data-cstep="1">
-                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                        <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
                             <div class="px-4 pt-4 pb-2 flex items-center gap-2">
                                 <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-location-dot text-[#EA1D2C] text-sm"></i></div>
                                 <div>
@@ -496,7 +496,7 @@
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="2">
-                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                        <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
                             <div class="px-4 pt-4 pb-2 flex items-center gap-2">
                                 <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-user text-[#EA1D2C] text-sm"></i></div>
                                 <div>
@@ -512,7 +512,7 @@
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="3">
-                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                        <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
                             <div class="px-4 pt-4 pb-2 flex items-center gap-2">
                                 <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-motorcycle text-[#EA1D2C] text-sm"></i></div>
                                 <div>
@@ -547,7 +547,7 @@
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="4">
-                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                        <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
                             <div class="px-4 pt-4 pb-2 flex items-center gap-2">
                                 <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-regular fa-credit-card text-[#EA1D2C] text-sm"></i></div>
                                 <div>
@@ -923,7 +923,7 @@
                 if (items.length > 0) {
                     let html = \`<div id="\${key}" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">\${title}</h3><div class="grid gap-4">\`;
                     items.forEach(p => {
-                        let highlightClass = 'border-gray-100 bg-white'; 
+                        let highlightClass = 'border-gray-100 bg-[#fafafa]'; 
                         
                         if (key === 'destaques') {
                             if (p.id === 'combo-rodízio' || p.id === 'barca-ostentacao') { 
@@ -936,7 +936,7 @@
                                     <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
                                     \${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">\${p.badge}</div>\` : ''}
                                 </div>
-                                <div class="p-4 flex flex-col flex-1 z-10 bg-white">
+                                <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
                                     <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p>
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
