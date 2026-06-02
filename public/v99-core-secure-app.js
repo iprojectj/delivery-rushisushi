@@ -1045,8 +1045,32 @@
         function updateCartBar() {
             const count = cart.reduce((acc, item) => acc + item.qty, 0);
             const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
-            document.getElementById('bar-count').innerText = count;
             document.getElementById('bar-total').innerText = formatMoney(total);
+            const lbl = document.getElementById('bar-count-label');
+            if (lbl) lbl.innerText = count + (count === 1 ? ' item' : ' itens');
+
+            // Progresso entrega grátis (meta R$ 50,00)
+            const META = 50;
+            const pct = Math.min(100, Math.round((total / META) * 100));
+            const fill = document.getElementById('cart-progress-fill');
+            const txt = document.getElementById('cart-progress-text');
+            const pctEl = document.getElementById('cart-progress-percent');
+            const icon = document.getElementById('cart-progress-icon');
+            if (fill) fill.style.width = pct + '%';
+            if (pctEl) pctEl.innerText = pct + '%';
+            if (total >= META) {
+                if (txt) txt.innerHTML = 'Você ganhou <strong class="text-[#05a65a]">entrega grátis</strong>!';
+                if (icon) icon.className = 'fa-solid fa-circle-check text-[#05a65a] text-[11px]';
+                if (fill) fill.classList.replace('bg-[#EA1D2C]', 'bg-[#05a65a]');
+                if (pctEl) pctEl.classList.add('text-[#05a65a]');
+            } else {
+                const falta = META - total;
+                if (txt) txt.innerHTML = 'Faltam <strong>' + formatMoney(falta) + '</strong> para entrega grátis';
+                if (icon) icon.className = 'fa-solid fa-motorcycle text-[#EA1D2C] text-[11px]';
+                if (fill) fill.classList.replace('bg-[#05a65a]', 'bg-[#EA1D2C]');
+                if (pctEl) pctEl.classList.remove('text-[#05a65a]');
+            }
+
             const bar = document.getElementById('cart-bar');
             count > 0 ? bar.classList.remove('translate-y-full') : bar.classList.add('translate-y-full');
         }
