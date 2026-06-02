@@ -1186,7 +1186,7 @@
 
         window.removeCartItem = function(idx) { cart.splice(idx, 1); renderBagItems(); updateCartBar(); if(cart.length === 0) closeBag(); }
 
-        window.META_FRETE_GRATIS = 50;
+        window.META_FRETE_GRATIS = 32.80;
         window.TAXA_PADRAO = 6.99;
 
         window.recalcTotal = function() {
