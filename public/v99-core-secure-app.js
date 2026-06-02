@@ -970,8 +970,9 @@
 
         function scrollToCat(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active', 'text-[#EA1D2C]'));
-            event.target.classList.add('active', 'text-[#EA1D2C]');
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+            event.target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         }
 
         window.openProductModal = function(id) {
