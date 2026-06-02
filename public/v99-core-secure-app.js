@@ -923,7 +923,7 @@
                 if (items.length > 0) {
                     let html = \`<div id="\${key}" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">\${title}</h3><div class="grid gap-4">\`;
                     items.forEach(p => {
-                        let highlightClass = 'border-gray-100 bg-white'; 
+                        let highlightClass = 'border-gray-100 bg-[#fafafa]'; 
                         
                         if (key === 'destaques') {
                             if (p.id === 'combo-rodízio' || p.id === 'barca-ostentacao') { 
