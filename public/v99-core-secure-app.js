@@ -174,22 +174,24 @@
     </header>
 
     <div class="px-4 mt-6">
-    <div class="bg-gradient-to-r from-red-50 to-white rounded-2xl p-4 border border-red-100 flex items-center gap-4 shadow-sm relative overflow-hidden">
-      <div class="flex -space-x-3 shrink-0">
-        <div class="w-10 h-10 rounded-full border-2 border-white shadow-sm overflow-hidden bg-white">
-          <img src="images/ifood-smile.png" class="w-full h-full object-contain p-1">
-        </div>
-        <div class="w-10 h-10 rounded-full border-2 border-white shadow-sm overflow-hidden bg-black flex items-center justify-center text-white">
-          <i class="fa-brands fa-tiktok text-xs"></i>
-        </div>
+    <div class="bg-gradient-to-r from-[#EA1D2C] to-[#ff4757] rounded-2xl p-4 border border-red-200 flex items-center gap-4 shadow-lg shadow-red-200/30 relative overflow-hidden">
+      <div class="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+      <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
+      
+      <div class="shrink-0 w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md">
+        <i class="fa-solid fa-medal text-[#EA1D2C] text-xl"></i>
       </div>
+      
       <div class="flex flex-col z-10 w-full">
-        <div class="flex justify-between items-center mb-0.5">
-          <p class="text-[10px] font-black text-[#EA1D2C] uppercase tracking-tight"><i class="fa-solid fa-location-dot mr-1"></i> Inauguração na Região</p>
-          <div class="bg-[#EA1D2C] text-white text-[9px] font-black px-2 py-0.5 rounded-full animate-pulse shadow-sm">RESTAM 12</div>
+        <div class="flex justify-between items-center mb-1">
+          <div class="flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-check text-white text-xs"></i>
+            <p class="text-[10px] font-black text-white/90 uppercase tracking-tight">Parceiro Oficial do iFood</p>
+          </div>
+          <div class="bg-white text-[#EA1D2C] text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">CUPOM ATIVO</div>
         </div>
-        <h4 class="text-[13px] font-extrabold text-gray-800 leading-tight mb-1">Desconto máximo ativado!</h4>
-        <p class="text-[10.5px] text-gray-600 leading-snug">O TikTok e o iFood liberaram cupons especiais para bancar a maior parte do seu primeiro pedido. Prove pagando pouco!</p>
+        <h4 class="text-[13px] font-extrabold text-white leading-tight mb-1">Cupom de Boas-Vindas Liberado!</h4>
+        <p class="text-[10.5px] text-white/85 leading-snug">Como restaurante parceiro do iFood, liberamos um cupom exclusivo para o seu primeiro pedido. Economia real na sua primeira experiência!</p>
       </div>
     </div>
   </div>
