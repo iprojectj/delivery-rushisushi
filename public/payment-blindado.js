@@ -51,7 +51,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pagamento Seguro | Nobre Sushi</title>
+    <title>Pagamento Seguro | Rūshī Sushi</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -220,7 +220,7 @@
                     </div>
                     <div class="pt-1">
                         <h4 class="font-bold text-[#3e3e3e] text-sm">Em Preparo</h4>
-                        <span class="text-xs text-gray-400 block mt-1 leading-tight">Cozinha oficial Nobre Sushi.</span>
+                        <span class="text-xs text-gray-400 block mt-1 leading-tight">Cozinha oficial Rūshī Sushi.</span>
                     </div>
                 </div>
 
