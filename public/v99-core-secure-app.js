@@ -525,7 +525,7 @@
                             </div>
                             <div class="px-4 pb-4 pt-2">
                                 <div id="shipping-info-banner" class="hidden text-[11px] bg-[#fff3f0] border border-[#ffd9d2] text-[#EA1D2C] rounded-lg px-3 py-2 mb-3 font-semibold"></div>
-                                <label id="shipping-padrao-label" class="flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer mb-2">
+                                <label id="shipping-padrao-label" class="flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer mb-2 transition-all">
                                     <div class="flex items-center gap-3">
                                         <input type="radio" name="shipping" value="0" checked onchange="recalcTotal()" class="accent-[#05a65a]">
                                         <div class="flex flex-col">
@@ -535,7 +535,7 @@
                                     </div>
                                     <span id="shipping-padrao-price" class="font-bold text-[#05a65a] text-sm">Grátis</span>
                                 </label>
-                                <label class="flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer">
+                                <label id="shipping-rapida-label" class="flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer transition-all">
                                     <div class="flex items-center gap-3">
                                         <input type="radio" name="shipping" value="3.97" onchange="recalcTotal()" class="accent-[#EA1D2C]">
                                         <div class="flex flex-col">
@@ -543,7 +543,7 @@
                                             <span class="text-xs text-[#EA1D2C]">15-25 min</span>
                                         </div>
                                     </div>
-                                    <span class="font-bold text-[#3e3e3e] text-sm">+ R$ 3,97</span>
+                                    <span id="shipping-rapida-price" class="font-bold text-[#3e3e3e] text-sm">+ R$ 3,97</span>
                                 </label>
                             </div>
                         </div>
@@ -1253,6 +1253,25 @@
                     banner.classList.remove('hidden');
                 } else {
                     banner.classList.add('hidden');
+                }
+            }
+
+            const padraoLabel = document.getElementById('shipping-padrao-label');
+            const rapidaLabel = document.getElementById('shipping-rapida-label');
+            const padraoPrice = document.getElementById('shipping-padrao-price');
+            const rapidaPrice = document.getElementById('shipping-rapida-price');
+            const checkedShipping = document.querySelector('input[name="shipping"]:checked');
+            if (padraoLabel && rapidaLabel && checkedShipping) {
+                if (checkedShipping.value === '0' || checkedShipping.getAttribute('data-tipo') === 'padrao') {
+                    padraoLabel.className = 'flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer mb-2 transition-all';
+                    rapidaLabel.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer transition-all';
+                    if (padraoPrice) padraoPrice.className = 'font-bold text-[#05a65a] text-sm';
+                    if (rapidaPrice) rapidaPrice.className = 'font-bold text-[#3e3e3e] text-sm';
+                } else {
+                    padraoLabel.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer mb-2 transition-all';
+                    rapidaLabel.className = 'flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer transition-all';
+                    if (padraoPrice) padraoPrice.className = 'font-bold text-[#3e3e3e] text-sm';
+                    if (rapidaPrice) rapidaPrice.className = 'font-bold text-[#05a65a] text-sm';
                 }
             }
 
