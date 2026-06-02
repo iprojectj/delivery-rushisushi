@@ -56,7 +56,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #f7f7f7; user-select: none; -webkit-user-select: none; }
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #ffffff; user-select: none; -webkit-user-select: none; }
         :root { --food-red: #EA1D2C; --food-green: #05a65a; --text-dark: #3e3e3e; --text-gray: #717171; }
         html, body { overflow-y: auto !important; height: auto !important; }
         .no-scroll::-webkit-scrollbar { display: none; }
@@ -71,7 +71,7 @@
         .sheet-overlay.visible { opacity: 1; pointer-events: auto; }
         .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -4px 30px rgba(0,0,0,0.15); }
         .bottom-sheet.open { transform: translateY(0); }
-        .input-group { background-color: #f7f7f7; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }
+        .input-group { background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }
         .input-group:focus-within { background-color: #fff; border-color: #EA1D2C; box-shadow: 0 0 0 2px rgba(234, 29, 44, 0.1); }
         .input-label { font-size: 11px; color: #717171; font-weight: 600; display: block; margin-bottom: 2px; text-transform: uppercase; }
         .input-field { width: 100%; background: transparent; border: none; font-size: 14px; color: #3e3e3e; font-weight: 500; outline: none; }
@@ -84,7 +84,7 @@
         .popup-local-container { border-radius: 16px !important; padding: 20px !important; font-family: 'Inter', sans-serif !important; }
         .btn-confirmar { background-color: #EA1D2C !important; border-radius: 8px !important; font-weight: 700 !important; padding: 12px 24px !important; width: 100% !important; margin-bottom: 10px !important; }
         .btn-alterar { background-color: transparent !important; color: #717171 !important; font-weight: 600 !important; border: 1px solid #e5e7eb !important; border-radius: 8px !important; padding: 10px 24px !important; width: 100% !important; }
-        .location-box { background-color: #f7f7f7; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left; border: 1px solid #e5e7eb; }
+        .location-box { background-color: #ffffff; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left; border: 1px solid #e5e7eb; }
         .location-box span { display: block; font-size: 12px; color: #717171; }
         .location-box strong { display: block; font-size: 16px; color: #3e3e3e; margin-top: 4px; }
         .popup-header i { font-size: 40px; color: #EA1D2C; margin-bottom: 15px; }
@@ -114,7 +114,7 @@
     })();
     </script>
 </head>
-<body class="pb-24 bg-gray-50" id="main-body">
+<body class="pb-24 bg-white" id="main-body">
 
     <div id="app-loader" class="fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center">
@@ -123,7 +123,7 @@
         <div class="w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
     </div>
 
-    <header class="w-full relative bg-[#f7f7f7]">
+    <header class="w-full relative bg-[#ffffff]">
         <div class="header-banner">
                   <img src="images/background.webp" class="banner-img">
             </div>
@@ -217,12 +217,12 @@
         </div>
     </div>
 
-    <main class="p-4 space-y-6 min-h-screen bg-[#f7f7f7]" id="product-container"></main>
+    <main class="p-4 space-y-6 min-h-screen bg-[#ffffff]" id="product-container"></main>
 
     <!-- ========================================== -->
         <!-- 🟢 NOVA SEÇÃO: FAQ (Design Clean) -->
         <!-- ========================================== -->
-        <section class="bg-[#f7f7f7] mt-2 pt-4 pb-2">
+        <section class="bg-[#ffffff] mt-2 pt-4 pb-2">
             <div class="px-4">
                 <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2">
                     <i class="fa-regular fa-comments text-[#EA1D2C]"></i> 
@@ -439,7 +439,7 @@
                 </div>
                 <button onclick="closeBag()" class="text-[#EA1D2C] font-semibold text-sm" id="bag-btn-close">Fechar</button>
             </div>
-            <div class="flex-1 overflow-y-auto pb-32 bg-[#f7f7f7]" id="bag-scroll">
+            <div class="flex-1 overflow-y-auto pb-32 bg-[#ffffff]" id="bag-scroll">
                 <div id="sacola-tela-1">
                     <div class="bg-white p-4 mb-4">
                         <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
