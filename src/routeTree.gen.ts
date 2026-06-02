@@ -9,38 +9,175 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WebhookParadiseRouteImport } from './routes/webhook-paradise'
+import { Route as Upsell2RouteImport } from './routes/upsell2'
+import { Route as PedidoRouteImport } from './routes/pedido'
+import { Route as ObrigadoRouteImport } from './routes/obrigado'
+import { Route as CriarPixDoacaoRouteImport } from './routes/criar-pix-doacao'
+import { Route as CriarPixRouteImport } from './routes/criar-pix'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
 
+const WebhookParadiseRoute = WebhookParadiseRouteImport.update({
+  id: '/webhook-paradise',
+  path: '/webhook-paradise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Upsell2Route = Upsell2RouteImport.update({
+  id: '/upsell2',
+  path: '/upsell2',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PedidoRoute = PedidoRouteImport.update({
+  id: '/pedido',
+  path: '/pedido',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ObrigadoRoute = ObrigadoRouteImport.update({
+  id: '/obrigado',
+  path: '/obrigado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CriarPixDoacaoRoute = CriarPixDoacaoRouteImport.update({
+  id: '/criar-pix-doacao',
+  path: '/criar-pix-doacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CriarPixRoute = CriarPixRouteImport.update({
+  id: '/criar-pix',
+  path: '/criar-pix',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VerificarStatusIdRoute = VerificarStatusIdRouteImport.update({
+  id: '/verificar-status/$id',
+  path: '/verificar-status/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/criar-pix': typeof CriarPixRoute
+  '/criar-pix-doacao': typeof CriarPixDoacaoRoute
+  '/obrigado': typeof ObrigadoRoute
+  '/pedido': typeof PedidoRoute
+  '/upsell2': typeof Upsell2Route
+  '/webhook-paradise': typeof WebhookParadiseRoute
+  '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/criar-pix': typeof CriarPixRoute
+  '/criar-pix-doacao': typeof CriarPixDoacaoRoute
+  '/obrigado': typeof ObrigadoRoute
+  '/pedido': typeof PedidoRoute
+  '/upsell2': typeof Upsell2Route
+  '/webhook-paradise': typeof WebhookParadiseRoute
+  '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/criar-pix': typeof CriarPixRoute
+  '/criar-pix-doacao': typeof CriarPixDoacaoRoute
+  '/obrigado': typeof ObrigadoRoute
+  '/pedido': typeof PedidoRoute
+  '/upsell2': typeof Upsell2Route
+  '/webhook-paradise': typeof WebhookParadiseRoute
+  '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/criar-pix'
+    | '/criar-pix-doacao'
+    | '/obrigado'
+    | '/pedido'
+    | '/upsell2'
+    | '/webhook-paradise'
+    | '/verificar-status/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/criar-pix'
+    | '/criar-pix-doacao'
+    | '/obrigado'
+    | '/pedido'
+    | '/upsell2'
+    | '/webhook-paradise'
+    | '/verificar-status/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/criar-pix'
+    | '/criar-pix-doacao'
+    | '/obrigado'
+    | '/pedido'
+    | '/upsell2'
+    | '/webhook-paradise'
+    | '/verificar-status/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CriarPixRoute: typeof CriarPixRoute
+  CriarPixDoacaoRoute: typeof CriarPixDoacaoRoute
+  ObrigadoRoute: typeof ObrigadoRoute
+  PedidoRoute: typeof PedidoRoute
+  Upsell2Route: typeof Upsell2Route
+  WebhookParadiseRoute: typeof WebhookParadiseRoute
+  VerificarStatusIdRoute: typeof VerificarStatusIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/webhook-paradise': {
+      id: '/webhook-paradise'
+      path: '/webhook-paradise'
+      fullPath: '/webhook-paradise'
+      preLoaderRoute: typeof WebhookParadiseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/upsell2': {
+      id: '/upsell2'
+      path: '/upsell2'
+      fullPath: '/upsell2'
+      preLoaderRoute: typeof Upsell2RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pedido': {
+      id: '/pedido'
+      path: '/pedido'
+      fullPath: '/pedido'
+      preLoaderRoute: typeof PedidoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/obrigado': {
+      id: '/obrigado'
+      path: '/obrigado'
+      fullPath: '/obrigado'
+      preLoaderRoute: typeof ObrigadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/criar-pix-doacao': {
+      id: '/criar-pix-doacao'
+      path: '/criar-pix-doacao'
+      fullPath: '/criar-pix-doacao'
+      preLoaderRoute: typeof CriarPixDoacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/criar-pix': {
+      id: '/criar-pix'
+      path: '/criar-pix'
+      fullPath: '/criar-pix'
+      preLoaderRoute: typeof CriarPixRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +185,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/verificar-status/$id': {
+      id: '/verificar-status/$id'
+      path: '/verificar-status/$id'
+      fullPath: '/verificar-status/$id'
+      preLoaderRoute: typeof VerificarStatusIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CriarPixRoute: CriarPixRoute,
+  CriarPixDoacaoRoute: CriarPixDoacaoRoute,
+  ObrigadoRoute: ObrigadoRoute,
+  PedidoRoute: PedidoRoute,
+  Upsell2Route: Upsell2Route,
+  WebhookParadiseRoute: WebhookParadiseRoute,
+  VerificarStatusIdRoute: VerificarStatusIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
