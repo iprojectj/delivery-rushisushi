@@ -1070,7 +1070,7 @@
                         cidade: localStorage.getItem('localCidade') || '',
                         estado: localStorage.getItem('localEstado') || ''
                     };
-                    localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, endereco: enderecoEntrega, validity: new Date().getTime() + 600000 }));
+                    localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, endereco: enderecoEntrega, shippingType: shippingType, validity: new Date().getTime() + 600000 }));
                     
                     // Alterado de 'CompletePayment' para 'AddPaymentInfo' para evitar conversão falsa
                     if(window.ttq) { 
