@@ -174,28 +174,47 @@
     </header>
 
     <div class="px-4 mt-6">
-    <div class="bg-white rounded-2xl border-2 border-[#EA1D2C] shadow-lg shadow-red-200/40 overflow-hidden relative">
-      <div class="bg-[#EA1D2C] px-4 py-2 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <svg viewBox="0 0 120 40" class="h-5 w-auto" xmlns="http://www.w3.org/2000/svg">
-            <text x="0" y="30" font-family="Arial, sans-serif" font-weight="900" font-size="32" fill="#ffffff" font-style="italic">iFood</text>
-          </svg>
-          <span class="flex items-center gap-1 bg-white/20 backdrop-blur px-1.5 py-0.5 rounded-full">
-            <i class="fa-solid fa-circle-check text-white text-[9px]"></i>
-            <span class="text-[9px] font-black text-white uppercase tracking-wide">Parceiro Oficial</span>
-          </span>
+    <div class="relative bg-white rounded-2xl shadow-xl shadow-red-200/40 overflow-hidden border border-gray-100">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#EA1D2C] via-[#ff4757] to-[#EA1D2C]"></div>
+
+      <div class="p-4 flex items-center gap-3.5">
+        <div class="relative shrink-0">
+          <div class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-md ring-2 ring-[#EA1D2C]/15 p-1.5">
+            <img src="images/ifood-smile.png" alt="iFood" class="w-full h-full object-contain" />
+          </div>
+          <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-[#EA1D2C] rounded-full flex items-center justify-center ring-2 ring-white">
+            <i class="fa-solid fa-check text-white text-[9px] font-black"></i>
+          </div>
         </div>
-        <div class="bg-white text-[#EA1D2C] text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">CUPOM ATIVO</div>
+
+        <div class="flex flex-col w-full min-w-0">
+          <div class="flex items-center justify-between gap-2 mb-1">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[10px] font-black text-[#EA1D2C] uppercase tracking-wider">Parceiro Oficial iFood</span>
+              <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[10px]"></i>
+            </div>
+            <div class="flex items-center gap-1 bg-[#EA1D2C] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+              CUPOM ATIVO
+            </div>
+          </div>
+          <h4 class="text-[14px] font-extrabold text-[#3e3e3e] leading-tight">Cupom de Boas-Vindas Liberado</h4>
+          <p class="text-[11px] text-gray-500 leading-snug mt-0.5">Desconto exclusivo concedido pelo programa de parceiros oficiais do iFood para o seu primeiro pedido.</p>
+        </div>
       </div>
-      
-      <div class="p-4 flex items-center gap-3">
-        <div class="shrink-0 w-12 h-12 bg-[#EA1D2C]/10 rounded-xl flex items-center justify-center border border-[#EA1D2C]/20">
-          <i class="fa-solid fa-ticket text-[#EA1D2C] text-xl"></i>
+
+      <div class="px-4 pb-3 pt-1 flex items-center justify-between border-t border-gray-100 mx-4 -mt-1">
+        <div class="flex items-center gap-3 pt-2">
+          <div class="flex items-center gap-1">
+            <i class="fa-solid fa-shield-halved text-[#50a773] text-[10px]"></i>
+            <span class="text-[9.5px] font-semibold text-gray-600">Verificado</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <i class="fa-solid fa-star text-[#f5a623] text-[10px]"></i>
+            <span class="text-[9.5px] font-semibold text-gray-600">4.9 no iFood</span>
+          </div>
         </div>
-        <div class="flex flex-col w-full">
-          <h4 class="text-[13px] font-extrabold text-[#3e3e3e] leading-tight mb-0.5">Cupom de Boas-Vindas Liberado!</h4>
-          <p class="text-[10.5px] text-gray-600 leading-snug">Restaurante <span class="font-bold text-[#EA1D2C]">parceiro oficial do iFood</span> — desconto exclusivo para o seu primeiro pedido garantido.</p>
-        </div>
+        <span class="text-[9.5px] font-bold text-[#EA1D2C] pt-2">100% Garantido</span>
       </div>
     </div>
   </div>
