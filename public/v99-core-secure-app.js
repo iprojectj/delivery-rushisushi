@@ -478,7 +478,7 @@
 
                     <div class="p-4">
                     <div class="checkout-step" data-cstep="1">
-                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                        <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
                             <div class="px-4 pt-4 pb-2 flex items-center gap-2">
                                 <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-location-dot text-[#EA1D2C] text-sm"></i></div>
                                 <div>
@@ -496,7 +496,7 @@
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="2">
-                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                        <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
                             <div class="px-4 pt-4 pb-2 flex items-center gap-2">
                                 <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-user text-[#EA1D2C] text-sm"></i></div>
                                 <div>
@@ -512,7 +512,7 @@
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="3">
-                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                        <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
                             <div class="px-4 pt-4 pb-2 flex items-center gap-2">
                                 <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-motorcycle text-[#EA1D2C] text-sm"></i></div>
                                 <div>
@@ -547,7 +547,7 @@
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="4">
-                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                        <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
                             <div class="px-4 pt-4 pb-2 flex items-center gap-2">
                                 <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-regular fa-credit-card text-[#EA1D2C] text-sm"></i></div>
                                 <div>
