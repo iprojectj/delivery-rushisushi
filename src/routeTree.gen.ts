@@ -13,7 +13,6 @@ import { Route as WebhookParadiseRouteImport } from './routes/webhook-paradise'
 import { Route as Upsell2RouteImport } from './routes/upsell2'
 import { Route as PedidoRouteImport } from './routes/pedido'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
-import { Route as CriarPixDoacaoRouteImport } from './routes/criar-pix-doacao'
 import { Route as CriarPixRouteImport } from './routes/criar-pix'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
@@ -38,11 +37,6 @@ const ObrigadoRoute = ObrigadoRouteImport.update({
   path: '/obrigado',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CriarPixDoacaoRoute = CriarPixDoacaoRouteImport.update({
-  id: '/criar-pix-doacao',
-  path: '/criar-pix-doacao',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CriarPixRoute = CriarPixRouteImport.update({
   id: '/criar-pix',
   path: '/criar-pix',
@@ -62,7 +56,6 @@ const VerificarStatusIdRoute = VerificarStatusIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/criar-pix': typeof CriarPixRoute
-  '/criar-pix-doacao': typeof CriarPixDoacaoRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/upsell2': typeof Upsell2Route
@@ -72,7 +65,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/criar-pix': typeof CriarPixRoute
-  '/criar-pix-doacao': typeof CriarPixDoacaoRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/upsell2': typeof Upsell2Route
@@ -83,7 +75,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/criar-pix': typeof CriarPixRoute
-  '/criar-pix-doacao': typeof CriarPixDoacaoRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/upsell2': typeof Upsell2Route
@@ -95,7 +86,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/criar-pix'
-    | '/criar-pix-doacao'
     | '/obrigado'
     | '/pedido'
     | '/upsell2'
@@ -105,7 +95,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/criar-pix'
-    | '/criar-pix-doacao'
     | '/obrigado'
     | '/pedido'
     | '/upsell2'
@@ -115,7 +104,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/criar-pix'
-    | '/criar-pix-doacao'
     | '/obrigado'
     | '/pedido'
     | '/upsell2'
@@ -126,7 +114,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CriarPixRoute: typeof CriarPixRoute
-  CriarPixDoacaoRoute: typeof CriarPixDoacaoRoute
   ObrigadoRoute: typeof ObrigadoRoute
   PedidoRoute: typeof PedidoRoute
   Upsell2Route: typeof Upsell2Route
@@ -164,13 +151,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ObrigadoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/criar-pix-doacao': {
-      id: '/criar-pix-doacao'
-      path: '/criar-pix-doacao'
-      fullPath: '/criar-pix-doacao'
-      preLoaderRoute: typeof CriarPixDoacaoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/criar-pix': {
       id: '/criar-pix'
       path: '/criar-pix'
@@ -198,7 +178,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CriarPixRoute: CriarPixRoute,
-  CriarPixDoacaoRoute: CriarPixDoacaoRoute,
   ObrigadoRoute: ObrigadoRoute,
   PedidoRoute: PedidoRoute,
   Upsell2Route: Upsell2Route,

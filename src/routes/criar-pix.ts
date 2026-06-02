@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   PARADISE_API_URL,
   enviarPedidoParaUtmify,
+  gerarEmailRandomico,
   getParadiseKey,
-  getParadiseProductHash,
+  montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
 } from "@/lib/paradise.server";
@@ -14,7 +15,6 @@ export const Route = createFileRoute("/criar-pix")({
       POST: async ({ request }) => {
         try {
           const body = (await request.json()) as any;
-          console.log("Recebido pedido para criar PIX (Paradise com UTMs):", body);
 
           const {
             valorTotal,
@@ -24,8 +24,6 @@ export const Route = createFileRoute("/criar-pix")({
             products,
             trackingParameters = {},
           } = body;
-
-          const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
 
           if (!valorTotal || !nome || !whatsapp) {
             return new Response(
@@ -37,37 +35,36 @@ export const Route = createFileRoute("/criar-pix")({
             );
           }
 
-          // 1. ViaCEP (opcional)
+          const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           if (cepLimpo.length === 8) {
+            // ViaCEP é opcional, apenas para validação leve
             try {
               await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
-            } catch (e: any) {
-              console.error("Erro ViaCEP:", e?.message ?? e);
+            } catch {
+              /* noop */
             }
           }
 
-          // 2. Valores
           const valorEmCentavos = Math.round(parseFloat(valorTotal) * 100);
-          const referenceId = `REF-${Date.now()}-${Math.floor(
+          const referenceId = `RUSHI-${Date.now()}-${Math.floor(
             Math.random() * 1000
           )}`;
+          const emailCliente = gerarEmailRandomico();
+          const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
+          const descricaoPedido = montarDescricaoPedido(products);
 
-          // 3. Email randômico para evitar duplicidade
-          const emailCliente = `cliente.${Date.now()}.${Math.floor(
-            Math.random() * 9999
-          )}@nobre.site`;
-
-          // 4. Payload Paradise
+          // Payload Paradise — usa source=api_externa (dispensa productHash)
+          // e description com o nome real do(s) produto(s) comprado(s).
           const payloadParadise = {
             amount: valorEmCentavos,
-            description: "Nobre",
+            description: descricaoPedido,
             reference: referenceId,
-            productHash: getParadiseProductHash(),
+            source: "api_externa",
             customer: {
               name: nome,
               email: emailCliente,
               document: "73793362906",
-              phone: String(whatsapp).replace(/\D/g, ""),
+              phone: telefoneLimpo,
             },
             tracking: {
               utm_source: trackingParameters.utm_source || "",
@@ -80,8 +77,6 @@ export const Route = createFileRoute("/criar-pix")({
             },
           };
 
-          // 5. Chamada Paradise
-          console.log("Enviando payload para Paradise...");
           const paradiseRes = await fetch(
             `${PARADISE_API_URL}/transaction.php`,
             {
@@ -95,41 +90,37 @@ export const Route = createFileRoute("/criar-pix")({
           );
 
           const apiData: any = await paradiseRes.json();
-          console.log("Paradise respondeu:", apiData);
 
           const transactionId = apiData.transaction_id;
           const pixCopiaECola = apiData.qr_code;
           let qrCodeFinal = apiData.qr_code_base64;
 
           if (!transactionId || !pixCopiaECola) {
-            throw new Error(
-              "Resposta da Paradise incompleta. Verifique no painel se o produto está Ativo."
-            );
+            console.error("Resposta Paradise inesperada:", apiData);
+            throw new Error("Resposta da Paradise incompleta.");
           }
 
           if (!qrCodeFinal || !String(qrCodeFinal).startsWith("data:image")) {
             qrCodeFinal = `https://quickchart.io/qr?text=${encodeURIComponent(
               pixCopiaECola
             )}&size=300&ecLevel=L&margin=1`;
-          } else {
-            qrCodeFinal = `data:image/png;base64,${qrCodeFinal}`;
           }
 
-          // 6. Utmify
+          // Produtos para Utmify com nomes reais do carrinho
           const produtosUtmify = Array.isArray(products)
-            ? products.map((p: any) => ({
-                id: p.id || "JAPA-SKU",
-                name: p.name,
+            ? products.map((p: any, idx: number) => ({
+                id: p.id || `RUSHI-SKU-${idx + 1}`,
+                name: p.name || "Produto",
                 planId: null,
                 planName: null,
-                quantity: p.quantity,
+                quantity: p.quantity || 1,
                 priceInCents: Math.round(parseFloat(p.price) * 100),
               }))
             : [];
 
           const payloadUtmify = {
             orderId: String(transactionId),
-            platform: "nobre-paradise",
+            platform: "rushi-paradise",
             paymentMethod: "pix",
             status: "waiting_payment",
             createdAt: nowUtcSqlString(),
@@ -138,7 +129,7 @@ export const Route = createFileRoute("/criar-pix")({
             customer: {
               name: nome,
               email: emailCliente,
-              phone: String(whatsapp).replace(/\D/g, ""),
+              phone: telefoneLimpo,
               document: "73793362906",
               country: "BR",
               ip: request.headers.get("x-forwarded-for") || null,
@@ -162,7 +153,6 @@ export const Route = createFileRoute("/criar-pix")({
             isTest: false,
           };
 
-          // 7. Envia + guarda
           enviarPedidoParaUtmify(payloadUtmify);
           pendingOrders[transactionId] = payloadUtmify;
 
@@ -176,11 +166,11 @@ export const Route = createFileRoute("/criar-pix")({
             { status: 200, headers: { "Content-Type": "application/json" } }
           );
         } catch (error: any) {
-          console.error("Erro na criação PIX Paradise:", error?.message ?? error);
+          console.error("Erro criar-pix Paradise:", error?.message ?? error);
           return new Response(
             JSON.stringify({
               success: false,
-              message: "Erro ao gerar PIX na Paradise.",
+              message: "Erro ao gerar PIX.",
             }),
             { status: 500, headers: { "Content-Type": "application/json" } }
           );

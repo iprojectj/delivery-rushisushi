@@ -1,7 +1,5 @@
-// Shared Paradise/Utmify config and in-memory order store.
-// NOTE: pendingOrders lives only in this Worker isolate's memory.
-// It is good enough for the short window between PIX creation and webhook,
-// but is NOT a durable store. If durability is needed later, swap to KV/DB.
+// Configuração compartilhada da Paradise + Utmify e store em memória de pedidos
+// pendentes. Bom o bastante para a janela curta entre criação do PIX e webhook.
 
 export const PARADISE_API_URL = "https://multi.paradisepags.com/api/v1";
 export const UTMIFY_API_URL =
@@ -14,17 +12,13 @@ export function getParadiseKey() {
   );
 }
 
-export function getParadiseProductHash() {
-  return process.env.PARADISE_PRODUCT_HASH || "prod_951a6a3476f8e39e";
-}
-
 export function getUtmifyToken() {
   return (
     process.env.UTMIFY_API_TOKEN || "ngrNdnLvTqawutDZesHf6ZcIAh5LTq4rYRAY"
   );
 }
 
-// Module-level in-memory store
+// Store em memória (volátil) para casar webhook -> pedido pendente
 export const pendingOrders: Record<string, any> = {};
 
 export async function enviarPedidoParaUtmify(payload: any) {
@@ -64,4 +58,28 @@ export async function enviarPedidoParaUtmify(payload: any) {
 
 export function nowUtcSqlString() {
   return new Date().toISOString().replace("T", " ").substring(0, 19);
+}
+
+// Gera email aleatório para evitar duplicidade entre pedidos
+export function gerarEmailRandomico(prefixo = "cliente") {
+  return `${prefixo}.${Date.now()}.${Math.floor(
+    Math.random() * 9999
+  )}@rushisushi.site`;
+}
+
+// Monta uma descrição curta a partir dos produtos do carrinho.
+// Ex.: "Combo Salmão (x2), Hot Roll (x1) + 1 item"
+export function montarDescricaoPedido(
+  products: Array<{ name: string; quantity: number }> | undefined
+): string {
+  if (!products || products.length === 0) return "Pedido Rushi Sushi";
+  const principais = products.slice(0, 2).map((p) => {
+    const q = p.quantity && p.quantity > 1 ? ` (x${p.quantity})` : "";
+    return `${p.name}${q}`;
+  });
+  const restantes = products.length - 2;
+  let desc = principais.join(", ");
+  if (restantes > 0) desc += ` + ${restantes} item${restantes > 1 ? "s" : ""}`;
+  // Paradise aceita string; mantemos limite razoável
+  return desc.length > 180 ? desc.substring(0, 177) + "..." : desc;
 }
