@@ -174,24 +174,28 @@
     </header>
 
     <div class="px-4 mt-6">
-    <div class="bg-gradient-to-r from-[#EA1D2C] to-[#ff4757] rounded-2xl p-4 border border-red-200 flex items-center gap-4 shadow-lg shadow-red-200/30 relative overflow-hidden">
-      <div class="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
-      <div class="absolute -left-4 -bottom-4 w-20 h-20 bg-white/10 rounded-full blur-xl"></div>
-      
-      <div class="shrink-0 w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-md">
-        <i class="fa-solid fa-medal text-[#EA1D2C] text-xl"></i>
+    <div class="bg-white rounded-2xl border-2 border-[#EA1D2C] shadow-lg shadow-red-200/40 overflow-hidden relative">
+      <div class="bg-[#EA1D2C] px-4 py-2 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <svg viewBox="0 0 120 40" class="h-5 w-auto" xmlns="http://www.w3.org/2000/svg">
+            <text x="0" y="30" font-family="Arial, sans-serif" font-weight="900" font-size="32" fill="#ffffff" font-style="italic">iFood</text>
+          </svg>
+          <span class="flex items-center gap-1 bg-white/20 backdrop-blur px-1.5 py-0.5 rounded-full">
+            <i class="fa-solid fa-circle-check text-white text-[9px]"></i>
+            <span class="text-[9px] font-black text-white uppercase tracking-wide">Parceiro Oficial</span>
+          </span>
+        </div>
+        <div class="bg-white text-[#EA1D2C] text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">CUPOM ATIVO</div>
       </div>
       
-      <div class="flex flex-col z-10 w-full">
-        <div class="flex justify-between items-center mb-1">
-          <div class="flex items-center gap-1.5">
-            <i class="fa-solid fa-circle-check text-white text-xs"></i>
-            <p class="text-[10px] font-black text-white/90 uppercase tracking-tight">Parceiro Oficial do iFood</p>
-          </div>
-          <div class="bg-white text-[#EA1D2C] text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm animate-pulse">CUPOM ATIVO</div>
+      <div class="p-4 flex items-center gap-3">
+        <div class="shrink-0 w-12 h-12 bg-[#EA1D2C]/10 rounded-xl flex items-center justify-center border border-[#EA1D2C]/20">
+          <i class="fa-solid fa-ticket text-[#EA1D2C] text-xl"></i>
         </div>
-        <h4 class="text-[13px] font-extrabold text-white leading-tight mb-1">Cupom de Boas-Vindas Liberado!</h4>
-        <p class="text-[10.5px] text-white/85 leading-snug">Como restaurante parceiro do iFood, liberamos um cupom exclusivo para o seu primeiro pedido. Economia real na sua primeira experiência!</p>
+        <div class="flex flex-col w-full">
+          <h4 class="text-[13px] font-extrabold text-[#3e3e3e] leading-tight mb-0.5">Cupom de Boas-Vindas Liberado!</h4>
+          <p class="text-[10.5px] text-gray-600 leading-snug">Restaurante <span class="font-bold text-[#EA1D2C]">parceiro oficial do iFood</span> — desconto exclusivo para o seu primeiro pedido garantido.</p>
+        </div>
       </div>
     </div>
   </div>
