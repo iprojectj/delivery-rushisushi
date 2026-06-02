@@ -512,8 +512,9 @@
                     <div class="flex flex-col"><span class="text-xs text-gray-500">Total com a entrega</span><span class="font-bold text-lg text-[#05a65a]" id="footer-total-display">R$ 0,00</span></div>
                     <button onclick="nextBagStep()" class="bg-[#EA1D2C] text-white font-bold px-8 py-3 rounded-lg text-sm active:bg-[#b81622] shadow-lg shadow-red-100">Continuar</button>
                 </div>
-                <div id="footer-act-2" class="hidden w-full">
-                    <button onclick="submitOrder()" class="w-full bg-[#EA1D2C] text-white font-bold h-12 rounded-lg text-lg active:bg-[#b81622] shadow-lg shadow-red-100">Fazer pedido</button>
+                <div id="footer-act-2" class="hidden w-full flex gap-2">
+                    <button onclick="prevCheckoutStep()" id="checkout-back-btn" class="hidden bg-gray-100 text-[#3e3e3e] font-bold h-12 px-5 rounded-lg text-sm active:bg-gray-200"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="nextCheckoutStep()" id="checkout-next-btn" class="flex-1 bg-[#EA1D2C] text-white font-bold h-12 rounded-lg text-base active:bg-[#b81622] shadow-lg shadow-red-100">Continuar</button>
                 </div>
             </div>
         </div>
