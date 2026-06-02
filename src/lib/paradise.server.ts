@@ -74,7 +74,10 @@ export function montarDescricaoPedido(
 ): string {
   if (!products || products.length === 0) return "Pedido Rushi Sushi";
   const limparNome = (nome: string) =>
-    (nome || "").replace(/^\s*combos?\s+/i, "").trim() || nome;
+    (nome || "")
+      .replace(/^\s*combos?\s+/i, "")
+      .replace(/\s*\(\d+\s*peças?\)\s*/gi, "")
+      .trim() || nome;
   const principais = products.slice(0, 2).map((p) => {
     const q = p.quantity && p.quantity > 1 ? ` (x${p.quantity})` : "";
     return `${limparNome(p.name)}${q}`;
