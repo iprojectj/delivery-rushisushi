@@ -194,7 +194,7 @@
                 <div class="flex items-center gap-3 mt-3 pt-3 border-t border-gray-100 text-[10px] text-gray-500">
                     <span class="flex items-center gap-1"><i class="fa-solid fa-shield-halved text-[#05a65a]"></i> Rota Segura</span>
                     <span class="flex items-center gap-1"><i class="fa-solid fa-motorcycle text-[#EA1D2C]"></i> Entregador Próximo</span>
-                    <span class="flex items-center gap-1"><i class="fa-regular fa-clock text-gray-400"></i> ~40 min</span>
+                    <span id="delivery-time" class="flex items-center gap-1"><i class="fa-regular fa-clock text-gray-400"></i> ~40 min</span>
                 </div>
             </div>
         </div>
