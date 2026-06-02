@@ -378,12 +378,30 @@
             </div>
     </footer>
 
-    <div id="cart-bar" onclick="openBag()" class="fixed bottom-0 left-0 w-full bg-[#EA1D2C] z-40 p-3 px-4 flex justify-between items-center cursor-pointer transition-transform transform translate-y-full shadow-[0_-4px_10px_rgba(0,0,0,0.1)] mb-safe">
-        <div class="flex items-center gap-3">
-            <span class="bg-[#bf1622] text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center" id="bar-count">0</span>
-            <span class="text-white text-sm font-medium">Ver sacola</span>
+    <div id="cart-bar" class="fixed bottom-0 left-0 w-full bg-white z-40 transition-transform transform translate-y-full shadow-[0_-4px_14px_rgba(0,0,0,0.10)] mb-safe border-t border-gray-100">
+        <!-- Barra de progresso / cupom (topo) -->
+        <div id="cart-progress" class="px-4 pt-2.5 pb-2 border-b border-gray-100">
+            <div class="flex items-center justify-between mb-1.5">
+                <div class="flex items-center gap-1.5 min-w-0">
+                    <i id="cart-progress-icon" class="fa-solid fa-motorcycle text-[#EA1D2C] text-[11px]"></i>
+                    <span id="cart-progress-text" class="text-[11px] font-semibold text-[#3e3e3e] truncate">Faltam R$ 50,00 para entrega grátis</span>
+                </div>
+                <span id="cart-progress-percent" class="text-[10px] font-bold text-gray-400 ml-2 shrink-0">0%</span>
+            </div>
+            <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                <div id="cart-progress-fill" class="h-full bg-[#EA1D2C] rounded-full transition-all duration-500" style="width:0%"></div>
+            </div>
         </div>
-        <div class="text-white font-bold text-sm" id="bar-total">R$ 0,00</div>
+        <!-- Ação principal (rodapé) -->
+        <div class="flex items-center justify-between px-4 py-3 gap-3">
+            <div class="flex flex-col min-w-0">
+                <span class="font-bold text-[15px] text-[#3e3e3e] leading-tight" id="bar-total">R$ 0,00</span>
+                <span class="text-[11px] text-gray-500" id="bar-count-label">0 itens</span>
+            </div>
+            <button onclick="openBag()" class="bg-[#EA1D2C] active:bg-[#bf1622] text-white text-sm font-bold rounded-lg px-5 py-2.5 shadow-sm whitespace-nowrap">
+                Ver sacola
+            </button>
+        </div>
     </div>
 
     <div class="fixed inset-0 z-50 hidden" id="product-modal-container">
