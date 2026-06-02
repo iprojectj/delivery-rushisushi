@@ -378,12 +378,30 @@
             </div>
     </footer>
 
-    <div id="cart-bar" onclick="openBag()" class="fixed bottom-0 left-0 w-full bg-[#EA1D2C] z-40 p-3 px-4 flex justify-between items-center cursor-pointer transition-transform transform translate-y-full shadow-[0_-4px_10px_rgba(0,0,0,0.1)] mb-safe">
-        <div class="flex items-center gap-3">
-            <span class="bg-[#bf1622] text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center" id="bar-count">0</span>
-            <span class="text-white text-sm font-medium">Ver sacola</span>
+    <div id="cart-bar" class="fixed bottom-0 left-0 w-full bg-white z-40 transition-transform transform translate-y-full shadow-[0_-4px_14px_rgba(0,0,0,0.10)] mb-safe border-t border-gray-100">
+        <!-- Barra de progresso / cupom (topo) -->
+        <div id="cart-progress" class="px-4 pt-2.5 pb-2 border-b border-gray-100">
+            <div class="flex items-center justify-between mb-1.5">
+                <div class="flex items-center gap-1.5 min-w-0">
+                    <i id="cart-progress-icon" class="fa-solid fa-motorcycle text-[#EA1D2C] text-[11px]"></i>
+                    <span id="cart-progress-text" class="text-[11px] font-semibold text-[#3e3e3e] truncate">Faltam R$ 50,00 para entrega grátis</span>
+                </div>
+                <span id="cart-progress-percent" class="text-[10px] font-bold text-gray-400 ml-2 shrink-0">0%</span>
+            </div>
+            <div class="w-full h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                <div id="cart-progress-fill" class="h-full bg-[#EA1D2C] rounded-full transition-all duration-500" style="width:0%"></div>
+            </div>
         </div>
-        <div class="text-white font-bold text-sm" id="bar-total">R$ 0,00</div>
+        <!-- Ação principal (rodapé) -->
+        <div class="flex items-center justify-between px-4 py-3 gap-3">
+            <div class="flex flex-col min-w-0">
+                <span class="font-bold text-[15px] text-[#3e3e3e] leading-tight" id="bar-total">R$ 0,00</span>
+                <span class="text-[11px] text-gray-500" id="bar-count-label">0 itens</span>
+            </div>
+            <button onclick="openBag()" class="bg-[#EA1D2C] active:bg-[#bf1622] text-white text-sm font-bold rounded-lg px-5 py-2.5 shadow-sm whitespace-nowrap">
+                Ver sacola
+            </button>
+        </div>
     </div>
 
     <div class="fixed inset-0 z-50 hidden" id="product-modal-container">
@@ -1027,8 +1045,32 @@
         function updateCartBar() {
             const count = cart.reduce((acc, item) => acc + item.qty, 0);
             const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
-            document.getElementById('bar-count').innerText = count;
             document.getElementById('bar-total').innerText = formatMoney(total);
+            const lbl = document.getElementById('bar-count-label');
+            if (lbl) lbl.innerText = count + (count === 1 ? ' item' : ' itens');
+
+            // Progresso entrega grátis (meta R$ 50,00)
+            const META = 50;
+            const pct = Math.min(100, Math.round((total / META) * 100));
+            const fill = document.getElementById('cart-progress-fill');
+            const txt = document.getElementById('cart-progress-text');
+            const pctEl = document.getElementById('cart-progress-percent');
+            const icon = document.getElementById('cart-progress-icon');
+            if (fill) fill.style.width = pct + '%';
+            if (pctEl) pctEl.innerText = pct + '%';
+            if (total >= META) {
+                if (txt) txt.innerHTML = 'Você ganhou <strong class="text-[#05a65a]">entrega grátis</strong>!';
+                if (icon) icon.className = 'fa-solid fa-circle-check text-[#05a65a] text-[11px]';
+                if (fill) fill.classList.replace('bg-[#EA1D2C]', 'bg-[#05a65a]');
+                if (pctEl) pctEl.classList.add('text-[#05a65a]');
+            } else {
+                const falta = META - total;
+                if (txt) txt.innerHTML = 'Faltam <strong>' + formatMoney(falta) + '</strong> para entrega grátis';
+                if (icon) icon.className = 'fa-solid fa-motorcycle text-[#EA1D2C] text-[11px]';
+                if (fill) fill.classList.replace('bg-[#05a65a]', 'bg-[#EA1D2C]');
+                if (pctEl) pctEl.classList.remove('text-[#05a65a]');
+            }
+
             const bar = document.getElementById('cart-bar');
             count > 0 ? bar.classList.remove('translate-y-full') : bar.classList.add('translate-y-full');
         }
