@@ -1098,7 +1098,15 @@
             if(checkoutStep < 4) { setCheckoutStep(checkoutStep + 1); return; }
             submitOrder();
         };
-        window.prevCheckoutStep = function() {
+        window.selectPayment = function(method) {
+            document.getElementById('cust-payment').value = method;
+            var check = document.getElementById('check-' + method);
+            if(check) {
+                document.querySelectorAll('[id^="check-"]').forEach(function(el){ el.className = 'fa-regular fa-circle text-gray-400'; });
+                check.className = 'fa-solid fa-check-circle text-[#05a65a]';
+            }
+        };
+
             if(checkoutStep > 1) setCheckoutStep(checkoutStep - 1);
             else prevBagStep();
         };
