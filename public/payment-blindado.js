@@ -317,7 +317,88 @@
 
             const itemsToRender = data.items || data.itens || data.products || data.carrinho || [];
             populateResumo(itemsToRender, data.total);
+            initDeliveryMap(data.endereco);
         });
+
+        function initDeliveryMap(endereco) {
+            const mapEl = document.getElementById('delivery-map');
+            const loadingEl = document.getElementById('map-loading');
+            const addrEl = document.getElementById('delivery-address');
+            const addrEl2 = document.getElementById('delivery-address-2');
+            if (!mapEl || !endereco) {
+                if(loadingEl) loadingEl.innerHTML = '<span class="text-[11px] text-gray-400">Endereço indisponível</span>';
+                return;
+            }
+
+            const linha1 = [endereco.rua, endereco.numero].filter(Boolean).join(', ');
+            const linha2 = [endereco.bairro, endereco.cidade, endereco.estado].filter(Boolean).join(' • ');
+            if(addrEl) addrEl.innerText = linha1 || 'Endereço informado';
+            if(addrEl2) addrEl2.innerText = linha2 + (endereco.cep ? '  •  CEP ' + endereco.cep : '');
+
+            const queryParts = [linha1, endereco.bairro, endereco.cidade, endereco.estado, 'Brasil'].filter(Boolean);
+            const query = encodeURIComponent(queryParts.join(', '));
+
+            fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + query, {
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(r => r.json())
+            .then(results => {
+                let lat, lon;
+                if (results && results.length > 0) {
+                    lat = parseFloat(results[0].lat);
+                    lon = parseFloat(results[0].lon);
+                } else if (endereco.cep) {
+                    return fetch('https://brasilapi.com.br/api/cep/v2/' + endereco.cep.replace(/\\D/g, ''))
+                        .then(r => r.json())
+                        .then(c => {
+                            if (c && c.location && c.location.coordinates && c.location.coordinates.latitude) {
+                                renderMap(parseFloat(c.location.coordinates.latitude), parseFloat(c.location.coordinates.longitude));
+                            } else {
+                                throw new Error('sem coords');
+                            }
+                        });
+                } else {
+                    throw new Error('sem resultados');
+                }
+                renderMap(lat, lon);
+            })
+            .catch(() => {
+                if(loadingEl) loadingEl.innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl text-gray-300 mb-1"></i><span class="text-[11px] text-gray-400">Mapa indisponível no momento</span>';
+            });
+
+            function renderMap(lat, lon) {
+                if(loadingEl) loadingEl.style.display = 'none';
+                const map = L.map('delivery-map', {
+                    zoomControl: false,
+                    attributionControl: false,
+                    scrollWheelZoom: false,
+                    dragging: true,
+                    tap: false
+                }).setView([lat, lon], 16);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19
+                }).addTo(map);
+
+                const pinIcon = L.divIcon({
+                    className: 'custom-pin',
+                    html: '<div style="position:relative;width:36px;height:48px;"><div style="position:absolute;left:50%;top:0;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;background:#EA1D2C;border:3px solid #fff;box-shadow:0 4px 12px rgba(234,29,44,0.5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;"><i class="fa-solid fa-utensils"></i></div><div style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid #EA1D2C;"></div></div>',
+                    iconSize: [36, 48],
+                    iconAnchor: [18, 48]
+                });
+                L.marker([lat, lon], { icon: pinIcon }).addTo(map);
+
+                L.circle([lat, lon], {
+                    radius: 180,
+                    color: '#EA1D2C',
+                    weight: 1,
+                    fillColor: '#EA1D2C',
+                    fillOpacity: 0.1
+                }).addTo(map);
+
+                setTimeout(() => map.invalidateSize(), 200);
+            }
+        }
 
         function startTimer() {
             const timerEl = document.getElementById('pix-timer');
