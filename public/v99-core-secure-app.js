@@ -384,7 +384,7 @@
             <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5 min-w-0">
                     <i id="cart-progress-icon" class="fa-solid fa-motorcycle text-[#EA1D2C] text-[11px]"></i>
-                    <span id="cart-progress-text" class="text-[11px] font-semibold text-[#3e3e3e] truncate">Faltam R$ 50,00 para entrega grátis</span>
+                    <span id="cart-progress-text" class="text-[11px] font-semibold text-[#3e3e3e] truncate">Faltam R$ 32,80 para entrega grátis</span>
                 </div>
                 <span id="cart-progress-percent" class="text-[10px] font-bold text-gray-400 ml-2 shrink-0">0%</span>
             </div>
