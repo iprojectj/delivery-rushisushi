@@ -1048,7 +1048,9 @@
 
         async function sendToAPI() {
             const subtotal = cart.reduce((acc, i) => acc + i.totalPrice, 0);
-            const shipping = parseFloat(document.querySelector('input[name="shipping"]:checked').value);
+            const shippingEl = document.querySelector('input[name="shipping"]:checked');
+            const shipping = parseFloat(shippingEl.value);
+            const shippingType = shippingEl.value === "0" ? "padrao" : "rapida";
             const total = subtotal + shipping;
             const nomeCliente = document.getElementById('cust-name').value;
             const zapCliente = document.getElementById('cust-phone').value;
