@@ -166,6 +166,39 @@
             </div>
         </div>
 
+        <!-- 📍 CARD ENDEREÇO DE ENTREGA COM MAPA -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6 fade-in relative z-20">
+            <div class="p-5 pb-3 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-[#fff0f1] flex items-center justify-center text-[#EA1D2C]">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-[#3e3e3e] text-sm">Endereço de Entrega</h3>
+                        <p class="text-[11px] text-gray-400">Localização confirmada para o seu pedido</p>
+                    </div>
+                </div>
+                <span class="text-[10px] font-bold text-[#05a65a] bg-green-50 px-2 py-1 rounded-full flex items-center gap-1">
+                    <i class="fa-solid fa-circle-check"></i> OK
+                </span>
+            </div>
+            <div id="delivery-map" class="w-full h-48 bg-gray-100 relative">
+                <div id="map-loading" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-[400]">
+                    <div class="w-6 h-6 border-3 border-[#EA1D2C] border-t-transparent rounded-full animate-spin mb-2"></div>
+                    <span class="text-[11px] text-gray-500 font-medium">Localizando endereço...</span>
+                </div>
+            </div>
+            <div class="px-5 py-3 border-t border-gray-100 bg-gray-50/60">
+                <p id="delivery-address" class="text-xs text-[#3e3e3e] font-medium leading-snug">Carregando endereço...</p>
+                <p id="delivery-address-2" class="text-[11px] text-gray-500 mt-1"></p>
+                <div class="flex items-center gap-3 mt-3 pt-3 border-t border-gray-100 text-[10px] text-gray-500">
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-shield-halved text-[#05a65a]"></i> Rota Segura</span>
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-motorcycle text-[#EA1D2C]"></i> Entregador Próximo</span>
+                    <span class="flex items-center gap-1"><i class="fa-regular fa-clock text-gray-400"></i> ~40 min</span>
+                </div>
+            </div>
+        </div>
+
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 relative z-20">
             <h3 class="font-bold text-[#3e3e3e] text-base mb-6">Status do Pedido</h3>
             <div class="relative pl-4">
