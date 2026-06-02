@@ -132,6 +132,15 @@
                 <!-- Título Centralizado -->
                 <div class="mt-8 w-full text-center">
                     <h1 class="text-[#111827] text-2xl font-extrabold tracking-tight mb-1">Rūshī Sushi</h1>
+
+                    <!-- Indicador Loja Aberta -->
+                    <div class="flex items-center justify-center gap-1.5 mb-3">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#05a65a] opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#05a65a]"></span>
+                        </span>
+                        <span class="text-[11px] font-bold text-[#05a65a] tracking-wide uppercase">Aberto agora</span>
+                    </div>
                     
                     <!-- Localização e Valor Mínimo Harmonizados -->
                     <div class="flex items-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4">
