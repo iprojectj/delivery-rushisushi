@@ -1256,6 +1256,25 @@
                 }
             }
 
+            const padraoLabel = document.getElementById('shipping-padrao-label');
+            const rapidaLabel = document.getElementById('shipping-rapida-label');
+            const padraoPrice = document.getElementById('shipping-padrao-price');
+            const rapidaPrice = document.getElementById('shipping-rapida-price');
+            const checkedShipping = document.querySelector('input[name="shipping"]:checked');
+            if (padraoLabel && rapidaLabel && checkedShipping) {
+                if (checkedShipping.value === '0' || checkedShipping.getAttribute('data-tipo') === 'padrao') {
+                    padraoLabel.className = 'flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer mb-2 transition-all';
+                    rapidaLabel.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer transition-all';
+                    if (padraoPrice) padraoPrice.className = 'font-bold text-[#05a65a] text-sm';
+                    if (rapidaPrice) rapidaPrice.className = 'font-bold text-[#3e3e3e] text-sm';
+                } else {
+                    padraoLabel.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer mb-2 transition-all';
+                    rapidaLabel.className = 'flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer transition-all';
+                    if (padraoPrice) padraoPrice.className = 'font-bold text-[#3e3e3e] text-sm';
+                    if (rapidaPrice) rapidaPrice.className = 'font-bold text-[#05a65a] text-sm';
+                }
+            }
+
             const shippingEl = document.querySelector('input[name="shipping"]:checked');
             const shipping = shippingEl ? parseFloat(shippingEl.value) : taxaPadrao;
             const total = subtotal + shipping;
