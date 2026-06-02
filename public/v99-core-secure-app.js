@@ -454,7 +454,7 @@
                     <div class="bg-white p-4 mb-4">
                         <h3 class="font-bold text-[#3e3e3e] text-sm mb-3">Resumo de valores</h3>
                         <div class="flex justify-between text-sm text-gray-500 mb-2"><span>Subtotal</span><span id="bag-subtotal">R$ 0,00</span></div>
-                        <div class="flex justify-between text-sm text-gray-500 mb-2"><span>Taxa de entrega</span><span class="text-[#05a65a]">A calcular</span></div>
+                        <div class="flex justify-between text-sm text-gray-500 mb-2"><span>Taxa de entrega</span><span id="bag-shipping" class="text-[#05a65a]">A calcular</span></div>
                         <div class="flex justify-between text-lg font-bold text-[#3e3e3e] mt-3 pt-3 border-t border-gray-100"><span>Total</span><span id="bag-total" class="text-[#05a65a]">R$ 0,00</span></div>
                     </div>
                 </div>
