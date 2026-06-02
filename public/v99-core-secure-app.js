@@ -49,7 +49,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nobre Sushi</title>
+    <title>Rūshī Sushi</title>
     
     <script src="https://cdn.tailwindcss.com"><\/script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -126,12 +126,12 @@
             <div class="bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col items-center relative">
                 <!-- Logo centralizada -->
                 <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-1 shadow-md border border-gray-100">
-                    <img src="images/logo-preto.png" class="w-full h-full rounded-full object-cover">
+                    <img src="images/logo-rushi.webp" class="w-full h-full rounded-full object-cover">
                 </div>
                 
                 <!-- Título Centralizado -->
                 <div class="mt-8 w-full text-center">
-                    <h1 class="text-[#111827] text-2xl font-extrabold tracking-tight mb-1">Nobre Sushi</h1>
+                    <h1 class="text-[#111827] text-2xl font-extrabold tracking-tight mb-1">Rūshī Sushi</h1>
                     
                     <!-- Localização e Valor Mínimo Harmonizados -->
                     <div class="flex items-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4">
@@ -271,7 +271,7 @@
                         </button>
                         <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
                             <div class="pt-2 border-t border-gray-50">
-                                Estamos abertos <strong>24 Horas</strong>! Madrugada, manhã, tarde ou noite: bateu a fome, o Nobre Sushi entrega.
+                                Estamos abertos <strong>24 Horas</strong>! Madrugada, manhã, tarde ou noite: bateu a fome, o Rūshī Sushi entrega.
                             </div>
                         </div>
                     </div>
@@ -350,8 +350,8 @@
 
     <footer class="bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative">
             <div class="flex flex-col items-center justify-center mb-6">
-                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-preto.png" class="w-full h-full object-cover rounded-full"></div>
-                <h2 class="text-lg font-bold text-[#3e3e3e]">Nobre Sushi</h2>
+                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
+                <h2 class="text-lg font-bold text-[#3e3e3e]">Rūshī Sushi</h2>
                 <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">CNPJ: 57.272.601/0001-12</p>
             </div>
             <div class="flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto">
@@ -364,7 +364,7 @@
                 <div class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100"><i class="fa-brands fa-instagram text-lg"></i></div>
             </div>
             <div class="text-[10px] text-gray-400 border-t border-gray-100 pt-6">
-                <p>&copy; 2026 Nobre Sushi Delivery.</p>
+                <p>&copy; 2026 Rūshī Sushi Delivery.</p>
                 <p>Feito com <i class="fa-solid fa-heart text-[#EA1D2C] text-[8px]"></i> para você.</p>
             </div>
     </footer>
@@ -419,8 +419,8 @@
                 <div id="sacola-tela-1">
                     <div class="bg-white p-4 mb-4">
                         <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
-                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-[#EA1D2C] overflow-hidden"><img src="images/logo-preto.png" class="w-full h-full object-cover"></div>
-                            <div><h3 class="font-bold text-[#3e3e3e] text-sm">Nobre Sushi</h3><p class="text-xs text-[#EA1D2C] font-semibold cursor-pointer" onclick="closeBag()">Adicionar mais itens</p></div>
+                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-[#EA1D2C] overflow-hidden"><img src="images/logo-rushi.webp" class="w-full h-full object-cover"></div>
+                            <div><h3 class="font-bold text-[#3e3e3e] text-sm">Rūshī Sushi</h3><p class="text-xs text-[#EA1D2C] font-semibold cursor-pointer" onclick="closeBag()">Adicionar mais itens</p></div>
                         </div>
                         <div id="bag-list-items" class="space-y-4"></div>
                     </div>
@@ -879,7 +879,7 @@
                             html += \`
                             <div onclick="openProductModal('\${p.id}')" class="\${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
                                 <div class="w-full h-48 relative bg-gray-100 z-10">
-                                    <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-preto.png'">
+                                    <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
                                     \${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">\${p.badge}</div>\` : ''}
                                 </div>
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-white">
@@ -904,7 +904,7 @@
                                     <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">\${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p></div>
                                     <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm \${p.isBait ? 'font-bold text-lg' : ''}">\${formatMoney(p.price)}</span>\${p.oldPrice ? \`<span class="text-xs text-gray-400 line-through">\${formatMoney(p.oldPrice)}</span>\` : ''}\${p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-1 rounded font-bold animate-pulse">OFERTA</span>' : ''}</div>
                                 </div>
-                                <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-preto.png'">\${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">\${p.badge}</div>\` : ''}</div>
+                                <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">\${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">\${p.badge}</div>\` : ''}</div>
                             </div>\`;
                         }
                     });
@@ -1225,9 +1225,9 @@
         window.toggleFaq = function(button) { const item = button.closest('.faq-item'); const content = item.querySelector('.faq-content'); const icon = item.querySelector('.faq-icon'); document.querySelectorAll('.faq-item').forEach(function(otherItem) { if (otherItem !== item) { const otherContent = otherItem.querySelector('.faq-content'); const otherIcon = otherItem.querySelector('.faq-icon'); if(otherContent) otherContent.classList.add('hidden'); if(otherIcon) otherIcon.classList.remove('rotate-180'); } }); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180'); }
         
         const textosInstitucionais = {
-            sobre: { titulo: "Sobre o Nobre Sushi", texto: "<p>O <strong>Nobre Sushi</strong> nasceu com uma missão clara: democratizar o acesso à alta gastronomia japonesa. Acreditamos que sushi de qualidade não precisa custar uma fortuna.</p><br><p>Nossa cozinha opera 24 horas seguindo os mais rígidos padrões de segurança alimentar da ANVISA. Nossos peixes chegam frescos diariamente e são manipulados por sushimans experientes.</p><br><p>Mais do que entregar comida, entregamos momentos de felicidade em caixinhas.</p>" },
+            sobre: { titulo: "Sobre o Rūshī Sushi", texto: "<p>O <strong>Rūshī Sushi</strong> nasceu com uma missão clara: democratizar o acesso à alta gastronomia japonesa. Acreditamos que sushi de qualidade não precisa custar uma fortuna.</p><br><p>Nossa cozinha opera 24 horas seguindo os mais rígidos padrões de segurança alimentar da ANVISA. Nossos peixes chegam frescos diariamente e são manipulados por sushimans experientes.</p><br><p>Mais do que entregar comida, entregamos momentos de felicidade em caixinhas.</p>" },
             privacidade: { titulo: "Política de Privacidade", texto: "<p>Nós levamos sua privacidade a sério. Seus dados (nome, telefone e endereço) são utilizados <strong>exclusivamente</strong> para o processamento e entrega do seu pedido.</p><br><p>Não compartilhamos suas informações com terceiros para fins de marketing. Todos os dados de pagamento via PIX são processados em ambiente criptografado e seguro.</p>" },
-            termos: { titulo: "Termos de Uso", texto: "<p>Ao realizar um pedido no Nobre Sushi, você concorda que:</p><ul class='text-left list-disc pl-5 mt-2'><li>Os prazos de entrega são estimativas e podem variar conforme o clima e trânsito.</li><li>Verifique seu pedido no ato da entrega.</li><li>O pagamento deve ser confirmado antes da liberação do pedido.</li></ul>" },
+            termos: { titulo: "Termos de Uso", texto: "<p>Ao realizar um pedido no Rūshī Sushi, você concorda que:</p><ul class='text-left list-disc pl-5 mt-2'><li>Os prazos de entrega são estimativas e podem variar conforme o clima e trânsito.</li><li>Verifique seu pedido no ato da entrega.</li><li>O pagamento deve ser confirmado antes da liberação do pedido.</li></ul>" },
             trocas: { titulo: "Trocas e Devoluções", texto: "<p>Sua satisfação é nossa prioridade. Se houver qualquer divergência no seu pedido (item faltante ou errado), entre em contato imediatamente pelo nosso suporte.</p><br><p>Faremos o estorno do valor proporcional ou o envio de um novo item sem custo, mediante envio de foto comprovando o problema no momento do recebimento.</p>" }
         };
         window.openInstitucional = function(tipo) { const data = textosInstitucionais[tipo]; Swal.fire({ title: data.titulo, html: '<div class="text-sm text-gray-600 text-left leading-relaxed">' + data.texto + '</div>', showCloseButton: true, showConfirmButton: false, customClass: { popup: 'popup-local-container', title: 'text-xl font-bold text-[#3e3e3e] mb-4' }, buttonsStyling: false }); }
