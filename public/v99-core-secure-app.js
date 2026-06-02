@@ -892,7 +892,7 @@
             { id: "refri-jap-morango", category: "bebidas", name: "Refrigerante Japonês 350ml (Morango)", desc: "Bebida Gelada.", price: 6.90, img: "images/japonesmorango.webp" },
             { id: "refri-jap-uva", category: "bebidas", name: "Refrigerante Japonês 350ml (Uva)", desc: "Bebida Gelada.", price: 6.90, img: "images/japonesuva.webp" },
             { id: "coca-cola-2l", category: "bebidas", name: "Coca-Cola 2 Litros", desc: "Bebida Gelada.", price: 12.90, img: "images/coca-cola-2l.png" },
-            { id: "coca-cola-2l-zero", category: "bebidas", name: "Coca-Cola 2 Litros Zero", desc: "Bebida Gelada.", price: 12.90, img: "images/coca2ltzero.webp" },
+            { id: "coca-cola-2l-zero", category: "bebidas", name: "Coca-Cola 2 Litros Zero", desc: "Bebida Gelada.", price: 12.90, img: "images/coca-cola-2l-zero.png" },
             { id: "fanta-laranja-2l", category: "bebidas", name: "Fanta Laranja 2 Litros", desc: "Bebida Gelada.", price: 12.90, img: "images/fantalaranja2l.webp" },
             { id: "agua-sem-gas", category: "bebidas", name: "Água sem gás", desc: "Bebida Gelada.", price: 2.50, img: "images/aguasemgas.avif" },
             { id: "agua-com-gas", category: "bebidas", name: "Água com gás", desc: "Bebida Gelada.", price: 2.50, img: "images/bebida_6-CBZjy4rh.webp" }
