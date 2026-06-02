@@ -430,55 +430,73 @@
                 </div>
 
                 <div id="sacola-tela-2" class="hidden p-4">
-                    <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 text-center">Finalizar Pedido</h3>
-                    <div class="bg-white p-4 rounded-xl mb-4 shadow-sm border border-gray-100">
-                        <div class="flex gap-3 mb-3 items-center"><i class="fa-solid fa-location-dot text-[#EA1D2C]"></i><h4 class="font-bold text-[#3e3e3e] text-sm">Onde vamos entregar?</h4></div>
-                        <div class="space-y-3">
-                            <div class="input-group"><label class="input-label">CEP</label><input type="text" id="cust-cep" placeholder="00000-000" class="input-field"></div>
-                            <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Rua</label><input type="text" id="cust-street" class="input-field"></div><div class="input-group w-24"><label class="input-label">Número</label><input type="text" id="cust-number" class="input-field font-bold text-[#EA1D2C]"></div></div>
-                            <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Bairro</label><input type="text" id="cust-hood" class="input-field"></div><div class="input-group flex-1"><label class="input-label">Complemento</label><input type="text" id="cust-comp" class="input-field"></div></div>
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-bold text-[#3e3e3e] text-base">Finalizar Pedido</h3>
+                            <span class="text-xs font-bold text-[#EA1D2C]"><span id="checkout-step-current">1</span> de 4</span>
                         </div>
-                    </div>
-                    <div class="bg-white p-4 rounded-xl mb-4 shadow-sm border border-gray-100">
-                        <div class="flex gap-3 mb-3 items-center"><i class="fa-solid fa-user text-[#EA1D2C]"></i><h4 class="font-bold text-[#3e3e3e] text-sm">Quem vai receber?</h4></div>
-                        <div class="space-y-3">
-                            <div class="input-group"><label class="input-label">Nome Completo</label><input type="text" id="cust-name" class="input-field"></div>
-                            <div class="input-group"><label class="input-label">WhatsApp</label><input type="tel" id="cust-phone" class="input-field"></div>
+                        <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
+                            <div id="checkout-progress-bar" class="bg-[#EA1D2C] h-full rounded-full transition-all duration-300" style="width:25%"></div>
                         </div>
+                        <p id="checkout-step-label" class="text-[11px] text-gray-500 mt-2 font-semibold uppercase tracking-wide">Endereço de entrega</p>
                     </div>
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-4">
-                        <h3 class="font-bold text-[#3e3e3e] mb-3 text-sm uppercase"><i class="fa-solid fa-motorcycle mr-2"></i> Entrega</h3>
-                        
-                        <label class="flex items-center justify-between p-3 border border-green-200 bg-green-50 rounded-lg cursor-pointer mb-2">
-                            <div class="flex items-center gap-2">
-                                <input type="radio" name="shipping" value="0" checked onchange="recalcTotal()">
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-[#3e3e3e]">Entrega Padrão</span>
-                                    <span class="text-xs text-gray-500">30-45 min</span>
-                                </div>
-                            </div>
-                            <span class="font-bold text-[#05a65a] text-sm">Grátis</span>
-                        </label>
-                        
-                        <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer mb-2">
-                            <div class="flex items-center gap-2">
-                                <input type="radio" name="shipping" value="3.97" onchange="recalcTotal()">
-                                <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-[#3e3e3e]">Entrega Rápida</span>
-                                    <span class="text-xs text-[#EA1D2C]">15-25 min</span>
-                                </div>
-                            </div>
-                            <span class="font-bold text-[#3e3e3e] text-sm">+ R$ 3,97</span>
-                        </label>
 
+                    <div class="checkout-step" data-cstep="1">
+                        <div class="bg-white p-4 rounded-xl mb-4 shadow-sm border border-gray-100">
+                            <div class="flex gap-3 mb-3 items-center"><i class="fa-solid fa-location-dot text-[#EA1D2C]"></i><h4 class="font-bold text-[#3e3e3e] text-sm">Onde vamos entregar?</h4></div>
+                            <div class="space-y-3">
+                                <div class="input-group"><label class="input-label">CEP</label><input type="text" id="cust-cep" placeholder="00000-000" class="input-field"></div>
+                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Rua</label><input type="text" id="cust-street" class="input-field"></div><div class="input-group w-24"><label class="input-label">Número</label><input type="text" id="cust-number" class="input-field font-bold text-[#EA1D2C]"></div></div>
+                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Bairro</label><input type="text" id="cust-hood" class="input-field"></div><div class="input-group flex-1"><label class="input-label">Complemento</label><input type="text" id="cust-comp" class="input-field"></div></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-4">
-                        <h3 class="font-bold text-[#3e3e3e] mb-3 text-sm uppercase"><i class="fa-regular fa-credit-card mr-2"></i> Pagamento</h3>
-                        <div class="border border-[#05a65a] bg-[#f0fff4] p-4 rounded-lg flex justify-between items-center shadow-sm"><div class="flex items-center gap-3"><i class="fa-brands fa-pix text-[#05a65a] text-xl"></i><div class="flex flex-col"><span class="font-bold text-sm text-[#3e3e3e]">Pix</span><span class="text-xs text-[#05a65a] font-bold">Aprovação Imediata</span></div></div><i class="fa-solid fa-check-circle text-[#05a65a]"></i></div>
-                        <input type="hidden" id="cust-payment" value="PIX">
+
+                    <div class="checkout-step hidden" data-cstep="2">
+                        <div class="bg-white p-4 rounded-xl mb-4 shadow-sm border border-gray-100">
+                            <div class="flex gap-3 mb-3 items-center"><i class="fa-solid fa-user text-[#EA1D2C]"></i><h4 class="font-bold text-[#3e3e3e] text-sm">Quem vai receber?</h4></div>
+                            <div class="space-y-3">
+                                <div class="input-group"><label class="input-label">Nome Completo</label><input type="text" id="cust-name" class="input-field"></div>
+                                <div class="input-group"><label class="input-label">WhatsApp</label><input type="tel" id="cust-phone" class="input-field"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
-                        <div class="flex justify-between text-lg font-bold text-[#3e3e3e]"><span>Total Final</span><span id="final-total" class="text-[#05a65a]">R$ 0,00</span></div>
+
+                    <div class="checkout-step hidden" data-cstep="3">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-4">
+                            <h3 class="font-bold text-[#3e3e3e] mb-3 text-sm uppercase"><i class="fa-solid fa-motorcycle mr-2"></i> Entrega</h3>
+                            <label class="flex items-center justify-between p-3 border border-green-200 bg-green-50 rounded-lg cursor-pointer mb-2">
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="shipping" value="0" checked onchange="recalcTotal()">
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-[#3e3e3e]">Entrega Padrão</span>
+                                        <span class="text-xs text-gray-500">30-45 min</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-[#05a65a] text-sm">Grátis</span>
+                            </label>
+                            <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer mb-2">
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="shipping" value="3.97" onchange="recalcTotal()">
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-sm text-[#3e3e3e]">Entrega Rápida</span>
+                                        <span class="text-xs text-[#EA1D2C]">15-25 min</span>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-[#3e3e3e] text-sm">+ R$ 3,97</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="checkout-step hidden" data-cstep="4">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-4">
+                            <h3 class="font-bold text-[#3e3e3e] mb-3 text-sm uppercase"><i class="fa-regular fa-credit-card mr-2"></i> Pagamento</h3>
+                            <div class="border border-[#05a65a] bg-[#f0fff4] p-4 rounded-lg flex justify-between items-center shadow-sm"><div class="flex items-center gap-3"><i class="fa-brands fa-pix text-[#05a65a] text-xl"></i><div class="flex flex-col"><span class="font-bold text-sm text-[#3e3e3e]">Pix</span><span class="text-xs text-[#05a65a] font-bold">Aprovação Imediata</span></div></div><i class="fa-solid fa-check-circle text-[#05a65a]"></i></div>
+                            <input type="hidden" id="cust-payment" value="PIX">
+                        </div>
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
+                            <div class="flex justify-between text-lg font-bold text-[#3e3e3e]"><span>Total Final</span><span id="final-total" class="text-[#05a65a]">R$ 0,00</span></div>
+                        </div>
                     </div>
                 </div>
 
