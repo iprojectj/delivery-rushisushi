@@ -986,9 +986,11 @@
             if(step === 2) { 
                 document.getElementById('sacola-tela-2').classList.remove('hidden');
                 document.getElementById('footer-act-2').classList.remove('hidden');
+                document.getElementById('footer-act-2').classList.add('flex');
                 document.getElementById('bag-btn-back').classList.remove('hidden');
                 document.getElementById('bag-title').innerText = "FINALIZAR";
                 recalcTotal();
+                setCheckoutStep(1);
                 if(window.fbq) fbq('track', 'InitiateCheckout');
                 if(window.ttq) ttq.track('InitiateCheckout', { value: cart.reduce((acc, i) => acc + i.totalPrice, 0), currency: 'BRL', content_type: 'product', contents: cart.map(i => ({ content_id: i.id, content_name: i.name, quantity: i.qty, price: i.unitPrice })) });
             }
@@ -997,6 +999,44 @@
                 document.getElementById('bag-footer').classList.add('hidden');
             }
         }
+
+        var checkoutStep = 1;
+        var checkoutStepLabels = { 1: 'Endereço de entrega', 2: 'Quem vai receber', 3: 'Forma de entrega', 4: 'Pagamento' };
+
+        function setCheckoutStep(n) {
+            checkoutStep = n;
+            document.querySelectorAll('#sacola-tela-2 .checkout-step').forEach(function(el){
+                el.classList.toggle('hidden', parseInt(el.dataset.cstep) !== n);
+            });
+            var cur = document.getElementById('checkout-step-current'); if(cur) cur.innerText = n;
+            var bar = document.getElementById('checkout-progress-bar'); if(bar) bar.style.width = (n * 25) + '%';
+            var lbl = document.getElementById('checkout-step-label'); if(lbl) lbl.innerText = checkoutStepLabels[n];
+            var nextBtn = document.getElementById('checkout-next-btn'); if(nextBtn) nextBtn.innerText = (n === 4 ? 'Fazer pedido' : 'Continuar');
+            var backBtn = document.getElementById('checkout-back-btn'); if(backBtn) backBtn.classList.toggle('hidden', n === 1);
+            try { var fi = document.querySelector('#sacola-tela-2 .checkout-step[data-cstep="' + n + '"] input:not([type=hidden]):not([type=radio])'); if(fi) setTimeout(function(){ fi.focus({preventScroll:true}); }, 50); } catch(e){}
+        }
+
+        window.nextCheckoutStep = function() {
+            if(checkoutStep === 1) {
+                var cep = document.getElementById('cust-cep').value.trim();
+                var rua = document.getElementById('cust-street').value.trim();
+                var num = document.getElementById('cust-number').value.trim();
+                var bairro = document.getElementById('cust-hood').value.trim();
+                if(!cep || !rua || !num || !bairro) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Preencha o endereço completo', showConfirmButton:false, timer:2500 }); return; }
+            }
+            if(checkoutStep === 2) {
+                var nome = document.getElementById('cust-name').value.trim();
+                var fone = document.getElementById('cust-phone').value.replace(/\\D/g,'');
+                if(!nome || nome.split(' ').length < 2) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe seu nome completo', showConfirmButton:false, timer:2500 }); return; }
+                if(fone.length < 10) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe um WhatsApp válido', showConfirmButton:false, timer:2500 }); return; }
+            }
+            if(checkoutStep < 4) { setCheckoutStep(checkoutStep + 1); return; }
+            submitOrder();
+        };
+        window.prevCheckoutStep = function() {
+            if(checkoutStep > 1) setCheckoutStep(checkoutStep - 1);
+            else prevBagStep();
+        };
 
         window.nextBagStep = function() { if(bagStep === 1 && cart.length > 0) setBagStep(2); }
         window.prevBagStep = function() { if(bagStep === 2) setBagStep(1); }
