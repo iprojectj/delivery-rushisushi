@@ -188,40 +188,32 @@
     </header>
 
     <div class="px-4 mt-5">
-    <div class="relative bg-white rounded-xl border border-[#EA1D2C]/20 overflow-hidden shadow-sm">
-      <div class="absolute top-0 left-0 right-0 h-0.5 bg-[#EA1D2C]"></div>
-      
-      <div class="px-3 py-2.5 flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-lg bg-[#fff5f5] flex items-center justify-center shrink-0 border border-[#EA1D2C]/10">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2.5 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-[#fff1f2] flex items-center justify-center shrink-0">
           <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
         </div>
-        
-        <div class="flex items-center gap-2 min-w-0 flex-1">
-          <div class="flex flex-col min-w-0">
-            <span class="text-xs font-bold text-[#EA1D2C] truncate">Parceiro Oficial iFood</span>
-            <span class="text-[10px] text-gray-500 truncate">Cupom de Boas-Vindas Liberado</span>
+        <div class="flex flex-col min-w-0 flex-1">
+          <div class="flex items-center gap-1.5">
+            <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
+            <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[11px]"></i>
           </div>
+          <span class="text-[11px] text-gray-500 truncate">Cupom de boas-vindas liberado</span>
         </div>
-        
-        <div class="flex items-center gap-1 bg-[#EA1D2C] text-white text-[9px] font-black px-2 py-1 rounded-full shrink-0">
-          <span class="w-1 h-1 rounded-full bg-white animate-pulse"></span>
-          CUPOM ATIVO
-        </div>
+        <span class="text-[10px] font-bold text-[#EA1D2C] bg-[#fff1f2] px-2 py-1 rounded-full shrink-0">ATIVO</span>
       </div>
     </div>
-  </div>
 
-    <div class="sticky top-0 bg-[#f7f7f7] z-30 shadow-sm border-b border-gray-200 pb-2 mt-6">
+    <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
         <div class="flex overflow-x-auto no-scroll px-4">
-            <button onclick="scrollToCat('destaques')" class="nav-item active whitespace-nowrap px-4 py-2 mr-2 text-sm font-bold text-[#3e3e3e] bg-white rounded-full shadow-sm border border-gray-100">Destaques</button>
-            <button onclick="scrollToCat('entradas')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Entradas</button>
-            <button onclick="scrollToCat('temakis')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Temakis</button>
-            <button onclick="scrollToCat('familia')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Família</button>
-            <button onclick="scrollToCat('classicos')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Clássicos</button>
-            <button onclick="scrollToCat('hot-rolls')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Quentes</button>
-            <button onclick="scrollToCat('yakisobas')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Yakisobas</button>
-            <button onclick="scrollToCat('sobremesas')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Sobremesas</button>
-            <button onclick="scrollToCat('bebidas')" class="nav-item whitespace-nowrap px-4 py-2 mr-2 text-sm font-semibold text-gray-500">Bebidas</button>
+            <button onclick="scrollToCat('destaques')" class="nav-item active">Destaques</button>
+            <button onclick="scrollToCat('entradas')" class="nav-item">Entradas</button>
+            <button onclick="scrollToCat('temakis')" class="nav-item">Temakis</button>
+            <button onclick="scrollToCat('familia')" class="nav-item">Família</button>
+            <button onclick="scrollToCat('classicos')" class="nav-item">Clássicos</button>
+            <button onclick="scrollToCat('hot-rolls')" class="nav-item">Quentes</button>
+            <button onclick="scrollToCat('yakisobas')" class="nav-item">Yakisobas</button>
+            <button onclick="scrollToCat('sobremesas')" class="nav-item">Sobremesas</button>
+            <button onclick="scrollToCat('bebidas')" class="nav-item">Bebidas</button>
         </div>
     </div>
 
