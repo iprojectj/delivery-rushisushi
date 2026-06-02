@@ -173,48 +173,26 @@
         </div>
     </header>
 
-    <div class="px-4 mt-6">
-    <div class="relative bg-white rounded-2xl shadow-xl shadow-red-200/40 overflow-hidden border border-gray-100">
-      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#EA1D2C] via-[#ff4757] to-[#EA1D2C]"></div>
-
-      <div class="p-4 flex items-center gap-3.5">
-        <div class="relative shrink-0">
-          <div class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-md ring-2 ring-[#EA1D2C]/15 p-1.5">
-            <img src="images/ifood-smile.png" alt="iFood" class="w-full h-full object-contain" />
-          </div>
-          <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-[#EA1D2C] rounded-full flex items-center justify-center ring-2 ring-white">
-            <i class="fa-solid fa-check text-white text-[9px] font-black"></i>
+    <div class="px-4 mt-5">
+    <div class="relative bg-white rounded-xl border border-[#EA1D2C]/20 overflow-hidden shadow-sm">
+      <div class="absolute top-0 left-0 right-0 h-0.5 bg-[#EA1D2C]"></div>
+      
+      <div class="px-3 py-2.5 flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg bg-[#fff5f5] flex items-center justify-center shrink-0 border border-[#EA1D2C]/10">
+          <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
+        </div>
+        
+        <div class="flex items-center gap-2 min-w-0 flex-1">
+          <div class="flex flex-col min-w-0">
+            <span class="text-xs font-bold text-[#EA1D2C] truncate">Parceiro Oficial iFood</span>
+            <span class="text-[10px] text-gray-500 truncate">Cupom de Boas-Vindas Liberado</span>
           </div>
         </div>
-
-        <div class="flex flex-col w-full min-w-0">
-          <div class="flex items-center justify-between gap-2 mb-1">
-            <div class="flex items-center gap-1.5">
-              <span class="text-[10px] font-black text-[#EA1D2C] uppercase tracking-wider">Parceiro Oficial iFood</span>
-              <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[10px]"></i>
-            </div>
-            <div class="flex items-center gap-1 bg-[#EA1D2C] text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-sm">
-              <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
-              CUPOM ATIVO
-            </div>
-          </div>
-          <h4 class="text-[14px] font-extrabold text-[#3e3e3e] leading-tight">Cupom de Boas-Vindas Liberado</h4>
-          <p class="text-[11px] text-gray-500 leading-snug mt-0.5">Desconto exclusivo concedido pelo programa de parceiros oficiais do iFood para o seu primeiro pedido.</p>
+        
+        <div class="flex items-center gap-1 bg-[#EA1D2C] text-white text-[9px] font-black px-2 py-1 rounded-full shrink-0">
+          <span class="w-1 h-1 rounded-full bg-white animate-pulse"></span>
+          CUPOM ATIVO
         </div>
-      </div>
-
-      <div class="px-4 pb-3 pt-1 flex items-center justify-between border-t border-gray-100 mx-4 -mt-1">
-        <div class="flex items-center gap-3 pt-2">
-          <div class="flex items-center gap-1">
-            <i class="fa-solid fa-shield-halved text-[#50a773] text-[10px]"></i>
-            <span class="text-[9.5px] font-semibold text-gray-600">Verificado</span>
-          </div>
-          <div class="flex items-center gap-1">
-            <i class="fa-solid fa-star text-[#f5a623] text-[10px]"></i>
-            <span class="text-[9.5px] font-semibold text-gray-600">4.9 no iFood</span>
-          </div>
-        </div>
-        <span class="text-[9.5px] font-bold text-[#EA1D2C] pt-2">100% Garantido</span>
       </div>
     </div>
   </div>
