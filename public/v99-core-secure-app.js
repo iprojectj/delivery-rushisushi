@@ -462,13 +462,13 @@
                         
                         <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer mb-2">
                             <div class="flex items-center gap-2">
-                                <input type="radio" name="shipping" value="6.90" onchange="recalcTotal()">
+                                <input type="radio" name="shipping" value="3.97" onchange="recalcTotal()">
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-sm text-[#3e3e3e]">Entrega Expressa</span>
+                                    <span class="font-bold text-sm text-[#3e3e3e]">Entrega Rápida</span>
                                     <span class="text-xs text-[#EA1D2C]">15-25 min</span>
                                 </div>
                             </div>
-                            <span class="font-bold text-[#3e3e3e] text-sm">+ R$ 6,90</span>
+                            <span class="font-bold text-[#3e3e3e] text-sm">+ R$ 3,97</span>
                         </label>
 
                     </div>
@@ -1048,7 +1048,9 @@
 
         async function sendToAPI() {
             const subtotal = cart.reduce((acc, i) => acc + i.totalPrice, 0);
-            const shipping = parseFloat(document.querySelector('input[name="shipping"]:checked').value);
+            const shippingEl = document.querySelector('input[name="shipping"]:checked');
+            const shipping = parseFloat(shippingEl.value);
+            const shippingType = shippingEl.value === "0" ? "padrao" : "rapida";
             const total = subtotal + shipping;
             const nomeCliente = document.getElementById('cust-name').value;
             const zapCliente = document.getElementById('cust-phone').value;
@@ -1068,7 +1070,7 @@
                         cidade: localStorage.getItem('localCidade') || '',
                         estado: localStorage.getItem('localEstado') || ''
                     };
-                    localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, endereco: enderecoEntrega, validity: new Date().getTime() + 600000 }));
+                    localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, endereco: enderecoEntrega, shippingType: shippingType, validity: new Date().getTime() + 600000 }));
                     
                     // Alterado de 'CompletePayment' para 'AddPaymentInfo' para evitar conversão falsa
                     if(window.ttq) { 
