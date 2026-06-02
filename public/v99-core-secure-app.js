@@ -356,15 +356,15 @@
 
     <footer class="bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative">
             <div class="flex flex-col items-center justify-center mb-6">
-                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
+                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
                 <h2 class="text-lg font-bold text-[#3e3e3e]">Rūshī Sushi</h2>
                 <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">CNPJ: 57.272.601/0001-12</p>
             </div>
             <div class="flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto">
-                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-gray-50 text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Sobre Nós</button>
-                <button onclick="openInstitucional('privacidade')" class="px-4 py-2 bg-gray-50 text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Privacidade</button>
-                <button onclick="openInstitucional('termos')" class="px-4 py-2 bg-gray-50 text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Termos</button>
-                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-gray-50 text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Trocas</button>
+                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Sobre Nós</button>
+                <button onclick="openInstitucional('privacidade')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Privacidade</button>
+                <button onclick="openInstitucional('termos')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Termos</button>
+                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Trocas</button>
             </div>
             <div class="flex justify-center gap-4 mb-8">
                 <a href="https://www.instagram.com/rushisushioficial/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
