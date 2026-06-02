@@ -501,7 +501,7 @@
                                         <span class="text-xs text-[#05a65a] font-bold">Aprovação Imediata</span>
                                     </div>
                                 </div>
-                                <i class="fa-solid fa-check-circle text-[#05a65a]" id="check-PIX"></i>
+                                <i class="fa-solid fa-check-circle text-[#05a65a]" id="check-pay-PIX"></i>
                             </div>
                             
                             <!-- Cartão de Crédito (manutenção) -->
