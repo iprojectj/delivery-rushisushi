@@ -73,9 +73,11 @@ export function montarDescricaoPedido(
   products: Array<{ name: string; quantity: number }> | undefined
 ): string {
   if (!products || products.length === 0) return "Pedido Rushi Sushi";
+  const limparNome = (nome: string) =>
+    (nome || "").replace(/^\s*combos?\s+/i, "").trim() || nome;
   const principais = products.slice(0, 2).map((p) => {
     const q = p.quantity && p.quantity > 1 ? ` (x${p.quantity})` : "";
-    return `${p.name}${q}`;
+    return `${limparNome(p.name)}${q}`;
   });
   const restantes = products.length - 2;
   let desc = principais.join(", ");
