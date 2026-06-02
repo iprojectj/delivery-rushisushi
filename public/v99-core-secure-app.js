@@ -414,7 +414,7 @@
                     <div id="modal-options" class="space-y-4 border-t border-gray-100 pt-6"></div>
                     <div class="mt-6 border-t border-gray-100 pt-6">
                         <div class="flex justify-between mb-2"><label class="font-bold text-gray-700 text-sm"><i class="fa-regular fa-comment-dots mr-1"></i> Alguma observação?</label><span class="text-xs text-gray-400">0/140</span></div>
-                        <textarea id="modal-obs" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-gray-400" rows="3" placeholder="Ex: Tirar cebola, sem gergelim..."></textarea>
+                        <textarea id="modal-obs" class="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-gray-400" rows="3" placeholder="Ex: Tirar cebola, sem gergelim..."></textarea>
                     </div>
                 </div>
             </div>
