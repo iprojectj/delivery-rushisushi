@@ -125,7 +125,7 @@
         <div class="px-4 relative -mt-10 z-20">
             <div class="bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col items-center relative">
                 <!-- Logo centralizada -->
-                <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-1 shadow-md border border-gray-100">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-0.5 shadow-md border border-gray-100">
                     <img src="images/logo-rushi.webp" class="w-full h-full rounded-full object-cover">
                 </div>
                 
