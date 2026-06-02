@@ -936,7 +936,7 @@
                                     <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
                                     \${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">\${p.badge}</div>\` : ''}
                                 </div>
-                                <div class="p-4 flex flex-col flex-1 z-10 bg-white">
+                                <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
                                     <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p>
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
