@@ -71,7 +71,7 @@
         .sheet-overlay.visible { opacity: 1; pointer-events: auto; }
         .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -4px 30px rgba(0,0,0,0.15); }
         .bottom-sheet.open { transform: translateY(0); }
-        .input-group { background-color: #fafafa; border: 1px solid #ececec; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }
+        .input-group { background-color: #ffffff; border: 1px solid #f0f0f0; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }
         .input-group:focus-within { background-color: #fff; border-color: #EA1D2C; box-shadow: 0 0 0 2px rgba(234, 29, 44, 0.1); }
         .input-label { font-size: 11px; color: #717171; font-weight: 600; display: block; margin-bottom: 2px; text-transform: uppercase; }
         .input-field { width: 100%; background: transparent; border: none; font-size: 14px; color: #3e3e3e; font-weight: 500; outline: none; }
@@ -356,15 +356,15 @@
 
     <footer class="bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative">
             <div class="flex flex-col items-center justify-center mb-6">
-                <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
+                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
                 <h2 class="text-lg font-bold text-[#3e3e3e]">Rūshī Sushi</h2>
                 <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">CNPJ: 57.272.601/0001-12</p>
             </div>
             <div class="flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto">
-                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-gray-50 text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Sobre Nós</button>
-                <button onclick="openInstitucional('privacidade')" class="px-4 py-2 bg-gray-50 text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Privacidade</button>
-                <button onclick="openInstitucional('termos')" class="px-4 py-2 bg-gray-50 text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Termos</button>
-                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-gray-50 text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Trocas</button>
+                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Sobre Nós</button>
+                <button onclick="openInstitucional('privacidade')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Privacidade</button>
+                <button onclick="openInstitucional('termos')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Termos</button>
+                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-white text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-50 transition">Trocas</button>
             </div>
             <div class="flex justify-center gap-4 mb-8">
                 <a href="https://www.instagram.com/rushisushioficial/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
@@ -414,7 +414,7 @@
                     <div id="modal-options" class="space-y-4 border-t border-gray-100 pt-6"></div>
                     <div class="mt-6 border-t border-gray-100 pt-6">
                         <div class="flex justify-between mb-2"><label class="font-bold text-gray-700 text-sm"><i class="fa-regular fa-comment-dots mr-1"></i> Alguma observação?</label><span class="text-xs text-gray-400">0/140</span></div>
-                        <textarea id="modal-obs" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-gray-400" rows="3" placeholder="Ex: Tirar cebola, sem gergelim..."></textarea>
+                        <textarea id="modal-obs" class="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-gray-400" rows="3" placeholder="Ex: Tirar cebola, sem gergelim..."></textarea>
                     </div>
                 </div>
             </div>
@@ -431,7 +431,7 @@
 
     <div class="fixed inset-0 z-[60] hidden" id="bag-modal-container">
         <div class="absolute inset-0 bg-black/60 sheet-overlay" id="bag-overlay" onclick="closeBag()"></div>
-        <div id="bag-sheet" class="absolute bottom-0 left-0 w-full bg-gray-50 h-[95vh] flex flex-col bottom-sheet rounded-t-3xl overflow-hidden">
+        <div id="bag-sheet" class="absolute bottom-0 left-0 w-full bg-white h-[95vh] flex flex-col bottom-sheet rounded-t-3xl overflow-hidden">
             <div class="bg-white p-4 border-b border-gray-100 flex items-center justify-between z-10">
                 <div class="flex items-center gap-3">
                     <button onclick="prevBagStep()" class="text-[#EA1D2C] hidden" id="bag-btn-back"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
