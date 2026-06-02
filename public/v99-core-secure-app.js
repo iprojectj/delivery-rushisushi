@@ -1152,6 +1152,8 @@
         var checkoutStep = 1;
         var checkoutStepLabels = { 1: 'Endereço de entrega', 2: 'Quem vai receber', 3: 'Forma de entrega', 4: 'Pagamento' };
 
+        var checkoutStepIcons = { 1: 'fa-solid fa-location-dot', 2: 'fa-solid fa-user', 3: 'fa-solid fa-motorcycle', 4: 'fa-regular fa-credit-card' };
+
         function setCheckoutStep(n) {
             checkoutStep = n;
             document.querySelectorAll('#sacola-tela-2 .checkout-step').forEach(function(el){
@@ -1160,6 +1162,11 @@
             var cur = document.getElementById('checkout-step-current'); if(cur) cur.innerText = n;
             var bar = document.getElementById('checkout-progress-bar'); if(bar) bar.style.width = (n * 25) + '%';
             var lbl = document.getElementById('checkout-step-label'); if(lbl) lbl.innerText = checkoutStepLabels[n];
+            var ico = document.getElementById('checkout-step-icon'); if(ico) ico.className = checkoutStepIcons[n] + ' text-[#EA1D2C] text-sm';
+            document.querySelectorAll('[data-stepdot]').forEach(function(d){
+                var dn = parseInt(d.dataset.stepdot);
+                d.className = 'flex-1 h-1 rounded-full transition-colors ' + (dn <= n ? 'bg-[#EA1D2C]' : 'bg-gray-200');
+            });
             var nextBtn = document.getElementById('checkout-next-btn'); if(nextBtn) nextBtn.innerText = (n === 4 ? 'Fazer pedido' : 'Continuar');
             var backBtn = document.getElementById('checkout-back-btn'); if(backBtn) backBtn.classList.toggle('hidden', n === 1);
             try { var fi = document.querySelector('#sacola-tela-2 .checkout-step[data-cstep="' + n + '"] input:not([type=hidden]):not([type=radio])'); if(fi) setTimeout(function(){ fi.focus({preventScroll:true}); }, 50); } catch(e){}
