@@ -1105,7 +1105,7 @@
             var active = document.getElementById('check-pay-' + method);
             if(active) active.className = 'fa-solid fa-check-circle text-[#05a65a]';
         };
-
+        window.prevCheckoutStep = function() {
             if(checkoutStep > 1) setCheckoutStep(checkoutStep - 1);
             else prevBagStep();
         };
