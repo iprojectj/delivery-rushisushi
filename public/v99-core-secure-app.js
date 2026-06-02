@@ -431,7 +431,7 @@
 
     <div class="fixed inset-0 z-[60] hidden" id="bag-modal-container">
         <div class="absolute inset-0 bg-black/60 sheet-overlay" id="bag-overlay" onclick="closeBag()"></div>
-        <div id="bag-sheet" class="absolute bottom-0 left-0 w-full bg-gray-50 h-[95vh] flex flex-col bottom-sheet rounded-t-3xl overflow-hidden">
+        <div id="bag-sheet" class="absolute bottom-0 left-0 w-full bg-white h-[95vh] flex flex-col bottom-sheet rounded-t-3xl overflow-hidden">
             <div class="bg-white p-4 border-b border-gray-100 flex items-center justify-between z-10">
                 <div class="flex items-center gap-3">
                     <button onclick="prevBagStep()" class="text-[#EA1D2C] hidden" id="bag-btn-back"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
