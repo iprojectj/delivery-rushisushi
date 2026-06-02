@@ -337,7 +337,7 @@
                     </div>
                     <span class="text-[10px] text-gray-400">Hoje</span>
                 </div>
-                <p class="text-xs text-gray-600 italic">"Combo Tsunami maravilhoso. Comemos em 3 e ficamos satisfeitos!"</p>
+                <p class="text-xs text-gray-600 italic">"Combo Haki maravilhoso. Comemos em 3 e ficamos satisfeitos!"</p>
             </div>
 
             <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
@@ -806,11 +806,11 @@
       ];
 
         const catalog = [
-            { id: "barca-ostentacao", category: "destaques", name: "Combo Tsunami (120 peças)", desc: "O maior do cardápio! 40 Sashimis, 20 Joes, Camarão e muito mais.", price: 92.90, oldPrice: 319.90, img: "images/combo-presidencial.webp", badge: "🔥 70% OFF APLICADO", hasAddons: true, isBait: true },
-            { id: "combo-rodízio", category: "destaques", name: "Combo Raijin (68 peças)", desc: "Sashimis variados + Niguiris + Uramakis + Joe e Hot Holls variados.", price: 47.90, oldPrice: 149.80, img: "images/combo3.webp", badge: "MAIS VENDIDO", hasAddons: true, isBait: true },
-            { id: "combo-individual", category: "destaques", name: "Combo Koi (56 peças)", desc: "Para quem quer comer bem pagando pouco. Variedade incrível.", price: 39.90, oldPrice: 59.80, img: "images/combo-koi.webp", badge: "CUPOM ATIVADO", hasAddons: true, isBait: true },
-            { id: "temaki-isca", category: "destaques", name: "Combo Hoshi (24 peças)", desc: "Oferta limitada. O melhor custo benefício para sua fome.", price: 19.90, oldPrice: 54.90, img: "images/combo1.webp", badge: "PREÇO DE CUSTO", hasAddons: true, isBait: true },
-            { id: "combo-hot-24", category: "destaques", name: "Combo Hot Roll (24 peças)", desc: "Os melhores hot rolls, crocantes e recheados com muito cream cheese.", price: 29.90, oldPrice: 69.90, img: "images/hothothot.webp", badge: "NOVIDADE", hasAddons: true, isBait: true },
+            { id: "barca-ostentacao", category: "destaques", name: "Combo Haki (120 peças)", desc: "O maior do cardápio! 40 Sashimis, 20 Joes, Camarão e muito mais.", price: 92.90, oldPrice: 319.90, img: "images/combo-presidencial.webp", badge: "🔥 70% OFF APLICADO", hasAddons: true, isBait: true },
+            { id: "combo-rodízio", category: "destaques", name: "Combo Kamusari (68 peças)", desc: "Sashimis variados + Niguiris + Uramakis + Joe e Hot Holls variados.", price: 47.90, oldPrice: 149.80, img: "images/combo3.webp", badge: "MAIS VENDIDO", hasAddons: true, isBait: true },
+            { id: "combo-individual", category: "destaques", name: "Combo Tsuki (56 peças)", desc: "Para quem quer comer bem pagando pouco. Variedade incrível.", price: 39.90, oldPrice: 59.80, img: "images/combo-koi.webp", badge: "CUPOM ATIVADO", hasAddons: true, isBait: true },
+            { id: "temaki-isca", category: "destaques", name: "Combo Fujin (24 peças)", desc: "Oferta limitada. O melhor custo benefício para sua fome.", price: 19.90, oldPrice: 54.90, img: "images/combo1.webp", badge: "PREÇO DE CUSTO", hasAddons: true, isBait: true },
+            { id: "combo-hot-24", category: "destaques", name: "Combo Kaen (24 peças)", desc: "Os melhores hot rolls, crocantes e recheados com muito cream cheese.", price: 29.90, oldPrice: 69.90, img: "images/hothothot.webp", badge: "NOVIDADE", hasAddons: true, isBait: true },
             
             { id: "ceviche-tilapia", category: "entradas", name: "Ceviche Clássico", desc: "Cubos de peixe branco marinados no limão, cebola roxa, pimenta e coentro.", price: 29.90, img: "images/ceviche_classico.webp", hasAddons: true },
             { id: "shimeji-manteiga", category: "entradas", name: "Shimeji na Manteiga", desc: "Cogumelos frescos refogados na manteiga, shoyu e cebolinha. 200g.", price: 24.90, img: "images/entrada_shimeji.webp", hasAddons: true },
