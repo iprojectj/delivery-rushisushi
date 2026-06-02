@@ -459,33 +459,55 @@
                     </div>
                 </div>
 
-                <div id="sacola-tela-2" class="hidden p-4">
-                    <div class="mb-4">
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="font-bold text-[#3e3e3e] text-base">Finalizar Pedido</h3>
-                            <span class="text-xs font-bold text-[#EA1D2C]"><span id="checkout-step-current">1</span> de 4</span>
+                <div id="sacola-tela-2" class="hidden">
+                    <!-- Step header iFood-style -->
+                    <div class="bg-white px-4 pt-4 pb-3 border-b border-gray-100">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <i id="checkout-step-icon" class="fa-solid fa-location-dot text-[#EA1D2C] text-sm"></i>
+                                <p id="checkout-step-label" class="text-[13px] text-[#3e3e3e] font-bold">Endereço de entrega</p>
+                            </div>
+                            <span class="text-[11px] font-bold text-gray-400 tracking-wider"><span id="checkout-step-current">1</span>/4</span>
                         </div>
-                        <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
-                            <div id="checkout-progress-bar" class="bg-[#EA1D2C] h-full rounded-full transition-all duration-300" style="width:25%"></div>
+                        <div class="flex items-center gap-1.5">
+                            <div data-stepdot="1" class="flex-1 h-1 rounded-full bg-[#EA1D2C]"></div>
+                            <div data-stepdot="2" class="flex-1 h-1 rounded-full bg-gray-200"></div>
+                            <div data-stepdot="3" class="flex-1 h-1 rounded-full bg-gray-200"></div>
+                            <div data-stepdot="4" class="flex-1 h-1 rounded-full bg-gray-200"></div>
                         </div>
-                        <p id="checkout-step-label" class="text-[11px] text-gray-500 mt-2 font-semibold uppercase tracking-wide">Endereço de entrega</p>
+                        <!-- legacy progress bar kept for backwards compat (hidden) -->
+                        <div class="hidden"><div id="checkout-progress-bar"></div></div>
                     </div>
 
+                    <div class="p-4">
                     <div class="checkout-step" data-cstep="1">
-                        <div class="bg-white p-4 rounded-xl mb-4 shadow-sm border border-gray-100">
-                            <div class="flex gap-3 mb-3 items-center"><i class="fa-solid fa-location-dot text-[#EA1D2C]"></i><h4 class="font-bold text-[#3e3e3e] text-sm">Onde vamos entregar?</h4></div>
-                            <div class="space-y-3">
+                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                            <div class="px-4 pt-4 pb-2 flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-location-dot text-[#EA1D2C] text-sm"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Onde vamos entregar?</h4>
+                                    <p class="text-[11px] text-gray-400">Informe o endereço completo</p>
+                                </div>
+                            </div>
+                            <div class="px-4 pb-4 pt-2 space-y-3">
                                 <div class="input-group"><label class="input-label">CEP</label><input type="text" id="cust-cep" placeholder="00000-000" class="input-field"></div>
                                 <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Rua</label><input type="text" id="cust-street" class="input-field"></div><div class="input-group w-24"><label class="input-label">Número</label><input type="text" id="cust-number" class="input-field font-bold text-[#EA1D2C]"></div></div>
                                 <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Bairro</label><input type="text" id="cust-hood" class="input-field"></div><div class="input-group flex-1"><label class="input-label">Complemento</label><input type="text" id="cust-comp" class="input-field"></div></div>
                             </div>
                         </div>
+                        <div class="flex items-center gap-2 text-[11px] text-gray-500 px-1"><i class="fa-solid fa-shield-halved text-[#05a65a]"></i><span>Seus dados são protegidos e usados apenas para a entrega.</span></div>
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="2">
-                        <div class="bg-white p-4 rounded-xl mb-4 shadow-sm border border-gray-100">
-                            <div class="flex gap-3 mb-3 items-center"><i class="fa-solid fa-user text-[#EA1D2C]"></i><h4 class="font-bold text-[#3e3e3e] text-sm">Quem vai receber?</h4></div>
-                            <div class="space-y-3">
+                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                            <div class="px-4 pt-4 pb-2 flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-user text-[#EA1D2C] text-sm"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Quem vai receber?</h4>
+                                    <p class="text-[11px] text-gray-400">Usaremos seu WhatsApp para avisos do pedido</p>
+                                </div>
+                            </div>
+                            <div class="px-4 pb-4 pt-2 space-y-3">
                                 <div class="input-group"><label class="input-label">Nome Completo</label><input type="text" id="cust-name" class="input-field"></div>
                                 <div class="input-group"><label class="input-label">WhatsApp</label><input type="tel" id="cust-phone" class="input-field"></div>
                             </div>
@@ -493,108 +515,115 @@
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="3">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-4">
-                            <h3 class="font-bold text-[#3e3e3e] mb-3 text-sm uppercase"><i class="fa-solid fa-motorcycle mr-2"></i> Entrega</h3>
-                            <div id="shipping-info-banner" class="hidden text-[11px] bg-[#fff3f0] border border-[#ffd9d2] text-[#EA1D2C] rounded-md px-3 py-2 mb-3 font-semibold"></div>
-                            <label id="shipping-padrao-label" class="flex items-center justify-between p-3 border border-green-200 bg-green-50 rounded-lg cursor-pointer mb-2">
-                                <div class="flex items-center gap-2">
-                                    <input type="radio" name="shipping" value="0" checked onchange="recalcTotal()">
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-sm text-[#3e3e3e]">Entrega Padrão</span>
-                                        <span class="text-xs text-gray-500">30-45 min</span>
-                                    </div>
+                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                            <div class="px-4 pt-4 pb-2 flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-motorcycle text-[#EA1D2C] text-sm"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Forma de entrega</h4>
+                                    <p class="text-[11px] text-gray-400">Escolha como prefere receber</p>
                                 </div>
-                                <span id="shipping-padrao-price" class="font-bold text-[#05a65a] text-sm">Grátis</span>
-                            </label>
-                            <label class="flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer mb-2">
-                                <div class="flex items-center gap-2">
-                                    <input type="radio" name="shipping" value="3.97" onchange="recalcTotal()">
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-sm text-[#3e3e3e]">Entrega Rápida</span>
-                                        <span class="text-xs text-[#EA1D2C]">15-25 min</span>
+                            </div>
+                            <div class="px-4 pb-4 pt-2">
+                                <div id="shipping-info-banner" class="hidden text-[11px] bg-[#fff3f0] border border-[#ffd9d2] text-[#EA1D2C] rounded-lg px-3 py-2 mb-3 font-semibold"></div>
+                                <label id="shipping-padrao-label" class="flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer mb-2">
+                                    <div class="flex items-center gap-3">
+                                        <input type="radio" name="shipping" value="0" checked onchange="recalcTotal()" class="accent-[#05a65a]">
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-sm text-[#3e3e3e]">Entrega Padrão</span>
+                                            <span class="text-xs text-gray-500">30-45 min</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <span class="font-bold text-[#3e3e3e] text-sm">+ R$ 3,97</span>
-                            </label>
+                                    <span id="shipping-padrao-price" class="font-bold text-[#05a65a] text-sm">Grátis</span>
+                                </label>
+                                <label class="flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer">
+                                    <div class="flex items-center gap-3">
+                                        <input type="radio" name="shipping" value="3.97" onchange="recalcTotal()" class="accent-[#EA1D2C]">
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-sm text-[#3e3e3e]">Entrega Rápida</span>
+                                            <span class="text-xs text-[#EA1D2C]">15-25 min</span>
+                                        </div>
+                                    </div>
+                                    <span class="font-bold text-[#3e3e3e] text-sm">+ R$ 3,97</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="4">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 mb-4">
-                            <h3 class="font-bold text-[#3e3e3e] mb-3 text-sm uppercase"><i class="fa-regular fa-credit-card mr-2"></i> Pagamento</h3>
-                            
-                            <!-- PIX Ativo -->
-                            <div class="border border-[#05a65a] bg-[#f0fff4] p-4 rounded-lg flex justify-between items-center shadow-sm mb-3 cursor-pointer" onclick="selectPayment('PIX')">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-brands fa-pix text-[#05a65a] text-xl"></i>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-sm text-[#3e3e3e]">Pix</span>
-                                        <span class="text-xs text-[#05a65a] font-bold">Aprovação Imediata</span>
-                                    </div>
+                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden">
+                            <div class="px-4 pt-4 pb-2 flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-regular fa-credit-card text-[#EA1D2C] text-sm"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Forma de pagamento</h4>
+                                    <p class="text-[11px] text-gray-400">Escolha como deseja pagar</p>
                                 </div>
-                                <i class="fa-solid fa-check-circle text-[#05a65a]" id="check-pay-PIX"></i>
                             </div>
-                            
-                            <!-- Cartão de Crédito (manutenção) -->
-                            <div class="border border-gray-200 bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-3 opacity-70">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-regular fa-credit-card text-gray-400 text-xl"></i>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-sm text-gray-400">Cartão de Crédito</span>
-                                        <span class="text-xs text-gray-400 font-medium">Em manutenção</span>
+                            <div class="px-4 pb-4 pt-2">
+                                <!-- PIX Ativo -->
+                                <div class="border-2 border-[#05a65a] bg-[#f0fff4] p-3 rounded-xl flex justify-between items-center mb-2 cursor-pointer" onclick="selectPayment('PIX')">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-brands fa-pix text-[#05a65a] text-xl"></i>
+                                        <div class="flex flex-col">
+                                            <span class="font-bold text-sm text-[#3e3e3e]">Pix</span>
+                                            <span class="text-[11px] text-[#05a65a] font-bold">Aprovação Imediata</span>
+                                        </div>
                                     </div>
+                                    <i class="fa-solid fa-check-circle text-[#05a65a]" id="check-pay-PIX"></i>
                                 </div>
-                                <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
-                            </div>
-                            
-                            <!-- Nupay (manutenção) -->
-                            <div class="border border-gray-200 bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-3 opacity-70">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-solid fa-wallet text-gray-400 text-xl"></i>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-sm text-gray-400">NuPay</span>
-                                        <span class="text-xs text-gray-400 font-medium">Em manutenção</span>
+
+                                <div class="border border-gray-200 bg-gray-50 p-3 rounded-xl flex justify-between items-center mb-2 opacity-70">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-regular fa-credit-card text-gray-400 text-xl"></i>
+                                        <div class="flex flex-col"><span class="font-bold text-sm text-gray-400">Cartão de Crédito</span><span class="text-[11px] text-gray-400">Em manutenção</span></div>
                                     </div>
+                                    <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
                                 </div>
-                                <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
-                            </div>
-                            
-                            <!-- Google Pay (manutenção) -->
-                            <div class="border border-gray-200 bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-3 opacity-70">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-brands fa-google text-gray-400 text-xl"></i>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-sm text-gray-400">Google Pay</span>
-                                        <span class="text-xs text-gray-400 font-medium">Em manutenção</span>
+                                <div class="border border-gray-200 bg-gray-50 p-3 rounded-xl flex justify-between items-center mb-2 opacity-70">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-solid fa-wallet text-gray-400 text-xl"></i>
+                                        <div class="flex flex-col"><span class="font-bold text-sm text-gray-400">NuPay</span><span class="text-[11px] text-gray-400">Em manutenção</span></div>
                                     </div>
+                                    <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
                                 </div>
-                                <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
-                            </div>
-                            
-                            <!-- Apple Pay (manutenção) -->
-                            <div class="border border-gray-200 bg-gray-50 p-4 rounded-lg flex justify-between items-center mb-3 opacity-70">
-                                <div class="flex items-center gap-3">
-                                    <i class="fa-brands fa-apple text-gray-400 text-xl"></i>
-                                    <div class="flex flex-col">
-                                        <span class="font-bold text-sm text-gray-400">Apple Pay</span>
-                                        <span class="text-xs text-gray-400 font-medium">Em manutenção</span>
+                                <div class="border border-gray-200 bg-gray-50 p-3 rounded-xl flex justify-between items-center mb-2 opacity-70">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-brands fa-google text-gray-400 text-xl"></i>
+                                        <div class="flex flex-col"><span class="font-bold text-sm text-gray-400">Google Pay</span><span class="text-[11px] text-gray-400">Em manutenção</span></div>
                                     </div>
+                                    <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
                                 </div>
-                                <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
-                            </div>
-                            
-                            <input type="hidden" id="cust-payment" value="PIX">
-                            
-                            <div class="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-lg p-3 mt-2">
-                                <i class="fa-solid fa-circle-info text-amber-500 text-sm"></i>
-                                <p class="text-xs text-amber-700 leading-snug">No momento estamos aceitando apenas <strong>PIX</strong> para garantir a aprovação imediata do seu pedido. As demais formas de pagamento retornarão em breve.</p>
+                                <div class="border border-gray-200 bg-gray-50 p-3 rounded-xl flex justify-between items-center opacity-70">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-brands fa-apple text-gray-400 text-xl"></i>
+                                        <div class="flex flex-col"><span class="font-bold text-sm text-gray-400">Apple Pay</span><span class="text-[11px] text-gray-400">Em manutenção</span></div>
+                                    </div>
+                                    <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
+                                </div>
+
+                                <input type="hidden" id="cust-payment" value="PIX">
+
+                                <div class="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl p-3 mt-3">
+                                    <i class="fa-solid fa-circle-info text-amber-500 text-sm mt-0.5"></i>
+                                    <p class="text-[11px] text-amber-700 leading-snug">No momento estamos aceitando apenas <strong>PIX</strong> para garantir a aprovação imediata do seu pedido.</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
-                            <div class="flex justify-between text-lg font-bold text-[#3e3e3e]"><span>Total Final</span><span id="final-total" class="text-[#05a65a]">R$ 0,00</span></div>
+
+                        <!-- Resumo iFood-style -->
+                        <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+                            <div class="px-4 pt-4 pb-2">
+                                <h4 class="font-bold text-[#3e3e3e] text-[13px] uppercase tracking-wide">Resumo do pedido</h4>
+                            </div>
+                            <div class="px-4 pb-4 pt-2 space-y-1.5">
+                                <div class="flex justify-between text-[13px] text-gray-500"><span>Subtotal</span><span id="final-subtotal">R$ 0,00</span></div>
+                                <div class="flex justify-between text-[13px] text-gray-500"><span>Taxa de entrega</span><span id="final-shipping" class="text-[#05a65a] font-semibold">Grátis</span></div>
+                                <div class="flex justify-between text-base font-bold text-[#3e3e3e] mt-2 pt-2 border-t border-gray-100"><span>Total</span><span id="final-total" class="text-[#05a65a]">R$ 0,00</span></div>
+                            </div>
                         </div>
                     </div>
+                    </div>
                 </div>
+
 
                 <div id="sacola-tela-3" class="hidden h-full flex flex-col items-center justify-center p-8 text-center mt-20">
                     <img src="images/ifood-red.png" class="w-32 h-auto mb-6 animate-pulse object-contain">
