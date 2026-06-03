@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Rūshī Sushi" },
+      { name: "description", content: "Faça seu pedido — Rūshī Sushi" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Rūshī Sushi" },
+      { property: "og:description", content: "Faça seu pedido — Rūshī Sushi" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Rūshī Sushi" },
+      { name: "twitter:description", content: "Faça seu pedido — Rūshī Sushi" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/rg3w3Jfg0xU8eg2GMj9PmqMpkJz2/social-images/social-1780448423541-logo-preto.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/rg3w3Jfg0xU8eg2GMj9PmqMpkJz2/social-images/social-1780448423541-logo-preto.webp" },
     ],
     links: [
       {
