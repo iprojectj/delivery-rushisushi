@@ -459,21 +459,40 @@
                 <div id="sacola-tela-2" class="hidden">
                     <!-- Step header iFood-style -->
                     <div class="bg-white px-4 pt-4 pb-3 border-b border-gray-100">
-                        <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center justify-between mb-1">
                             <div class="flex items-center gap-2">
                                 <i id="checkout-step-icon" class="fa-solid fa-location-dot text-[#EA1D2C] text-sm"></i>
                                 <p id="checkout-step-label" class="text-[13px] text-[#3e3e3e] font-bold">Endereço de entrega</p>
                             </div>
                             <span class="text-[11px] font-bold text-gray-400 tracking-wider"><span id="checkout-step-current">1</span>/4</span>
                         </div>
-                        <div class="flex items-center gap-1.5">
-                            <div data-stepdot="1" class="flex-1 h-1 rounded-full bg-[#EA1D2C]"></div>
-                            <div data-stepdot="2" class="flex-1 h-1 rounded-full bg-gray-200"></div>
-                            <div data-stepdot="3" class="flex-1 h-1 rounded-full bg-gray-200"></div>
-                            <div data-stepdot="4" class="flex-1 h-1 rounded-full bg-gray-200"></div>
+                        <div class="relative pt-3 pb-1">
+                            <div class="absolute left-3 right-3 top-[22px] h-[2px] bg-gray-200 rounded-full"></div>
+                            <div id="checkout-step-fill" class="absolute left-3 top-[22px] h-[2px] bg-[#EA1D2C] rounded-full transition-all duration-300" style="width:0px"></div>
+                            <div class="relative flex justify-between">
+                                <div class="flex flex-col items-center gap-1" data-stepnode="1">
+                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white">1</div>
+                                    <span class="step-label text-[9px] font-semibold text-[#EA1D2C]">Endereço</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1" data-stepnode="2">
+                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">2</div>
+                                    <span class="step-label text-[9px] font-semibold text-gray-400">Dados</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1" data-stepnode="3">
+                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">3</div>
+                                    <span class="step-label text-[9px] font-semibold text-gray-400">Entrega</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1" data-stepnode="4">
+                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">4</div>
+                                    <span class="step-label text-[9px] font-semibold text-gray-400">Pagamento</span>
+                                </div>
+                            </div>
                         </div>
-                        <!-- legacy progress bar kept for backwards compat (hidden) -->
-                        <div class="hidden"><div id="checkout-progress-bar"></div></div>
+                        <!-- legacy elements kept for backwards compat (hidden) -->
+                        <div class="hidden">
+                            <div id="checkout-progress-bar"></div>
+                            <div data-stepdot="1"></div><div data-stepdot="2"></div><div data-stepdot="3"></div><div data-stepdot="4"></div>
+                        </div>
                     </div>
 
                     <div class="p-4">
