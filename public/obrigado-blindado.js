@@ -84,11 +84,6 @@
 </head>
 <body class="bg-[#f7f7f7] min-h-screen flex flex-col" oncontextmenu="return false">
 
-    <div id="desktop-warning">
-        <i class="fa-solid fa-mobile-screen-button text-6xl mb-4"></i>
-        <h1 class="text-3xl font-bold mb-2">Use seu Celular</h1>
-        <p class="text-lg opacity-90">Acompanhe seu pedido pelo dispositivo móvel.</p>
-    </div>
 
     <!-- TELA 1: SUCESSO -->
     <div id="screen-success" class="flex-1 flex flex-col items-center justify-center p-6 text-center transition-all duration-500">
