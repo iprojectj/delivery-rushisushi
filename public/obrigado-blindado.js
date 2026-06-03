@@ -75,17 +75,6 @@
         }
         .pin { position:absolute; transform:translate(-50%,-100%); }
 
-        #desktop-warning { display: none; }
-        @media (min-width: 1024px) {
-            #desktop-warning {
-                display: flex !important;
-                position: fixed; top:0; left:0; width:100vw; height:100vh;
-                background:#ea1d2c; z-index:99999;
-                flex-direction:column; align-items:center; justify-content:center;
-                color:white; text-align:center; padding:20px;
-            }
-            body { overflow:hidden !important; }
-        }
     </style>
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
