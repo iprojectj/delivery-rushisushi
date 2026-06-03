@@ -583,7 +583,6 @@
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-center gap-1.5">
                                             <span class="font-bold text-[14px] text-[#3e3e3e]">Pix</span>
-                                            <span class="text-[9px] font-bold bg-[#05a65a] text-white px-1.5 py-0.5 rounded-full uppercase tracking-wide">Recomendado</span>
                                         </div>
                                         <span class="text-[11px] text-[#05a65a] font-semibold flex items-center gap-1"><i class="fa-solid fa-bolt text-[10px]"></i> Aprovação imediata</span>
                                     </div>
