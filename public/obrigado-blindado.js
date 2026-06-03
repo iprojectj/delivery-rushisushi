@@ -75,17 +75,6 @@
         }
         .pin { position:absolute; transform:translate(-50%,-100%); }
 
-        #desktop-warning { display: none; }
-        @media (min-width: 1024px) {
-            #desktop-warning {
-                display: flex !important;
-                position: fixed; top:0; left:0; width:100vw; height:100vh;
-                background:#ea1d2c; z-index:99999;
-                flex-direction:column; align-items:center; justify-content:center;
-                color:white; text-align:center; padding:20px;
-            }
-            body { overflow:hidden !important; }
-        }
     </style>
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -95,11 +84,6 @@
 </head>
 <body class="bg-[#f7f7f7] min-h-screen flex flex-col" oncontextmenu="return false">
 
-    <div id="desktop-warning">
-        <i class="fa-solid fa-mobile-screen-button text-6xl mb-4"></i>
-        <h1 class="text-3xl font-bold mb-2">Use seu Celular</h1>
-        <p class="text-lg opacity-90">Acompanhe seu pedido pelo dispositivo móvel.</p>
-    </div>
 
     <!-- TELA 1: SUCESSO -->
     <div id="screen-success" class="flex-1 flex flex-col items-center justify-center p-6 text-center transition-all duration-500">
