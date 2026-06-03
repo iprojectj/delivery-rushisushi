@@ -155,7 +155,7 @@
         <div class="bg-white rounded-2xl shadow-sm border border-red-100 p-4 mb-6 flex items-center gap-4 relative overflow-hidden fade-in">
             <div class="absolute right-0 top-0 bg-[#EA1D2C] w-1 h-full"></div>
             <div class="w-12 h-12 shrink-0 bg-gray-50 rounded-full flex items-center justify-center p-2 border border-gray-100">
-                <img src="images/ifood-avatar.png" class="w-full h-full object-contain">
+                <img src="images/ifood-smile.png" class="w-full h-full object-contain">
             </div>
             <div>
                 <h3 class="font-bold text-[#3e3e3e] text-sm flex items-center gap-1">
