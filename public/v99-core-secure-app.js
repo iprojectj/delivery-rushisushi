@@ -854,7 +854,7 @@
        ];
 
         const catalog = [
-            { id: "barca-ostentacao", category: "destaques", name: "Combo Haki (120 peças)", desc: "O maior do cardápio! 40 Sashimis, 20 Joes, Camarão e muito mais.", price: 92.90, oldPrice: 319.90, img: "images/combo-presidencial.webp", badge: "🔥 70% OFF APLICADO", hasAddons: true, isBait: true },
+            { id: "barca-ostentacao", category: "destaques", name: "Combo Haki (120 peças)", desc: "O maior do cardápio! 40 Sashimis, 20 Joes, Camarão e muito mais.", price: 72.90, oldPrice: 219.90, img: "images/combo-presidencial.webp", badge: "🔥 70% OFF APLICADO", hasAddons: true, isBait: true },
             { id: "combo-rodízio", category: "destaques", name: "Combo Kamusari (68 peças)", desc: "Sashimis variados + Niguiris + Uramakis + Joe e Hot Holls variados.", price: 47.90, oldPrice: 149.80, img: "images/combo3.webp", badge: "MAIS VENDIDO", hasAddons: true, isBait: true },
             { id: "combo-individual", category: "destaques", name: "Combo Tsuki (56 peças)", desc: "Para quem quer comer bem pagando pouco. Variedade incrível.", price: 39.90, oldPrice: 59.80, img: "images/combo-koi.webp", badge: "CUPOM ATIVADO", hasAddons: true, isBait: true },
             { id: "combo-hot-24", category: "destaques", name: "Combo Kaen (24 peças)", desc: "Os melhores hot rolls, crocantes e recheados com muito cream cheese.", price: 29.90, oldPrice: 69.90, img: "images/hothothot.webp", badge: "NOVIDADE", hasAddons: true, isBait: true },
