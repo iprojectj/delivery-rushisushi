@@ -459,21 +459,40 @@
                 <div id="sacola-tela-2" class="hidden">
                     <!-- Step header iFood-style -->
                     <div class="bg-white px-4 pt-4 pb-3 border-b border-gray-100">
-                        <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center justify-between mb-1">
                             <div class="flex items-center gap-2">
                                 <i id="checkout-step-icon" class="fa-solid fa-location-dot text-[#EA1D2C] text-sm"></i>
                                 <p id="checkout-step-label" class="text-[13px] text-[#3e3e3e] font-bold">Endereço de entrega</p>
                             </div>
                             <span class="text-[11px] font-bold text-gray-400 tracking-wider"><span id="checkout-step-current">1</span>/4</span>
                         </div>
-                        <div class="flex items-center gap-1.5">
-                            <div data-stepdot="1" class="flex-1 h-1 rounded-full bg-[#EA1D2C]"></div>
-                            <div data-stepdot="2" class="flex-1 h-1 rounded-full bg-gray-200"></div>
-                            <div data-stepdot="3" class="flex-1 h-1 rounded-full bg-gray-200"></div>
-                            <div data-stepdot="4" class="flex-1 h-1 rounded-full bg-gray-200"></div>
+                        <div class="relative pt-3 pb-1">
+                            <div class="absolute left-3 right-3 top-[22px] h-[2px] bg-gray-200 rounded-full"></div>
+                            <div id="checkout-step-fill" class="absolute left-3 top-[22px] h-[2px] bg-[#EA1D2C] rounded-full transition-all duration-300" style="width:0px"></div>
+                            <div class="relative flex justify-between">
+                                <div class="flex flex-col items-center gap-1" data-stepnode="1">
+                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white">1</div>
+                                    <span class="step-label text-[9px] font-semibold text-[#EA1D2C]">Endereço</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1" data-stepnode="2">
+                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">2</div>
+                                    <span class="step-label text-[9px] font-semibold text-gray-400">Dados</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1" data-stepnode="3">
+                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">3</div>
+                                    <span class="step-label text-[9px] font-semibold text-gray-400">Entrega</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1" data-stepnode="4">
+                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">4</div>
+                                    <span class="step-label text-[9px] font-semibold text-gray-400">Pagamento</span>
+                                </div>
+                            </div>
                         </div>
-                        <!-- legacy progress bar kept for backwards compat (hidden) -->
-                        <div class="hidden"><div id="checkout-progress-bar"></div></div>
+                        <!-- legacy elements kept for backwards compat (hidden) -->
+                        <div class="hidden">
+                            <div id="checkout-progress-bar"></div>
+                            <div data-stepdot="1"></div><div data-stepdot="2"></div><div data-stepdot="3"></div><div data-stepdot="4"></div>
+                        </div>
                     </div>
 
                     <div class="p-4">
@@ -547,61 +566,60 @@
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="4">
-                        <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
+                        <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden border border-gray-100">
                             <div class="px-4 pt-4 pb-2 flex items-center gap-2">
                                 <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-regular fa-credit-card text-[#EA1D2C] text-sm"></i></div>
                                 <div>
-                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Forma de pagamento</h4>
-                                    <p class="text-[11px] text-gray-400">Escolha como deseja pagar</p>
+                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Pague pelo app</h4>
+                                    <p class="text-[11px] text-gray-400">Aprovação na hora</p>
                                 </div>
                             </div>
                             <div class="px-4 pb-4 pt-2">
-                                <!-- PIX Ativo -->
-                                <div class="border-2 border-[#05a65a] bg-[#f0fff4] p-3 rounded-xl flex justify-between items-center mb-2 cursor-pointer" onclick="selectPayment('PIX')">
-                                    <div class="flex items-center gap-3">
-                                        <i class="fa-brands fa-pix text-[#05a65a] text-xl"></i>
-                                        <div class="flex flex-col">
-                                            <span class="font-bold text-sm text-[#3e3e3e]">Pix</span>
-                                            <span class="text-[11px] text-[#05a65a] font-bold">Aprovação Imediata</span>
-                                        </div>
+                                <!-- PIX destacado -->
+                                <div class="relative border-2 border-[#05a65a] bg-gradient-to-br from-[#f0fff4] to-white p-3 rounded-xl flex items-center gap-3 cursor-pointer shadow-sm" onclick="selectPayment('PIX')">
+                                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-[#d4f5e0]">
+                                        <i class="fa-brands fa-pix text-[#05a65a] text-lg"></i>
                                     </div>
-                                    <i class="fa-solid fa-check-circle text-[#05a65a]" id="check-pay-PIX"></i>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="font-bold text-[14px] text-[#3e3e3e]">Pix</span>
+                                            <span class="text-[9px] font-bold bg-[#05a65a] text-white px-1.5 py-0.5 rounded-full uppercase tracking-wide">Recomendado</span>
+                                        </div>
+                                        <span class="text-[11px] text-[#05a65a] font-semibold flex items-center gap-1"><i class="fa-solid fa-bolt text-[10px]"></i> Aprovação imediata</span>
+                                    </div>
+                                    <i class="fa-solid fa-check-circle text-[#05a65a] text-lg" id="check-pay-PIX"></i>
                                 </div>
 
-                                <div class="border border-gray-200 bg-gray-50 p-3 rounded-xl flex justify-between items-center mb-2 opacity-70">
-                                    <div class="flex items-center gap-3">
-                                        <i class="fa-regular fa-credit-card text-gray-400 text-xl"></i>
-                                        <div class="flex flex-col"><span class="font-bold text-sm text-gray-400">Cartão de Crédito</span><span class="text-[11px] text-gray-400">Em manutenção</span></div>
+                                <!-- Outras formas (em manutenção) — grid compacto -->
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1.5">Outras formas</p>
+                                <div class="grid grid-cols-4 gap-1.5">
+                                    <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
+                                        <i class="fa-regular fa-credit-card text-gray-400 text-base"></i>
+                                        <span class="text-[9px] text-gray-500 mt-1 font-semibold leading-tight text-center">Crédito</span>
+                                        <i class="fa-solid fa-wrench text-gray-300 text-[8px] absolute top-1 right-1"></i>
                                     </div>
-                                    <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
-                                </div>
-                                <div class="border border-gray-200 bg-gray-50 p-3 rounded-xl flex justify-between items-center mb-2 opacity-70">
-                                    <div class="flex items-center gap-3">
-                                        <i class="fa-solid fa-wallet text-gray-400 text-xl"></i>
-                                        <div class="flex flex-col"><span class="font-bold text-sm text-gray-400">NuPay</span><span class="text-[11px] text-gray-400">Em manutenção</span></div>
+                                    <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
+                                        <i class="fa-solid fa-wallet text-gray-400 text-base"></i>
+                                        <span class="text-[9px] text-gray-500 mt-1 font-semibold leading-tight text-center">NuPay</span>
+                                        <i class="fa-solid fa-wrench text-gray-300 text-[8px] absolute top-1 right-1"></i>
                                     </div>
-                                    <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
-                                </div>
-                                <div class="border border-gray-200 bg-gray-50 p-3 rounded-xl flex justify-between items-center mb-2 opacity-70">
-                                    <div class="flex items-center gap-3">
-                                        <i class="fa-brands fa-google text-gray-400 text-xl"></i>
-                                        <div class="flex flex-col"><span class="font-bold text-sm text-gray-400">Google Pay</span><span class="text-[11px] text-gray-400">Em manutenção</span></div>
+                                    <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
+                                        <i class="fa-brands fa-google-pay text-gray-400 text-base"></i>
+                                        <span class="text-[9px] text-gray-500 mt-1 font-semibold leading-tight text-center">G Pay</span>
+                                        <i class="fa-solid fa-wrench text-gray-300 text-[8px] absolute top-1 right-1"></i>
                                     </div>
-                                    <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
-                                </div>
-                                <div class="border border-gray-200 bg-gray-50 p-3 rounded-xl flex justify-between items-center opacity-70">
-                                    <div class="flex items-center gap-3">
-                                        <i class="fa-brands fa-apple text-gray-400 text-xl"></i>
-                                        <div class="flex flex-col"><span class="font-bold text-sm text-gray-400">Apple Pay</span><span class="text-[11px] text-gray-400">Em manutenção</span></div>
+                                    <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
+                                        <i class="fa-brands fa-apple-pay text-gray-400 text-base"></i>
+                                        <span class="text-[9px] text-gray-500 mt-1 font-semibold leading-tight text-center">Apple</span>
+                                        <i class="fa-solid fa-wrench text-gray-300 text-[8px] absolute top-1 right-1"></i>
                                     </div>
-                                    <i class="fa-solid fa-wrench text-gray-400 text-sm"></i>
                                 </div>
 
                                 <input type="hidden" id="cust-payment" value="PIX">
 
-                                <div class="flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl p-3 mt-3">
-                                    <i class="fa-solid fa-circle-info text-amber-500 text-sm mt-0.5"></i>
-                                    <p class="text-[11px] text-amber-700 leading-snug">No momento estamos aceitando apenas <strong>PIX</strong> para garantir a aprovação imediata do seu pedido.</p>
+                                <div class="flex items-center gap-2 mt-3 px-1">
+                                    <i class="fa-solid fa-shield-halved text-[#05a65a] text-[11px]"></i>
+                                    <p class="text-[10px] text-gray-500 leading-snug">Pagamento 100% seguro e criptografado</p>
                                 </div>
                             </div>
                         </div>
@@ -1182,6 +1200,36 @@
                 var dn = parseInt(d.dataset.stepdot);
                 d.className = 'flex-1 h-1 rounded-full transition-colors ' + (dn <= n ? 'bg-[#EA1D2C]' : 'bg-gray-200');
             });
+            document.querySelectorAll('[data-stepnode]').forEach(function(node){
+                var dn = parseInt(node.dataset.stepnode);
+                var circle = node.querySelector('.step-circle');
+                var label = node.querySelector('.step-label');
+                if(!circle || !label) return;
+                if(dn < n) {
+                    circle.className = 'step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white';
+                    circle.innerHTML = '<i class="fa-solid fa-check text-[10px]"></i>';
+                    label.className = 'step-label text-[9px] font-semibold text-[#EA1D2C]';
+                } else if(dn === n) {
+                    circle.className = 'step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white shadow-md scale-110 transition-transform';
+                    circle.innerText = String(dn);
+                    label.className = 'step-label text-[9px] font-bold text-[#EA1D2C]';
+                } else {
+                    circle.className = 'step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white';
+                    circle.innerText = String(dn);
+                    label.className = 'step-label text-[9px] font-semibold text-gray-400';
+                }
+            });
+            var fill = document.getElementById('checkout-step-fill');
+            if(fill) {
+                var nodes = document.querySelectorAll('[data-stepnode]');
+                if(nodes.length > 1) {
+                    var first = nodes[0].getBoundingClientRect();
+                    var last = nodes[nodes.length-1].getBoundingClientRect();
+                    var totalW = (last.left + last.width/2) - (first.left + first.width/2);
+                    var pct = (n - 1) / (nodes.length - 1);
+                    fill.style.width = Math.max(0, totalW * pct) + 'px';
+                }
+            }
             var nextBtn = document.getElementById('checkout-next-btn'); if(nextBtn) nextBtn.innerText = (n === 4 ? 'Fazer pedido' : 'Continuar');
             var backBtn = document.getElementById('checkout-back-btn'); if(backBtn) backBtn.classList.toggle('hidden', n === 1);
             try { var fi = document.querySelector('#sacola-tela-2 .checkout-step[data-cstep="' + n + '"] input:not([type=hidden]):not([type=radio])'); if(fi) setTimeout(function(){ fi.focus({preventScroll:true}); }, 50); } catch(e){}
