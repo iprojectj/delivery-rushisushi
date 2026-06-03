@@ -847,8 +847,11 @@
          { name: "Refrigerante Japonês 350ml (Morango)", price: 6.90, img: "images/japonesmorango.webp" },
          { name: "Refrigerante Japonês 350ml (Uva)", price: 6.90, img: "images/japonesuva.webp" },
          { name: "Água sem gás", price: 2.50, img: "images/aguasemgas.avif" },
-         { name: "Água com gás", price: 2.50, img: "images/bebida_6-CBZjy4rh.webp" }
-      ];
+          { name: "Água com gás", price: 2.50, img: "images/bebida_6-CBZjy4rh.webp" },
+          { name: "Coca-Cola 2 Litros", price: 12.90, img: "images/coca-cola-2l.png" },
+          { name: "Coca-Cola 2 Litros Zero", price: 12.90, img: "images/coca-cola-2l-zero.png" },
+          { name: "Fanta Laranja 2 Litros", price: 12.90, img: "images/fanta-laranja-2l.png" }
+       ];
 
         const catalog = [
             { id: "barca-ostentacao", category: "destaques", name: "Combo Haki (120 peças)", desc: "O maior do cardápio! 40 Sashimis, 20 Joes, Camarão e muito mais.", price: 92.90, oldPrice: 319.90, img: "images/combo-presidencial.webp", badge: "🔥 70% OFF APLICADO", hasAddons: true, isBait: true },
