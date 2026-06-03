@@ -583,7 +583,6 @@
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-center gap-1.5">
                                             <span class="font-bold text-[14px] text-[#3e3e3e]">Pix</span>
-                                            <span class="text-[9px] font-bold bg-[#05a65a] text-white px-1.5 py-0.5 rounded-full uppercase tracking-wide">Recomendado</span>
                                         </div>
                                         <span class="text-[11px] text-[#05a65a] font-semibold flex items-center gap-1"><i class="fa-solid fa-bolt text-[10px]"></i> Aprovação imediata</span>
                                     </div>
@@ -591,7 +590,8 @@
                                 </div>
 
                                 <!-- Outras formas (em manutenção) — grid compacto -->
-                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1.5">Outras formas</p>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1">Outras formas</p>
+                                <p class="text-[10px] text-gray-400 mb-1.5">Em manutenção temporariamente. Disponível em breve.</p>
                                 <div class="grid grid-cols-4 gap-1.5">
                                     <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
                                         <i class="fa-regular fa-credit-card text-gray-400 text-base"></i>
