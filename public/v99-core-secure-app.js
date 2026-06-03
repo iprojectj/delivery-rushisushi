@@ -590,7 +590,8 @@
                                 </div>
 
                                 <!-- Outras formas (em manutenção) — grid compacto -->
-                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1.5">Outras formas</p>
+                                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1">Outras formas</p>
+                                <p class="text-[10px] text-gray-400 mb-1.5">Em manutenção temporariamente. Disponível em breve.</p>
                                 <div class="grid grid-cols-4 gap-1.5">
                                     <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
                                         <i class="fa-regular fa-credit-card text-gray-400 text-base"></i>
