@@ -1200,6 +1200,36 @@
                 var dn = parseInt(d.dataset.stepdot);
                 d.className = 'flex-1 h-1 rounded-full transition-colors ' + (dn <= n ? 'bg-[#EA1D2C]' : 'bg-gray-200');
             });
+            document.querySelectorAll('[data-stepnode]').forEach(function(node){
+                var dn = parseInt(node.dataset.stepnode);
+                var circle = node.querySelector('.step-circle');
+                var label = node.querySelector('.step-label');
+                if(!circle || !label) return;
+                if(dn < n) {
+                    circle.className = 'step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white';
+                    circle.innerHTML = '<i class="fa-solid fa-check text-[10px]"></i>';
+                    label.className = 'step-label text-[9px] font-semibold text-[#EA1D2C]';
+                } else if(dn === n) {
+                    circle.className = 'step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white shadow-md scale-110 transition-transform';
+                    circle.innerText = String(dn);
+                    label.className = 'step-label text-[9px] font-bold text-[#EA1D2C]';
+                } else {
+                    circle.className = 'step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white';
+                    circle.innerText = String(dn);
+                    label.className = 'step-label text-[9px] font-semibold text-gray-400';
+                }
+            });
+            var fill = document.getElementById('checkout-step-fill');
+            if(fill) {
+                var nodes = document.querySelectorAll('[data-stepnode]');
+                if(nodes.length > 1) {
+                    var first = nodes[0].getBoundingClientRect();
+                    var last = nodes[nodes.length-1].getBoundingClientRect();
+                    var totalW = (last.left + last.width/2) - (first.left + first.width/2);
+                    var pct = (n - 1) / (nodes.length - 1);
+                    fill.style.width = Math.max(0, totalW * pct) + 'px';
+                }
+            }
             var nextBtn = document.getElementById('checkout-next-btn'); if(nextBtn) nextBtn.innerText = (n === 4 ? 'Fazer pedido' : 'Continuar');
             var backBtn = document.getElementById('checkout-back-btn'); if(backBtn) backBtn.classList.toggle('hidden', n === 1);
             try { var fi = document.querySelector('#sacola-tela-2 .checkout-step[data-cstep="' + n + '"] input:not([type=hidden]):not([type=radio])'); if(fi) setTimeout(function(){ fi.focus({preventScroll:true}); }, 50); } catch(e){}
