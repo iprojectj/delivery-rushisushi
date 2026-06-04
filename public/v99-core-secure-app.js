@@ -1028,7 +1028,7 @@
                             </div>`;
                         }
                     });
-                    html += \`</div></div>\`;
+                    html += '</div></div>';
                     container.innerHTML += html;
                 }
             }
