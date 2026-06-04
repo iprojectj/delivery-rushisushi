@@ -251,7 +251,7 @@
 
     <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
         <div class="flex overflow-x-auto no-scroll px-4">
-            <button onclick="scrollToCat('destaques', event)" class="nav-item active">Destaques</button>
+            <button onclick="scrollToCat('destaques', event)" class="nav-item active" id="btn-destaques">Destaques</button>
             <button onclick="scrollToCat('entradas', event)" class="nav-item">Entradas</button>
             <button onclick="scrollToCat('temakis', event)" class="nav-item">Temakis</button>
             <button onclick="scrollToCat('familia', event)" class="nav-item">Família</button>
@@ -984,7 +984,15 @@
 
         function renderCatalog() {
             const container = document.getElementById('product-container');
-            const cats = { 'destaques': 'Destaques', 'entradas': 'Entradas', 'temakis': 'Temakis', 'familia': 'Para a Família', 'classicos': 'Sushis Clássicos', 'hot-rolls': 'Hot Rolls & Fritos', 'yakisobas': 'Yakisobas', 'sobremesas': 'Sobremesas', 'bebidas': 'Bebidas' };
+            const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+            const dayName = days[new Date().getDay()];
+            const highlightsTitle = `Destaques de ${dayName}`;
+            
+            // Atualizar também o botão de navegação se ele existir
+            const btnDestaques = document.getElementById('btn-destaques');
+            if (btnDestaques) btnDestaques.innerText = dayName;
+
+            const cats = { 'destaques': highlightsTitle, 'entradas': 'Entradas', 'temakis': 'Temakis', 'familia': 'Para a Família', 'classicos': 'Sushis Clássicos', 'hot-rolls': 'Hot Rolls & Fritos', 'yakisobas': 'Yakisobas', 'sobremesas': 'Sobremesas', 'bebidas': 'Bebidas' };
             for (const [key, title] of Object.entries(cats)) {
                 const items = catalog.filter(p => p.category === key);
                 if (items.length > 0) {
