@@ -986,14 +986,16 @@
             const container = document.getElementById('product-container');
             const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
             const dayName = days[new Date().getDay()];
-            const highlightsTitle = `Destaques de ${dayName}`;
+            const highlightsTitle = "Destaques de " + dayName;
             
             // Atualizar também o botão de navegação se ele existir
             const btnDestaques = document.getElementById('btn-destaques');
             if (btnDestaques) btnDestaques.innerText = dayName;
 
             const cats = { 'destaques': highlightsTitle, 'entradas': 'Entradas', 'temakis': 'Temakis', 'familia': 'Para a Família', 'classicos': 'Sushis Clássicos', 'hot-rolls': 'Hot Rolls & Fritos', 'yakisobas': 'Yakisobas', 'sobremesas': 'Sobremesas', 'bebidas': 'Bebidas' };
-            for (const [key, title] of Object.entries(cats)) {
+            for (const key in cats) {
+                const title = cats[key];
+
                 const items = catalog.filter(p => p.category === key);
                 if (items.length > 0) {
                     let html = \`<div id="\${key}" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">\${title}</h3><div class="grid gap-4">\`;
