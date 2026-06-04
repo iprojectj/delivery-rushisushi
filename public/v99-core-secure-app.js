@@ -240,10 +240,8 @@
           <div class="flex flex-col min-w-0 flex-1">
             <div class="flex items-center gap-1.5">
               <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
-              <div class="w-3.5 h-3.5 bg-[#EA1D2C] rounded-full flex items-center justify-center shrink-0">
-                <svg viewBox="0 0 24 24" class="w-2 h-2 text-white fill-current" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path>
-                </svg>
+              <div class="w-3.5 h-3.5 bg-[#EA1D2C] rounded-full flex items-center justify-center shrink-0 shadow-[0_0_8px_rgba(234,29,44,0.4)]">
+                <i class="fa-solid fa-star text-white text-[7px]"></i>
               </div>
             </div>
           </div>
