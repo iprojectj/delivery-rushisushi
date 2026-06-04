@@ -288,95 +288,87 @@
 \"            </div>\" +
 \"        </section>\" +
 
-    <!-- SEÇÃO DE REVIEWS REAIS -->
-    <section class="px-4 mt-8 mb-4">
-        <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2">
-            <i class="fa-solid fa-star text-[#fbbf24]"></i> 
-            O que dizem nossos clientes
-        </h3>
-        
-        <div class="space-y-3">
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xs">RM</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Ricardo Mello</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"Melhor custo benefício que já vi. O peixe está muito fresco, chegou rápido."</p>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center font-bold text-pink-600 text-xs">AB</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Amanda Borges</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"O Hot Roll veio crocante de verdade! Embalagem impecável."</p>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 text-xs">JP</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">João Paulo</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"Vi no TikTok e resolvi testar. Entrega super rápida e sushi de qualidade."</p>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-600 text-xs">LH</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Letícia Helena</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"Combo Haki maravilhoso. Comemos em 3 e ficamos satisfeitos!"</p>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-600 text-xs">CC</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Claudio C.</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"A entrega grátis realmente funciona e não demora. Gostei muito."</p>
-            </div>
-
-            <button class="w-full py-3 text-[#EA1D2C] text-xs font-bold border border-gray-200 rounded-xl bg-white active:bg-gray-50 transition">
-                Faça seu primeiro pedido para avaliar!
-            </button>
-        </div>
-    </section>
-
-    <footer class="bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative">
-            <div class="flex flex-col items-center justify-center mb-6">
-                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
-                <h2 class="text-lg font-bold text-[#3e3e3e]">Rūshī Sushi</h2>
-                <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">CNPJ: 57.272.601/0001-12</p>
-            </div>
-            <div class="flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto">
-                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Sobre Nós</button>
-                <button onclick="openInstitucional('privacidade')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Privacidade</button>
-                <button onclick="openInstitucional('termos')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Termos</button>
-                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Trocas</button>
-            </div>
-            <div class="flex justify-center gap-4 mb-8">
-                <a href="https://www.instagram.com/rushisushioficial/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
-            </div>
-            <div class="text-[10px] text-gray-400 border-t border-gray-100 pt-6">
-                <p>&copy; 2026 Rūshī Sushi Delivery.</p>
-                <p>Feito com <i class="fa-solid fa-heart text-[#EA1D2C] text-[8px]"></i> para você.</p>
-            </div>
-    </footer>
+\"    <section class='px-4 mt-8 mb-4'>\" +
+\"        <h3 class='font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2'>\" +
+\"            <i class='fa-solid fa-star text-[#fbbf24]'></i>\" +
+\"            O que dizem nossos clientes\" +
+\"        </h3>\" +
+\"        <div class='space-y-3'>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xs'>RM</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>Ricardo Mello</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"Melhor custo benefício que já vi. O peixe está muito fresco, chegou rápido.\\\"</p>\" +
+\"            </div>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center font-bold text-pink-600 text-xs'>AB</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>Amanda Borges</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"O Hot Roll veio crocante de verdade! Embalagem impecável.\\\"</p>\" +
+\"            </div>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 text-xs'>JP</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>João Paulo</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"Vi no TikTok e resolvi testar. Entrega super rápida e sushi de qualidade.\\\"</p>\" +
+\"            </div>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-600 text-xs'>LH</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>Letícia Helena</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"Combo Haki maravilhoso. Comemos em 3 e ficamos satisfeitos!\\\"</p>\" +
+\"            </div>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-600 text-xs'>CC</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>Claudio C.</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"A entrega grátis realmente funciona e não demora. Gostei muito.\\\"</p>\" +
+\"            </div>\" +
+\"            <button class='w-full py-3 text-[#EA1D2C] text-xs font-bold border border-gray-200 rounded-xl bg-white active:bg-gray-50 transition'>\" +
+\"                Faça seu primeiro pedido para avaliar!\" +
+\"            </button>\" +
+\"        </div>\" +
+\"    </section>\" +
+\"    <footer class='bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative'>\" +
+\"            <div class='flex flex-col items-center justify-center mb-6'>\" +
+\"                <div class='w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1'><img src='images/logo-rushi.webp' class='w-full h-full object-cover rounded-full'></div>\" +
+\"                <h2 class='text-lg font-bold text-[#3e3e3e]'>Rūshī Sushi</h2>\" +
+\"                <p class='text-[10px] text-gray-400 uppercase tracking-widest mt-1'>CNPJ: 57.272.601/0001-12</p>\" +
+\"            </div>\" +
+\"            <div class='flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto'>\" +
+\"                <button onclick='openInstitucional(\\\"sobre\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Sobre Nós</button>\" +
+\"                <button onclick='openInstitucional(\\\"privacidade\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Privacidade</button>\" +
+\"                <button onclick='openInstitucional(\\\"termos\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Termos</button>\" +
+\"                <button onclick='openInstitucional(\\\"trocas\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Trocas</button>\" +
+\"            </div>\" +
+\"            <div class='flex justify-center gap-4 mb-8'>\" +
+\"                <a href='https://www.instagram.com/rushisushioficial/' target='_blank' rel='noopener noreferrer' class='w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition'><i class='fa-brands fa-instagram text-lg'></i></a>\" +
+\"            </div>\" +
+\"            <div class='text-[10px] text-gray-400 border-t border-gray-100 pt-6'>\" +
+\"                <p>&copy; 2026 Rūshī Sushi Delivery.</p>\" +
+\"                <p>Feito com <i class='fa-solid fa-heart text-[#EA1D2C] text-[8px]'></i> para você.</p>\" +
+\"            </div>\" +
+\"    </footer>\" +
 
     <div id="cart-bar" class="fixed bottom-0 left-0 w-full bg-white z-40 transition-transform transform translate-y-full shadow-[0_-4px_14px_rgba(0,0,0,0.10)] mb-safe border-t border-gray-100">
         <!-- Barra de progresso / cupom (topo) -->
