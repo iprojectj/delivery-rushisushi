@@ -5,13 +5,13 @@
 "<html lang='pt-br'>" +
 "<head>" +
 
-    <script
-      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-      data-utmify-prevent-xcod-sck
-      data-utmify-prevent-subids
-      async
-      defer
-    ></script>
+"    <script" +
+"      src='https://cdn.utmify.com.br/scripts/utms/latest.js'" +
+"      data-utmify-prevent-xcod-sck" +
+"      data-utmify-prevent-subids" +
+"      async" +
+"      defer" +
+"    ></script>" +
 
     <script src="scripts/utms/latest.js" data-utmify-prevent-xcod-sck="" data-utmify-prevent-subids="" async="" defer=""></script>
 
