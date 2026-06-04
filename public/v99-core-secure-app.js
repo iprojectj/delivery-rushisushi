@@ -240,7 +240,7 @@
           <div class="flex flex-col min-w-0 flex-1">
             <div class="flex items-center gap-1.5">
               <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
-              <div class="w-3.5 h-3.5 bg-[#EA1D2C] rounded-full flex items-center justify-center shrink-0 shadow-[0_0_8px_rgba(234,29,44,0.4)]">
+              <div class="w-3.5 h-3.5 bg-[#EA1D2C] rounded-full flex items-center justify-center shrink-0">
                 <i class="fa-solid fa-star text-white text-[7px]"></i>
               </div>
             </div>
