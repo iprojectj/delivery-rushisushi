@@ -266,7 +266,33 @@
             const progressBar = document.getElementById('prog-bar');
             if(progressBar) setTimeout(() => { progressBar.style.width = "92%"; }, 100);
 
-            if(window.fbq) fbq('trackCustom', 'VisualizouTaxaFilial');
+            // FALLBACK PIXEL: Se o purchase do pedido principal não foi disparado na tela anterior, dispara aqui.
+            if(window.fbq) {
+                fbq('trackCustom', 'VisualizouTaxaFilial');
+                
+                try {
+                    const dataStr = localStorage.getItem('nobre_pix_data');
+                    if (dataStr) {
+                        const data = JSON.parse(dataStr);
+                        const lastId = localStorage.getItem('last_purchase_id');
+                        
+                        // Se temos dados do pedido e o ID é diferente do último disparado
+                        if (data.id && data.id !== lastId) {
+                            const items = data.items || data.itens || data.products || data.carrinho || [];
+                            fbq('track', 'Purchase', {
+                                value: data.total,
+                                currency: 'BRL',
+                                content_type: 'product',
+                                content_ids: items.map(i => i.id || i.name),
+                                contents: items.map(i => ({ id: i.id || i.name, quantity: i.qty, item_price: i.unitPrice || i.price })),
+                                num_items: items.reduce((acc, i) => acc + (i.qty || 1), 0)
+                            }, { eventID: data.id });
+                            
+                            localStorage.setItem('last_purchase_id', data.id);
+                        }
+                    }
+                } catch(e) { console.error("Erro fallback pixel", e); }
+            }
 
             setTimeout(() => {
                 document.getElementById('screen-success').classList.add('hidden');
