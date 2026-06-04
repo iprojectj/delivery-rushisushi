@@ -1010,11 +1010,11 @@
                                 highlightClass = 'card-destaque-master border-2 border-[#EA1D2C] bg-white'; 
                             }
                             
-                            html += \`
-                            <div onclick="openProductModal('\${p.id}')" class="\${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
+                            html += `
+                            <div onclick="openProductModal('${p.id}')" class="${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
                                 <div class="w-full h-48 relative bg-gray-100 z-10">
-                                    <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
-                                    \${p.isBait ? `
+                                    <img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
+                                    ${p.isBait ? `
                                     <div class="absolute top-2 left-2 flex flex-col gap-1 z-20">
                                         <div class="bg-amber-500/95 backdrop-blur-sm text-white text-[9px] font-black px-2 py-1 rounded shadow-sm flex items-center gap-1.5 border border-amber-400/50">
                                             <i class="fa-solid fa-paw text-[8px]"></i>
@@ -1026,31 +1026,31 @@
                                         </div>
                                     </div>
                                     ` : ''}
-                                    \${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">\${p.badge}\</div>` : ''}
+                                    ${p.badge ? `<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">${p.badge}</div>` : ''}
                                 </div>
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
-                                    <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
-                                    <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p>
+                                    <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">${p.name}</h4>
+                                    <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p>
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
-                                        <span class="text-[#05a65a] font-black text-2xl">\${formatMoney(p.price)}</span>
-                                        \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">\${formatMoney(p.oldPrice)}</span>\` : ''}
+                                        <span class="text-[#05a65a] font-black text-2xl">${formatMoney(p.price)}</span>
+                                        ${p.oldPrice ? `<span class="text-sm text-gray-400 line-through font-medium">${formatMoney(p.oldPrice)}</span>` : ''}
                                     </div>
                                 </div>
-                            </div>\`;
+                            </div>`;
                         } 
                         else {
                             if (p.id === 'combo-rodízio' || p.id === 'barca-ostentacao') { 
                                 highlightClass = 'card-destaque-master border-l-4 border-l-[#EA1D2C]'; 
                             }
                             
-                            html += \`
-                            <div onclick="openProductModal('\${p.id}')" class="flex justify-between items-center p-5 \${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
+                            html += `
+                            <div onclick="openProductModal('${p.id}')" class="flex justify-between items-center p-5 ${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
                                 <div class="flex flex-col justify-between min-h-[100px] py-1 pr-2 z-10 w-full">
-                                    <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">\${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p></div>
-                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm \${p.isBait ? 'font-bold text-lg' : ''}">\${formatMoney(p.price)}</span>\${p.oldPrice ? \`<span class="text-xs text-gray-400 line-through">\${formatMoney(p.oldPrice)}</span>\` : ''}\${p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-1 rounded font-bold animate-pulse">OFERTA</span>' : ''}</div>
+                                    <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p></div>
+                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm ${p.isBait ? 'font-bold text-lg' : ''}">${formatMoney(p.price)}</span>${p.oldPrice ? `<span class="text-xs text-gray-400 line-through">${formatMoney(p.oldPrice)}</span>` : ''}${p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-1 rounded font-bold animate-pulse">OFERTA</span>' : ''}</div>
                                 </div>
-                                <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">\${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">\${p.badge}</div>\` : ''}</div>
-                            </div>\`;
+                                <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">${p.badge ? `<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">${p.badge}</div>` : ''}</div>
+                            </div>`;
                         }
                     });
                     html += \`</div></div>\`;
