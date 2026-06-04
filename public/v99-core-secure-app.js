@@ -1056,7 +1056,6 @@
                     html += \`\\</div\\>\\</div\\>\`;
                     container.innerHTML += html;
                 }
-                }
             }
         }
 
