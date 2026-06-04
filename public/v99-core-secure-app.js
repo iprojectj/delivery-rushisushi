@@ -219,87 +219,74 @@
 \"      </div>\" +
 \"    </div>\" +
 
-    <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
-        <div class="flex overflow-x-auto no-scroll px-4" id="category-tabs">
-            <button onclick="scrollToCat('destaques', event)" class="nav-item active">Destaques</button>
-            <button onclick="scrollToCat('entradas', event)" class="nav-item">Entradas</button>
-            <button onclick="scrollToCat('temakis', event)" class="nav-item">Temakis</button>
-            <button onclick="scrollToCat('familia', event)" class="nav-item">Família</button>
-            <button onclick="scrollToCat('classicos', event)" class="nav-item">Clássicos</button>
-            <button onclick="scrollToCat('hot-rolls', event)" class="nav-item">Quentes</button>
-            <button onclick="scrollToCat('yakisobas', event)" class="nav-item">Yakisobas</button>
-            <button onclick="scrollToCat('sobremesas', event)" class="nav-item">Sobremesas</button>
-            <button onclick="scrollToCat('bebidas', event)" class="nav-item">Bebidas</button>
-        </div>
-    </div>
-
-    <main class="p-4 space-y-6 min-h-screen bg-[#ffffff]" id="product-container"></main>
-
-    <!-- ========================================== -->
-        <!-- 🟢 NOVA SEÇÃO: FAQ (Design Clean) -->
-        <!-- ========================================== -->
-        <section class="bg-[#ffffff] mt-2 pt-4 pb-2">
-            <div class="px-4">
-                <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2">
-                    <i class="fa-regular fa-comments text-[#EA1D2C]"></i> 
-                    Dúvidas Frequentes
-                </h3>
-                
-                <div class="space-y-2">
-                    <!-- Pergunta 1 -->
-                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Qual o prazo de entrega?</span>
-                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
-                        </button>
-                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
-                            <div class="pt-2 border-t border-gray-50">
-                                Nosso prazo médio é de <strong>30 a 45 minutos</strong>. Em dias de chuva ou alta demanda, esse tempo pode variar levemente, mas sempre prezamos pela agilidade.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pergunta 2 -->
-                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Quais formas de pagamento?</span>
-                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
-                        </button>
-                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
-                            <div class="pt-2 border-t border-gray-50">
-                                Aceitamos <strong>PIX (Aprovação Imediata)</strong>. É a forma mais rápida e segura. Seu pedido vai direto para a cozinha assim que o pagamento é confirmado.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pergunta 3 -->
-                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Os produtos são frescos?</span>
-                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
-                        </button>
-                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
-                            <div class="pt-2 border-t border-gray-50">
-                                <strong>Sim! Absolutamente.</strong> Recebemos peixe fresco todos os dias. Não trabalhamos com estoque congelado de sushis prontos. Tudo é feito na hora.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pergunta 4 -->
-                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Horário de Funcionamento</span>
-                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
-                        </button>
-                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
-                            <div class="pt-2 border-t border-gray-50">
-                                Estamos abertos <strong>24 Horas</strong>! Madrugada, manhã, tarde ou noite: bateu a fome, o Rūshī Sushi entrega.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+\"    <div class='sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap'>\" +
+\"        <div class='flex overflow-x-auto no-scroll px-4' id='category-tabs'>\" +
+\"            <button onclick='scrollToCat(\\\"destaques\\\", event)' class='nav-item active'>Destaques</button>\" +
+\"            <button onclick='scrollToCat(\\\"entradas\\\", event)' class='nav-item'>Entradas</button>\" +
+\"            <button onclick='scrollToCat(\\\"temakis\\\", event)' class='nav-item'>Temakis</button>\" +
+\"            <button onclick='scrollToCat(\\\"familia\\\", event)' class='nav-item'>Família</button>\" +
+\"            <button onclick='scrollToCat(\\\"classicos\\\", event)' class='nav-item'>Clássicos</button>\" +
+\"            <button onclick='scrollToCat(\\\"hot-rolls\\\", event)' class='nav-item'>Quentes</button>\" +
+\"            <button onclick='scrollToCat(\\\"yakisobas\\\", event)' class='nav-item'>Yakisobas</button>\" +
+\"            <button onclick='scrollToCat(\\\"sobremesas\\\", event)' class='nav-item'>Sobremesas</button>\" +
+\"            <button onclick='scrollToCat(\\\"bebidas\\\", event)' class='nav-item'>Bebidas</button>\" +
+\"        </div>\" +
+\"    </div>\" +
+\"    <main class='p-4 space-y-6 min-h-screen bg-[#ffffff]' id='product-container'></main>\" +
+\"        <section class='bg-[#ffffff] mt-2 pt-4 pb-2'>\" +
+\"            <div class='px-4'>\" +
+\"                <h3 class='font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2'>\" +
+\"                    <i class='fa-regular fa-comments text-[#EA1D2C]'></i>\" +
+\"                    Dúvidas Frequentes\" +
+\"                </h3>\" +
+\"                <div class='space-y-2'>\" +
+\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
+\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
+\"                            <span>Qual o prazo de entrega?</span>\" +
+\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
+\"                        </button>\" +
+\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
+\"                            <div class='pt-2 border-t border-gray-50'>\" +
+\"                                Nosso prazo médio é de <strong>30 a 45 minutos</strong>. Em dias de chuva ou alta demanda, esse tempo pode variar levemente, mas sempre prezamos pela agilidade.\" +
+\"                            </div>\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
+\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
+\"                            <span>Quais formas de pagamento?</span>\" +
+\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
+\"                        </button>\" +
+\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
+\"                            <div class='pt-2 border-t border-gray-50'>\" +
+\"                                Aceitamos <strong>PIX (Aprovação Imediata)</strong>. É a forma mais rápida e segura. Seu pedido vai direto para a cozinha assim que o pagamento é confirmado.\" +
+\"                            </div>\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
+\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
+\"                            <span>Os produtos são frescos?</span>\" +
+\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
+\"                        </button>\" +
+\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
+\"                            <div class='pt-2 border-t border-gray-50'>\" +
+\"                                <strong>Sim! Absolutamente.</strong> Recebemos peixe fresco todos os dias. Não trabalhamos com estoque congelado de sushis prontos. Tudo é feito na hora.\" +
+\"                            </div>\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
+\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
+\"                            <span>Horário de Funcionamento</span>\" +
+\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
+\"                        </button>\" +
+\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
+\"                            <div class='pt-2 border-t border-gray-50'>\" +
+\"                                Estamos abertos <strong>24 Horas</strong>! Madrugada, manhã, tarde ou noite: bateu a fome, o Rūshī Sushi entrega.\" +
+\"                            </div>\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                </div>\" +
+\"            </div>\" +
+\"        </section>\" +
 
     <!-- SEÇÃO DE REVIEWS REAIS -->
     <section class="px-4 mt-8 mb-4">
