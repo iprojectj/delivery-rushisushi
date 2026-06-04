@@ -1,6 +1,7 @@
 (function() {
+    
+    
     var payload = `<!DOCTYPE html>
-
 <html lang="pt-br">
 <head>
 
@@ -50,7 +51,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rūshī Sushi</title>
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"><\/script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -722,7 +723,7 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js"><\/script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"><\/script>
 
     <script>
@@ -868,7 +869,8 @@
         function atualizarHeaderLocalizacao(cidade, estado) {
             const el = document.getElementById("header-location-info");
             if (el) {
-                el.innerText = cidade + " - " + estado;
+                // Adicionamos a barra invertida \ antes do $ para o código não quebrar
+                el.innerText = \`\${cidade} - \${estado}\`;
             }
         }
 
@@ -890,14 +892,14 @@
 
         function salvarEExibir(cidade, estado) {
             localStorage.setItem("localCidade", cidade); localStorage.setItem("localEstado", estado); atualizarHeaderLocalizacao(cidade, estado);
-            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>', confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
+            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>\`, confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
         }
 
         async function iniciarVerificacaoLocal() {
             const cidadeSalva = localStorage.getItem("localCidade"); const estadoSalvo = localStorage.getItem("localEstado");
             if (cidadeSalva && estadoSalvo) { atualizarHeaderLocalizacao(cidadeSalva, estadoSalvo); return; }
             const local = await fetchLocation();
-            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>' + local.city + ' - ' + local.region + '</strong></div>', showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
+            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>\${local.city} - \${local.region}</strong></div>\`, showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
         }
 
         const commonAddons = [
@@ -998,8 +1000,8 @@
                 const title = cats[key];
 
                 const items = catalog.filter(p => p.category === key);
-                                if (items.length > 0) {
-                    let html = '<div id="' + key + '" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">' + title + '</h3><div class="grid gap-4">';
+                if (items.length > 0) {
+                    let html = \`<div id="\${key}" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">\${title}</h3><div class="grid gap-4">\`;
                     items.forEach(p => {
                         let highlightClass = 'border-gray-100 bg-[#fafafa]'; 
                         
@@ -1008,50 +1010,39 @@
                                 highlightClass = 'card-destaque-master border-2 border-[#EA1D2C] bg-white'; 
                             }
                             
-                            html += '\
-                            <div onclick="openProductModal(\'' + p.id + '\')" class="' + highlightClass + ' rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">\
-                                <div class="w-full h-48 relative bg-gray-100 z-10">\
-                                    <img src="' + p.img + '" class="w-full h-full object-cover" onerror="this.src=\'images/logo-rushi.webp\'">\
-                                    ' + (p.isBait ? '\
-                                    <div class="absolute top-2 left-2 flex flex-col gap-1 z-20">\
-                                        <div class="bg-amber-500/95 backdrop-blur-sm text-white text-[9px] font-black px-2 py-1 rounded shadow-sm flex items-center gap-1.5 border border-amber-400/50">\
-                                            <i class="fa-solid fa-paw text-[8px]"></i>\
-                                            <span>AMIGO DE PATAS</span>\
-                                        </div>\
-                                        <div class="bg-white/95 backdrop-blur-sm text-amber-600 text-[8px] font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 border border-amber-100">\
-                                            <i class="fa-solid fa-clock-rotate-left text-[7px] animate-pulse"></i>\
-                                            <span>PROMOÇÃO HOJE</span>\
-                                        </div>\
-                                    </div>\
-                                    ' : '') + '\
-                                    ' + (p.badge ? '<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">' + p.badge + '</div>' : '') + '\
-                                </div>\
-                                <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">\
-                                    <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">' + p.name + '</h4>\
-                                    <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">' + p.desc + '</p>\
-                                    <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">\
-                                        <span class="text-[#05a65a] font-black text-2xl">' + formatMoney(p.price) + '</span>\
-                                        ' + (p.oldPrice ? '<span class="text-sm text-gray-400 line-through font-medium">' + formatMoney(p.oldPrice) + '</span>' : '') + '\
-                                    </div>\
-                                </div>\
-                            </div>';
+                            html += \`
+                            <div onclick="openProductModal('\${p.id}')" class="\${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
+                                <div class="w-full h-48 relative bg-gray-100 z-10">
+                                    <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
+                                    \${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">\${p.badge}</div>\` : ''}
+                                </div>
+                                <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
+                                    <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
+                                    <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p>
+                                    <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
+                                        <span class="text-[#05a65a] font-black text-2xl">\${formatMoney(p.price)}</span>
+                                        \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">\${formatMoney(p.oldPrice)}</span>\` : ''}
+                                        ${p.isBait ? '' : ''}
+                                    </div>
+                                </div>
+                            </div>\`;
                         } 
                         else {
                             if (p.id === 'combo-rodízio' || p.id === 'barca-ostentacao') { 
                                 highlightClass = 'card-destaque-master border-l-4 border-l-[#EA1D2C]'; 
                             }
                             
-                            html += '\
-                            <div onclick="openProductModal(\'' + p.id + '\')" class="flex justify-between items-center p-5 ' + highlightClass + ' rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">\
-                                <div class="flex flex-col justify-between min-h-[100px] py-1 pr-2 z-10 w-full">\
-                                    <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">' + p.name + '</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">' + p.desc + '</p></div>\
-                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm ' + (p.isBait ? 'font-bold text-lg' : '') + '">' + formatMoney(p.price) + '</span>' + (p.oldPrice ? '<span class="text-xs text-gray-400 line-through">' + formatMoney(p.oldPrice) + '</span>' : '') + (p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-1 rounded font-bold animate-pulse">OFERTA</span>' : '') + '</div>\
-                                </div>\
-                                <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="' + p.img + '" class="w-full h-full object-cover" onerror="this.src=\'images/logo-rushi.webp\'">' + (p.badge ? '<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">' + p.badge + '</div>' : '') + '</div>\
-                            </div>';
+                            html += \`
+                            <div onclick="openProductModal('\${p.id}')" class="flex justify-between items-center p-5 \${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
+                                <div class="flex flex-col justify-between min-h-[100px] py-1 pr-2 z-10 w-full">
+                                    <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">\${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p></div>
+                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm \${p.isBait ? 'font-bold text-lg' : ''}">\${formatMoney(p.price)}</span>\${p.oldPrice ? \`<span class="text-xs text-gray-400 line-through">\${formatMoney(p.oldPrice)}</span>\` : ''}\${p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-1 rounded font-bold animate-pulse">OFERTA</span>' : ''}</div>
+                                </div>
+                                <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">\${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">\${p.badge}</div>\` : ''}</div>
+                            </div>\`;
                         }
                     });
-                    html += '</div></div>';
+                    html += \`</div></div>\`;
                     container.innerHTML += html;
                 }
             }
@@ -1100,16 +1091,16 @@
             opts.innerHTML = '';
             
             if(item.hasAddons) {
-                let html = '<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>';
+                let html = \`<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>\`;
                 commonAddons.forEach((opt, idx) => {
                     addonsState[opt.name] = 0;
-                    html += '\
-                    <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">\
-                        <div class="flex items-center gap-3"><img src="' + opt.img + '" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">' + opt.name + '</div><div class="text-xs text-[#05a65a] font-bold">' + (opt.price === 0 ? 'Grátis' : '+ ' + formatMoney(opt.price)) + '</div></div></div>\
-                        <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty(\'' + opt.name + '\', ' + opt.price + ', -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-' + idx + '">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty(\'' + opt.name + '\', ' + opt.price + ', 1)">+</button></div>\
-                    </div>';
+                    html += \`
+                    <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
+                        <div class="flex items-center gap-3"><img src="\${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">\${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">\${opt.price === 0 ? 'Grátis' : '+ '+formatMoney(opt.price)}</div></div></div>
+                        <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-\${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, 1)">+</button></div>
+                    </div>\`;
                 });
-                html += '</div>';
+                html += \`</div>\`;
                 opts.innerHTML = html;
             }
             document.getElementById('product-modal-container').classList.remove('hidden');
@@ -1121,7 +1112,7 @@
             let current = addonsState[name] || 0;
             const newQty = current + delta;
             if (price === 0 && delta > 0 && newQty > 2) { Swal.fire({ toast: true, position: 'center', icon: 'warning', title: 'Máximo de 2 unidades para itens grátis!', showConfirmButton: false, timer: 2000 }); return; }
-            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById('addon-qty-' + idx).innerText = addonsState[name]; updateModalTotal(); }
+            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById(\`addon-qty-\${idx}\`).innerText = addonsState[name]; updateModalTotal(); }
         }
 
         function updateModalTotal() {
@@ -1341,12 +1332,12 @@
             container.innerHTML = '';
             if(cart.length === 0) { container.innerHTML = '<p class="text-center text-gray-400 py-4">Sua sacola está vazia.</p>'; return; }
             cart.forEach((item, idx) => {
-                let addonsHtml = (item.addons || []).map(function(a) { return '<span class="text-xs text-gray-500 block">+ ' + a.qty + 'x ' + a.name + '</span>'; }).join('');
-                container.innerHTML += '\
-                <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">\
-                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">' + item.qty + 'x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">' + item.name + '</span>' + addonsHtml + (item.obs ? '<span class="text-xs text-gray-400 italic">"' + item.obs + '"</span>' : '') + '<div class="text-[#3e3e3e] font-medium text-sm mt-1">' + formatMoney(item.totalPrice) + '</div></div></div>\
-                    <button onclick="removeCartItem(' + idx + ')" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>\
-                </div>';
+                let addonsHtml = (item.addons || []).map(a => \`<span class="text-xs text-gray-500 block">+ \${a.qty}x \${a.name}</span>\`).join('');
+                container.innerHTML += \`
+                <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
+                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">\${item.qty}x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">\${item.name}</span>\${addonsHtml}\${item.obs ? \`<span class="text-xs text-gray-400 italic">"\${item.obs}"</span>\` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">\${formatMoney(item.totalPrice)}</div></div></div>
+                    <button onclick="removeCartItem(\${idx})" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>
+                </div>\`;
             });
             recalcTotal();
         }
@@ -1481,7 +1472,7 @@
             const payload = { valorTotal: total, nome: nomeCliente, whatsapp: zapCliente, cep: document.getElementById('cust-cep').value, rua: document.getElementById('cust-street').value, numero: document.getElementById('cust-number').value, bairro: document.getElementById('cust-hood').value, complemento: document.getElementById('cust-comp').value, products: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })), trackingParameters: getTrackingParams() };
             try {
                 if(window.fbq) fbq('track', 'AddPaymentInfo');
-                const response = await fetch(API_BASE_URL + '/criar-pix', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const response = await fetch(\`\${API_BASE_URL}/criar-pix\`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await response.json();
                 if(data.success) {
                     localStorage.setItem('user_cache_nome', nomeCliente); localStorage.setItem('user_cache_zap', zapCliente);
@@ -1527,10 +1518,14 @@
             if (reviewStep === 0) { document.getElementById('more-reviews-1').classList.remove('hidden'); document.getElementById('more-reviews-1').classList.add('animate-[fade_0.5s]'); reviewStep++; } 
             else if (reviewStep === 1) { document.getElementById('more-reviews-2').classList.remove('hidden'); document.getElementById('more-reviews-2').classList.add('animate-[fade_0.5s]'); document.getElementById('btn-load-reviews').style.display = 'none'; reviewStep++; }
         }
-    </script>
+
+    <\/script>
+
+    
 </body>
 </html>`;
 
+    // 🚀 EXECUÇÃO FINAL
     document.open();
     document.write(payload);
     document.close();

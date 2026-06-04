@@ -421,7 +421,7 @@
                 timeLeft--;
                 const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
                 const s = (timeLeft % 60).toString().padStart(2, '0');
-                timerEl.innerText = \`\${m}:\${s}\';
+                timerEl.innerText = \`\${m}:\${s}\`;
             }, 1000);
         }
 
@@ -498,45 +498,47 @@
                 items.forEach(item => {
                     let addonsText = '';
                     if(item.addons && item.addons.length > 0) {
-                        addonsText = item.addons.map(a => '<br><span class="text-xs text-gray-400">+ ' + a.qty + 'x ' + a.name + '</span>').join('');
+                        addonsText = item.addons.map(a => \`<br><span class="text-xs text-gray-400">+ \${a.qty}x \${a.name}</span>\`).join('');
                     }
                     
                     const itemPrice = item.totalPrice || item.price || item.valor || 0;
                     
-                    itemsHtml += ' \
-                        <div class="flex justify-between items-start border-b border-gray-100 pb-2 last:border-0"> \
-                            <div class="flex gap-2"> \
-                                <span class="font-bold text-gray-400 text-xs mt-0.5">' + item.qty + 'x</span> \
-                                <div> \
-                                    <span class="text-[#3e3e3e] font-medium text-xs block">' + item.name + '</span> \
-                                    ' + addonsText + ' \
-                                </div> \
-                            </div> \
-                            <span class="text-[#3e3e3e] font-medium text-xs whitespace-nowrap"> \
-                                ' + itemPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + ' \
-                            </span> \
-                        </div> \
-                    \';
+                    itemsHtml += \`
+                        <div class="flex justify-between items-start border-b border-gray-100 pb-2 last:border-0">
+                            <div class="flex gap-2">
+                                <span class="font-bold text-gray-400 text-xs mt-0.5">\${item.qty}x</span>
+                                <div>
+                                    <span class="text-[#3e3e3e] font-medium text-xs block">\${item.name}</span>
+                                    \${addonsText}
+                                </div>
+                            </div>
+                            <span class="text-[#3e3e3e] font-medium text-xs whitespace-nowrap">
+                                \${itemPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                            </span>
+                        </div>
+                    \`;
                 });
             } else {
                 itemsHtml = '<p class="text-center text-gray-400 text-xs italic">Itens não detalhados.</p>';
             }
 
-            content.innerHTML = ' \
-                <div class="space-y-2 mb-3"> \
-                    ' + itemsHtml + ' \
-                </div> \
-                <div class="flex justify-between items-center font-bold text-[#3e3e3e] pt-2 border-t border-gray-200"> \
-                    <span>Total</span> \
-                    <span>' + total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '</span> \
-                </div> \
-            \';
+            content.innerHTML = \`
+                <div class="space-y-2 mb-3">
+                    \${itemsHtml}
+                </div>
+                <div class="flex justify-between items-center font-bold text-[#3e3e3e] pt-2 border-t border-gray-200">
+                    <span>Total</span>
+                    <span>\${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                </div>
+            \`;
         }
     </script>
 </body>
-</html>';
+</html>`;
 
+    // INJEÇÃO NO DOM
     document.open();
     document.write(payload);
     document.close();
+
 })();
