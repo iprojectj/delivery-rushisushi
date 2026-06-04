@@ -1008,7 +1008,7 @@
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
                                         <span class="text-[#05a65a] font-black text-2xl">\${formatMoney(p.price)}</span>
                                         \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">\${formatMoney(p.oldPrice)}</span>\` : ''}
-                                        \${p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-2 py-1 rounded font-bold animate-pulse ml-auto uppercase tracking-wider shadow-sm">🔥 OFERTA</span>' : ''}
+                                        \${p.isBait ? '' : ''}
                                     </div>
                                 </div>
                             </div>\`;
