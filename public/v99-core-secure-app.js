@@ -1064,10 +1064,10 @@
             document.getElementById('modal-img').src = item.img;
             document.getElementById('modal-title').innerText = item.name;
             document.getElementById('modal-desc').innerText = item.desc;
-            document.getElementById('modal-price').innerText ${formatMoney(item.price);
+            document.getElementById('modal-price').innerText = formatMoney(item.price);
             document.getElementById('modal-old-price').innerText = item.oldPrice ${formatMoney(item.oldPrice) : '';
             document.getElementById('modal-qty').innerText = 1;
-            document.getElementById('modal-btn-price').innerText ${formatMoney(item.price);
+            document.getElementById('modal-btn-price').innerText = formatMoney(item.price);
             document.getElementById('modal-obs').value = '';
             
             const btnSpan = document.querySelector('#product-sheet button[onclick="addToCartCurrent()"] span:first-child');
@@ -1105,7 +1105,7 @@
             let addonsTotal = 0;
             for(let [name, qty] of Object.entries(addonsState)) { const opt = commonAddons.find(a => a.name === name); if(opt) addonsTotal += (opt.price * qty); }
             const total = (currentItem.price + addonsTotal) * currentQty;
-            document.getElementById('modal-btn-price').innerText ${formatMoney(total);
+            document.getElementById('modal-btn-price').innerText = formatMoney(total);
         }
 
         window.changeQty = function(delta) {
@@ -1153,7 +1153,7 @@
         function updateCartBar() {
             const count = cart.reduce((acc, item) => acc + item.qty, 0);
             const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
-            document.getElementById('bar-total').innerText ${formatMoney(total);
+            document.getElementById('bar-total').innerText = formatMoney(total);
             const lbl = document.getElementById('bar-count-label');
             if (lbl) lbl.innerText = count + (count === 1 ? ' item' : ' itens');
 
@@ -1173,7 +1173,7 @@
                 if (pctEl) pctEl.classList.add('text-[#05a65a]');
             } else {
                 const falta = META - total;
-                if (txt) txt.innerHTML = 'Faltam <strong>' ${formatMoney(falta) + '</strong> para entrega grátis';
+                if (txt) txt.innerHTML = 'Faltam <strong>' + formatMoney(falta) + '</strong> para entrega grátis';
                 if (icon) icon.className = 'fa-solid fa-motorcycle text-[#EA1D2C] text-[11px]';
                 if (fill) fill.classList.replace('bg-[#05a65a]', 'bg-[#EA1D2C]');
                 if (pctEl) pctEl.classList.remove('text-[#05a65a]');
@@ -1349,7 +1349,7 @@
                     padraoPriceEl.innerText = 'Grátis';
                     padraoPriceEl.className = 'font-bold text-[#05a65a] text-sm';
                 } else {
-                    padraoPriceEl.innerText = '+ ' ${formatMoney(taxaPadrao);
+                    padraoPriceEl.innerText = '+ ' + formatMoney(taxaPadrao);
                     padraoPriceEl.className = 'font-bold text-[#3e3e3e] text-sm';
                 }
             }
@@ -1357,7 +1357,7 @@
             if (banner) {
                 if (taxaPadrao > 0) {
                     const falta = window.META_FRETE_GRATIS - subtotal;
-                    banner.innerHTML = '<i class="fa-solid fa-circle-info mr-1"></i> Faltam <strong>' ${formatMoney(falta) + '</strong> em itens para ganhar entrega grátis.';
+                    banner.innerHTML = '<i class="fa-solid fa-circle-info mr-1"></i> Faltam <strong>' + formatMoney(falta) + '</strong> em itens para ganhar entrega grátis.';
                     banner.classList.remove('hidden');
                 } else {
                     banner.classList.add('hidden');
@@ -1387,7 +1387,7 @@
             const shipping = shippingEl ? parseFloat(shippingEl.value) : taxaPadrao;
             const total = subtotal + shipping;
             const subEl = document.getElementById('bag-subtotal');
-            if(subEl) subEl.innerText ${formatMoney(subtotal);
+            if(subEl) subEl.innerText = formatMoney(subtotal);
             const shipEl = document.getElementById('bag-shipping');
             if(shipEl) {
                 if (cart.length === 0) {
@@ -1397,23 +1397,23 @@
                     shipEl.innerText = 'Grátis';
                     shipEl.className = 'text-[#05a65a] font-semibold';
                 } else {
-                    shipEl.innerText ${formatMoney(shipping);
+                    shipEl.innerText = formatMoney(shipping);
                     shipEl.className = 'text-[#3e3e3e]';
                 }
             }
             const totEl = document.getElementById('bag-total');
-            if(totEl) totEl.innerText ${formatMoney(total);
+            if(totEl) totEl.innerText = formatMoney(total);
             const finEl = document.getElementById('final-total');
-            if(finEl) finEl.innerText ${formatMoney(total);
+            if(finEl) finEl.innerText = formatMoney(total);
             const finSub = document.getElementById('final-subtotal');
-            if(finSub) finSub.innerText ${formatMoney(subtotal);
+            if(finSub) finSub.innerText = formatMoney(subtotal);
             const finShip = document.getElementById('final-shipping');
             if(finShip) {
                 if (shipping === 0) { finShip.innerText = 'Grátis'; finShip.className = 'text-[#05a65a] font-semibold'; }
-                else { finShip.innerText ${formatMoney(shipping); finShip.className = 'text-[#3e3e3e]'; }
+                else { finShip.innerText = formatMoney(shipping); finShip.className = 'text-[#3e3e3e]'; }
             }
             const footEl = document.getElementById('footer-total-display');
-            if(footEl) footEl.innerText ${formatMoney(total);
+            if(footEl) footEl.innerText = formatMoney(total);
         }
 
         // 🔥 LÓGICA DO ORDER BUMP
