@@ -1065,7 +1065,7 @@
             document.getElementById('modal-title').innerText = item.name;
             document.getElementById('modal-desc').innerText = item.desc;
             document.getElementById('modal-price').innerText = formatMoney(item.price);
-            document.getElementById('modal-old-price').innerText = item.oldPrice \${formatMoney(item.oldPrice) : '';
+            document.getElementById('modal-old-price').innerText = item.oldPrice ? formatMoney(item.oldPrice) : '';
             document.getElementById('modal-qty').innerText = 1;
             document.getElementById('modal-btn-price').innerText = formatMoney(item.price);
             document.getElementById('modal-obs').value = '';
