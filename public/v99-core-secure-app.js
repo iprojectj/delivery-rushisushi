@@ -879,7 +879,7 @@
             if (stateData) {
                 const { value: city } = await Swal.fire({
                     title: 'Sua cidade', input: 'select', inputPlaceholder: 'Selecione a cidade', confirmButtonText: 'Confirmar', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' }, allowOutsideClick: false,
-                    inputOptions: (async () => { try { const res = await fetch(\`https://servicodados.ibge.gov.br/api/v1/localidades/estados/\${stateData.id}/municipios?orderBy=nome\`); const cities = await res.json(); const opts = {}; cities.forEach(c => opts[c.nome] = c.nome); return opts; } catch { return {}; } })(),
+                    inputOptions: (async () => { try { const res = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + stateData.id + '/municipios?orderBy=nome'); const cities = await res.json(); const opts = {}; cities.forEach(c => opts[c.nome] = c.nome); return opts; } catch { return {}; } })(),
                     inputValidator: v => !v && 'Selecione uma cidade!'
                 });
                 if (city) salvarEExibir(city, stateData.sigla);
