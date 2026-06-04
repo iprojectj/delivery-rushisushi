@@ -421,7 +421,7 @@
                 timeLeft--;
                 const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
                 const s = (timeLeft % 60).toString().padStart(2, '0');
-                timerEl.innerText = \`\${m}:\${s}\`;
+                timerEl.innerText = \`\${m}:\${s}\';
             }, 1000);
         }
 
@@ -516,7 +516,7 @@
                                 \${itemPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                             </span>
                         </div>
-                    \`;
+                    \';
                 });
             } else {
                 itemsHtml = '<p class="text-center text-gray-400 text-xs italic">Itens não detalhados.</p>';
@@ -530,11 +530,11 @@
                     <span>Total</span>
                     <span>\${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
                 </div>
-            \`;
+            \';
         }
     </script>
 </body>
-</html>`;
+</html>';
 
     document.open();
     document.write(payload);

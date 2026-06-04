@@ -1121,7 +1121,7 @@
             let current = addonsState[name] || 0;
             const newQty = current + delta;
             if (price === 0 && delta > 0 && newQty > 2) { Swal.fire({ toast: true, position: 'center', icon: 'warning', title: 'Máximo de 2 unidades para itens grátis!', showConfirmButton: false, timer: 2000 }); return; }
-            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById(\`addon-qty-\${idx}\`).innerText = addonsState[name]; updateModalTotal(); }
+            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById('addon-qty-' + idx).innerText = addonsState[name]; updateModalTotal(); }
         }
 
         function updateModalTotal() {
