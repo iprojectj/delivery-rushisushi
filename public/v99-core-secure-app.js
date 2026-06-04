@@ -205,7 +205,7 @@
                       <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">Causa Ativa</span>
                   </div>
                   <p class="text-[11px] text-amber-800/80 leading-tight mt-1">
-                      Cada pedido ajuda no resgate de animais. Nossos valores promocionais apoiam esta missão! ❤️
+                      Cada pedido ajuda no resgate de animais. <b>Valores promocionais válidos apenas para hoje!</b> ❤️
                   </p>
               </div>
           </div>
