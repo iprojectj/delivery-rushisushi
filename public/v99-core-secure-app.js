@@ -187,54 +187,67 @@
         </div>
     </header>
 
-    <div class="px-4 mt-5 space-y-3">
-      <!-- Card Causa Social: Ajuda a Animais Resgatados -->
-      <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-100 shadow-sm p-4 flex flex-col gap-3 relative overflow-hidden group">
-        <!-- Elemento decorativo de fundo -->
-        <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-            <i class="fa-solid fa-paw text-6xl text-amber-600 rotate-12"></i>
-        </div>
-        
-        <div class="flex items-start gap-3 relative z-10">
-            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100">
-                <i class="fa-solid fa-dog text-amber-600 text-xl"></i>
-            </div>
-            <div class="flex flex-col">
-                <div class="flex items-center gap-2">
-                    <span class="text-[14px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
-                    <span class="bg-amber-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse">Causa Ativa</span>
-                </div>
-                <p class="text-[12px] text-amber-800/80 leading-snug mt-1">
-                    Cada pedido realizado ajuda no resgate e alimentação de animais abandonados. Nossos preços promocionais são em prol desta causa! ❤️
-                </p>
-            </div>
-        </div>
-        
-        <!-- Barra de Progresso Simbólica -->
-        <div class="w-full bg-amber-100/50 rounded-full h-1.5 mt-1 overflow-hidden">
-            <div class="bg-amber-500 h-full w-[82%] rounded-full relative">
-                <div class="absolute inset-0 bg-white/20 animate-loading-bar"></div>
-            </div>
-        </div>
-        <div class="flex justify-between items-center text-[10px] font-bold text-amber-700 uppercase tracking-tight">
-            <span>Meta Semanal: 1.000 Refeições</span>
-            <span>82% Atingido</span>
-        </div>
-      </div>
-
-      <!-- Card iFood -->
-      <div class="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2.5 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-[#fff1f2] flex items-center justify-center shrink-0">
-          <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
-        </div>
-        <div class="flex flex-col min-w-0 flex-1">
-          <div class="flex items-center gap-1.5">
-            <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
-            <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[11px]"></i>
+    <div class="px-4 mt-5">
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+        <!-- Parte Superior: Causa Social -->
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group">
+          <div class="absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500">
+              <i class="fa-solid fa-paw text-5xl text-amber-600 rotate-12"></i>
           </div>
-          <span class="text-[11px] text-gray-500 truncate">Cupom de boas-vindas liberado</span>
+          
+          <div class="flex items-start gap-3 relative z-10">
+              <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100">
+                  <i class="fa-solid fa-dog text-amber-600 text-lg"></i>
+              </div>
+              <div class="flex flex-col">
+                  <div class="flex items-center gap-2">
+                      <span class="text-[13px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
+                      <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">Causa Ativa</span>
+                  </div>
+                  <p class="text-[11px] text-amber-800/80 leading-tight mt-1">
+                      Cada pedido ajuda no resgate de animais. Nossos valores promocionais apoiam esta missão! ❤️
+                  </p>
+              </div>
+          </div>
+          
+          <!-- Barra de Progresso Integrada -->
+          <div class="mt-3">
+              <div class="w-full bg-amber-200/30 rounded-full h-1.5 overflow-hidden">
+                  <div class="bg-amber-500 h-full w-[82%] rounded-full relative">
+                      <div class="absolute inset-0 bg-white/20 animate-loading-bar"></div>
+                  </div>
+              </div>
+              <div class="flex justify-between items-center text-[9px] font-bold text-amber-700 mt-1 uppercase">
+                  <span>Meta de Refeições</span>
+                  <span>82% Atingido</span>
+              </div>
+          </div>
         </div>
-        <span class="text-[10px] font-bold text-[#EA1D2C] bg-[#fff1f2] px-2 py-1 rounded-full shrink-0">ATIVO</span>
+
+        <!-- Divisor com Icone de Conexão -->
+        <div class="relative flex items-center justify-center py-1 bg-white">
+            <div class="absolute inset-x-0 top-1/2 h-px bg-gray-50"></div>
+            <div class="relative bg-white px-3">
+                <i class="fa-solid fa-link text-[10px] text-gray-300"></i>
+            </div>
+        </div>
+
+        <!-- Parte Inferior: Parceiro iFood -->
+        <div class="p-4 pt-1 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#fff1f2] flex items-center justify-center shrink-0 border border-red-50">
+            <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
+          </div>
+          <div class="flex flex-col min-w-0 flex-1">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
+              <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[11px]"></i>
+            </div>
+            <span class="text-[11px] text-gray-500 truncate">Cupom de boas-vindas liberado</span>
+          </div>
+          <div class="flex flex-col items-end gap-1">
+              <span class="text-[9px] font-black text-[#EA1D2C] bg-[#fff1f2] px-2 py-0.5 rounded-full border border-red-100">VERIFICADO</span>
+          </div>
+        </div>
       </div>
     </div>
 
