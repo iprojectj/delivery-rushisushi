@@ -868,8 +868,7 @@
         function atualizarHeaderLocalizacao(cidade, estado) {
             const el = document.getElementById("header-location-info");
             if (el) {
-                // Adicionamos a barra invertida \ antes do $ para o código não quebrar
-                el.innerText = \`\${cidade} - \${estado}\`;
+                el.innerText = cidade + " - " + estado;
             }
         }
 
@@ -891,14 +890,14 @@
 
         function salvarEExibir(cidade, estado) {
             localStorage.setItem("localCidade", cidade); localStorage.setItem("localEstado", estado); atualizarHeaderLocalizacao(cidade, estado);
-            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>\`, confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
+            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>', confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
         }
 
         async function iniciarVerificacaoLocal() {
             const cidadeSalva = localStorage.getItem("localCidade"); const estadoSalvo = localStorage.getItem("localEstado");
             if (cidadeSalva && estadoSalvo) { atualizarHeaderLocalizacao(cidadeSalva, estadoSalvo); return; }
             const local = await fetchLocation();
-            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>\${local.city} - \${local.region}</strong></div>\`, showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
+            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>' + local.city + ' - ' + local.region + '</strong></div>', showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
         }
 
         const commonAddons = [
@@ -1101,16 +1100,16 @@
             opts.innerHTML = '';
             
             if(item.hasAddons) {
-                let html = \`<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>\`;
+                let html = '<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>';
                 commonAddons.forEach((opt, idx) => {
                     addonsState[opt.name] = 0;
-                    html += \`
-                    <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
-                        <div class="flex items-center gap-3"><img src="\${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">\${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">\${opt.price === 0 ? 'Grátis' : '+ '+formatMoney(opt.price)}</div></div></div>
-                        <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-\${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, 1)">+</button></div>
-                    </div>\`;
+                    html += '\
+                    <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">\
+                        <div class="flex items-center gap-3"><img src="' + opt.img + '" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">' + opt.name + '</div><div class="text-xs text-[#05a65a] font-bold">' + (opt.price === 0 ? 'Grátis' : '+ ' + formatMoney(opt.price)) + '</div></div></div>\
+                        <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty(\'' + opt.name + '\', ' + opt.price + ', -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-' + idx + '">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty(\'' + opt.name + '\', ' + opt.price + ', 1)">+</button></div>\
+                    </div>';
                 });
-                html += \`</div>\`;
+                html += '</div>';
                 opts.innerHTML = html;
             }
             document.getElementById('product-modal-container').classList.remove('hidden');
@@ -1342,12 +1341,12 @@
             container.innerHTML = '';
             if(cart.length === 0) { container.innerHTML = '<p class="text-center text-gray-400 py-4">Sua sacola está vazia.</p>'; return; }
             cart.forEach((item, idx) => {
-                let addonsHtml = (item.addons || []).map(a => \`<span class="text-xs text-gray-500 block">+ \${a.qty}x \${a.name}</span>\`).join('');
-                container.innerHTML += \`
-                <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
-                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">\${item.qty}x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">\${item.name}</span>\${addonsHtml}\${item.obs ? \`<span class="text-xs text-gray-400 italic">"\${item.obs}"</span>\` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">\${formatMoney(item.totalPrice)}</div></div></div>
-                    <button onclick="removeCartItem(\${idx})" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>
-                </div>\`;
+                let addonsHtml = (item.addons || []).map(function(a) { return '<span class="text-xs text-gray-500 block">+ ' + a.qty + 'x ' + a.name + '</span>'; }).join('');
+                container.innerHTML += '\
+                <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">\
+                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">' + item.qty + 'x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">' + item.name + '</span>' + addonsHtml + (item.obs ? '<span class="text-xs text-gray-400 italic">"' + item.obs + '"</span>' : '') + '<div class="text-[#3e3e3e] font-medium text-sm mt-1">' + formatMoney(item.totalPrice) + '</div></div></div>\
+                    <button onclick="removeCartItem(' + idx + ')" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>\
+                </div>';
             });
             recalcTotal();
         }
@@ -1482,7 +1481,7 @@
             const payload = { valorTotal: total, nome: nomeCliente, whatsapp: zapCliente, cep: document.getElementById('cust-cep').value, rua: document.getElementById('cust-street').value, numero: document.getElementById('cust-number').value, bairro: document.getElementById('cust-hood').value, complemento: document.getElementById('cust-comp').value, products: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })), trackingParameters: getTrackingParams() };
             try {
                 if(window.fbq) fbq('track', 'AddPaymentInfo');
-                const response = await fetch(\`\${API_BASE_URL}/criar-pix\`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const response = await fetch(API_BASE_URL + '/criar-pix', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await response.json();
                 if(data.success) {
                     localStorage.setItem('user_cache_nome', nomeCliente); localStorage.setItem('user_cache_zap', zapCliente);
