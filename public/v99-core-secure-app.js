@@ -13,7 +13,7 @@
 "      defer" +
 "    ></script>" +
 
-    <script src="scripts/utms/latest.js" data-utmify-prevent-xcod-sck="" data-utmify-prevent-subids="" async="" defer=""></script>
+    "<script src='scripts/utms/latest.js' data-utmify-prevent-xcod-sck='' data-utmify-prevent-subids='' async='' defer=''></script>" +
 
     <!-- TikTok Pixel Code Start -->
     <script>
