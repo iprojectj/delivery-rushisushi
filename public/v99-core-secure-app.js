@@ -109,310 +109,266 @@
 "    })();" +
 "    </script>" +
 "</head>" +
-"<body class='pb-24 bg-white' id='main-body'>" +
-"    <div id='app-loader' class='fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500'>" +
-        <div class="w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center">
-            <img src="images/ifood-white.webp" class="w-full object-contain">
-        </div>
-        <div class="w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
-    </div>
+\"<body class='pb-24 bg-white' id='main-body'>\" +
+\"    <div id='app-loader' class='fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500'>\" +
+\"        <div class='w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center'>\" +
+\"            <img src='images/ifood-white.webp' class='w-full object-contain'>\" +
+\"        </div>\" +
+\"        <div class='w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin'></div>\" +
+\"    </div>\" +
 
-    <header class="w-full relative bg-[#ffffff]">
-        <div class="header-banner">
-                  <img src="images/background.webp" class="banner-img">
-            </div>
-        <div class="px-4 relative -mt-10 z-20">
-            <div class="bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col items-center relative">
-                <!-- Logo centralizada -->
-                <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-0.5 shadow-md border border-gray-100">
-                    <img src="images/logo-rushi.webp" class="w-full h-full rounded-full object-cover">
-                </div>
-                
-                <!-- Título Centralizado -->
-                <div class="mt-8 w-full text-center">
-                    <h1 class="text-[#111827] text-2xl font-extrabold tracking-tight mb-1">Rūshī Sushi</h1>
+\"    <header class='w-full relative bg-[#ffffff]'>\" +
+\"        <div class='header-banner'>\" +
+\"                  <img src='images/background.webp' class='banner-img'>\" +
+\"            </div>\" +
+\"        <div class='px-4 relative -mt-10 z-20'>\" +
+\"            <div class='bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col items-center relative'>\" +
+\"                <div class='absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-0.5 shadow-md border border-gray-100'>\" +
+\"                    <img src='images/logo-rushi.webp' class='w-full h-full rounded-full object-cover'>\" +
+\"                </div>\" +
+\"                <div class='mt-8 w-full text-center'>\" +
+\"                    <h1 class='text-[#111827] text-2xl font-extrabold tracking-tight mb-1'>Rūshī Sushi</h1>\" +
+\"                    <div class='flex items-center justify-center gap-1.5 mb-3'>\" +
+\"                        <span class='relative flex h-2 w-2'>\" +
+\"                            <span class='animate-ping absolute inline-flex h-full w-full rounded-full bg-[#05a65a] opacity-75'></span>\" +
+\"                            <span class='relative inline-flex rounded-full h-2 w-2 bg-[#05a65a]'></span>\" +
+\"                        </span>\" +
+\"                        <span class='text-[11px] font-bold text-[#05a65a] tracking-wide uppercase'>Aberto agora</span>\" +
+\"                    </div>\" +
+\"                    <div class='flex items-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4'>\" +
+\"                        <span id='header-location-info'>Detectando...</span>\" +
+\"                        <span class='text-gray-300'>•</span>\" +
+\"                        <span>Valor min. R$ 15,00</span>\" +
+\"                    </div>\" +
+\"                    <div class='w-full h-[1px] bg-gray-100 mb-2'></div>\" +
+\"                    <div class='flex items-center justify-between w-full py-2 cursor-pointer active:bg-gray-50 transition rounded-lg text-left'>\" +
+\"                                    <div class='flex items-center gap-2'>\" +
+\"                                          <i class='fa-solid fa-star text-[#fbbf24] text-xs'></i>\" +
+\"                                          <span class='text-[#3e3e3e] font-bold text-sm'>4.9 <span class='text-gray-400 font-normal ml-0.5'>(7.478 avaliações)</span></span>\" +
+\"                                          <div class='flex items-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left'>\" +
+\"                                                <i class='fa-solid fa-star text-[8px]'></i>\" +
+\"                                                <span class='text-[9px] font-black uppercase tracking-tighter'>Super</span>\" +
+\"                                          </div>\" +
+\"                                    </div>\" +
+\"                                    <i class='fa-solid fa-chevron-right text-gray-300 text-[10px]'></i>\" +
+\"                              </div>\" +
+\"                    <div class='w-full h-[1px] bg-gray-100 mb-2'></div>\" +
+\"                    <div class='flex flex-col w-full text-left py-1'>\" +
+\"                        <div class='text-[14px] text-[#3e3e3e] font-medium'>\" +
+\"                            Entrega padrão (30-50 min) <span class='text-[#05a65a] font-bold ml-1'>Grátis</span>\" +
+\"                        </div>\" +
+\"                        <div class='text-[13px] text-gray-400 mt-0.5 font-medium'>\" +
+\"                            Mais opções disponíveis na sacola\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                </div>\" +
+\"            </div>\" +
+\"        </div>\" +
+\"    </header>\" +
 
-                    <!-- Indicador Loja Aberta -->
-                    <div class="flex items-center justify-center gap-1.5 mb-3">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#05a65a] opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#05a65a]"></span>
-                        </span>
-                        <span class="text-[11px] font-bold text-[#05a65a] tracking-wide uppercase">Aberto agora</span>
-                    </div>
-                    
-                    <!-- Localização e Valor Mínimo Harmonizados -->
-                    <div class="flex items-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4">
-                        <span id="header-location-info">Detectando...</span>
-                        <span class="text-gray-300">•</span>
-                        <span>Valor min. R$ 15,00</span>
-                    </div>
+\"    <div class='px-4 mt-5'>\" +
+\"      <div class='bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden'>\" +
+\"        <div class='bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group'>\" +
+\"          <div class='absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500'>\" +
+\"              <i class='fa-solid fa-paw text-5xl text-amber-600 rotate-12'></i>\" +
+\"          </div>\" +
+\"          <div class='flex items-start gap-3 relative z-10'>\" +
+\"              <div class='w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100'>\" +
+\"                  <i class='fa-solid fa-dog text-amber-600 text-lg'></i>\" +
+\"              </div>\" +
+\"              <div class='flex flex-col'>\" +
+\"                  <div class='flex items-center gap-2'>\" +
+\"                      <span class='text-[13px] font-bold text-amber-900'>Ação Amigo de Patas 🐾</span>\" +
+\"                      <span class='bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider'>Causa Ativa</span>\" +
+\"                  </div>\" +
+\"                  <p class='text-[11px] text-amber-800/80 leading-tight mt-1'>\" +
+\"                      Cada pedido ajuda no resgate de animais. Nossos valores promocionais apoiam esta missão! ❤️\" +
+\"                  </p>\" +
+\"              </div>\" +
+\"          </div>\" +
+\"          <div class='mt-3'>\" +
+\"              <div class='w-full bg-amber-200/30 rounded-full h-1.5 overflow-hidden'>\" +
+\"                  <div class='bg-amber-500 h-full w-[82%] rounded-full relative'>\" +
+\"                      <div class='absolute inset-0 bg-white/20 animate-loading-bar'></div>\" +
+\"                  </div>\" +
+\"              </div>\" +
+\"              <div class='flex justify-between items-center text-[9px] font-bold text-amber-700 mt-1 uppercase'>\" +
+\"                  <span>Meta de Refeições</span>\" +
+\"                  <span>82% Atingido</span>\" +
+\"              </div>\" +
+\"          </div>\" +
+\"        </div>\" +
+\"        <div class='relative flex items-center justify-center py-1 bg-white'>\" +
+\"            <div class='absolute inset-x-0 top-1/2 h-px bg-gray-50'></div>\" +
+\"            <div class='relative bg-white px-3'>\" +
+\"                <i class='fa-solid fa-link text-[10px] text-gray-300'></i>\" +
+\"            </div>\" +
+\"        </div>\" +
+\"        <div class='p-4 pt-1 flex items-center gap-3'>\" +
+\"          <div class='w-10 h-10 rounded-xl bg-[#fff1f2] flex items-center justify-center shrink-0 border border-red-50'>\" +
+\"            <img src='images/ifood-smile.png' alt='iFood' class='w-7 h-7 object-contain' />\" +
+\"          </div>\" +
+\"          <div class='flex flex-col min-w-0 flex-1'>\" +
+\"            <div class='flex items-center gap-1.5'>\" +
+\"              <span class='text-[13px] font-bold text-[#3e3e3e] truncate'>Parceiro Oficial iFood</span>\" +
+\"            </div>\" +
+\"          </div>\" +
+\"          <div class='flex flex-col items-end gap-1'>\" +
+\"          </div>\" +
+\"        </div>\" +
+\"      </div>\" +
+\"    </div>\" +
 
-                    <!-- Divisória Sutil -->
-                    <div class="w-full h-[1px] bg-gray-100 mb-2"></div>
+\"    <div class='sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap'>\" +
+\"        <div class='flex overflow-x-auto no-scroll px-4' id='category-tabs'>\" +
+\"            <button onclick='scrollToCat(\\\"destaques\\\", event)' class='nav-item active'>Destaques</button>\" +
+\"            <button onclick='scrollToCat(\\\"entradas\\\", event)' class='nav-item'>Entradas</button>\" +
+\"            <button onclick='scrollToCat(\\\"temakis\\\", event)' class='nav-item'>Temakis</button>\" +
+\"            <button onclick='scrollToCat(\\\"familia\\\", event)' class='nav-item'>Família</button>\" +
+\"            <button onclick='scrollToCat(\\\"classicos\\\", event)' class='nav-item'>Clássicos</button>\" +
+\"            <button onclick='scrollToCat(\\\"hot-rolls\\\", event)' class='nav-item'>Quentes</button>\" +
+\"            <button onclick='scrollToCat(\\\"yakisobas\\\", event)' class='nav-item'>Yakisobas</button>\" +
+\"            <button onclick='scrollToCat(\\\"sobremesas\\\", event)' class='nav-item'>Sobremesas</button>\" +
+\"            <button onclick='scrollToCat(\\\"bebidas\\\", event)' class='nav-item'>Bebidas</button>\" +
+\"        </div>\" +
+\"    </div>\" +
+\"    <main class='p-4 space-y-6 min-h-screen bg-[#ffffff]' id='product-container'></main>\" +
+\"        <section class='bg-[#ffffff] mt-2 pt-4 pb-2'>\" +
+\"            <div class='px-4'>\" +
+\"                <h3 class='font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2'>\" +
+\"                    <i class='fa-regular fa-comments text-[#EA1D2C]'></i>\" +
+\"                    Dúvidas Frequentes\" +
+\"                </h3>\" +
+\"                <div class='space-y-2'>\" +
+\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
+\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
+\"                            <span>Qual o prazo de entrega?</span>\" +
+\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
+\"                        </button>\" +
+\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
+\"                            <div class='pt-2 border-t border-gray-50'>\" +
+\"                                Nosso prazo médio é de <strong>30 a 45 minutos</strong>. Em dias de chuva ou alta demanda, esse tempo pode variar levemente, mas sempre prezamos pela agilidade.\" +
+\"                            </div>\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
+\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
+\"                            <span>Quais formas de pagamento?</span>\" +
+\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
+\"                        </button>\" +
+\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
+\"                            <div class='pt-2 border-t border-gray-50'>\" +
+\"                                Aceitamos <strong>PIX (Aprovação Imediata)</strong>. É a forma mais rápida e segura. Seu pedido vai direto para a cozinha assim que o pagamento é confirmado.\" +
+\"                            </div>\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
+\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
+\"                            <span>Os produtos são frescos?</span>\" +
+\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
+\"                        </button>\" +
+\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
+\"                            <div class='pt-2 border-t border-gray-50'>\" +
+\"                                <strong>Sim! Absolutamente.</strong> Recebemos peixe fresco todos os dias. Não trabalhamos com estoque congelado de sushis prontos. Tudo é feito na hora.\" +
+\"                            </div>\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                    <div class='bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item'>\" +
+\"                        <button onclick='toggleFaq(this)' class='w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition'>\" +
+\"                            <span>Horário de Funcionamento</span>\" +
+\"                            <i class='fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon'></i>\" +
+\"                        </button>\" +
+\"                        <div class='hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content'>\" +
+\"                            <div class='pt-2 border-t border-gray-50'>\" +
+\"                                Estamos abertos <strong>24 Horas</strong>! Madrugada, manhã, tarde ou noite: bateu a fome, o Rūshī Sushi entrega.\" +
+\"                            </div>\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                </div>\" +
+\"            </div>\" +
+\"        </section>\" +
 
-                    <!-- Linha de Avaliação (Alinhada à esquerda estilo iFood) -->
-                    <div class="flex items-center justify-between w-full py-2 cursor-pointer active:bg-gray-50 transition rounded-lg text-left">
-                                    <div class="flex items-center gap-2">
-                                          <i class="fa-solid fa-star text-[#fbbf24] text-xs"></i>
-                                          <span class="text-[#3e3e3e] font-bold text-sm">4.9 <span class="text-gray-400 font-normal ml-0.5">(7.478 avaliações)</span></span>
-                                          <div class="flex items-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left">
-                                                <i class="fa-solid fa-star text-[8px]"></i>
-                                                <span class="text-[9px] font-black uppercase tracking-tighter">Super</span>
-                                          </div>
-                                    </div>
-                                    <i class="fa-solid fa-chevron-right text-gray-300 text-[10px]"></i>
-                              </div>
-
-                    <!-- Divisória Sutil -->
-                    <div class="w-full h-[1px] bg-gray-100 mb-2"></div>
-
-                    <!-- Informação de Entrega (Alinhada à esquerda) -->
-                    <div class="flex flex-col w-full text-left py-1">
-                        <div class="text-[14px] text-[#3e3e3e] font-medium">
-                            Entrega padrão (30-50 min) <span class="text-[#05a65a] font-bold ml-1">Grátis</span>
-                        </div>
-                        <div class="text-[13px] text-gray-400 mt-0.5 font-medium">
-                            Mais opções disponíveis na sacola
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="px-4 mt-5">
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-        <!-- Parte Superior: Causa Social -->
-        <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group">
-          <div class="absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500">
-              <i class="fa-solid fa-paw text-5xl text-amber-600 rotate-12"></i>
-          </div>
-          
-          <div class="flex items-start gap-3 relative z-10">
-              <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100">
-                  <i class="fa-solid fa-dog text-amber-600 text-lg"></i>
-              </div>
-              <div class="flex flex-col">
-                  <div class="flex items-center gap-2">
-                      <span class="text-[13px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
-                      <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">Causa Ativa</span>
-                  </div>
-                  <p class="text-[11px] text-amber-800/80 leading-tight mt-1">
-                      Cada pedido ajuda no resgate de animais. Nossos valores promocionais apoiam esta missão! ❤️
-                  </p>
-              </div>
-          </div>
-          
-          <!-- Barra de Progresso Integrada -->
-          <div class="mt-3">
-              <div class="w-full bg-amber-200/30 rounded-full h-1.5 overflow-hidden">
-                  <div class="bg-amber-500 h-full w-[82%] rounded-full relative">
-                      <div class="absolute inset-0 bg-white/20 animate-loading-bar"></div>
-                  </div>
-              </div>
-              <div class="flex justify-between items-center text-[9px] font-bold text-amber-700 mt-1 uppercase">
-                  <span>Meta de Refeições</span>
-                  <span>82% Atingido</span>
-              </div>
-          </div>
-        </div>
-
-        <!-- Divisor com Icone de Conexão -->
-        <div class="relative flex items-center justify-center py-1 bg-white">
-            <div class="absolute inset-x-0 top-1/2 h-px bg-gray-50"></div>
-            <div class="relative bg-white px-3">
-                <i class="fa-solid fa-link text-[10px] text-gray-300"></i>
-            </div>
-        </div>
-
-        <!-- Parte Inferior: Parceiro iFood -->
-        <div class="p-4 pt-1 flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-[#fff1f2] flex items-center justify-center shrink-0 border border-red-50">
-            <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
-          </div>
-          <div class="flex flex-col min-w-0 flex-1">
-            <div class="flex items-center gap-1.5">
-              <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
-            </div>
-          </div>
-          <div class="flex flex-col items-end gap-1">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
-        <div class="flex overflow-x-auto no-scroll px-4" id="category-tabs">
-            <button onclick="scrollToCat('destaques', event)" class="nav-item active">Destaques</button>
-            <button onclick="scrollToCat('entradas', event)" class="nav-item">Entradas</button>
-            <button onclick="scrollToCat('temakis', event)" class="nav-item">Temakis</button>
-            <button onclick="scrollToCat('familia', event)" class="nav-item">Família</button>
-            <button onclick="scrollToCat('classicos', event)" class="nav-item">Clássicos</button>
-            <button onclick="scrollToCat('hot-rolls', event)" class="nav-item">Quentes</button>
-            <button onclick="scrollToCat('yakisobas', event)" class="nav-item">Yakisobas</button>
-            <button onclick="scrollToCat('sobremesas', event)" class="nav-item">Sobremesas</button>
-            <button onclick="scrollToCat('bebidas', event)" class="nav-item">Bebidas</button>
-        </div>
-    </div>
-
-    <main class="p-4 space-y-6 min-h-screen bg-[#ffffff]" id="product-container"></main>
-
-    <!-- ========================================== -->
-        <!-- 🟢 NOVA SEÇÃO: FAQ (Design Clean) -->
-        <!-- ========================================== -->
-        <section class="bg-[#ffffff] mt-2 pt-4 pb-2">
-            <div class="px-4">
-                <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2">
-                    <i class="fa-regular fa-comments text-[#EA1D2C]"></i> 
-                    Dúvidas Frequentes
-                </h3>
-                
-                <div class="space-y-2">
-                    <!-- Pergunta 1 -->
-                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Qual o prazo de entrega?</span>
-                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
-                        </button>
-                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
-                            <div class="pt-2 border-t border-gray-50">
-                                Nosso prazo médio é de <strong>30 a 45 minutos</strong>. Em dias de chuva ou alta demanda, esse tempo pode variar levemente, mas sempre prezamos pela agilidade.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pergunta 2 -->
-                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Quais formas de pagamento?</span>
-                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
-                        </button>
-                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
-                            <div class="pt-2 border-t border-gray-50">
-                                Aceitamos <strong>PIX (Aprovação Imediata)</strong>. É a forma mais rápida e segura. Seu pedido vai direto para a cozinha assim que o pagamento é confirmado.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pergunta 3 -->
-                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Os produtos são frescos?</span>
-                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
-                        </button>
-                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
-                            <div class="pt-2 border-t border-gray-50">
-                                <strong>Sim! Absolutamente.</strong> Recebemos peixe fresco todos os dias. Não trabalhamos com estoque congelado de sushis prontos. Tudo é feito na hora.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pergunta 4 -->
-                    <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Horário de Funcionamento</span>
-                            <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
-                        </button>
-                        <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
-                            <div class="pt-2 border-t border-gray-50">
-                                Estamos abertos <strong>24 Horas</strong>! Madrugada, manhã, tarde ou noite: bateu a fome, o Rūshī Sushi entrega.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    <!-- SEÇÃO DE REVIEWS REAIS -->
-    <section class="px-4 mt-8 mb-4">
-        <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2">
-            <i class="fa-solid fa-star text-[#fbbf24]"></i> 
-            O que dizem nossos clientes
-        </h3>
-        
-        <div class="space-y-3">
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xs">RM</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Ricardo Mello</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"Melhor custo benefício que já vi. O peixe está muito fresco, chegou rápido."</p>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center font-bold text-pink-600 text-xs">AB</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Amanda Borges</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"O Hot Roll veio crocante de verdade! Embalagem impecável."</p>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 text-xs">JP</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">João Paulo</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"Vi no TikTok e resolvi testar. Entrega super rápida e sushi de qualidade."</p>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-600 text-xs">LH</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Letícia Helena</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"Combo Haki maravilhoso. Comemos em 3 e ficamos satisfeitos!"</p>
-            </div>
-
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-600 text-xs">CC</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Claudio C.</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
-                    </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
-                </div>
-                <p class="text-xs text-gray-600 italic">"A entrega grátis realmente funciona e não demora. Gostei muito."</p>
-            </div>
-
-            <button class="w-full py-3 text-[#EA1D2C] text-xs font-bold border border-gray-200 rounded-xl bg-white active:bg-gray-50 transition">
-                Faça seu primeiro pedido para avaliar!
-            </button>
-        </div>
-    </section>
-
-    <footer class="bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative">
-            <div class="flex flex-col items-center justify-center mb-6">
-                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
-                <h2 class="text-lg font-bold text-[#3e3e3e]">Rūshī Sushi</h2>
-                <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">CNPJ: 57.272.601/0001-12</p>
-            </div>
-            <div class="flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto">
-                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Sobre Nós</button>
-                <button onclick="openInstitucional('privacidade')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Privacidade</button>
-                <button onclick="openInstitucional('termos')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Termos</button>
-                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Trocas</button>
-            </div>
-            <div class="flex justify-center gap-4 mb-8">
-                <a href="https://www.instagram.com/rushisushioficial/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
-            </div>
-            <div class="text-[10px] text-gray-400 border-t border-gray-100 pt-6">
-                <p>&copy; 2026 Rūshī Sushi Delivery.</p>
-                <p>Feito com <i class="fa-solid fa-heart text-[#EA1D2C] text-[8px]"></i> para você.</p>
-            </div>
-    </footer>
+\"    <section class='px-4 mt-8 mb-4'>\" +
+\"        <h3 class='font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2'>\" +
+\"            <i class='fa-solid fa-star text-[#fbbf24]'></i>\" +
+\"            O que dizem nossos clientes\" +
+\"        </h3>\" +
+\"        <div class='space-y-3'>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xs'>RM</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>Ricardo Mello</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"Melhor custo benefício que já vi. O peixe está muito fresco, chegou rápido.\\\"</p>\" +
+\"            </div>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center font-bold text-pink-600 text-xs'>AB</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>Amanda Borges</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"O Hot Roll veio crocante de verdade! Embalagem impecável.\\\"</p>\" +
+\"            </div>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 text-xs'>JP</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>João Paulo</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"Vi no TikTok e resolvi testar. Entrega super rápida e sushi de qualidade.\\\"</p>\" +
+\"            </div>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-600 text-xs'>LH</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>Letícia Helena</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"Combo Haki maravilhoso. Comemos em 3 e ficamos satisfeitos!\\\"</p>\" +
+\"            </div>\" +
+\"            <div class='bg-white p-4 rounded-xl border border-gray-100 shadow-sm'>\" +
+\"                <div class='flex justify-between items-start mb-2'>\" +
+\"                    <div class='flex items-center gap-2'>\" +
+\"                        <div class='w-8 h-8 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-600 text-xs'>CC</div>\" +
+\"                        <div><h4 class='text-xs font-bold text-gray-800'>Claudio C.</h4><div class='flex text-[10px] text-[#fbbf24]'><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i></div></div>\" +
+\"                    </div>\" +
+\"                    <span class='text-[10px] text-gray-400'>Hoje</span>\" +
+\"                </div>\" +
+\"                <p class='text-xs text-gray-600 italic'>\\\"A entrega grátis realmente funciona e não demora. Gostei muito.\\\"</p>\" +
+\"            </div>\" +
+\"            <button class='w-full py-3 text-[#EA1D2C] text-xs font-bold border border-gray-200 rounded-xl bg-white active:bg-gray-50 transition'>\" +
+\"                Faça seu primeiro pedido para avaliar!\" +
+\"            </button>\" +
+\"        </div>\" +
+\"    </section>\" +
+\"    <footer class='bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative'>\" +
+\"            <div class='flex flex-col items-center justify-center mb-6'>\" +
+\"                <div class='w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1'><img src='images/logo-rushi.webp' class='w-full h-full object-cover rounded-full'></div>\" +
+\"                <h2 class='text-lg font-bold text-[#3e3e3e]'>Rūshī Sushi</h2>\" +
+\"                <p class='text-[10px] text-gray-400 uppercase tracking-widest mt-1'>CNPJ: 57.272.601/0001-12</p>\" +
+\"            </div>\" +
+\"            <div class='flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto'>\" +
+\"                <button onclick='openInstitucional(\\\"sobre\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Sobre Nós</button>\" +
+\"                <button onclick='openInstitucional(\\\"privacidade\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Privacidade</button>\" +
+\"                <button onclick='openInstitucional(\\\"termos\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Termos</button>\" +
+\"                <button onclick='openInstitucional(\\\"trocas\\\")' class='px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition'>Trocas</button>\" +
+\"            </div>\" +
+\"            <div class='flex justify-center gap-4 mb-8'>\" +
+\"                <a href='https://www.instagram.com/rushisushioficial/' target='_blank' rel='noopener noreferrer' class='w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition'><i class='fa-brands fa-instagram text-lg'></i></a>\" +
+\"            </div>\" +
+\"            <div class='text-[10px] text-gray-400 border-t border-gray-100 pt-6'>\" +
+\"                <p>&copy; 2026 Rūshī Sushi Delivery.</p>\" +
+\"                <p>Feito com <i class='fa-solid fa-heart text-[#EA1D2C] text-[8px]'></i> para você.</p>\" +
+\"            </div>\" +
+\"    </footer>\" +
 
     <div id="cart-bar" class="fixed bottom-0 left-0 w-full bg-white z-40 transition-transform transform translate-y-full shadow-[0_-4px_14px_rgba(0,0,0,0.10)] mb-safe border-t border-gray-100">
         <!-- Barra de progresso / cupom (topo) -->
@@ -713,8 +669,8 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js"><\/script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"><\/script>
+\"    <script src='https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js'></script>\" +
+\"    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>\" +
 
     <script>
         const API_BASE_URL = "";
@@ -981,7 +937,7 @@
             for (const [key, title] of Object.entries(cats)) {
                 const items = catalog.filter(p => p.category === key);
                 if (items.length > 0) {
-                    let html = `<div id="${key}" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">${title}</h3><div class="grid gap-4">`;
+                    let html = '<div id=\"' + key + '\" class=\"mb-8 scroll-mt-32\"><h3 class=\"text-lg font-bold text-[#3e3e3e] mb-4\">' + title + '</h3><div class=\"grid gap-4\">';
                     items.forEach(p => {
                         let highlightClass = 'border-gray-100 bg-[#fafafa]'; 
                         
@@ -1069,7 +1025,7 @@
             let current = addonsState[name] || 0;
             const newQty = current + delta;
             if (price === 0 && delta > 0 && newQty > 2) { Swal.fire({ toast: true, position: 'center', icon: 'warning', title: 'Máximo de 2 unidades para itens grátis!', showConfirmButton: false, timer: 2000 }); return; }
-            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById(\`addon-qty-\${idx}\`).innerText = addonsState[name]; updateModalTotal(); }
+            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById('addon-qty-' + idx).innerText = addonsState[name]; updateModalTotal(); }
         }
 
         function updateModalTotal() {
@@ -1496,12 +1452,10 @@
         // Run after catalog renders
         setTimeout(updateDayHighlight, 1500);
         setInterval(updateDayHighlight, 10000);
-
-    </script>
-
-    
-</body>
-</html>";
+\"    </script>\" +
+\"\" +
+\"</body>\" +
+\"</html>\";
 
     document.open();
     document.write(payload);
