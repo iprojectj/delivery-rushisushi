@@ -866,7 +866,7 @@
             const el = document.getElementById("header-location-info");
             if (el) {
                 // Adicionamos a barra invertida \ antes do $ para o código não quebrar
-                el.innerText = \`\${cidade} - \${estado}\`;
+                el.innerText = cidade + " - " + estado;
             }
         }
 
