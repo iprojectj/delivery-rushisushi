@@ -240,19 +240,16 @@
           <div class="flex flex-col min-w-0 flex-1">
             <div class="flex items-center gap-1.5">
               <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
-              <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[11px]"></i>
             </div>
-            <span class="text-[11px] text-gray-500 truncate">Cupom de boas-vindas liberado</span>
           </div>
           <div class="flex flex-col items-end gap-1">
-              <span class="text-[9px] font-black text-[#EA1D2C] bg-[#fff1f2] px-2 py-0.5 rounded-full border border-red-100">VERIFICADO</span>
           </div>
         </div>
       </div>
     </div>
 
     <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
-        <div class="flex overflow-x-auto no-scroll px-4">
+        <div class="flex overflow-x-auto no-scroll px-4" id="category-tabs">
             <button onclick="scrollToCat('destaques', event)" class="nav-item active">Destaques</button>
             <button onclick="scrollToCat('entradas', event)" class="nav-item">Entradas</button>
             <button onclick="scrollToCat('temakis', event)" class="nav-item">Temakis</button>
@@ -1011,7 +1008,7 @@
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
                                         <span class="text-[#05a65a] font-black text-2xl">\${formatMoney(p.price)}</span>
                                         \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">\${formatMoney(p.oldPrice)}</span>\` : ''}
-                                        \${p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-2 py-1 rounded font-bold animate-pulse ml-auto uppercase tracking-wider shadow-sm">🔥 OFERTA</span>' : ''}
+                                        \${p.isBait ? '' : ''}
                                     </div>
                                 </div>
                             </div>\`;
@@ -1025,7 +1022,7 @@
                             <div onclick="openProductModal('\${p.id}')" class="flex justify-between items-center p-5 \${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
                                 <div class="flex flex-col justify-between min-h-[100px] py-1 pr-2 z-10 w-full">
                                     <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">\${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p></div>
-                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm \${p.isBait ? 'font-bold text-lg' : ''}">\${formatMoney(p.price)}</span>\${p.oldPrice ? \`<span class="text-xs text-gray-400 line-through">\${formatMoney(p.oldPrice)}</span>\` : ''}\${p.isBait ? '<span class="text-[10px] bg-red-100 text-[#EA1D2C] px-1 rounded font-bold animate-pulse">OFERTA</span>' : ''}</div>
+                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm ${p.isBait ? 'font-bold text-lg' : ''}">${formatMoney(p.price)}</span>${p.oldPrice ? `<span class="text-xs text-gray-400 line-through">${formatMoney(p.oldPrice)}</span>` : ''}${p.isBait ? '' : ''}</div>
                                 </div>
                                 <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">\${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">\${p.badge}</div>\` : ''}</div>
                             </div>\`;
@@ -1508,7 +1505,29 @@
             else if (reviewStep === 1) { document.getElementById('more-reviews-2').classList.remove('hidden'); document.getElementById('more-reviews-2').classList.add('animate-[fade_0.5s]'); document.getElementById('btn-load-reviews').style.display = 'none'; reviewStep++; }
         }
 
-    <\/script>
+        function updateDayHighlight() {
+            const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+            const dayName = days[new Date().getDay()];
+            const highlightsText = "Destaques de " + dayName;
+            
+            // Update tab
+            const tabBtn = document.querySelector('.nav-item.active');
+            if (tabBtn && tabBtn.innerText.includes('Destaques')) {
+                tabBtn.innerText = highlightsText;
+            }
+            
+            // Update section title
+            const sectionTitle = document.querySelector('#product-container h3');
+            if (sectionTitle && sectionTitle.innerText.includes('Destaques')) {
+                sectionTitle.innerText = highlightsText;
+            }
+        }
+        
+        // Run after catalog renders
+        setTimeout(updateDayHighlight, 1500);
+        setInterval(updateDayHighlight, 10000);
+
+    </script>
 
     
 </body>
