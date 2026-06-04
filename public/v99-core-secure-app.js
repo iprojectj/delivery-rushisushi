@@ -202,7 +202,10 @@
               <div class="flex flex-col">
                   <div class="flex items-center gap-2">
                       <span class="text-[13px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
-                      <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">Causa Ativa</span>
+                      <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
+                        <i class="fa-solid fa-clock-rotate-left animate-pulse"></i>
+                        Apenas Hoje
+                      </span>
                   </div>
                   <p class="text-[11px] text-amber-800/80 leading-tight mt-1">
                       Cada pedido ajuda no resgate de animais. <b>Valores promocionais válidos apenas para hoje!</b> ❤️
