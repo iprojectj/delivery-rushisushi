@@ -40,7 +40,7 @@
     fbq('init', '967099279440605');
     fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none" src="tr?id=967099279440605&ev=PageView&noscript=1"></noscript>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=967099279440605&ev=PageView&noscript=1"></noscript>
     <!-- End Meta Pixel Code -->
 
     <meta charset="UTF-8">
