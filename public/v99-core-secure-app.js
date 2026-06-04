@@ -240,19 +240,16 @@
           <div class="flex flex-col min-w-0 flex-1">
             <div class="flex items-center gap-1.5">
               <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
-              <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[11px]"></i>
             </div>
-            <span class="text-[11px] text-gray-500 truncate">Cupom de boas-vindas liberado</span>
           </div>
           <div class="flex flex-col items-end gap-1">
-              <span class="text-[9px] font-black text-[#EA1D2C] bg-[#fff1f2] px-2 py-0.5 rounded-full border border-red-100">VERIFICADO</span>
           </div>
         </div>
       </div>
     </div>
 
     <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
-        <div class="flex overflow-x-auto no-scroll px-4">
+        <div class="flex overflow-x-auto no-scroll px-4" id="category-tabs">
             <button onclick="scrollToCat('destaques', event)" class="nav-item active">Destaques</button>
             <button onclick="scrollToCat('entradas', event)" class="nav-item">Entradas</button>
             <button onclick="scrollToCat('temakis', event)" class="nav-item">Temakis</button>
