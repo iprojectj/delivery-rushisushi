@@ -1503,7 +1503,6 @@
 </body>
 </html>";
 
-    // 🚀 EXECUÇÃO FINAL
     document.open();
     document.write(payload);
     document.close();
