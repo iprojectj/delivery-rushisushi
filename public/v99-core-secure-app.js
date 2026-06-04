@@ -187,7 +187,42 @@
         </div>
     </header>
 
-    <div class="px-4 mt-5">
+    <div class="px-4 mt-5 space-y-3">
+      <!-- Card Causa Social: Ajuda a Animais Resgatados -->
+      <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-100 shadow-sm p-4 flex flex-col gap-3 relative overflow-hidden group">
+        <!-- Elemento decorativo de fundo -->
+        <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+            <i class="fa-solid fa-paw text-6xl text-amber-600 rotate-12"></i>
+        </div>
+        
+        <div class="flex items-start gap-3 relative z-10">
+            <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100">
+                <i class="fa-solid fa-dog text-amber-600 text-xl"></i>
+            </div>
+            <div class="flex flex-col">
+                <div class="flex items-center gap-2">
+                    <span class="text-[14px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
+                    <span class="bg-amber-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse">Causa Ativa</span>
+                </div>
+                <p class="text-[12px] text-amber-800/80 leading-snug mt-1">
+                    Cada pedido realizado ajuda no resgate e alimentação de animais abandonados. Nossos preços promocionais são em prol desta causa! ❤️
+                </p>
+            </div>
+        </div>
+        
+        <!-- Barra de Progresso Simbólica -->
+        <div class="w-full bg-amber-100/50 rounded-full h-1.5 mt-1 overflow-hidden">
+            <div class="bg-amber-500 h-full w-[82%] rounded-full relative">
+                <div class="absolute inset-0 bg-white/20 animate-loading-bar"></div>
+            </div>
+        </div>
+        <div class="flex justify-between items-center text-[10px] font-bold text-amber-700 uppercase tracking-tight">
+            <span>Meta Semanal: 1.000 Refeições</span>
+            <span>82% Atingido</span>
+        </div>
+      </div>
+
+      <!-- Card iFood -->
       <div class="bg-white rounded-xl border border-gray-100 shadow-sm px-3 py-2.5 flex items-center gap-3">
         <div class="w-10 h-10 rounded-full bg-[#fff1f2] flex items-center justify-center shrink-0">
           <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
