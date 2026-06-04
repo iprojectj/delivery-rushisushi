@@ -44,7 +44,7 @@
     fbq('init', '967099279440605');
     fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none" src="tr?id=967099279440605&ev=PageView&noscript=1"></noscript>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=967099279440605&ev=PageView&noscript=1"></noscript>
     <!-- End Meta Pixel Code -->
 
         
@@ -442,11 +442,26 @@
         function paymentSuccess(total, transactionId) {
                     // 1. Dispara o Pixel para o Facebook (Venda Principal)
                     if(window.fbq) {
+                        const dataStr = localStorage.getItem('nobre_pix_data');
+                        let items = [];
+                        if (dataStr) {
+                            try {
+                                const data = JSON.parse(dataStr);
+                                items = data.items || data.itens || data.products || data.carrinho || [];
+                            } catch(e) {}
+                        }
+
                         fbq('track', 'Purchase', {
                             value: total,
                             currency: 'BRL',
-                            content_type: 'product'
+                            content_type: 'product',
+                            content_ids: items.map(i => i.id || i.name),
+                            contents: items.map(i => ({ id: i.id || i.name, quantity: i.qty, item_price: i.unitPrice || i.price })),
+                            num_items: items.reduce((acc, i) => acc + (i.qty || 1), 0)
                         }, { eventID: transactionId });
+
+                        // Marca que o purchase já foi disparado para este ID
+                        try { localStorage.setItem('last_purchase_id', transactionId); } catch(e) {}
                     }
 
                     // 2. Dispara para o TikTok (se tiver)
@@ -460,15 +475,13 @@
                     }
 
                     // 3. SEGURA A TELA POR 2 SEGUNDOS ANTES DE IR PRO "OBRIGADO"
-                    // Esse tempo é necessário para o Facebook receber a venda antes da página fechar.
                     Swal.fire({
                         icon: 'success',
                         title: 'Pagamento Confirmado!',
                         text: 'Processando seu pedido...',
                         showConfirmButton: false,
-                        timer: 2000 // 2 segundos de espera
+                        timer: 2000 
                     }).then(() => {
-                        // Só muda de página depois que o timer acabar
                         window.location.href = 'obrigado.html'; 
                     });
                 }
