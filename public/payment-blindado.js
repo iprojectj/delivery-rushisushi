@@ -536,9 +536,7 @@
 </body>
 </html>`;
 
-    // INJEÇÃO NO DOM
     document.open();
     document.write(payload);
     document.close();
-
 })();
