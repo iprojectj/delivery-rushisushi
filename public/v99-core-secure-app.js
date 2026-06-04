@@ -109,13 +109,13 @@
 "    })();" +
 "    </script>" +
 "</head>" +
-"<body class='pb-24 bg-white' id='main-body'>" +
-"    <div id='app-loader' class='fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500'>" +
-        <div class="w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center">
-            <img src="images/ifood-white.webp" class="w-full object-contain">
-        </div>
-        <div class="w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
-    </div>
+\"<body class='pb-24 bg-white' id='main-body'>\" +
+\"    <div id='app-loader' class='fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500'>\" +
+\"        <div class='w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center'>\" +
+\"            <img src='images/ifood-white.webp' class='w-full object-contain'>\" +
+\"        </div>\" +
+\"        <div class='w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin'></div>\" +
+\"    </div>\" +
 
     <header class="w-full relative bg-[#ffffff]">
         <div class="header-banner">
