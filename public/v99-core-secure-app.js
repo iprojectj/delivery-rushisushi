@@ -888,7 +888,7 @@
 
         function salvarEExibir(cidade, estado) {
             localStorage.setItem("localCidade", cidade); localStorage.setItem("localEstado", estado); atualizarHeaderLocalizacao(cidade, estado);
-            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>\`, confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
+            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>', confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
         }
 
         async function iniciarVerificacaoLocal() {
