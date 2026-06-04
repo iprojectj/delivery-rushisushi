@@ -895,7 +895,7 @@
             const cidadeSalva = localStorage.getItem("localCidade"); const estadoSalvo = localStorage.getItem("localEstado");
             if (cidadeSalva && estadoSalvo) { atualizarHeaderLocalizacao(cidadeSalva, estadoSalvo); return; }
             const local = await fetchLocation();
-            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>\${local.city} - \${local.region}</strong></div>\`, showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
+            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>' + local.city + ' - ' + local.region + '</strong></div>', showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
         }
 
         const commonAddons = [
