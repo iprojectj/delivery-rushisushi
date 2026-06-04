@@ -1527,9 +1527,7 @@
             if (reviewStep === 0) { document.getElementById('more-reviews-1').classList.remove('hidden'); document.getElementById('more-reviews-1').classList.add('animate-[fade_0.5s]'); reviewStep++; } 
             else if (reviewStep === 1) { document.getElementById('more-reviews-2').classList.remove('hidden'); document.getElementById('more-reviews-2').classList.add('animate-[fade_0.5s]'); document.getElementById('btn-load-reviews').style.display = 'none'; reviewStep++; }
         }
-
     </script>
-
 </body>
 </html>`;
 
