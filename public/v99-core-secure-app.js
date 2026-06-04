@@ -117,69 +117,54 @@
 \"        <div class='w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin'></div>\" +
 \"    </div>\" +
 
-    <header class="w-full relative bg-[#ffffff]">
-        <div class="header-banner">
-                  <img src="images/background.webp" class="banner-img">
-            </div>
-        <div class="px-4 relative -mt-10 z-20">
-            <div class="bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col items-center relative">
-                <!-- Logo centralizada -->
-                <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-0.5 shadow-md border border-gray-100">
-                    <img src="images/logo-rushi.webp" class="w-full h-full rounded-full object-cover">
-                </div>
-                
-                <!-- Título Centralizado -->
-                <div class="mt-8 w-full text-center">
-                    <h1 class="text-[#111827] text-2xl font-extrabold tracking-tight mb-1">Rūshī Sushi</h1>
-
-                    <!-- Indicador Loja Aberta -->
-                    <div class="flex items-center justify-center gap-1.5 mb-3">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#05a65a] opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#05a65a]"></span>
-                        </span>
-                        <span class="text-[11px] font-bold text-[#05a65a] tracking-wide uppercase">Aberto agora</span>
-                    </div>
-                    
-                    <!-- Localização e Valor Mínimo Harmonizados -->
-                    <div class="flex items-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4">
-                        <span id="header-location-info">Detectando...</span>
-                        <span class="text-gray-300">•</span>
-                        <span>Valor min. R$ 15,00</span>
-                    </div>
-
-                    <!-- Divisória Sutil -->
-                    <div class="w-full h-[1px] bg-gray-100 mb-2"></div>
-
-                    <!-- Linha de Avaliação (Alinhada à esquerda estilo iFood) -->
-                    <div class="flex items-center justify-between w-full py-2 cursor-pointer active:bg-gray-50 transition rounded-lg text-left">
-                                    <div class="flex items-center gap-2">
-                                          <i class="fa-solid fa-star text-[#fbbf24] text-xs"></i>
-                                          <span class="text-[#3e3e3e] font-bold text-sm">4.9 <span class="text-gray-400 font-normal ml-0.5">(7.478 avaliações)</span></span>
-                                          <div class="flex items-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left">
-                                                <i class="fa-solid fa-star text-[8px]"></i>
-                                                <span class="text-[9px] font-black uppercase tracking-tighter">Super</span>
-                                          </div>
-                                    </div>
-                                    <i class="fa-solid fa-chevron-right text-gray-300 text-[10px]"></i>
-                              </div>
-
-                    <!-- Divisória Sutil -->
-                    <div class="w-full h-[1px] bg-gray-100 mb-2"></div>
-
-                    <!-- Informação de Entrega (Alinhada à esquerda) -->
-                    <div class="flex flex-col w-full text-left py-1">
-                        <div class="text-[14px] text-[#3e3e3e] font-medium">
-                            Entrega padrão (30-50 min) <span class="text-[#05a65a] font-bold ml-1">Grátis</span>
-                        </div>
-                        <div class="text-[13px] text-gray-400 mt-0.5 font-medium">
-                            Mais opções disponíveis na sacola
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+\"    <header class='w-full relative bg-[#ffffff]'>\" +
+\"        <div class='header-banner'>\" +
+\"                  <img src='images/background.webp' class='banner-img'>\" +
+\"            </div>\" +
+\"        <div class='px-4 relative -mt-10 z-20'>\" +
+\"            <div class='bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col items-center relative'>\" +
+\"                <div class='absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-0.5 shadow-md border border-gray-100'>\" +
+\"                    <img src='images/logo-rushi.webp' class='w-full h-full rounded-full object-cover'>\" +
+\"                </div>\" +
+\"                <div class='mt-8 w-full text-center'>\" +
+\"                    <h1 class='text-[#111827] text-2xl font-extrabold tracking-tight mb-1'>Rūshī Sushi</h1>\" +
+\"                    <div class='flex items-center justify-center gap-1.5 mb-3'>\" +
+\"                        <span class='relative flex h-2 w-2'>\" +
+\"                            <span class='animate-ping absolute inline-flex h-full w-full rounded-full bg-[#05a65a] opacity-75'></span>\" +
+\"                            <span class='relative inline-flex rounded-full h-2 w-2 bg-[#05a65a]'></span>\" +
+\"                        </span>\" +
+\"                        <span class='text-[11px] font-bold text-[#05a65a] tracking-wide uppercase'>Aberto agora</span>\" +
+\"                    </div>\" +
+\"                    <div class='flex items-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4'>\" +
+\"                        <span id='header-location-info'>Detectando...</span>\" +
+\"                        <span class='text-gray-300'>•</span>\" +
+\"                        <span>Valor min. R$ 15,00</span>\" +
+\"                    </div>\" +
+\"                    <div class='w-full h-[1px] bg-gray-100 mb-2'></div>\" +
+\"                    <div class='flex items-center justify-between w-full py-2 cursor-pointer active:bg-gray-50 transition rounded-lg text-left'>\" +
+\"                                    <div class='flex items-center gap-2'>\" +
+\"                                          <i class='fa-solid fa-star text-[#fbbf24] text-xs'></i>\" +
+\"                                          <span class='text-[#3e3e3e] font-bold text-sm'>4.9 <span class='text-gray-400 font-normal ml-0.5'>(7.478 avaliações)</span></span>\" +
+\"                                          <div class='flex items-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left'>\" +
+\"                                                <i class='fa-solid fa-star text-[8px]'></i>\" +
+\"                                                <span class='text-[9px] font-black uppercase tracking-tighter'>Super</span>\" +
+\"                                          </div>\" +
+\"                                    </div>\" +
+\"                                    <i class='fa-solid fa-chevron-right text-gray-300 text-[10px]'></i>\" +
+\"                              </div>\" +
+\"                    <div class='w-full h-[1px] bg-gray-100 mb-2'></div>\" +
+\"                    <div class='flex flex-col w-full text-left py-1'>\" +
+\"                        <div class='text-[14px] text-[#3e3e3e] font-medium'>\" +
+\"                            Entrega padrão (30-50 min) <span class='text-[#05a65a] font-bold ml-1'>Grátis</span>\" +
+\"                        </div>\" +
+\"                        <div class='text-[13px] text-gray-400 mt-0.5 font-medium'>\" +
+\"                            Mais opções disponíveis na sacola\" +
+\"                        </div>\" +
+\"                    </div>\" +
+\"                </div>\" +
+\"            </div>\" +
+\"        </div>\" +
+\"    </header>\" +
 
     <div class="px-4 mt-5">
       <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
