@@ -1006,8 +1006,8 @@
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
                                     <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p>
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
-                                        <span class="text-[#05a65a] font-black text-2xl"> = formatMoney(p.price)}</span>
-                                        \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium"> = formatMoney(p.oldPrice)}</span>\` : ''}
+                                        <span class="text-[#05a65a] font-black text-2xl">${formatMoney(p.price)}</span>
+                                        \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">${formatMoney(p.oldPrice)}</span>\` : ''}
                                         \${p.isBait ? '' : ''}
                                     </div>
                                 </div>
@@ -1022,7 +1022,7 @@
                             <div onclick="openProductModal('\${p.id}')" class="flex justify-between items-center p-5 \${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
                                 <div class="flex flex-col justify-between min-h-[100px] py-1 pr-2 z-10 w-full">
                                     <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">\${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p></div>
-                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm ${p.isBait ? 'font-bold text-lg' : ''}"> = formatMoney(p.price)}</span>${p.oldPrice ? `<span class="text-xs text-gray-400 line-through"> = formatMoney(p.oldPrice)}</span>` : ''}</div>
+                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm ${p.isBait ? 'font-bold text-lg' : ''}">${formatMoney(p.price)}</span>${p.oldPrice ? `<span class="text-xs text-gray-400 line-through">${formatMoney(p.oldPrice)}</span>` : ''}</div>
                                 </div>
                                 <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">\${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">\${p.badge}</div>\` : ''}</div>
                             </div>\`;
@@ -1064,10 +1064,10 @@
             document.getElementById('modal-img').src = item.img;
             document.getElementById('modal-title').innerText = item.name;
             document.getElementById('modal-desc').innerText = item.desc;
-            document.getElementById('modal-price').innerText  = formatMoney(item.price);
-            document.getElementById('modal-old-price').innerText = item.oldPrice  = formatMoney(item.oldPrice) : '';
+            document.getElementById('modal-price').innerText ${formatMoney(item.price);
+            document.getElementById('modal-old-price').innerText = item.oldPrice ${formatMoney(item.oldPrice) : '';
             document.getElementById('modal-qty').innerText = 1;
-            document.getElementById('modal-btn-price').innerText  = formatMoney(item.price);
+            document.getElementById('modal-btn-price').innerText ${formatMoney(item.price);
             document.getElementById('modal-obs').value = '';
             
             const btnSpan = document.querySelector('#product-sheet button[onclick="addToCartCurrent()"] span:first-child');
@@ -1082,7 +1082,7 @@
                     addonsState[opt.name] = 0;
                     html += \`
                     <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
-                        <div class="flex items-center gap-3"><img src="\${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">\${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">\${opt.price === 0 ? 'Grátis' : '+  = formatMoney(opt.price)}</div></div></div>
+                        <div class="flex items-center gap-3"><img src="\${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">\${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">\${opt.price === 0 ? 'Grátis' : '+ ${formatMoney(opt.price)}</div></div></div>
                         <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-\${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, 1)">+</button></div>
                     </div>\`;
                 });
@@ -1105,7 +1105,7 @@
             let addonsTotal = 0;
             for(let [name, qty] of Object.entries(addonsState)) { const opt = commonAddons.find(a => a.name === name); if(opt) addonsTotal += (opt.price * qty); }
             const total = (currentItem.price + addonsTotal) * currentQty;
-            document.getElementById('modal-btn-price').innerText  = formatMoney(total);
+            document.getElementById('modal-btn-price').innerText ${formatMoney(total);
         }
 
         window.changeQty = function(delta) {
@@ -1153,7 +1153,7 @@
         function updateCartBar() {
             const count = cart.reduce((acc, item) => acc + item.qty, 0);
             const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
-            document.getElementById('bar-total').innerText  = formatMoney(total);
+            document.getElementById('bar-total').innerText ${formatMoney(total);
             const lbl = document.getElementById('bar-count-label');
             if (lbl) lbl.innerText = count + (count === 1 ? ' item' : ' itens');
 
@@ -1173,7 +1173,7 @@
                 if (pctEl) pctEl.classList.add('text-[#05a65a]');
             } else {
                 const falta = META - total;
-                if (txt) txt.innerHTML = 'Faltam <strong>'  = formatMoney(falta) + '</strong> para entrega grátis';
+                if (txt) txt.innerHTML = 'Faltam <strong>' ${formatMoney(falta) + '</strong> para entrega grátis';
                 if (icon) icon.className = 'fa-solid fa-motorcycle text-[#EA1D2C] text-[11px]';
                 if (fill) fill.classList.replace('bg-[#05a65a]', 'bg-[#EA1D2C]');
                 if (pctEl) pctEl.classList.remove('text-[#05a65a]');
@@ -1321,7 +1321,7 @@
                 let addonsHtml = (item.addons || []).map(a => \`<span class="text-xs text-gray-500 block">+ \${a.qty}x \${a.name}</span>\`).join('');
                 container.innerHTML += \`
                 <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
-                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">\${item.qty}x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">\${item.name}</span>\${addonsHtml}\${item.obs ? \`<span class="text-xs text-gray-400 italic">"\${item.obs}"</span>\` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1"> = formatMoney(item.totalPrice)}</div></div></div>
+                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">\${item.qty}x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">\${item.name}</span>\${addonsHtml}\${item.obs ? \`<span class="text-xs text-gray-400 italic">"\${item.obs}"</span>\` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">${formatMoney(item.totalPrice)}</div></div></div>
                     <button onclick="removeCartItem(\${idx})" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>
                 </div>\`;
             });
@@ -1349,7 +1349,7 @@
                     padraoPriceEl.innerText = 'Grátis';
                     padraoPriceEl.className = 'font-bold text-[#05a65a] text-sm';
                 } else {
-                    padraoPriceEl.innerText = '+ '  = formatMoney(taxaPadrao);
+                    padraoPriceEl.innerText = '+ ' ${formatMoney(taxaPadrao);
                     padraoPriceEl.className = 'font-bold text-[#3e3e3e] text-sm';
                 }
             }
@@ -1357,7 +1357,7 @@
             if (banner) {
                 if (taxaPadrao > 0) {
                     const falta = window.META_FRETE_GRATIS - subtotal;
-                    banner.innerHTML = '<i class="fa-solid fa-circle-info mr-1"></i> Faltam <strong>'  = formatMoney(falta) + '</strong> em itens para ganhar entrega grátis.';
+                    banner.innerHTML = '<i class="fa-solid fa-circle-info mr-1"></i> Faltam <strong>' ${formatMoney(falta) + '</strong> em itens para ganhar entrega grátis.';
                     banner.classList.remove('hidden');
                 } else {
                     banner.classList.add('hidden');
@@ -1387,7 +1387,7 @@
             const shipping = shippingEl ? parseFloat(shippingEl.value) : taxaPadrao;
             const total = subtotal + shipping;
             const subEl = document.getElementById('bag-subtotal');
-            if(subEl) subEl.innerText  = formatMoney(subtotal);
+            if(subEl) subEl.innerText ${formatMoney(subtotal);
             const shipEl = document.getElementById('bag-shipping');
             if(shipEl) {
                 if (cart.length === 0) {
@@ -1397,23 +1397,23 @@
                     shipEl.innerText = 'Grátis';
                     shipEl.className = 'text-[#05a65a] font-semibold';
                 } else {
-                    shipEl.innerText  = formatMoney(shipping);
+                    shipEl.innerText ${formatMoney(shipping);
                     shipEl.className = 'text-[#3e3e3e]';
                 }
             }
             const totEl = document.getElementById('bag-total');
-            if(totEl) totEl.innerText  = formatMoney(total);
+            if(totEl) totEl.innerText ${formatMoney(total);
             const finEl = document.getElementById('final-total');
-            if(finEl) finEl.innerText  = formatMoney(total);
+            if(finEl) finEl.innerText ${formatMoney(total);
             const finSub = document.getElementById('final-subtotal');
-            if(finSub) finSub.innerText  = formatMoney(subtotal);
+            if(finSub) finSub.innerText ${formatMoney(subtotal);
             const finShip = document.getElementById('final-shipping');
             if(finShip) {
                 if (shipping === 0) { finShip.innerText = 'Grátis'; finShip.className = 'text-[#05a65a] font-semibold'; }
-                else { finShip.innerText  = formatMoney(shipping); finShip.className = 'text-[#3e3e3e]'; }
+                else { finShip.innerText ${formatMoney(shipping); finShip.className = 'text-[#3e3e3e]'; }
             }
             const footEl = document.getElementById('footer-total-display');
-            if(footEl) footEl.innerText  = formatMoney(total);
+            if(footEl) footEl.innerText ${formatMoney(total);
         }
 
         // 🔥 LÓGICA DO ORDER BUMP
