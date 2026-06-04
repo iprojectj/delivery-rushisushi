@@ -240,12 +240,7 @@
           <div class="flex flex-col min-w-0 flex-1">
             <div class="flex items-center gap-1.5">
               <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
-              <i class="fa-solid fa-circle-check text-[#EA1D2C] text-[11px]"></i>
             </div>
-            <span class="text-[11px] text-gray-500 truncate">Cupom de boas-vindas liberado</span>
-          </div>
-          <div class="flex flex-col items-end gap-1">
-              <span class="text-[9px] font-black text-[#EA1D2C] bg-[#fff1f2] px-2 py-0.5 rounded-full border border-red-100">VERIFICADO</span>
           </div>
         </div>
       </div>
