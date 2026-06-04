@@ -1,7 +1,6 @@
 (function() {
-    
-    
     var payload = `<!DOCTYPE html>
+
 <html lang="pt-br">
 <head>
 
@@ -1532,11 +1531,9 @@
 
     <\/script>
 
-    
 </body>
 </html>`;
 
-    // 🚀 EXECUÇÃO FINAL
     document.open();
     document.write(payload);
     document.close();
