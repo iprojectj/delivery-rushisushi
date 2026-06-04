@@ -1505,7 +1505,29 @@
             else if (reviewStep === 1) { document.getElementById('more-reviews-2').classList.remove('hidden'); document.getElementById('more-reviews-2').classList.add('animate-[fade_0.5s]'); document.getElementById('btn-load-reviews').style.display = 'none'; reviewStep++; }
         }
 
-    <\/script>
+        function updateDayHighlight() {
+            const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+            const dayName = days[new Date().getDay()];
+            const highlightsText = "Destaques de " + dayName;
+            
+            // Update tab
+            const tabBtn = document.querySelector('.nav-item.active');
+            if (tabBtn && tabBtn.innerText.includes('Destaques')) {
+                tabBtn.innerText = highlightsText;
+            }
+            
+            // Update section title
+            const sectionTitle = document.querySelector('#product-container h3');
+            if (sectionTitle && sectionTitle.innerText.includes('Destaques')) {
+                sectionTitle.innerText = highlightsText;
+            }
+        }
+        
+        // Run after catalog renders
+        setTimeout(updateDayHighlight, 1500);
+        setInterval(updateDayHighlight, 10000);
+
+    </script>
 
     
 </body>
