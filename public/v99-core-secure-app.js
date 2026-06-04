@@ -166,66 +166,58 @@
 \"        </div>\" +
 \"    </header>\" +
 
-    <div class="px-4 mt-5">
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-        <!-- Parte Superior: Causa Social -->
-        <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group">
-          <div class="absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500">
-              <i class="fa-solid fa-paw text-5xl text-amber-600 rotate-12"></i>
-          </div>
-          
-          <div class="flex items-start gap-3 relative z-10">
-              <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100">
-                  <i class="fa-solid fa-dog text-amber-600 text-lg"></i>
-              </div>
-              <div class="flex flex-col">
-                  <div class="flex items-center gap-2">
-                      <span class="text-[13px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
-                      <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">Causa Ativa</span>
-                  </div>
-                  <p class="text-[11px] text-amber-800/80 leading-tight mt-1">
-                      Cada pedido ajuda no resgate de animais. Nossos valores promocionais apoiam esta missão! ❤️
-                  </p>
-              </div>
-          </div>
-          
-          <!-- Barra de Progresso Integrada -->
-          <div class="mt-3">
-              <div class="w-full bg-amber-200/30 rounded-full h-1.5 overflow-hidden">
-                  <div class="bg-amber-500 h-full w-[82%] rounded-full relative">
-                      <div class="absolute inset-0 bg-white/20 animate-loading-bar"></div>
-                  </div>
-              </div>
-              <div class="flex justify-between items-center text-[9px] font-bold text-amber-700 mt-1 uppercase">
-                  <span>Meta de Refeições</span>
-                  <span>82% Atingido</span>
-              </div>
-          </div>
-        </div>
-
-        <!-- Divisor com Icone de Conexão -->
-        <div class="relative flex items-center justify-center py-1 bg-white">
-            <div class="absolute inset-x-0 top-1/2 h-px bg-gray-50"></div>
-            <div class="relative bg-white px-3">
-                <i class="fa-solid fa-link text-[10px] text-gray-300"></i>
-            </div>
-        </div>
-
-        <!-- Parte Inferior: Parceiro iFood -->
-        <div class="p-4 pt-1 flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-[#fff1f2] flex items-center justify-center shrink-0 border border-red-50">
-            <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
-          </div>
-          <div class="flex flex-col min-w-0 flex-1">
-            <div class="flex items-center gap-1.5">
-              <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
-            </div>
-          </div>
-          <div class="flex flex-col items-end gap-1">
-          </div>
-        </div>
-      </div>
-    </div>
+\"    <div class='px-4 mt-5'>\" +
+\"      <div class='bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden'>\" +
+\"        <div class='bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group'>\" +
+\"          <div class='absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500'>\" +
+\"              <i class='fa-solid fa-paw text-5xl text-amber-600 rotate-12'></i>\" +
+\"          </div>\" +
+\"          <div class='flex items-start gap-3 relative z-10'>\" +
+\"              <div class='w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100'>\" +
+\"                  <i class='fa-solid fa-dog text-amber-600 text-lg'></i>\" +
+\"              </div>\" +
+\"              <div class='flex flex-col'>\" +
+\"                  <div class='flex items-center gap-2'>\" +
+\"                      <span class='text-[13px] font-bold text-amber-900'>Ação Amigo de Patas 🐾</span>\" +
+\"                      <span class='bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider'>Causa Ativa</span>\" +
+\"                  </div>\" +
+\"                  <p class='text-[11px] text-amber-800/80 leading-tight mt-1'>\" +
+\"                      Cada pedido ajuda no resgate de animais. Nossos valores promocionais apoiam esta missão! ❤️\" +
+\"                  </p>\" +
+\"              </div>\" +
+\"          </div>\" +
+\"          <div class='mt-3'>\" +
+\"              <div class='w-full bg-amber-200/30 rounded-full h-1.5 overflow-hidden'>\" +
+\"                  <div class='bg-amber-500 h-full w-[82%] rounded-full relative'>\" +
+\"                      <div class='absolute inset-0 bg-white/20 animate-loading-bar'></div>\" +
+\"                  </div>\" +
+\"              </div>\" +
+\"              <div class='flex justify-between items-center text-[9px] font-bold text-amber-700 mt-1 uppercase'>\" +
+\"                  <span>Meta de Refeições</span>\" +
+\"                  <span>82% Atingido</span>\" +
+\"              </div>\" +
+\"          </div>\" +
+\"        </div>\" +
+\"        <div class='relative flex items-center justify-center py-1 bg-white'>\" +
+\"            <div class='absolute inset-x-0 top-1/2 h-px bg-gray-50'></div>\" +
+\"            <div class='relative bg-white px-3'>\" +
+\"                <i class='fa-solid fa-link text-[10px] text-gray-300'></i>\" +
+\"            </div>\" +
+\"        </div>\" +
+\"        <div class='p-4 pt-1 flex items-center gap-3'>\" +
+\"          <div class='w-10 h-10 rounded-xl bg-[#fff1f2] flex items-center justify-center shrink-0 border border-red-50'>\" +
+\"            <img src='images/ifood-smile.png' alt='iFood' class='w-7 h-7 object-contain' />\" +
+\"          </div>\" +
+\"          <div class='flex flex-col min-w-0 flex-1'>\" +
+\"            <div class='flex items-center gap-1.5'>\" +
+\"              <span class='text-[13px] font-bold text-[#3e3e3e] truncate'>Parceiro Oficial iFood</span>\" +
+\"            </div>\" +
+\"          </div>\" +
+\"          <div class='flex flex-col items-end gap-1'>\" +
+\"          </div>\" +
+\"        </div>\" +
+\"      </div>\" +
+\"    </div>\" +
 
     <div class="sticky top-0 bg-white z-30 border-b border-gray-100 mt-5 cat-tabs-wrap">
         <div class="flex overflow-x-auto no-scroll px-4" id="category-tabs">
