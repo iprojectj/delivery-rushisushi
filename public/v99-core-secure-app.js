@@ -1,9 +1,9 @@
 (function() {
     
     
-    var payload = `<!DOCTYPE html>
-<html lang="pt-br">
-<head>
+    var payload = "<!DOCTYPE html>" +
+"<html lang='pt-br'>" +
+"<head>" +
 
     <script
       src="https://cdn.utmify.com.br/scripts/utms/latest.js"
