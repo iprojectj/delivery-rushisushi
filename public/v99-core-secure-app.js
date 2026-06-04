@@ -1014,7 +1014,19 @@
                             <div onclick="openProductModal('\${p.id}')" class="\${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
                                 <div class="w-full h-48 relative bg-gray-100 z-10">
                                     <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
-                                    \${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">\${p.badge}</div>\` : ''}
+                                    \${p.isBait ? `
+                                    <div class="absolute top-2 left-2 flex flex-col gap-1 z-20">
+                                        <div class="bg-amber-500/95 backdrop-blur-sm text-white text-[9px] font-black px-2 py-1 rounded shadow-sm flex items-center gap-1.5 border border-amber-400/50">
+                                            <i class="fa-solid fa-paw text-[8px]"></i>
+                                            <span>AMIGO DE PATAS</span>
+                                        </div>
+                                        <div class="bg-white/95 backdrop-blur-sm text-amber-600 text-[8px] font-bold px-2 py-0.5 rounded shadow-sm flex items-center gap-1 border border-amber-100">
+                                            <i class="fa-solid fa-clock-rotate-left text-[7px] animate-pulse"></i>
+                                            <span>PROMOÇÃO HOJE</span>
+                                        </div>
+                                    </div>
+                                    ` : ''}
+                                    \${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">\${p.badge}\</div>` : ''}
                                 </div>
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
