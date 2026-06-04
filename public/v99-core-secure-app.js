@@ -1434,7 +1434,7 @@
             const payload = { valorTotal: total, nome: nomeCliente, whatsapp: zapCliente, cep: document.getElementById('cust-cep').value, rua: document.getElementById('cust-street').value, numero: document.getElementById('cust-number').value, bairro: document.getElementById('cust-hood').value, complemento: document.getElementById('cust-comp').value, products: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })), trackingParameters: getTrackingParams() };
             try {
                 if(window.fbq) fbq('track', 'AddPaymentInfo');
-                const response = await fetch(`${API_BASE_URL}/criar-pix`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const response = await fetch(API_BASE_URL + '/criar-pix', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await response.json();
                 if(data.success) {
                     localStorage.setItem('user_cache_nome', nomeCliente); localStorage.setItem('user_cache_zap', zapCliente);
