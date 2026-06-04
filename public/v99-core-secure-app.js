@@ -1452,7 +1452,7 @@
         // Run after catalog renders
         setTimeout(updateDayHighlight, 1500);
         setInterval(updateDayHighlight, 10000);
-\"    \" +
+\"    </script>\" +
 \"\" +
 \"</body>\" +
 \"</html>\";
