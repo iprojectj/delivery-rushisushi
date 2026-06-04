@@ -1082,7 +1082,7 @@
                     addonsState[opt.name] = 0;
                     html += \`
                     <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
-                        <div class="flex items-center gap-3"><img src="\${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">\${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">\${opt.price === 0 ? 'Grátis' : '+ \${formatMoney(opt.price)}</div></div></div>
+                        <div class="flex items-center gap-3"><img src="${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">${opt.price === 0 ? 'Grátis' : '+ ' + formatMoney(opt.price)}</div></div></div>
                         <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-\${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, 1)">+</button></div>
                     </div>\`;
                 });
