@@ -498,7 +498,7 @@
                 items.forEach(item => {
                     let addonsText = '';
                     if(item.addons && item.addons.length > 0) {
-                        addonsText = item.addons.map(a => \`<br><span class="text-xs text-gray-400">+ \${a.qty}x \${a.name}</span>\`).join('');
+                        addonsText = item.addons.map(a => '<br><span class="text-xs text-gray-400">+ ' + a.qty + 'x ' + a.name + '</span>').join('');
                     }
                     
                     const itemPrice = item.totalPrice || item.price || item.valor || 0;
