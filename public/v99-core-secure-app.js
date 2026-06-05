@@ -189,7 +189,7 @@
 
     <div class="px-4 mt-5">
       <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-        <!-- Parte Superior: Ca🐾 Oferta Solidária -->
+        <!-- Parte Superior: Causa Social -->
         <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group">
           <div class="absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500">
               <i class="fa-solid fa-paw text-5xl text-amber-600 rotate-12"></i>
