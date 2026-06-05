@@ -1,7 +1,7 @@
 // Configuração compartilhada da Paradise + Utmify e store em memória de pedidos
 // pendentes. Bom o bastante para a janela curta entre criação do PIX e webhook.
 
-export const PARADISE_API_URL = "https://multi.paradisepags.com/api/v1";
+export const PARADISE_API_URL = "https://multi.paradisepags.com/api";
 export const UTMIFY_API_URL =
   "https://api.utmify.com.br/api-credentials/orders";
 
