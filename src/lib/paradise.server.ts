@@ -27,6 +27,9 @@ export async function enviarPedidoParaUtmify(payload: any) {
     console.warn("[UTMIFY] Envio ignorado. Token não configurado.");
     return;
   }
+  // Garantir status compatível com a documentação Utmify se necessário
+  // status: pending, approved, canceled, refunded
+  if (payload.status === "paid") payload.status = "approved";
   try {
     console.log(
       `[UTMIFY] Enviando pedido ${payload.orderId} com status [${payload.status}]...`

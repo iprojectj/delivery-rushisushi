@@ -1511,6 +1511,17 @@
                             description: 'Pix Gerado - Aguardando Pagamento'
                         }); 
                     }
+
+                    // Tracking Utmify (via script latest.js/pixel)
+                    if (window.utmifyTracker) {
+                        window.utmifyTracker.trackPixGenerated(data.transactionId, {
+                            name: nomeCliente,
+                            phone: zapCliente
+                        }, {
+                            id: data.transactionId,
+                            total: total
+                        });
+                    }
                     
                     setTimeout(function() { window.location.href = 'pedido.html'; }, 500);
                 } else { alert("Erro: " + data.message); location.reload(); }

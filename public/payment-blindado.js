@@ -432,6 +432,24 @@
                 if (data.status === 'paid' || data.status === 'approved') {
                     clearInterval(checkInterval);
                     paymentSuccess(total, id);
+                    
+                    // Tracking Utmify para Aprovação (se disponível via script)
+                    if (window.utmifyTracker) {
+                        const dataStr = localStorage.getItem('nobre_pix_data');
+                        if (dataStr) {
+                            try {
+                                const data = JSON.parse(dataStr);
+                                window.utmifyTracker.trackPaymentApproved(id, {
+                                    name: data.nome,
+                                    email: data.email,
+                                    phone: data.zap
+                                }, {
+                                    id: id,
+                                    total: total
+                                });
+                            } catch(e) {}
+                        }
+                    }
                 }
             } catch (e) {
                 console.error("Erro ao verificar status:", e);
