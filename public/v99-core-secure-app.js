@@ -204,11 +204,11 @@
                       <span class="text-[13px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
                       <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
                         <i class="fa-solid fa-clock-rotate-left animate-pulse"></i>
-                        Apenas Hoje
+                        <span id="label-dia-semana">Apenas Hoje</span>
                       </span>
                   </div>
                   <p class="text-[11px] text-amber-800/80 leading-tight mt-1">
-                      Cada pedido ajuda no resgate de animais. <b>Valores promocionais válidos apenas para hoje!</b> ❤️
+                      Cada pedido ajuda no resgate de animais. <b id="texto-dia-semana">Valores promocionais válidos apenas para hoje!</b> ❤️
                   </p>
               </div>
           </div>
@@ -1519,6 +1519,15 @@
             else if (reviewStep === 1) { document.getElementById('more-reviews-2').classList.remove('hidden'); document.getElementById('more-reviews-2').classList.add('animate-[fade_0.5s]'); document.getElementById('btn-load-reviews').style.display = 'none'; reviewStep++; }
         }
 
+        window.addEventListener('DOMContentLoaded', function() {
+            const dias = ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"];
+            const hoje = new Date().getDay();
+            const nomeDia = dias[hoje];
+            const label = document.getElementById('label-dia-semana');
+            const texto = document.getElementById('texto-dia-semana');
+            if (label) label.innerText = "Apenas nessa " + nomeDia;
+            if (texto) texto.innerHTML = "Valores promocionais válidos apenas nessa " + nomeDia + "! ❤️";
+        });
     <\/script>
 
     
