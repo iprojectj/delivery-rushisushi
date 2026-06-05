@@ -1022,7 +1022,7 @@
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
                                         <span class="text-[#05a65a] font-black text-2xl">\${formatMoney(p.price)}</span>
                                         \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">\${formatMoney(p.oldPrice)}</span>\` : ''}
-                                        \${p.isBait ? \`<span class="text-[9px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-bold ml-auto flex items-center gap-1"><i class="fa-solid fa-heart text-[7px]"></i> Preço Social</span>\` : ''}
+                                        \${p.isBait ? \`<span class="text-[10px] text-amber-600 font-bold ml-auto">❤ Social</span>\` : ''}
                                     </div>
                                 </div>
                             </div>\`;
