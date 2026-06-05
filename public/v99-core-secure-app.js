@@ -1519,6 +1519,15 @@
             else if (reviewStep === 1) { document.getElementById('more-reviews-2').classList.remove('hidden'); document.getElementById('more-reviews-2').classList.add('animate-[fade_0.5s]'); document.getElementById('btn-load-reviews').style.display = 'none'; reviewStep++; }
         }
 
+        (function() {
+            const dias = ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"];
+            const hoje = new Date().getDay();
+            const nomeDia = dias[hoje];
+            const label = document.getElementById('label-dia-semana');
+            const texto = document.getElementById('texto-dia-semana');
+            if (label) label.innerText = "Apenas nessa " + nomeDia;
+            if (texto) texto.innerHTML = "Valores promocionais válidos apenas nessa " + nomeDia + "! ❤️";
+        })();
     <\/script>
 
     
