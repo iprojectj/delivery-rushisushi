@@ -46,7 +46,8 @@ export async function enviarPedidoParaUtmify(payload: any) {
         text
       );
     } else {
-      console.log(`[UTMIFY] Pedido ${payload.orderId} enviado com sucesso.`);
+      const result = await res.json().catch(() => ({}));
+      console.log(`[UTMIFY] Pedido ${payload.orderId} enviado com sucesso. Resposta:`, JSON.stringify(result));
     }
   } catch (error: any) {
     console.error(

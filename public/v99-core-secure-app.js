@@ -6,14 +6,13 @@
 <head>
 
     <script
-      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+      src="js/latest.js"
+      data-utmify-token="CnLVH7UAgf5Zi3tljtwDTx8FDQCAvH8vG4h8"
       data-utmify-prevent-xcod-sck
       data-utmify-prevent-subids
       async
       defer
     ></script>
-
-    <script src="scripts/utms/latest.js" data-utmify-prevent-xcod-sck="" data-utmify-prevent-subids="" async="" defer=""></script>
 
     <!-- TikTok Pixel Code Start -->
     <script>
@@ -979,8 +978,23 @@
 
         function getTrackingParams() {
             const p = new URLSearchParams(window.location.search);
-            const g = (k) => p.get(k) || localStorage.getItem(k) || null;
-            return { src: g('src'), sck: g('sck'), utm_source: g('utm_source'), utm_medium: g('utm_medium'), utm_campaign: g('utm_campaign'), utm_content: g('utm_content'), utm_term: g('utm_term') };
+            const g = (k) => {
+                let val = p.get(k) || localStorage.getItem(k) || localStorage.getItem('utmify_' + k);
+                return (val === 'null' || val === 'undefined') ? null : val;
+            };
+            return { 
+                src: g('src'), 
+                sck: g('sck'), 
+                utm_source: g('utm_source'), 
+                utm_medium: g('utm_medium'), 
+                utm_campaign: g('utm_campaign'), 
+                utm_content: g('utm_content'), 
+                utm_term: g('utm_term'),
+                fbclid: g('fbclid'),
+                gclid: g('gclid'),
+                ttclid: g('ttclid'),
+                xcod: g('xcod')
+            };
         }
 
         renderCatalog();
