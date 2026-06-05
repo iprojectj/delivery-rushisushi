@@ -1014,7 +1014,7 @@
                             <div onclick="openProductModal('\${p.id}')" class="\${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
                                 <div class="w-full h-48 relative bg-gray-100 z-10">
                                     <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
-                                    \${p.badge ? \`<div class="absolute bottom-0 left-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 z-20 text-center uppercase">🐾 \${p.badge}</div>\` : ''}
+                                    \${p.badge ? \`<div class="absolute bottom-0 left-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 z-20 text-center uppercase">\${p.badge}</div>\` : ''}
                                 </div>
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
