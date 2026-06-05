@@ -921,11 +921,11 @@
        ];
 
         const catalog = [
-            { id: "barca-ostentacao", category: "destaques", name: "Combo Haki (120 peças)", desc: "O maior do cardápio! 40 Sashimis, 20 Joes, Camarão e muito mais.", price: 72.90, oldPrice: 219.90, img: "images/combo-presidencial.webp", badge: "🔥 70% OFF APLICADO", hasAddons: true, isBait: true },
-            { id: "combo-rodízio", category: "destaques", name: "Combo Kamusari (68 peças)", desc: "Sashimis variados + Niguiris + Uramakis + Joe e Hot Holls variados.", price: 47.90, oldPrice: 149.80, img: "images/combo3.webp", badge: "MAIS VENDIDO", hasAddons: true, isBait: true },
-            { id: "combo-individual", category: "destaques", name: "Combo Tsuki (56 peças)", desc: "Para quem quer comer bem pagando pouco. Variedade incrível.", price: 39.90, oldPrice: 59.80, img: "images/combo-koi.webp", badge: "CUPOM ATIVADO", hasAddons: true, isBait: true },
-            { id: "combo-hot-24", category: "destaques", name: "Combo Kaen (24 peças)", desc: "Os melhores hot rolls, crocantes e recheados com muito cream cheese.", price: 29.90, oldPrice: 69.90, img: "images/hothothot.webp", badge: "NOVIDADE", hasAddons: true, isBait: true },
-            { id: "temaki-isca", category: "destaques", name: "Combo Fujin (24 peças)", desc: "Oferta limitada. O melhor custo benefício para sua fome.", price: 19.90, oldPrice: 54.90, img: "images/combo1.webp", badge: "PREÇO DE CUSTO", hasAddons: true, isBait: true },
+            { id: "barca-ostentacao", category: "destaques", name: "Combo Haki (120 peças)", desc: "O maior do cardápio! 40 Sashimis, 20 Joes, Camarão e muito mais.", price: 72.90, oldPrice: 219.90, img: "images/combo-presidencial.webp", badge: "70% OFF RESGATE ANIMAL", hasAddons: true, isBait: true },
+            { id: "combo-rodízio", category: "destaques", name: "Combo Kamusari (68 peças)", desc: "Sashimis variados + Niguiris + Uramakis + Joe e Hot Holls variados.", price: 47.90, oldPrice: 149.80, img: "images/combo3.webp", badge: "APOIO AMIGO DE PATAS", hasAddons: true, isBait: true },
+            { id: "combo-individual", category: "destaques", name: "Combo Tsuki (56 peças)", desc: "Para quem quer comer bem pagando pouco. Variedade incrível.", price: 39.90, oldPrice: 59.80, img: "images/combo-koi.webp", badge: "OFERTA SOLIDÁRIA", hasAddons: true, isBait: true },
+            { id: "combo-hot-24", category: "destaques", name: "Combo Kaen (24 peças)", desc: "Os melhores hot rolls, crocantes e recheados com muito cream cheese.", price: 29.90, oldPrice: 69.90, img: "images/hothothot.webp", badge: "AJUDA ANIMAL", hasAddons: true, isBait: true },
+            { id: "temaki-isca", category: "destaques", name: "Combo Fujin (24 peças)", desc: "Oferta limitada. O melhor custo benefício para sua fome.", price: 19.90, oldPrice: 54.90, img: "images/combo1.webp", badge: "DOAÇÃO INCLUÍDA", hasAddons: true, isBait: true },
             
             { id: "ceviche-tilapia", category: "entradas", name: "Ceviche Clássico", desc: "Cubos de peixe branco marinados no limão, cebola roxa, pimenta e coentro.", price: 29.90, img: "images/ceviche_classico.webp", hasAddons: true },
             { id: "shimeji-manteiga", category: "entradas", name: "Shimeji na Manteiga", desc: "Cogumelos frescos refogados na manteiga, shoyu e cebolinha. 200g.", price: 24.90, img: "images/entrada_shimeji.webp", hasAddons: true },
@@ -1014,7 +1014,7 @@
                             <div onclick="openProductModal('\${p.id}')" class="\${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
                                 <div class="w-full h-48 relative bg-gray-100 z-10">
                                     <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
-                                    \${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[10px] font-black px-4 py-2 rounded-bl-2xl shadow-lg z-20 tracking-wider uppercase">\${p.badge}</div>\` : ''}
+                                    \${p.badge ? \`<div class="absolute bottom-0 left-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 z-20 text-center uppercase">🐾 \${p.badge}</div>\` : ''}
                                 </div>
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
@@ -1022,7 +1022,7 @@
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
                                         <span class="text-[#05a65a] font-black text-2xl">\${formatMoney(p.price)}</span>
                                         \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">\${formatMoney(p.oldPrice)}</span>\` : ''}
-                                        \${p.isBait ? '' : ''}
+                                        \${p.isBait ? \`<span class="text-[10px] text-amber-600 font-bold ml-auto">❤ Social</span>\` : ''}
                                     </div>
                                 </div>
                             </div>\`;
