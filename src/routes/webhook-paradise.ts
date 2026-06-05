@@ -16,10 +16,10 @@ export const Route = createFileRoute("/webhook-paradise")({
             JSON.stringify(evento, null, 2)
           );
 
-          const status = evento.status;
-          const transactionId = evento.transaction_id;
+          const status = evento.status || evento.transaction_status;
+          const transactionId = evento.transaction_id || evento.id;
 
-          if (status === "approved") {
+          if (status === "approved" || status === "paid" || status === "completed") {
             console.log(`✅ Pagamento APROVADO ID: ${transactionId}`);
             const pedidoPendente = pendingOrders[transactionId];
             if (pedidoPendente) {
