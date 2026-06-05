@@ -1,7 +1,7 @@
 // Configuração compartilhada da Paradise + Utmify e store em memória de pedidos
 // pendentes. Bom o bastante para a janela curta entre criação do PIX e webhook.
 
-export const PARADISE_API_URL = "https://multi.paradisepags.com/api";
+export const PARADISE_API_URL = "https://multi.paradisepags.com/api/v1";
 export const UTMIFY_API_URL =
   "https://api.utmify.com.br/api-credentials/orders";
 
@@ -27,9 +27,6 @@ export async function enviarPedidoParaUtmify(payload: any) {
     console.warn("[UTMIFY] Envio ignorado. Token não configurado.");
     return;
   }
-  // Garantir status compatível com a documentação Utmify se necessário
-  // status: pending, approved, canceled, refunded
-  if (payload.status === "paid") payload.status = "approved";
   try {
     console.log(
       `[UTMIFY] Enviando pedido ${payload.orderId} com status [${payload.status}]...`

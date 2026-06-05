@@ -16,22 +16,21 @@ export const Route = createFileRoute("/webhook-paradise")({
             JSON.stringify(evento, null, 2)
           );
 
-          const status = evento.status || evento.transaction_status;
-          const transactionId = evento.transaction_id || evento.id;
+          const status = evento.status;
+          const transactionId = evento.transaction_id;
 
-          if (status === "approved" || status === "paid" || status === "completed") {
+          if (status === "approved") {
             console.log(`✅ Pagamento APROVADO ID: ${transactionId}`);
             const pedidoPendente = pendingOrders[transactionId];
             if (pedidoPendente) {
-              pedidoPendente.status = "approved"; // Status correto para Utmify (approved/paid)
+              pedidoPendente.status = "paid";
               pedidoPendente.approvedDate = nowUtcSqlString();
-              await enviarPedidoParaUtmify(pedidoPendente);
+              enviarPedidoParaUtmify(pedidoPendente);
               delete pendingOrders[transactionId];
             } else {
               console.error(
                 `[UTMIFY] Pedido ${transactionId} não encontrado nos pendentes.`
               );
-              // Como fallback, poderíamos reconstruir o pedido se o payload do webhook for completo
             }
           }
           return new Response("ok", { status: 200 });

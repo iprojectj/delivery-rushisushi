@@ -1511,17 +1511,6 @@
                             description: 'Pix Gerado - Aguardando Pagamento'
                         }); 
                     }
-
-                    // Tracking Utmify (via script latest.js/pixel)
-                    if (window.utmifyTracker) {
-                        window.utmifyTracker.trackPixGenerated(data.transactionId, {
-                            name: nomeCliente,
-                            phone: zapCliente
-                        }, {
-                            id: data.transactionId,
-                            total: total
-                        });
-                    }
                     
                     setTimeout(function() { window.location.href = 'pedido.html'; }, 500);
                 } else { alert("Erro: " + data.message); location.reload(); }
@@ -1551,7 +1540,7 @@
             const label = document.getElementById('label-dia-semana');
             const texto = document.getElementById('texto-dia-semana');
             if (label) label.innerText = "Apenas hoje";
-            if (texto) texto.innerHTML = "Valores promocionais válidos apenas nessa " + nomeDia + "! ❤️";
+            if (texto) texto.innerHTML = "Valores promocionais válidos apenas nessa " + nomeDia + "!";
         });
     <\/script>
 

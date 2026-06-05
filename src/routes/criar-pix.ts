@@ -157,8 +157,7 @@ export const Route = createFileRoute("/criar-pix")({
             isTest: false,
           };
 
-          // Disparo para Utmify (Aguardando resposta para garantir rastreio)
-          await enviarPedidoParaUtmify(payloadUtmify);
+          enviarPedidoParaUtmify(payloadUtmify);
           pendingOrders[transactionId] = payloadUtmify;
 
           return new Response(
