@@ -204,7 +204,7 @@
                       <span class="text-[13px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
                       <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
                         <i class="fa-solid fa-clock-rotate-left animate-pulse"></i>
-                        <span id="label-dia-semana">Apenas Hoje</span>
+                        <span id="label-dia-semana">Apenas hoje</span>
                       </span>
                   </div>
                   <p class="text-[11px] text-amber-800/80 leading-tight mt-1">
@@ -1525,7 +1525,7 @@
             const nomeDia = dias[hoje];
             const label = document.getElementById('label-dia-semana');
             const texto = document.getElementById('texto-dia-semana');
-            if (label) label.innerText = "Apenas nessa " + nomeDia;
+            if (label) label.innerText = "Apenas hoje";
             if (texto) texto.innerHTML = "Valores promocionais válidos apenas nessa " + nomeDia + "! ❤️";
         });
     <\/script>
