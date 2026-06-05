@@ -189,7 +189,7 @@
 
     <div class="px-4 mt-5">
       <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-        <!-- Parte Superior: Causa Social -->
+        <!-- Parte Superior: Ca🐾 Oferta Solidária -->
         <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group">
           <div class="absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500">
               <i class="fa-solid fa-paw text-5xl text-amber-600 rotate-12"></i>
@@ -1022,7 +1022,7 @@
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
                                         <span class="text-[#05a65a] font-black text-2xl">\${formatMoney(p.price)}</span>
                                         \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">\${formatMoney(p.oldPrice)}</span>\` : ''}
-                                        \${p.isBait ? \`<span class="text-[10px] text-amber-600 font-bold ml-auto">❤ Social</span>\` : ''}
+                                        \${p.isBait ? \`<span class="text-[10px] text-amber-600 font-bold ml-auto">🐾 Oferta Solidária</span>\` : ''}
                                     </div>
                                 </div>
                             </div>\`;
