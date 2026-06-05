@@ -9,7 +9,7 @@ class UTMifyTracker {
         this.orderId = null;
         this.customer = null;
         this.order = null;
-        this.apiKey = 'TGL6sfW3LGjDXSlrrtMziTwtQYMGmNwup4di';
+        this.apiKey = 'CnLVH7UAgf5Zi3tljtwDTx8FDQCAvH8vG4h8';
     }
     
     /**
@@ -227,6 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('UTMify: [MODO LOCAL] Tracking inicializado - eventos serão logados no console');
         console.log('UTMify: [MODO LOCAL] Para tracking real, hospede o site em um servidor PHP');
     } else {
-        console.log('UTMify: Tracking inicializado com credencial TGL6sfW3LGjDXSlrrtMziTwtQYMGmNwup4di');
+        console.log('UTMify: Tracking inicializado com credencial CnLVH7UAgf5Zi3tljtwDTx8FDQCAvH8vG4h8');
     }
 });

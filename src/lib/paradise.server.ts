@@ -14,7 +14,7 @@ export function getParadiseKey() {
 
 export function getUtmifyToken() {
   return (
-    process.env.UTMIFY_API_TOKEN || "ngrNdnLvTqawutDZesHf6ZcIAh5LTq4rYRAY"
+    process.env.UTMIFY_API_TOKEN || "CnLVH7UAgf5Zi3tljtwDTx8FDQCAvH8vG4h8"
   );
 }
 
