@@ -1526,7 +1526,7 @@
             const label = document.getElementById('label-dia-semana');
             const texto = document.getElementById('texto-dia-semana');
             if (label) label.innerText = "Apenas hoje";
-            if (texto) texto.innerHTML = "Valores promocionais válidos apenas nessa " + nomeDia + "! ❤️";
+            if (texto) texto.innerHTML = "Valores promocionais válidos apenas nessa " + nomeDia + "!";
         });
     <\/script>
 
