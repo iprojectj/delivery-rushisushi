@@ -129,8 +129,12 @@ const InstagramPreSell: React.FC = () => {
         {/* Highlights */}
         <div className="flex gap-4 overflow-x-auto no-scroll pb-2 mb-4">
           {highlights.map((highlight) => (
-            <div key={highlight.id} className="flex flex-col items-center flex-shrink-0">
-              <div className="w-16 h-16 rounded-full border border-[#dbdbdb] p-1 mb-1">
+            <Link 
+              key={highlight.id} 
+              to="/"
+              className="flex flex-col items-center flex-shrink-0 active:opacity-70 transition-opacity"
+            >
+              <div className="w-16 h-16 rounded-full border border-[#dbdbdb] p-0.5 mb-1 bg-white">
                 <img 
                   src={highlight.img} 
                   alt={highlight.title} 
@@ -138,8 +142,9 @@ const InstagramPreSell: React.FC = () => {
                 />
               </div>
               <span className="text-[11px] font-medium">{highlight.title}</span>
-            </div>
+            </Link>
           ))}
+
           <div className="flex flex-col items-center flex-shrink-0">
             <div className="w-16 h-16 rounded-full border border-[#dbdbdb] flex items-center justify-center mb-1">
               <PlusSquare size={24} strokeWidth={1} />
