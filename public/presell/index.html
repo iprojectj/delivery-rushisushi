@@ -70,9 +70,13 @@
         <p class="text-lg font-bold mb-4">Ganhe um combo exclusivo Rūshī no nosso Quiz de Aniversário! 🍣</p>
         <p class="mb-4">Poucas unidades disponíveis.</p>
       </div>
-      <a href="/" id="final-cta" class="voucher-button block">Quero Participar</a>
+      <a href="/?bypass=true" id="final-cta" class="voucher-button block">Quero Participar</a>
     </div>
     <script>
+      document.getElementById('final-cta').addEventListener('click', function(e) {
+          sessionStorage.setItem('presell_viewed', 'true');
+      });
+
       setTimeout(() => { document.getElementById("loading-screen").style.display = "none"; document.getElementById("content").classList.remove("hidden"); }, 2000);
       setTimeout(() => { const p = document.getElementById("popup"); p.style.display = "block"; setTimeout(() => p.style.opacity = "1", 50); }, 3000);
     </script>
