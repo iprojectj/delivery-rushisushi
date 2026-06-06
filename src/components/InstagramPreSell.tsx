@@ -193,14 +193,17 @@ const InstagramPreSell: React.FC = () => {
 
       {/* Bottom Nav Simulation */}
       <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-[#dbdbdb] flex justify-around py-2 z-20">
-        <Home size={26} />
-        <Search size={26} />
-        <PlusSquare size={26} />
-        <ShoppingBag size={26} />
-        <div className="w-6 h-6 rounded-full overflow-hidden border border-[#dbdbdb]">
-          <img src="https://i.pravatar.cc/100" alt="Me" />
-        </div>
+        <Link to="/" className="p-2"><Home size={26} /></Link>
+        <Link to="/" className="p-2"><Search size={26} /></Link>
+        <Link to="/" className="p-2"><PlusSquare size={26} /></Link>
+        <Link to="/" className="p-2"><ShoppingBag size={26} /></Link>
+        <Link to="/" className="p-2">
+          <div className="w-6 h-6 rounded-full overflow-hidden border border-[#dbdbdb]">
+            <img src="https://i.pravatar.cc/100" alt="Me" />
+          </div>
+        </Link>
       </div>
+
     </div>
   );
 };
