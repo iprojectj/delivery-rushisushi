@@ -1,23 +1,12 @@
-I will investigate and fix the UTMify tracking issues by addressing potential script loading errors, enhancing UTM parameter capture in the frontend, and standardizing the order status sent to the UTMify API.
+A página de pré-sell será criada como uma nova rota no TanStack Start, simulando com alta fidelidade a interface do perfil do Instagram no mobile.
 
-### Changes to be made:
+1.  **Criar Componente de UI**: Criar `src/components/InstagramPreSell.tsx` contendo a estrutura visual do perfil do Instagram (header, biografia, stories, grid de posts, botões de ação).
+2.  **Configurar Nova Rota**: Criar `src/routes/instagram.tsx` que renderizará o componente `InstagramPreSell`.
+3.  **Implementar Design Responsivo**: Focar na experiência mobile, utilizando Tailwind CSS para replicar ícones, fontes e espaçamentos do Instagram.
+4.  **Adicionar Conteúdo Estratégico**: Incluir elementos de prova social (stories com depoimentos, posts de pratos do Rūshī Sushi) e um link de "Link na Bio" que redireciona para a página principal de pedidos.
+5.  **Simular Interatividade**: Adicionar estados para cliques em stories e posts para aumentar a percepção de autenticidade.
 
-#### Frontend (`public/v99-core-secure-app.js` and `public/payment-blindado.js`)
-- Fix the UTMify script tags to use the correct local path `js/latest.js` and remove redundant or broken script references.
-- Enhance the `getTrackingParams` function to capture a wider range of tracking parameters (including `fbclid`, `gclid`, etc.) and to look for both standard and `utmify_` prefixed keys in `localStorage`.
-- Add the UTMify API token to the script tags to ensure proper account association.
-
-#### Backend (`src/routes/criar-pix.ts`)
-- Change the initial order status sent to UTMify from `waiting_payment` to `pending`, which is more universally recognized for generated but unpaid orders.
-- Ensure all captured tracking parameters are correctly mapped to the UTMify payload.
-
-#### Backend (`src/lib/paradise.server.ts`)
-- Add detailed logging for the UTMify API response to facilitate debugging if tracking still fails.
-
-#### Syntax Review
-- Verify that the changes maintain the correct JavaScript syntax, especially within the large template literals used for HTML injection.
-
-TECHNICAL DETAILS:
-- UTMify API endpoint: `https://api.utmify.com.br/api-credentials/orders`
-- Headers: `x-api-token`
-- Status mapping: `pending` (generated), `paid` (approved)
+**Detalhes Técnicos**:
+- Framework: TanStack Router + Tailwind CSS.
+- Assets: Utilização de ícones Lucide-react (substituindo ícones do Instagram).
+- Navegação: O "botão de compra" ou "link na bio" levará o usuário para `/` (página de pedidos).

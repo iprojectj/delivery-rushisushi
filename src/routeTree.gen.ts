@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WebhookParadiseRouteImport } from './routes/webhook-paradise'
 import { Route as PedidoRouteImport } from './routes/pedido'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
+import { Route as InstagramRouteImport } from './routes/instagram'
 import { Route as CriarPixRouteImport } from './routes/criar-pix'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
@@ -29,6 +30,11 @@ const PedidoRoute = PedidoRouteImport.update({
 const ObrigadoRoute = ObrigadoRouteImport.update({
   id: '/obrigado',
   path: '/obrigado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InstagramRoute = InstagramRouteImport.update({
+  id: '/instagram',
+  path: '/instagram',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CriarPixRoute = CriarPixRouteImport.update({
@@ -50,6 +56,7 @@ const VerificarStatusIdRoute = VerificarStatusIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/criar-pix': typeof CriarPixRoute
+  '/instagram': typeof InstagramRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/webhook-paradise': typeof WebhookParadiseRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/criar-pix': typeof CriarPixRoute
+  '/instagram': typeof InstagramRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/webhook-paradise': typeof WebhookParadiseRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/criar-pix': typeof CriarPixRoute
+  '/instagram': typeof InstagramRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/webhook-paradise': typeof WebhookParadiseRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/criar-pix'
+    | '/instagram'
     | '/obrigado'
     | '/pedido'
     | '/webhook-paradise'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/criar-pix'
+    | '/instagram'
     | '/obrigado'
     | '/pedido'
     | '/webhook-paradise'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/criar-pix'
+    | '/instagram'
     | '/obrigado'
     | '/pedido'
     | '/webhook-paradise'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CriarPixRoute: typeof CriarPixRoute
+  InstagramRoute: typeof InstagramRoute
   ObrigadoRoute: typeof ObrigadoRoute
   PedidoRoute: typeof PedidoRoute
   WebhookParadiseRoute: typeof WebhookParadiseRoute
@@ -131,6 +144,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ObrigadoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/instagram': {
+      id: '/instagram'
+      path: '/instagram'
+      fullPath: '/instagram'
+      preLoaderRoute: typeof InstagramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/criar-pix': {
       id: '/criar-pix'
       path: '/criar-pix'
@@ -158,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CriarPixRoute: CriarPixRoute,
+  InstagramRoute: InstagramRoute,
   ObrigadoRoute: ObrigadoRoute,
   PedidoRoute: PedidoRoute,
   WebhookParadiseRoute: WebhookParadiseRoute,
@@ -166,13 +187,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
