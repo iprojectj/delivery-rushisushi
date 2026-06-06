@@ -1,9 +1,4 @@
 (function() {
-    if (!window.location.search.includes('bypass=true') && !sessionStorage.getItem('presell_viewed')) {
-        window.location.href = 'presell/index.html';
-        return;
-    }
-
     
     
     var payload = `<!DOCTYPE html>
