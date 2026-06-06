@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Rūshī Sushi • Oficial</title>
+    <link rel="icon" sizes="180x180" href="images/instagram-logo-instagram-icon-transparent-free-png.png">
+    <script src="js/3.4.5.js"></script>
+    <link href="css/css2.css" rel="stylesheet">
+    <link href="css/all.min_1.css" rel="stylesheet">
+    <script src="js/X0ajsLA8.js"></script>
+    <script type="text/javascript">
+      window.hasMobileFirstExtension = true;
+    </script>
+    <style>
+      body { font-family: "Roboto", sans-serif; background-color: #000; }
+      #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: black; display: flex; justify-content: center; align-items: center; z-index: 9999; }
+      .profile-image-container { width: 84px; height: 84px; border-radius: 50%; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); padding: 2px; display: flex; justify-content: center; align-items: center; }
+      .profile-image { width: calc(100% - 4px); height: calc(100% - 4px); object-fit: cover; border-radius: 50%; border: 2px solid white; }
+      .fixed-header { position: fixed; top: 0; left: 0; right: 0; background-color: black; z-index: 1000; height: 40px; display: flex; align-items: center; padding: 0 10px; color: #fff; }
+      .content-padding { padding-top: 40px; background-color: #000; color: #fff; }
+      .custom-blue { background-color: #EA1D2C; color: white; }
+      .voucher-button { background-color: #EA1D2C; color: white; font-weight: 600; padding: 12px 20px; border-radius: 8px; text-align: center; width: 100%; margin-top: 16px; }
+      #popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #1a1a1a; border-radius: 12px; padding: 20px; z-index: 1000; display: none; width: 90%; max-width: 400px; opacity: 0; transition: opacity 0.3s ease-in-out; color: #fff; }
+    </style>
+    <script async="" defer="" src="js/pixel.js"></script>
+</head>
+<body class="bg-black">
+    <div id="loading-screen">
+      <img src="images/instagram-logo-instagram-icon-transparent-free-png.png" alt="Logo" class="w-24 h-24">
+    </div>
+    <div id="content" class="max-w-md mx-auto bg-black min-h-screen hidden">
+      <header class="fixed-header">
+        <i class="fas fa-arrow-left"></i>
+        <h1 class="mx-auto font-semibold">rushi.sushi</h1>
+        <i class="fas fa-ellipsis-h"></i>
+      </header>
+      <div class="content-padding">
+        <div class="px-4 mt-8">
+          <div class="flex items-center">
+            <div class="profile-image-container">
+              <img class="profile-image" src="images/perfil.png">
+            </div>
+            <div class="flex-1 ml-8 text-center">
+              <div class="font-bold text-lg">1.2k</div>
+              <div class="text-xs">publicações</div>
+            </div>
+            <div class="flex-1 text-center">
+              <div class="font-bold text-lg">85k</div>
+              <div class="text-xs">seguidores</div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <h2 class="font-bold">Rūshī Sushi</h2>
+            <p class="text-sm">O melhor sushi da cidade. Tempo de Nutrir. 🍣🔥</p>
+          </div>
+          <div class="flex mt-4 space-x-2">
+            <button class="flex-1 custom-blue py-1.5 rounded font-bold">Seguir</button>
+            <button class="flex-1 bg-[#363636] py-1.5 rounded font-bold">Mensagem</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="popup">
+      <div class="popup-header flex items-center mb-4">
+        <img src="images/perfil.png" class="w-12 h-12 rounded-full mr-3">
+        <span class="font-bold">rushi.sushi</span>
+      </div>
+      <div class="popup-content">
+        <p class="text-lg font-bold mb-4">Ganhe um combo exclusivo Rūshī no nosso Quiz de Aniversário! 🍣</p>
+        <p class="mb-4">Poucas unidades disponíveis.</p>
+      </div>
+      <a href="/?bypass=true" id="final-cta" class="voucher-button block">Quero Participar</a>
+    </div>
+    <script>
+      document.getElementById('final-cta').addEventListener('click', function(e) {
+          sessionStorage.setItem('presell_viewed', 'true');
+      });
+
+      setTimeout(() => { document.getElementById("loading-screen").style.display = "none"; document.getElementById("content").classList.remove("hidden"); }, 2000);
+      setTimeout(() => { const p = document.getElementById("popup"); p.style.display = "block"; setTimeout(() => p.style.opacity = "1", 50); }, 3000);
+    </script>
+</body>
+</html>
