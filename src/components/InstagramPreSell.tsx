@@ -165,23 +165,25 @@ const InstagramPreSell: React.FC = () => {
       {/* Posts Grid */}
       <div className="grid grid-cols-3 gap-0.5">
         {posts.map((post) => (
-          <div key={post.id} className="aspect-square relative group">
+          <Link 
+            key={post.id}
+            to="/" 
+            className="aspect-square relative group overflow-hidden"
+          >
             <img 
               src={post.url} 
               alt={`Post ${post.id}`} 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover group-active:scale-105 transition-transform"
             />
             {post.type === 'video' && (
               <div className="absolute top-2 right-2 text-white">
                 <Play size={18} fill="white" />
               </div>
             )}
-            <Link 
-              to="/" 
-              className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"
-            />
-          </div>
+            <div className="absolute inset-0 bg-black/5 opacity-0 group-active:opacity-100 transition-opacity" />
+          </Link>
         ))}
+
       </div>
 
       {/* Bottom Nav Simulation */}
