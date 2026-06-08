@@ -338,32 +338,63 @@
             const queryParts = [linha1, endereco.bairro, endereco.cidade, endereco.estado, 'Brasil'].filter(Boolean);
             const query = encodeURIComponent(queryParts.join(', '));
 
-            fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + query, {
-                headers: { 'Accept': 'application/json' }
+            const nominatimUrl = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + query;
+            
+            const fetchOptions = {
+                headers: { 
+                    'Accept': 'application/json',
+                    'User-Agent': 'RushSushiApp/1.0' 
+                }
+            };
+
+            fetch(nominatimUrl, fetchOptions)
+            .then(r => {
+                if (!r.ok) throw new Error('Nominatim error');
+                return r.json();
             })
-            .then(r => r.json())
             .then(results => {
-                let lat, lon;
                 if (results && results.length > 0) {
-                    lat = parseFloat(results[0].lat);
-                    lon = parseFloat(results[0].lon);
+                    renderMap(parseFloat(results[0].lat), parseFloat(results[0].lon));
                 } else if (endereco.cep) {
-                    return fetch('https://brasilapi.com.br/api/cep/v2/' + endereco.cep.replace(/D/g, ''))
+                    // Fallback para BrasilAPI se Nominatim falhar em achar a rua
+                    return fetch('https://brasilapi.com.br/api/cep/v2/' + endereco.cep.replace(/\D/g, ''))
                         .then(r => r.json())
                         .then(c => {
-                            if (c && c.location && c.location.coordinates && c.location.coordinates.latitude) {
+                            if (c && c.location && c.location.coordinates) {
                                 renderMap(parseFloat(c.location.coordinates.latitude), parseFloat(c.location.coordinates.longitude));
                             } else {
-                                throw new Error('sem coords');
+                                throw new Error('No coordinates in BrasilAPI');
                             }
                         });
                 } else {
-                    throw new Error('sem resultados');
+                    throw new Error('No results');
                 }
-                renderMap(lat, lon);
             })
-            .catch(() => {
-                if(loadingEl) loadingEl.innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl text-gray-300 mb-1"></i><span class="text-[11px] text-gray-400">Mapa indisponível no momento</span>';
+            .catch((err) => {
+                console.error("Erro no mapa:", err);
+                // Se tudo falhar, tenta apenas pelo CEP (fallback final)
+                if (endereco.cep) {
+                    fetch('https://brasilapi.com.br/api/cep/v1/' + endereco.cep.replace(/\D/g, ''))
+                    .then(r => r.json())
+                    .then(c => {
+                        // Como v1 não tem coords, buscamos por cidade/estado no Nominatim como última esperança
+                        const fallbackQuery = encodeURIComponent(`${c.city}, ${c.state}, Brasil`);
+                        return fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + fallbackQuery, fetchOptions);
+                    })
+                    .then(r => r.json())
+                    .then(res => {
+                        if (res && res.length > 0) {
+                            renderMap(parseFloat(res[0].lat), parseFloat(res[0].lon));
+                        } else {
+                            throw new Error('Final fallback failed');
+                        }
+                    })
+                    .catch(() => {
+                        if(loadingEl) loadingEl.innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl text-gray-300 mb-1"></i><span class="text-[11px] text-gray-400">Mapa indisponível no momento</span>';
+                    });
+                } else {
+                    if(loadingEl) loadingEl.innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl text-gray-300 mb-1"></i><span class="text-[11px] text-gray-400">Mapa indisponível no momento</span>';
+                }
             });
 
             function renderMap(lat, lon) {
@@ -541,10 +572,4 @@
         }
     </script>
 </body>
-</html>`;
-
-    // INJEÇÃO NO DOM
-    document.open();
-    document.write(payload);
-    document.close();
-</body></html>
+</html>
