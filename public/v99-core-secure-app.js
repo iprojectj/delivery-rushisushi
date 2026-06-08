@@ -1030,21 +1030,23 @@
 
         function renderCatalog() {
             const container = document.getElementById('product-container');
+            if (!container) return;
+            container.innerHTML = '';
+            
             const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
             const dayName = days[new Date().getDay()];
             const highlightsTitle = "Destaques de " + dayName;
             
-            // Atualizar também o botão de navegação se ele existir
             const btnDestaques = document.getElementById('btn-destaques');
             if (btnDestaques) btnDestaques.innerText = dayName;
 
             const cats = { 'destaques': highlightsTitle, 'entradas': 'Entradas', 'temakis': 'Temakis', 'familia': 'Para a Família', 'classicos': 'Sushis Clássicos', 'hot-rolls': 'Hot Rolls & Fritos', 'yakisobas': 'Yakisobas', 'sobremesas': 'Sobremesas', 'bebidas': 'Bebidas' };
             for (const key in cats) {
                 const title = cats[key];
-
                 const items = catalog.filter(p => p.category === key);
+                
                 if (items.length > 0) {
-                    let html = \`<div id="\${key}" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">\${title}</h3><div class="grid gap-4">\`;
+                    let html = `<div id="${key}" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">${title}</h3><div class="grid gap-4">`;
                     items.forEach(p => {
                         let highlightClass = 'border-gray-100 bg-[#fafafa]'; 
                         
@@ -1084,29 +1086,29 @@
                                         ${p.oldPrice ? `<span class="text-sm text-gray-400 line-through font-medium">${formatMoney(p.oldPrice)}</span>` : ''}
                                     </div>
                                 </div>
-                            </div>\`;
-
+                            </div>`;
                         } 
                         else {
                             if (p.id === 'combo-rodízio' || p.id === 'barca-ostentacao') { 
                                 highlightClass = 'card-destaque-master border-l-4 border-l-[#EA1D2C]'; 
                             }
                             
-                            html += \`
-                            <div onclick="openProductModal('\${p.id}')" class="flex justify-between items-center p-5 \${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
+                            html += `
+                            <div onclick="openProductModal('${p.id}')" class="flex justify-between items-center p-5 ${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
                                 <div class="flex flex-col justify-between min-h-[100px] py-1 pr-2 z-10 w-full">
-                                    <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">\${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p></div>
-                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm \${p.isBait ? 'font-bold text-lg' : ''}">\${formatMoney(p.price)}</span>\${p.oldPrice ? \`<span class="text-xs text-gray-400 line-through">\${formatMoney(p.oldPrice)}</span>\` : ''}\${p.isBait ? '' : ''}</div>
+                                    <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p></div>
+                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm ${p.isBait ? 'font-bold text-lg' : ''}">${formatMoney(p.price)}</span>${p.oldPrice ? `<span class="text-xs text-gray-400 line-through">${formatMoney(p.oldPrice)}</span>` : ''}</div>
                                 </div>
-                                <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">\${p.badge ? \`<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">\${p.badge}</div>\` : ''}</div>
-                            </div>\`;
+                                <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">${p.badge ? `<div class="absolute top-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 rounded-bl-lg shadow-sm z-20">${p.badge}</div>` : ''}</div>
+                            </div>`;
                         }
                     });
-                    html += \`</div></div>\`;
+                    html += `</div></div>`;
                     container.innerHTML += html;
                 }
             }
         }
+
 
         function scrollToCat(id, ev) {
             ev = ev || window.event;
