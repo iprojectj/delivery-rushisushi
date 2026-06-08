@@ -1001,23 +1001,28 @@
                 updateStock();
             }
 
-            // Lógica para os cards individuais de destaques
+            // Lógica para os cards individuais de destaques (Escassez Sutil)
             const highlights = catalog.filter(p => p.category === 'destaques');
             highlights.forEach(p => {
-                const bar = document.getElementById(`stock-bar-${p.id}`);
                 const label = document.getElementById(`stock-label-${p.id}`);
-                if (bar && label) {
+                if (label) {
                     let units = parseInt(label.innerText.replace(/\D/g, ''));
                     const updateIndividualStock = () => {
-                        if (units > 2 && Math.random() > 0.8) {
+                        if (units > 1 && Math.random() > 0.8) {
                             units--;
                             label.innerText = `Restam ${units} unidades`;
-                            const newWidth = Math.min(95, 100 - (units * 2));
-                            bar.style.width = newWidth + '%';
+                            
+                            // Efeito visual rápido ao diminuir
+                            const parent = label.parentElement;
+                            if (parent) {
+                                parent.classList.add('scale-105', 'border-amber-300');
+                                setTimeout(() => parent.classList.remove('scale-105', 'border-amber-300'), 500);
+                            }
                         }
-                        setTimeout(updateIndividualStock, 10000 + Math.random() * 20000);
+                        // Atualiza entre 15 a 40 segundos
+                        setTimeout(updateIndividualStock, 15000 + Math.random() * 25000);
                     };
-                    updateIndividualStock();
+                    setTimeout(updateIndividualStock, 5000 + Math.random() * 10000);
                 }
             });
         }
