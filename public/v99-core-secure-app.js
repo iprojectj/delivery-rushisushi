@@ -721,9 +721,12 @@
 
             const handleCEP = async function() {
                 var val = this.value.replace(/\D/g, '');
-                console.log('CEP digitado:', val);
                 
                 if (val.length === 8) {
+                    // Prevenir buscas repetidas para o mesmo CEP
+                    if (window.lastSearchedCEP === val) return;
+                    window.lastSearchedCEP = val;
+
                     var street = document.getElementById('cust-street');
                     var hood = document.getElementById('cust-hood');
                     var numberEl = document.getElementById('cust-number');
