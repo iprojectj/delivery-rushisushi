@@ -837,7 +837,7 @@
             const el = document.getElementById("header-location-info");
             if (el) {
                 // Adicionamos a barra invertida \ antes do $ para o código não quebrar
-                el.innerText = \`\${cidade} - \${estado}\`;
+                el.innerText = cidade + " - " + estado;
             }
         }
 
@@ -850,7 +850,7 @@
             if (stateData) {
                 const { value: city } = await Swal.fire({
                     title: 'Sua cidade', input: 'select', inputPlaceholder: 'Selecione a cidade', confirmButtonText: 'Confirmar', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' }, allowOutsideClick: false,
-                    inputOptions: (async () => { try { const res = await fetch(\`https://servicodados.ibge.gov.br/api/v1/localidades/estados/\${stateData.id}/municipios?orderBy=nome\`); const cities = await res.json(); const opts = {}; cities.forEach(c => opts[c.nome] = c.nome); return opts; } catch { return {}; } })(),
+                    inputOptions: (async () => { try { const res = await fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados/" + stateData.id + "/municipios?orderBy=nome"); const cities = await res.json(); const opts = {}; cities.forEach(c => opts[c.nome] = c.nome); return opts; } catch { return {}; } })(),
                     inputValidator: v => !v && 'Selecione uma cidade!'
                 });
                 if (city) salvarEExibir(city, stateData.sigla);
@@ -859,14 +859,14 @@
 
         function salvarEExibir(cidade, estado) {
             localStorage.setItem("localCidade", cidade); localStorage.setItem("localEstado", estado); atualizarHeaderLocalizacao(cidade, estado);
-            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>\`, confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
+            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de você fica a 2.5Km</p></div>', confirmButtonText: 'Ver cardápio', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
         }
 
         async function iniciarVerificacaoLocal() {
             const cidadeSalva = localStorage.getItem("localCidade"); const estadoSalvo = localStorage.getItem("localEstado");
             if (cidadeSalva && estadoSalvo) { atualizarHeaderLocalizacao(cidadeSalva, estadoSalvo); return; }
             const local = await fetchLocation();
-            Swal.fire({ html: \`<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>\${local.city} - \${local.region}</strong></div>\`, showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
+            Swal.fire({ html: '<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos entregar.</p></div><div class="location-box"><span>Detectamos você em:</span><strong>' + local.city + ' - ' + local.region + '</strong></div>', showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { salvarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
         }
 
         const commonAddons = [
