@@ -192,13 +192,19 @@
         <div class="p-4">
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-2">
-              <i class="fa-solid fa-bolt-lightning text-[#EA1D2C] text-sm"></i>
-              <span class="text-sm font-bold text-gray-800 tracking-tight">Oferta Relâmpago</span>
+              <div class="flex items-center gap-1.5 bg-[#EA1D2C]/10 px-2 py-0.5 rounded-full">
+                <i class="fa-solid fa-star text-[#EA1D2C] text-[8px]"></i>
+                <span class="text-[9px] font-black text-[#EA1D2C] uppercase tracking-tighter">Parceiro Oficial iFood</span>
+              </div>
             </div>
             <div class="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-md border border-gray-100">
               <i class="fa-solid fa-clock text-gray-400 text-[10px]"></i>
               <span id="countdown-timer" class="text-[11px] font-bold text-gray-600 tabular-nums">00:00:00</span>
             </div>
+          </div>
+          <div class="flex items-center gap-2 mb-3">
+            <i class="fa-solid fa-bolt-lightning text-[#EA1D2C] text-sm"></i>
+            <span class="text-sm font-bold text-gray-800 tracking-tight">Oferta Relâmpago</span>
           </div>
           
           <div class="flex items-center justify-between mb-2">
