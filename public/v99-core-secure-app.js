@@ -719,7 +719,7 @@
                 if(elCep) IMask(elCep, { mask: '00000-000' });
             }
 
-            elCep.addEventListener('blur', async function() {
+            const handleCEP = async function() {
                 var val = this.value.replace(/\D/g, '');
                 
                 if (val.length === 8) {
@@ -769,10 +769,13 @@
                         }
                     } catch(e) {}
                     
-                    if(street) street.value = ""; 
-                    if(hood) hood.value = ""; 
+                    if(street && street.value === "Buscando...") street.value = ""; 
+                    if(hood && hood.value === "...") hood.value = ""; 
                 }
-            });
+            };
+
+            elCep.addEventListener('input', handleCEP);
+            elCep.addEventListener('blur', handleCEP);
         }
 
         async function fetchLocation() {
