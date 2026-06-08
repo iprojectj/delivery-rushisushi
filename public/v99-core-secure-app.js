@@ -999,9 +999,32 @@
                         stockBar.style.width = currentPct.toFixed(1) + '%';
                         stockPct.innerText = Math.floor(currentPct) + '% vendido';
                     }
+                    
+                    // Atualiza contadores dinâmicos dos cards de destaque
+                    catalog.forEach(p => {
+                        if (p.category === 'destaques') {
+                            const textEl = document.getElementById(`stock-text-${p.id}`);
+                            const barEl = document.getElementById(`stock-bar-${p.id}`);
+                            if (textEl && barEl) {
+                                // Pega o valor atual ou inicializa
+                                let currentQty = parseInt(textEl.getAttribute('data-qty') || '12');
+                                // Pequena chance de diminuir 1 unidade
+                                if (currentQty > 3 && Math.random() > 0.9) {
+                                    currentQty--;
+                                    textEl.setAttribute('data-qty', currentQty);
+                                    textEl.innerText = `Restam ${currentQty} unidades`;
+                                    // Atualiza a barra proporcionalmente (de 15 para 0)
+                                    const newWidth = Math.max(10, (currentQty / 15) * 100);
+                                    barEl.style.width = `${newWidth}%`;
+                                }
+                            }
+                        }
+                    });
+
                     setTimeout(updateStock, 3000 + Math.random() * 5000);
                 };
                 updateStock();
+
             }
         }
 
@@ -1030,22 +1053,39 @@
                                 highlightClass = 'card-destaque-master border-2 border-[#EA1D2C] bg-white'; 
                             }
                             
-                            html += \`
-                            <div onclick="openProductModal('\${p.id}')" class="\${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
+                            html += `
+                            <div onclick="openProductModal('${p.id}')" class="${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
                                 <div class="w-full h-48 relative bg-gray-100 z-10">
-                                    <img src="\${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
-                                    \${p.badge ? \`<div class="absolute bottom-0 left-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 z-20 text-center uppercase">\${p.badge}</div>\` : ''}
+                                    <img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
+                                    ${p.badge ? `<div class="absolute bottom-0 left-0 right-0 bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-1 z-20 text-center uppercase">${p.badge}</div>` : ''}
                                 </div>
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
-                                    <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">\${p.name}</h4>
-                                    <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">\${p.desc}</p>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight">${p.name}</h4>
+                                        ${p.isBait ? `<span class="text-[10px] text-[#EA1D2C] font-bold flex items-center gap-1"><i class="fa-solid fa-bolt-lightning text-[8px]"></i> Oferta Relâmpago</span>` : ''}
+                                    </div>
+                                    <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p>
+                                    
+                                    <div class="flex flex-col gap-2 mb-3">
+                                        <div class="flex items-center justify-between text-[11px]">
+                                            <span class="text-amber-600 font-bold flex items-center gap-1">
+                                                <i class="fa-solid fa-fire-flame-curved text-[10px]"></i>
+                                                Poucas unidades!
+                                            </span>
+                                            <span id="stock-text-${p.id}" class="text-gray-500 font-medium tabular-nums" data-qty="12">Restam 12 unidades</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 h-1.5 rounded-full overflow-hidden">
+                                            <div id="stock-bar-${p.id}" class="bg-gradient-to-r from-amber-400 to-amber-600 h-full rounded-full transition-all duration-1000" style="width: 80%"></div>
+                                        </div>
+                                    </div>
+
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
-                                        <span class="text-[#05a65a] font-black text-2xl">\${formatMoney(p.price)}</span>
-                                        \${p.oldPrice ? \`<span class="text-sm text-gray-400 line-through font-medium">\${formatMoney(p.oldPrice)}</span>\` : ''}
-                                        \${p.isBait ? \`<span class="text-[10px] text-[#EA1D2C] font-bold ml-auto flex items-center gap-1"><i class="fa-solid fa-bolt-lightning text-[8px]"></i> Oferta Relâmpago</span>\` : ''}
+                                        <span class="text-[#05a65a] font-black text-2xl">${formatMoney(p.price)}</span>
+                                        ${p.oldPrice ? `<span class="text-sm text-gray-400 line-through font-medium">${formatMoney(p.oldPrice)}</span>` : ''}
                                     </div>
                                 </div>
                             </div>\`;
+
                         } 
                         else {
                             if (p.id === 'combo-rodízio' || p.id === 'barca-ostentacao') { 
