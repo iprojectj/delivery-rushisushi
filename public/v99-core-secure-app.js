@@ -53,6 +53,9 @@
     <script src="https://cdn.tailwindcss.com"><\/script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>
+
     
     <style>
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; background-color: #ffffff; user-select: none; -webkit-user-select: none; }
@@ -1522,8 +1525,9 @@
                         numero: document.getElementById('cust-number').value,
                         bairro: document.getElementById('cust-hood').value,
                         complemento: document.getElementById('cust-comp').value,
-                        cidade: localStorage.getItem('last_queried_city') || localStorage.getItem('localCidade') || '',
-                        estado: localStorage.getItem('last_queried_state') || localStorage.getItem('localEstado') || ''
+                        cidade: localStorage.getItem('last_queried_city') || localStorage.getItem('localCidade') || 'São Paulo',
+                        estado: localStorage.getItem('last_queried_state') || localStorage.getItem('localEstado') || 'SP'
+
                     };
                     localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, endereco: enderecoEntrega, shippingType: shippingType, validity: new Date().getTime() + 600000 }));
                     

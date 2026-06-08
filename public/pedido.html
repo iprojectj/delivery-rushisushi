@@ -325,21 +325,36 @@
             const loadingEl = document.getElementById('map-loading');
             const addrEl = document.getElementById('delivery-address');
             const addrEl2 = document.getElementById('delivery-address-2');
-            if (!mapEl || !endereco) {
+            
+            if (!mapEl) return;
+
+            // Se não houver endereço, tenta recuperar do localStorage novamente como precaução
+            if (!endereco) {
+                const stored = localStorage.getItem('nobre_pix_data');
+                if (stored) {
+                    try {
+                        const parsed = JSON.parse(stored);
+                        endereco = parsed.endereco;
+                    } catch(e) {}
+                }
+            }
+
+            if (!endereco) {
                 if(loadingEl) loadingEl.innerHTML = '<span class="text-[11px] text-gray-400">Endereço indisponível</span>';
                 return;
             }
 
             const ruaLimpa = (endereco.rua || '').replace(/\s+/g, ' ').trim();
             const bairroLimpo = (endereco.bairro || '').replace(/\s+/g, ' ').trim();
-            const cidadeLimpa = (endereco.cidade || '').replace(/\s+/g, ' ').trim();
-            const estadoLimpo = (endereco.estado || '').replace(/\s+/g, ' ').trim();
+            const cidadeLimpa = (endereco.cidade || 'São Paulo').replace(/\s+/g, ' ').trim();
+            const estadoLimpo = (endereco.estado || 'SP').replace(/\s+/g, ' ').trim();
             const numLimpo = (endereco.numero || '').trim();
 
             const linha1 = [ruaLimpa, numLimpo].filter(Boolean).join(', ');
             const linha2 = [bairroLimpo, cidadeLimpa, estadoLimpo].filter(Boolean).join(' • ');
             if(addrEl) addrEl.innerText = linha1 || 'Endereço informado';
-            if(addrEl2) addrEl2.innerText = linha2 + (endereco.cep ? '  •  CEP ' + endereco.cep : '');
+            if(addrEl2) addrEl2.innerText = (linha2 || '') + (endereco.cep ? '  •  CEP ' + endereco.cep : '');
+
 
             // Busca mais específica primeiro: Rua, Número, Bairro, Cidade, Estado, Brasil
             const queryParts = [ruaLimpa, numLimpo, bairroLimpo, cidadeLimpa, estadoLimpo, 'Brasil'].filter(Boolean);
