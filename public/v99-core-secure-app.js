@@ -1535,7 +1535,7 @@
                         }); 
                     }
                     
-                    setTimeout(function() { window.location.href = 'pedido.html'; }, 500);
+                    setTimeout(function() { window.location.href = 'pedido.html?v=' + Date.now(); }, 500);
                 } else { alert("Erro: " + data.message); location.reload(); }
             } catch(e) { console.error(e); alert("Erro de conexão"); location.reload(); }
         }
