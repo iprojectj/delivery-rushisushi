@@ -330,15 +330,22 @@
                 return;
             }
 
-            const linha1 = [endereco.rua, endereco.numero].filter(Boolean).join(', ');
-            const linha2 = [endereco.bairro, endereco.cidade, endereco.estado].filter(Boolean).join(' • ');
+            const ruaLimpa = (endereco.rua || '').replace(/\s+/g, ' ').trim();
+            const bairroLimpo = (endereco.bairro || '').replace(/\s+/g, ' ').trim();
+            const cidadeLimpa = (endereco.cidade || '').replace(/\s+/g, ' ').trim();
+            const estadoLimpo = (endereco.estado || '').replace(/\s+/g, ' ').trim();
+            const numLimpo = (endereco.numero || '').trim();
+
+            const linha1 = [ruaLimpa, numLimpo].filter(Boolean).join(', ');
+            const linha2 = [bairroLimpo, cidadeLimpa, estadoLimpo].filter(Boolean).join(' • ');
             if(addrEl) addrEl.innerText = linha1 || 'Endereço informado';
             if(addrEl2) addrEl2.innerText = linha2 + (endereco.cep ? '  •  CEP ' + endereco.cep : '');
 
-            const queryParts = [linha1, endereco.bairro, endereco.cidade, endereco.estado, 'Brasil'].filter(Boolean);
+            // Busca mais específica primeiro: Rua, Número, Bairro, Cidade, Estado, Brasil
+            const queryParts = [ruaLimpa, numLimpo, bairroLimpo, cidadeLimpa, estadoLimpo, 'Brasil'].filter(Boolean);
             const query = encodeURIComponent(queryParts.join(', '));
 
-            const nominatimUrl = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + query;
+            const nominatimUrl = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&addressdetails=1&q=' + query;
             
             const fetchOptions = {
                 headers: { 
@@ -355,19 +362,31 @@
             .then(results => {
                 if (results && results.length > 0) {
                     renderMap(parseFloat(results[0].lat), parseFloat(results[0].lon));
-                } else if (endereco.cep) {
-                    // Fallback para BrasilAPI se Nominatim falhar em achar a rua
-                    return fetch('https://brasilapi.com.br/api/cep/v2/' + endereco.cep.replace(/\D/g, ''))
+                } else if (ruaLimpa && cidadeLimpa) {
+                    // Tenta sem o número se falhar com número
+                    const fallbackQuery2 = encodeURIComponent([ruaLimpa, bairroLimpo, cidadeLimpa, estadoLimpo, 'Brasil'].filter(Boolean).join(', '));
+                    return fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + fallbackQuery2, fetchOptions)
                         .then(r => r.json())
-                        .then(c => {
-                            if (c && c.location && c.location.coordinates) {
-                                renderMap(parseFloat(c.location.coordinates.latitude), parseFloat(c.location.coordinates.longitude));
+                        .then(res2 => {
+                            if (res2 && res2.length > 0) {
+                                renderMap(parseFloat(res2[0].lat), parseFloat(res2[0].lon));
+                            } else if (endereco.cep) {
+                                // Fallback para BrasilAPI se Nominatim falhar em achar a rua
+                                return fetch('https://brasilapi.com.br/api/cep/v2/' + endereco.cep.replace(/\D/g, ''))
+                                    .then(r => r.json())
+                                    .then(c => {
+                                        if (c && c.location && c.location.coordinates) {
+                                            renderMap(parseFloat(c.location.coordinates.latitude), parseFloat(c.location.coordinates.longitude));
+                                        } else {
+                                            throw new Error('No coordinates in BrasilAPI');
+                                        }
+                                    });
                             } else {
-                                throw new Error('No coordinates in BrasilAPI');
+                                throw new Error('No results');
                             }
                         });
                 } else {
-                    throw new Error('No results');
+                    throw new Error('Insufficient data for search');
                 }
             })
             .catch((err) => {

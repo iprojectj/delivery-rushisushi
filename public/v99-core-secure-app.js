@@ -1519,8 +1519,8 @@
                         numero: document.getElementById('cust-number').value,
                         bairro: document.getElementById('cust-hood').value,
                         complemento: document.getElementById('cust-comp').value,
-                        cidade: localStorage.getItem('localCidade') || '',
-                        estado: localStorage.getItem('localEstado') || ''
+                        cidade: localStorage.getItem('last_queried_city') || localStorage.getItem('localCidade') || '',
+                        estado: localStorage.getItem('last_queried_state') || localStorage.getItem('localEstado') || ''
                     };
                     localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, endereco: enderecoEntrega, shippingType: shippingType, validity: new Date().getTime() + 600000 }));
                     
