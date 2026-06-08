@@ -1057,11 +1057,14 @@
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">${p.name}</h4>
                                     <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p>
                                     
-                                    <div class="flex items-center gap-2 mb-3 bg-[#EA1D2C]/5 p-2 rounded-lg border border-[#EA1D2C]/10">
-                                        <div class="flex h-1.5 flex-1 bg-gray-200 rounded-full overflow-hidden">
-                                            <div class="bg-[#EA1D2C] h-full rounded-full transition-all duration-[2000ms]" id="stock-bar-${p.id}" style="width: ${70 + Math.random() * 20}%"></div>
+                                    <div class="flex items-center gap-2 mb-3 h-6">
+                                        <div class="flex items-center gap-1.5 px-2 py-0.5 bg-amber-50 rounded-full border border-amber-100/50">
+                                            <span class="relative flex h-1.5 w-1.5">
+                                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                                                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
+                                            </span>
+                                            <span class="text-[10px] font-bold text-amber-700 whitespace-nowrap" id="stock-label-${p.id}">Restam ${Math.floor(Math.random() * 8) + 3} unidades</span>
                                         </div>
-                                        <span class="text-[10px] font-bold text-[#EA1D2C] whitespace-nowrap" id="stock-label-${p.id}">Restam ${Math.floor(Math.random() * 15) + 5} unidades</span>
                                     </div>
 
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
