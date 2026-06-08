@@ -999,9 +999,32 @@
                         stockBar.style.width = currentPct.toFixed(1) + '%';
                         stockPct.innerText = Math.floor(currentPct) + '% vendido';
                     }
+                    
+                    // Atualiza contadores dinâmicos dos cards de destaque
+                    catalog.forEach(p => {
+                        if (p.category === 'destaques') {
+                            const textEl = document.getElementById(`stock-text-${p.id}`);
+                            const barEl = document.getElementById(`stock-bar-${p.id}`);
+                            if (textEl && barEl) {
+                                // Pega o valor atual ou inicializa
+                                let currentQty = parseInt(textEl.getAttribute('data-qty') || '12');
+                                // Pequena chance de diminuir 1 unidade
+                                if (currentQty > 3 && Math.random() > 0.9) {
+                                    currentQty--;
+                                    textEl.setAttribute('data-qty', currentQty);
+                                    textEl.innerText = `Restam ${currentQty} unidades`;
+                                    // Atualiza a barra proporcionalmente (de 15 para 0)
+                                    const newWidth = Math.max(10, (currentQty / 15) * 100);
+                                    barEl.style.width = `${newWidth}%`;
+                                }
+                            }
+                        }
+                    });
+
                     setTimeout(updateStock, 3000 + Math.random() * 5000);
                 };
                 updateStock();
+
             }
         }
 
