@@ -522,9 +522,9 @@
                                 </div>
                             </div>
                             <div class="px-4 pb-4 pt-2 space-y-3">
-                                <div class="input-group"><label class="input-label">CEP</label><input type="text" id="cust-cep" placeholder="00000-000" class="input-field"></div>
-                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Rua</label><input type="text" id="cust-street" class="input-field"></div><div class="input-group w-24"><label class="input-label">Número</label><input type="text" id="cust-number" class="input-field font-bold text-[#EA1D2C]"></div></div>
-                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Bairro</label><input type="text" id="cust-hood" class="input-field"></div><div class="input-group flex-1"><label class="input-label">Complemento</label><input type="text" id="cust-comp" class="input-field"></div></div>
+                                <div class="input-group"><label class="input-label">CEP</label><input type="text" id="cust-cep" placeholder="00000-000" class="input-field" autocomplete="postal-code"></div>
+                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Rua</label><input type="text" id="cust-street" class="input-field" autocomplete="address-line1"></div><div class="input-group w-24"><label class="input-label">Número</label><input type="text" id="cust-number" class="input-field font-bold text-[#EA1D2C]" autocomplete="address-line2"></div></div>
+                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Bairro</label><input type="text" id="cust-hood" class="input-field" autocomplete="address-level3"></div><div class="input-group flex-1"><label class="input-label">Complemento</label><input type="text" id="cust-comp" class="input-field" autocomplete="address-line3"></div></div>
                             </div>
                         </div>
                         <div class="flex items-center gap-2 text-[11px] text-gray-500 px-1"><i class="fa-solid fa-shield-halved text-[#05a65a]"></i><span>Seus dados são protegidos e usados apenas para a entrega.</span></div>
@@ -723,57 +723,68 @@
                 var val = this.value.replace(/\D/g, '');
                 
                 if (val.length === 8) {
+                    // Prevenir buscas repetidas para o mesmo CEP
+                    if (window.lastSearchedCEP === val) return;
+                    window.lastSearchedCEP = val;
+
                     var street = document.getElementById('cust-street');
                     var hood = document.getElementById('cust-hood');
                     var numberEl = document.getElementById('cust-number');
+                    var cityEl = document.getElementById('cust-city');
 
                     if(street) street.value = "Buscando...";
                     if(hood) hood.value = "...";
 
-                    // Função para preencher campos com segurança
-                    const preencherCampos = (logradouro, bairro) => {
+                    const preencherCampos = (logradouro, bairro, localidade) => {
+                        console.log('Preenchendo:', { logradouro, bairro, localidade });
                         if(street) {
                             street.value = logradouro || "";
                             street.dispatchEvent(new Event('input', { bubbles: true }));
+                            street.dispatchEvent(new Event('change', { bubbles: true }));
                         }
                         if(hood) {
                             hood.value = bairro || "";
                             hood.dispatchEvent(new Event('input', { bubbles: true }));
+                            hood.dispatchEvent(new Event('change', { bubbles: true }));
                         }
-                        if(numberEl) numberEl.focus();
+                        if(cityEl && localidade) {
+                            cityEl.value = localidade;
+                            cityEl.dispatchEvent(new Event('input', { bubbles: true }));
+                            cityEl.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                        if(numberEl) {
+                            setTimeout(() => numberEl.focus(), 100);
+                        }
                     };
 
-                    // Tentativa 1: ViaCEP (Mais estável para endereços brasileiros)
                     try {
                         let res = await fetch(`https://viacep.com.br/ws/${val}/json/`);
                         if(res.ok) {
                             let data = await res.json();
                             if (data && !data.erro) { 
-                                preencherCampos(data.logradouro, data.bairro);
+                                preencherCampos(data.logradouro, data.bairro, data.localidade);
                                 return;
                             }
                         }
                     } catch(e) {}
 
-                    // Tentativa 2: BrasilAPI
                     try {
                         let res = await fetch(`https://brasilapi.com.br/api/cep/v1/${val}`);
                         if(res.ok) {
                             let data = await res.json();
-                            if (data && data.street) {
-                                preencherCampos(data.street, data.neighborhood);
+                            if (data && data.cep) {
+                                preencherCampos(data.street, data.neighborhood, data.city);
                                 return;
                             }
                         }
                     } catch(e) {}
                     
-                    // Tentativa 3: OpenCEP
                     try {
                         let res = await fetch(`https://opencep.com/v1/${val}`);
                         if(res.ok) {
                             let data = await res.json();
                             if (data && !data.error) {
-                                preencherCampos(data.logradouro, data.bairro);
+                                preencherCampos(data.logradouro, data.bairro, data.localidade);
                                 return;
                             }
                         }
@@ -784,8 +795,8 @@
                 }
             };
 
-            elCep.addEventListener('keyup', handleCEP);
-            elCep.addEventListener('blur', handleCEP);
+            elCep.addEventListener('input', handleCEP);
+            elCep.addEventListener('propertychange', handleCEP);
         }
 
         async function fetchLocation() {
