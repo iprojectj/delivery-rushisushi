@@ -188,80 +188,74 @@
     </header>
 
     <div class="px-4 mt-5">
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] overflow-hidden">
-        <!-- Parte Superior: Meta Solidária -->
-        <div class="bg-gradient-to-br from-white to-orange-50/30 p-5 relative overflow-hidden">
-          <!-- Elementos decorativos de fundo -->
-          <div class="absolute -top-4 -right-4 w-20 h-20 bg-orange-100/20 rounded-full blur-2xl"></div>
-          <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-red-100/20 rounded-full blur-xl"></div>
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+        <!-- Parte Superior: Oferta Relâmpago -->
+        <div class="bg-gradient-to-r from-red-50 to-orange-50 p-4 relative overflow-hidden group">
+          <!-- Efeito de brilho passando -->
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none"></div>
           
           <div class="flex flex-col relative z-10">
-              <div class="flex justify-between items-start mb-4">
-                  <div class="flex items-center gap-3">
-                      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center shadow-md shadow-orange-200/50">
-                          <i class="fa-solid fa-paw text-white text-xl"></i>
+              <div class="flex justify-between items-center mb-3">
+                  <div class="flex items-center gap-2">
+                      <div class="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-200">
+                          <i class="fa-solid fa-fire-flame-curved text-white text-sm animate-pulse"></i>
                       </div>
-                      <div>
-                          <span class="block text-[10px] font-black text-orange-500 uppercase tracking-[0.15em] mb-0.5">🐾 Oferta Solidária</span>
-                          <h4 class="text-base font-black text-gray-800 leading-tight">Meta Amigo de Patas</h4>
-                      </div>
+                      <span class="text-[14px] font-extrabold text-red-900 tracking-tight uppercase">Oferta Relâmpago</span>
                   </div>
-                  <div class="flex flex-col items-end">
-                      <div class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-sm border border-orange-100">
-                          <i class="fa-solid fa-clock text-orange-500 text-[10px] animate-pulse"></i>
-                          <span id="countdown-timer" class="text-[12px] font-black text-orange-600 tabular-nums">00:00:00</span>
-                      </div>
+                  <div class="flex items-center gap-1.5 bg-white/80 backdrop-blur-sm border border-red-100 px-2 py-1 rounded-full shadow-sm">
+                      <i class="fa-solid fa-clock text-red-600 text-[10px]"></i>
+                      <span id="countdown-timer" class="text-[11px] font-black text-red-600 tabular-nums tracking-wider">00:00:00</span>
                   </div>
               </div>
 
-              <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-3.5 border border-orange-50 mb-5 relative z-10">
-                  <p class="text-[12px] text-gray-700 leading-relaxed">
-                      Cada pedido aproxima nossa meta de ajudar os peludinhos. <span class="text-orange-600 font-black italic">A oferta expira quando a meta for atingida!</span>
+              <div class="mb-3">
+                  <h4 class="text-[12px] font-bold text-red-800 mb-1">Atenção: Promoção <span id="label-dia-semana">Apenas Hoje</span>!</h4>
+                  <p class="text-[11px] text-red-700/80 leading-snug">
+                      Restam poucas unidades com <b>50% de desconto</b>. Garanta seu pedido antes que o cronômetro chegue a zero!
                   </p>
               </div>
               
-              <!-- Barra de Meta Premium -->
-              <div class="relative z-10">
-                  <div class="flex items-center justify-between mb-2.5 px-0.5">
-                      <div class="flex items-center gap-1.5">
-                          <i class="fa-solid fa-fire-flame-curved text-orange-500 text-[10px] animate-bounce"></i>
-                          <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Estoque da Promoção</span>
-                      </div>
+              <!-- Barra de Escassez Dinâmica -->
+              <div class="relative pt-1">
+                  <div class="flex items-center justify-between mb-1.5">
                       <div class="flex items-center gap-1">
-                        <span id="stock-percentage" class="text-[12px] font-black text-orange-600">94%</span>
-                        <span class="text-[9px] text-gray-400 font-bold uppercase tracking-tighter">concluído</span>
+                          <span class="flex h-2 w-2 relative">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                          </span>
+                          <span class="text-[10px] font-black text-red-600 uppercase tracking-tighter">Estoque Crítico</span>
                       </div>
+                      <span id="stock-percentage" class="text-[10px] font-black text-red-600">94% vendido</span>
                   </div>
-                  <div class="w-full bg-gray-100 rounded-full h-4 p-1 shadow-inner border border-gray-100">
-                      <div id="stock-progress-bar" class="bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 h-full rounded-full transition-all duration-1000 ease-out shadow-sm relative overflow-hidden" style="width: 94%">
-                          <!-- Brilho animado na barra -->
-                          <div class="absolute inset-0 bg-white/30 w-1/3 -skew-x-[20deg] animate-[shimmer_2s_infinite]"></div>
+                  <div class="w-full bg-red-100 rounded-full h-3 p-0.5 border border-red-200/50">
+                      <div id="stock-progress-bar" class="bg-gradient-to-r from-red-500 to-orange-500 h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(234,29,44,0.3)]" style="width: 94%">
+                          <div class="w-full h-full bg-white/20 animate-loading-bar rounded-full"></div>
                       </div>
-                  </div>
-                  <div class="mt-2.5 flex justify-center">
-                      <span class="text-[9px] font-bold text-gray-400 italic">🔥 Mais de 14 pessoas estão finalizando o pedido agora!</span>
                   </div>
               </div>
           </div>
         </div>
 
-        <!-- Divisor suave -->
-        <div class="h-px bg-gradient-to-r from-transparent via-gray-100 to-transparent mx-4"></div>
+        <!-- Divisor com Icone de Conexão -->
+        <div class="relative flex items-center justify-center py-1 bg-white">
+            <div class="absolute inset-x-0 top-1/2 h-px bg-gray-50"></div>
+            <div class="relative bg-white px-3">
+                <i class="fa-solid fa-link text-[10px] text-gray-300"></i>
+            </div>
+        </div>
 
         <!-- Parte Inferior: Parceiro iFood -->
-        <div class="p-4 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-lg bg-gray-50 flex items-center justify-center shrink-0 border border-gray-100">
-              <img src="images/ifood-smile.png" alt="iFood" class="w-6 h-6 object-contain opacity-80" />
-            </div>
-            <div class="flex flex-col">
-              <span class="text-[12px] font-bold text-gray-700">Restaurante Verificado</span>
-              <span class="text-[10px] text-gray-400">Entrega rápida oficial</span>
-            </div>
+        <div class="p-4 pt-1 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#fff1f2] flex items-center justify-center shrink-0 border border-red-50">
+            <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
           </div>
-          <div class="flex items-center gap-1 bg-green-50 px-2 py-1 rounded-md border border-green-100">
-            <i class="fa-solid fa-check-circle text-green-500 text-[10px]"></i>
-            <span class="text-[9px] font-bold text-green-700 uppercase">Seguro</span>
+          <div class="flex flex-col min-w-0 flex-1">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
+              <div class="w-3.5 h-3.5 bg-[#EA1D2C] rounded-full flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-star text-white text-[7px]"></i>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1045,7 +1039,7 @@
                     if (currentPct < 99 && Math.random() > 0.7) {
                         currentPct += 0.1;
                         stockBar.style.width = currentPct.toFixed(1) + '%';
-                        stockPct.innerText = Math.floor(currentPct) + '%';
+                        stockPct.innerText = Math.floor(currentPct) + '% vendido';
                     }
                     setTimeout(updateStock, 3000 + Math.random() * 5000);
                 };
