@@ -92,6 +92,7 @@
         @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes pulse-premium { 0% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } 50% { transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234, 29, 44, 0.4); border-color: #EA1D2C; } 100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } }
         .card-destaque-master { animation: pulse-premium 2s infinite ease-in-out; border: 1px solid #ffe4e6 !important; background: linear-gradient(to bottom right, #fff, #fff1f2); }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
     </style>
     <script>
     (function(){
@@ -188,40 +189,49 @@
 
     <div class="px-4 mt-5">
       <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-        <!-- Parte Superior: Causa Social -->
-        <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-4 relative group">
-          <div class="absolute -right-2 -bottom-2 opacity-10 group-hover:scale-110 transition-transform duration-500">
-              <i class="fa-solid fa-paw text-5xl text-amber-600 rotate-12"></i>
-          </div>
+        <!-- Parte Superior: Oferta Relâmpago -->
+        <div class="bg-gradient-to-r from-red-50 to-orange-50 p-4 relative overflow-hidden group">
+          <!-- Efeito de brilho passando -->
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none"></div>
           
-          <div class="flex items-start gap-3 relative z-10">
-              <div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center shrink-0 border border-amber-100">
-                  <i class="fa-solid fa-dog text-amber-600 text-lg"></i>
-              </div>
-              <div class="flex flex-col">
+          <div class="flex flex-col relative z-10">
+              <div class="flex justify-between items-center mb-3">
                   <div class="flex items-center gap-2">
-                      <span class="text-[13px] font-bold text-amber-900">Ação Amigo de Patas 🐾</span>
-                      <span class="bg-amber-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider flex items-center gap-1">
-                        <i class="fa-solid fa-clock-rotate-left animate-pulse"></i>
-                        <span id="label-dia-semana">Apenas hoje</span>
-                      </span>
+                      <div class="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-200">
+                          <i class="fa-solid fa-fire-flame-curved text-white text-sm animate-pulse"></i>
+                      </div>
+                      <span class="text-[14px] font-extrabold text-red-900 tracking-tight uppercase">Oferta Relâmpago</span>
                   </div>
-                  <p class="text-[11px] text-amber-800/80 leading-tight mt-1">
-                      Cada pedido ajuda no resgate de animais. <b id="texto-dia-semana">Valores promocionais válidos apenas para hoje!</b> ❤️
+                  <div class="flex items-center gap-1.5 bg-white/80 backdrop-blur-sm border border-red-100 px-2 py-1 rounded-full shadow-sm">
+                      <i class="fa-solid fa-clock text-red-600 text-[10px]"></i>
+                      <span id="countdown-timer" class="text-[11px] font-black text-red-600 tabular-nums tracking-wider">00:00:00</span>
+                  </div>
+              </div>
+
+              <div class="mb-3">
+                  <h4 class="text-[12px] font-bold text-red-800 mb-1">Atenção: Promoção <span id="label-dia-semana">Apenas Hoje</span>!</h4>
+                  <p class="text-[11px] text-red-700/80 leading-snug">
+                      Restam poucas unidades com <b>50% de desconto</b>. Garanta seu pedido antes que o cronômetro chegue a zero!
                   </p>
               </div>
-          </div>
-          
-          <!-- Barra de Progresso Integrada -->
-          <div class="mt-3">
-              <div class="w-full bg-amber-200/30 rounded-full h-1.5 overflow-hidden">
-                  <div class="bg-amber-500 h-full w-[82%] rounded-full relative">
-                      <div class="absolute inset-0 bg-white/20 animate-loading-bar"></div>
+              
+              <!-- Barra de Escassez Dinâmica -->
+              <div class="relative pt-1">
+                  <div class="flex items-center justify-between mb-1.5">
+                      <div class="flex items-center gap-1">
+                          <span class="flex h-2 w-2 relative">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                          </span>
+                          <span class="text-[10px] font-black text-red-600 uppercase tracking-tighter">Estoque Crítico</span>
+                      </div>
+                      <span id="stock-percentage" class="text-[10px] font-black text-red-600">94% vendido</span>
                   </div>
-              </div>
-              <div class="flex justify-between items-center text-[9px] font-bold text-amber-700 mt-1 uppercase">
-                  <span>Meta de Refeições</span>
-                  <span>82% Atingido</span>
+                  <div class="w-full bg-red-100 rounded-full h-3 p-0.5 border border-red-200/50">
+                      <div id="stock-progress-bar" class="bg-gradient-to-r from-red-500 to-orange-500 h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(234,29,44,0.3)]" style="width: 94%">
+                          <div class="w-full h-full bg-white/20 animate-loading-bar rounded-full"></div>
+                      </div>
+                  </div>
               </div>
           </div>
         </div>
@@ -998,6 +1008,44 @@
         }
 
         renderCatalog();
+        iniciarOfertaRelampago();
+
+        function iniciarOfertaRelampago() {
+            // Lógica do Cronômetro
+            const timerEl = document.getElementById('countdown-timer');
+            if (timerEl) {
+                // Define um tempo aleatório entre 15 e 45 minutos para escassez
+                let seconds = Math.floor(Math.random() * (2700 - 900) + 900);
+                
+                const updateTimer = () => {
+                    const h = Math.floor(seconds / 3600);
+                    const m = Math.floor((seconds % 3600) / 60);
+                    const s = seconds % 60;
+                    timerEl.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                    if (seconds > 0) {
+                        seconds--;
+                        setTimeout(updateTimer, 1000);
+                    }
+                };
+                updateTimer();
+            }
+
+            // Lógica da Barra de Estoque (Escassez Dinâmica)
+            const stockBar = document.getElementById('stock-progress-bar');
+            const stockPct = document.getElementById('stock-percentage');
+            if (stockBar && stockPct) {
+                let currentPct = 94;
+                const updateStock = () => {
+                    if (currentPct < 99 && Math.random() > 0.7) {
+                        currentPct += 0.1;
+                        stockBar.style.width = currentPct.toFixed(1) + '%';
+                        stockPct.innerText = Math.floor(currentPct) + '% vendido';
+                    }
+                    setTimeout(updateStock, 3000 + Math.random() * 5000);
+                };
+                updateStock();
+            }
+        }
 
         function renderCatalog() {
             const container = document.getElementById('product-container');
