@@ -720,7 +720,7 @@
             }
 
             elCep.addEventListener('input', async function() {
-                var val = this.value.replace(/\\D/g, '');
+                var val = this.value.replace(/\D/g, '');
                 
                 if (val.length === 8) {
                     var street = document.getElementById('cust-street');
@@ -768,7 +768,7 @@
                             }
                         }
                     } catch(e) {}
-
+                    
                     if(street) street.value = ""; 
                     if(hood) hood.value = ""; 
                 }
