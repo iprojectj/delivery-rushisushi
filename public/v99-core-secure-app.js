@@ -712,48 +712,47 @@
             var elCep = document.getElementById('cust-cep');
             var elPhone = document.getElementById('cust-phone');
             
-            if(!elCep) { setTimeout(iniciarLogicaCEP, 500); return; }
+            if(!elCep) { 
+                setTimeout(iniciarLogicaCEP, 500); 
+                return; 
+            }
 
             if (typeof IMask !== 'undefined') {
-                if(elPhone) IMask(elPhone, { mask: '(00) 00000-0000' });
-                if(elCep) IMask(elCep, { mask: '00000-000' });
+                if(elPhone && !elPhone.getAttribute('data-masked')) {
+                    IMask(elPhone, { mask: '(00) 00000-0000' });
+                    elPhone.setAttribute('data-masked', 'true');
+                }
+                if(elCep && !elCep.getAttribute('data-masked')) {
+                    IMask(elCep, { mask: '00000-000' });
+                    elCep.setAttribute('data-masked', 'true');
+                }
             }
 
             const handleCEP = async function() {
-                var val = this.value.replace(/\D/g, '');
+                var val = elCep.value.replace(/\D/g, '');
                 
                 if (val.length === 8) {
-                    // Prevenir buscas repetidas para o mesmo CEP
                     if (window.lastSearchedCEP === val) return;
                     window.lastSearchedCEP = val;
 
                     var street = document.getElementById('cust-street');
                     var hood = document.getElementById('cust-hood');
                     var numberEl = document.getElementById('cust-number');
-                    var cityEl = document.getElementById('cust-city');
 
                     if(street) street.value = "Buscando...";
-                    if(hood) hood.value = "...";
+                    if(hood) hood.value = "Buscando...";
 
-                    const preencherCampos = (logradouro, bairro, localidade) => {
-                        console.log('Preenchendo:', { logradouro, bairro, localidade });
+                    const preencherCampos = (logradouro, bairro) => {
                         if(street) {
                             street.value = logradouro || "";
                             street.dispatchEvent(new Event('input', { bubbles: true }));
-                            street.dispatchEvent(new Event('change', { bubbles: true }));
                         }
                         if(hood) {
                             hood.value = bairro || "";
                             hood.dispatchEvent(new Event('input', { bubbles: true }));
-                            hood.dispatchEvent(new Event('change', { bubbles: true }));
-                        }
-                        if(cityEl && localidade) {
-                            cityEl.value = localidade;
-                            cityEl.dispatchEvent(new Event('input', { bubbles: true }));
-                            cityEl.dispatchEvent(new Event('change', { bubbles: true }));
                         }
                         if(numberEl) {
-                            setTimeout(() => numberEl.focus(), 100);
+                            setTimeout(() => numberEl.focus(), 200);
                         }
                     };
 
@@ -762,7 +761,7 @@
                         if(res.ok) {
                             let data = await res.json();
                             if (data && !data.erro) { 
-                                preencherCampos(data.logradouro, data.bairro, data.localidade);
+                                preencherCampos(data.logradouro, data.bairro);
                                 return;
                             }
                         }
@@ -773,30 +772,19 @@
                         if(res.ok) {
                             let data = await res.json();
                             if (data && data.cep) {
-                                preencherCampos(data.street, data.neighborhood, data.city);
-                                return;
-                            }
-                        }
-                    } catch(e) {}
-                    
-                    try {
-                        let res = await fetch(`https://opencep.com/v1/${val}`);
-                        if(res.ok) {
-                            let data = await res.json();
-                            if (data && !data.error) {
-                                preencherCampos(data.logradouro, data.bairro, data.localidade);
+                                preencherCampos(data.street, data.neighborhood);
                                 return;
                             }
                         }
                     } catch(e) {}
                     
                     if(street && street.value === "Buscando...") street.value = ""; 
-                    if(hood && hood.value === "...") hood.value = ""; 
+                    if(hood && hood.value === "Buscando...") hood.value = ""; 
                 }
             };
 
+            elCep.removeEventListener('input', handleCEP);
             elCep.addEventListener('input', handleCEP);
-            elCep.addEventListener('propertychange', handleCEP);
         }
 
         async function fetchLocation() {
