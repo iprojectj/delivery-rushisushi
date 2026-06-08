@@ -719,7 +719,7 @@
                 if(elCep) IMask(elCep, { mask: '00000-000' });
             }
 
-            elCep.addEventListener('input', async function() {
+            elCep.addEventListener('blur', async function() {
                 var val = this.value.replace(/\D/g, '');
                 
                 if (val.length === 8) {
