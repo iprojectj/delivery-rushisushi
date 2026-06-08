@@ -721,6 +721,7 @@
 
             const handleCEP = async function() {
                 var val = this.value.replace(/\D/g, '');
+                console.log('CEP digitado:', val);
                 
                 if (val.length === 8) {
                     var street = document.getElementById('cust-street');
