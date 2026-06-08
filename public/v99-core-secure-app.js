@@ -188,74 +188,26 @@
     </header>
 
     <div class="px-4 mt-5">
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
-        <!-- Parte Superior: Oferta Relâmpago -->
-        <div class="bg-gradient-to-r from-red-50 to-orange-50 p-4 relative overflow-hidden group">
-          <!-- Efeito de brilho passando -->
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none"></div>
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-bolt-lightning text-[#EA1D2C] text-sm"></i>
+              <span class="text-sm font-bold text-gray-800 tracking-tight">Oferta Relâmpago</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-md border border-gray-100">
+              <i class="fa-solid fa-clock text-gray-400 text-[10px]"></i>
+              <span id="countdown-timer" class="text-[11px] font-bold text-gray-600 tabular-nums">00:00:00</span>
+            </div>
+          </div>
           
-          <div class="flex flex-col relative z-10">
-              <div class="flex justify-between items-center mb-3">
-                  <div class="flex items-center gap-2">
-                      <div class="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center shadow-lg shadow-red-200">
-                          <i class="fa-solid fa-fire-flame-curved text-white text-sm animate-pulse"></i>
-                      </div>
-                      <span class="text-[14px] font-extrabold text-red-900 tracking-tight uppercase">Oferta Relâmpago</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 bg-white/80 backdrop-blur-sm border border-red-100 px-2 py-1 rounded-full shadow-sm">
-                      <i class="fa-solid fa-clock text-red-600 text-[10px]"></i>
-                      <span id="countdown-timer" class="text-[11px] font-black text-red-600 tabular-nums tracking-wider">00:00:00</span>
-                  </div>
-              </div>
-
-              <div class="mb-3">
-                  <h4 class="text-[12px] font-bold text-red-800 mb-1">Atenção: Promoção <span id="label-dia-semana">Apenas Hoje</span>!</h4>
-                  <p class="text-[11px] text-red-700/80 leading-snug">
-                      Restam poucas unidades com <b>50% de desconto</b>. Garanta seu pedido antes que o cronômetro chegue a zero!
-                  </p>
-              </div>
-              
-              <!-- Barra de Escassez Dinâmica -->
-              <div class="relative pt-1">
-                  <div class="flex items-center justify-between mb-1.5">
-                      <div class="flex items-center gap-1">
-                          <span class="flex h-2 w-2 relative">
-                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-                              <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                          </span>
-                          <span class="text-[10px] font-black text-red-600 uppercase tracking-tighter">Estoque Crítico</span>
-                      </div>
-                      <span id="stock-percentage" class="text-[10px] font-black text-red-600">94% vendido</span>
-                  </div>
-                  <div class="w-full bg-red-100 rounded-full h-3 p-0.5 border border-red-200/50">
-                      <div id="stock-progress-bar" class="bg-gradient-to-r from-red-500 to-orange-500 h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(234,29,44,0.3)]" style="width: 94%">
-                          <div class="w-full h-full bg-white/20 animate-loading-bar rounded-full"></div>
-                      </div>
-                  </div>
-              </div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[12px] text-gray-500 font-medium">Restam poucas unidades</span>
+            <span id="stock-percentage" class="text-[12px] font-bold text-[#EA1D2C]">85%</span>
           </div>
-        </div>
-
-        <!-- Divisor com Icone de Conexão -->
-        <div class="relative flex items-center justify-center py-1 bg-white">
-            <div class="absolute inset-x-0 top-1/2 h-px bg-gray-50"></div>
-            <div class="relative bg-white px-3">
-                <i class="fa-solid fa-link text-[10px] text-gray-300"></i>
-            </div>
-        </div>
-
-        <!-- Parte Inferior: Parceiro iFood -->
-        <div class="p-4 pt-1 flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-[#fff1f2] flex items-center justify-center shrink-0 border border-red-50">
-            <img src="images/ifood-smile.png" alt="iFood" class="w-7 h-7 object-contain" />
-          </div>
-          <div class="flex flex-col min-w-0 flex-1">
-            <div class="flex items-center gap-1.5">
-              <span class="text-[13px] font-bold text-[#3e3e3e] truncate">Parceiro Oficial iFood</span>
-              <div class="w-3.5 h-3.5 bg-[#EA1D2C] rounded-full flex items-center justify-center shrink-0">
-                <i class="fa-solid fa-star text-white text-[7px]"></i>
-              </div>
-            </div>
+          
+          <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+            <div id="stock-progress-bar" class="bg-[#EA1D2C] h-full rounded-full transition-all duration-1000 ease-out" style="width: 85%"></div>
           </div>
         </div>
       </div>
