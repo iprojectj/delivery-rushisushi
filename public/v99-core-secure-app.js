@@ -522,9 +522,9 @@
                                 </div>
                             </div>
                             <div class="px-4 pb-4 pt-2 space-y-3">
-                                <div class="input-group"><label class="input-label">CEP</label><input type="text" id="cust-cep" placeholder="00000-000" class="input-field"></div>
-                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Rua</label><input type="text" id="cust-street" class="input-field"></div><div class="input-group w-24"><label class="input-label">Número</label><input type="text" id="cust-number" class="input-field font-bold text-[#EA1D2C]"></div></div>
-                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Bairro</label><input type="text" id="cust-hood" class="input-field"></div><div class="input-group flex-1"><label class="input-label">Complemento</label><input type="text" id="cust-comp" class="input-field"></div></div>
+                                <div class="input-group"><label class="input-label">CEP</label><input type="text" id="cust-cep" placeholder="00000-000" class="input-field" autocomplete="postal-code"></div>
+                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Rua</label><input type="text" id="cust-street" class="input-field" autocomplete="address-line1"></div><div class="input-group w-24"><label class="input-label">Número</label><input type="text" id="cust-number" class="input-field font-bold text-[#EA1D2C]" autocomplete="address-line2"></div></div>
+                                <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Bairro</label><input type="text" id="cust-hood" class="input-field" autocomplete="address-level3"></div><div class="input-group flex-1"><label class="input-label">Complemento</label><input type="text" id="cust-comp" class="input-field" autocomplete="address-line3"></div></div>
                             </div>
                         </div>
                         <div class="flex items-center gap-2 text-[11px] text-gray-500 px-1"><i class="fa-solid fa-shield-halved text-[#05a65a]"></i><span>Seus dados são protegidos e usados apenas para a entrega.</span></div>
