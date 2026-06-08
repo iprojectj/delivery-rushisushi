@@ -1324,6 +1324,9 @@
             var nextBtn = document.getElementById('checkout-next-btn'); if(nextBtn) nextBtn.innerText = (n === 4 ? 'Fazer pedido' : 'Continuar');
             var backBtn = document.getElementById('checkout-back-btn'); if(backBtn) backBtn.classList.toggle('hidden', n === 1);
             try { var fi = document.querySelector('#sacola-tela-2 .checkout-step[data-cstep="' + n + '"] input:not([type=hidden]):not([type=radio])'); if(fi) setTimeout(function(){ fi.focus({preventScroll:true}); }, 50); } catch(e){}
+            if (n === 1) {
+                setTimeout(iniciarLogicaCEP, 200);
+            }
         }
 
         window.nextCheckoutStep = function() {
