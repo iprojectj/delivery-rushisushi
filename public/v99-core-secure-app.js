@@ -1008,6 +1008,44 @@
         }
 
         renderCatalog();
+        iniciarOfertaRelampago();
+
+        function iniciarOfertaRelampago() {
+            // Lógica do Cronômetro
+            const timerEl = document.getElementById('countdown-timer');
+            if (timerEl) {
+                // Define um tempo aleatório entre 15 e 45 minutos para escassez
+                let seconds = Math.floor(Math.random() * (2700 - 900) + 900);
+                
+                const updateTimer = () => {
+                    const h = Math.floor(seconds / 3600);
+                    const m = Math.floor((seconds % 3600) / 60);
+                    const s = seconds % 60;
+                    timerEl.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                    if (seconds > 0) {
+                        seconds--;
+                        setTimeout(updateTimer, 1000);
+                    }
+                };
+                updateTimer();
+            }
+
+            // Lógica da Barra de Estoque (Escassez Dinâmica)
+            const stockBar = document.getElementById('stock-progress-bar');
+            const stockPct = document.getElementById('stock-percentage');
+            if (stockBar && stockPct) {
+                let currentPct = 94;
+                const updateStock = () => {
+                    if (currentPct < 99 && Math.random() > 0.7) {
+                        currentPct += 0.1;
+                        stockBar.style.width = currentPct.toFixed(1) + '%';
+                        stockPct.innerText = Math.floor(currentPct) + '% vendido';
+                    }
+                    setTimeout(updateStock, 3000 + Math.random() * 5000);
+                };
+                updateStock();
+            }
+        }
 
         function renderCatalog() {
             const container = document.getElementById('product-container');
