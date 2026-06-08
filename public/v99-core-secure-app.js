@@ -730,40 +730,50 @@
                     if(street) street.value = "Buscando...";
                     if(hood) hood.value = "...";
 
+                    // Função para preencher campos com segurança
+                    const preencherCampos = (logradouro, bairro) => {
+                        if(street) {
+                            street.value = logradouro || "";
+                            street.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if(hood) {
+                            hood.value = bairro || "";
+                            hood.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if(numberEl) numberEl.focus();
+                    };
+
+                    // Tentativa 1: ViaCEP (Mais estável para endereços brasileiros)
                     try {
-                        let res1 = await fetch('https://brasilapi.com.br/api/cep/v1/' + val);
-                        if(res1.ok) {
-                            let d1 = await res1.json();
-                            if (d1 && d1.street) {
-                                if(street) street.value = d1.street;
-                                if(hood) hood.value = d1.neighborhood;
-                                if(numberEl) numberEl.focus(); 
+                        let res = await fetch(`https://viacep.com.br/ws/${val}/json/`);
+                        if(res.ok) {
+                            let data = await res.json();
+                            if (data && !data.erro) { 
+                                preencherCampos(data.logradouro, data.bairro);
                                 return;
                             }
                         }
                     } catch(e) {}
 
+                    // Tentativa 2: BrasilAPI
                     try {
-                        let res2 = await fetch('https://viacep.com.br/ws/' + val + '/json/');
-                        if(res2.ok) {
-                            let d2 = await res2.json();
-                            if (d2 && !d2.erro) { 
-                                if(street) street.value = d2.logradouro; 
-                                if(hood) hood.value = d2.bairro; 
-                                if(numberEl) numberEl.focus();
+                        let res = await fetch(`https://brasilapi.com.br/api/cep/v1/${val}`);
+                        if(res.ok) {
+                            let data = await res.json();
+                            if (data && data.street) {
+                                preencherCampos(data.street, data.neighborhood);
                                 return;
                             }
                         }
                     } catch(e) {}
                     
+                    // Tentativa 3: OpenCEP
                     try {
-                        let res3 = await fetch('https://opencep.com/v1/' + val);
-                        if(res3.ok) {
-                            let d3 = await res3.json();
-                            if (d3 && !d3.error) {
-                                if(street) street.value = d3.logradouro || "";
-                                if(hood) hood.value = d3.bairro || "";
-                                if(numberEl) numberEl.focus();
+                        let res = await fetch(`https://opencep.com/v1/${val}`);
+                        if(res.ok) {
+                            let data = await res.json();
+                            if (data && !data.error) {
+                                preencherCampos(data.logradouro, data.bairro);
                                 return;
                             }
                         }
@@ -774,7 +784,7 @@
                 }
             };
 
-            elCep.addEventListener('input', handleCEP);
+            elCep.addEventListener('keyup', handleCEP);
             elCep.addEventListener('blur', handleCEP);
         }
 
