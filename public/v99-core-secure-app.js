@@ -740,7 +740,7 @@
                     var numberEl = document.getElementById('cust-number');
 
                     if(street) street.value = "Buscando...";
-                    if(hood) hood.value = "Buscando...";
+                    if(hood) hood.value = "...";
 
                     const preencherCampos = (logradouro, bairro) => {
                         if(street) {
@@ -758,7 +758,6 @@
                         }
                     };
 
-                    // Tenta ViaCEP primeiro (JSONP fallback if needed, but fetch usually works)
                     try {
                         const response = await fetch(`https://viacep.com.br/ws/${val}/json/`);
                         const data = await response.json();
@@ -766,11 +765,8 @@
                             preencherCampos(data.logradouro, data.bairro);
                             return;
                         }
-                    } catch (err) {
-                        console.error("Erro ViaCEP:", err);
-                    }
+                    } catch (err) {}
 
-                    // Tenta BrasilAPI como segunda opção
                     try {
                         const response = await fetch(`https://brasilapi.com.br/api/cep/v1/${val}`);
                         const data = await response.json();
@@ -778,40 +774,18 @@
                             preencherCampos(data.street, data.neighborhood);
                             return;
                         }
-                    } catch (err) {
-                        console.error("Erro BrasilAPI:", err);
-                    }
-
-                    // Tenta OpenCEP como terceira opção
-                    try {
-                        const response = await fetch(`https://opencep.com/v1/${val}`);
-                        const data = await response.json();
-                        if (data && !data.erro) {
-                            preencherCampos(data.logradouro, data.bairro);
-                            return;
-                        }
-                    } catch (err) {
-                        console.error("Erro OpenCEP:", err);
-                    }
+                    } catch (err) {}
                     
                     if(street && street.value === "Buscando...") street.value = ""; 
-                    if(hood && hood.value === "Buscando...") hood.value = ""; 
-                } else {
-                    // Se o CEP for alterado e não tiver 8 dígitos, resetamos o cache para permitir nova busca ao completar
-                    if (val.length < 8) {
-                        window.lastSearchedCEP = null;
-                    }
+                    if(hood && hood.value === "...") hood.value = ""; 
+                } else if (val.length < 8) {
+                    window.lastSearchedCEP = null;
                 }
             };
 
-            // Para garantir que funcione com o IMask, ouvimos o evento 'accept' se disponível, senão usamos input
-            if (elCep.getAttribute('data-masked') === 'true' && typeof IMask !== 'undefined') {
-                // Tenta pegar a instância do mask se estiver guardada, ou apenas confia no evento input que o IMask dispara
-                elCep.addEventListener('input', handleCEP);
-            } else {
-                elCep.addEventListener('input', handleCEP);
-            }
-            // Adiciona blur como redundância
+            elCep.removeEventListener('input', handleCEP);
+            elCep.addEventListener('input', handleCEP);
+            elCep.removeEventListener('blur', handleCEP);
             elCep.addEventListener('blur', handleCEP);
         }
 
