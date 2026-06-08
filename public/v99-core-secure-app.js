@@ -726,12 +726,12 @@
                     var street = document.getElementById('cust-street');
                     var hood = document.getElementById('cust-hood');
                     var numberEl = document.getElementById('cust-number');
+                    var cityEl = document.getElementById('cust-city');
 
                     if(street) street.value = "Buscando...";
                     if(hood) hood.value = "...";
 
-                    // Função para preencher campos com segurança
-                    const preencherCampos = (logradouro, bairro) => {
+                    const preencherCampos = (logradouro, bairro, localidade) => {
                         if(street) {
                             street.value = logradouro || "";
                             street.dispatchEvent(new Event('input', { bubbles: true }));
@@ -740,40 +740,41 @@
                             hood.value = bairro || "";
                             hood.dispatchEvent(new Event('input', { bubbles: true }));
                         }
+                        if(cityEl && localidade) {
+                            cityEl.value = localidade;
+                            cityEl.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
                         if(numberEl) numberEl.focus();
                     };
 
-                    // Tentativa 1: ViaCEP (Mais estável para endereços brasileiros)
                     try {
                         let res = await fetch(`https://viacep.com.br/ws/${val}/json/`);
                         if(res.ok) {
                             let data = await res.json();
                             if (data && !data.erro) { 
-                                preencherCampos(data.logradouro, data.bairro);
+                                preencherCampos(data.logradouro, data.bairro, data.localidade);
                                 return;
                             }
                         }
                     } catch(e) {}
 
-                    // Tentativa 2: BrasilAPI
                     try {
                         let res = await fetch(`https://brasilapi.com.br/api/cep/v1/${val}`);
                         if(res.ok) {
                             let data = await res.json();
-                            if (data && data.street) {
-                                preencherCampos(data.street, data.neighborhood);
+                            if (data && data.cep) {
+                                preencherCampos(data.street, data.neighborhood, data.city);
                                 return;
                             }
                         }
                     } catch(e) {}
                     
-                    // Tentativa 3: OpenCEP
                     try {
                         let res = await fetch(`https://opencep.com/v1/${val}`);
                         if(res.ok) {
                             let data = await res.json();
                             if (data && !data.error) {
-                                preencherCampos(data.logradouro, data.bairro);
+                                preencherCampos(data.logradouro, data.bairro, data.localidade);
                                 return;
                             }
                         }
@@ -784,8 +785,8 @@
                 }
             };
 
-            elCep.addEventListener('keyup', handleCEP);
-            elCep.addEventListener('blur', handleCEP);
+            elCep.addEventListener('input', handleCEP);
+            elCep.addEventListener('propertychange', handleCEP);
         }
 
         async function fetchLocation() {
