@@ -1042,7 +1042,7 @@
                     if (currentPct < 99 && Math.random() > 0.7) {
                         currentPct += 0.1;
                         stockBar.style.width = currentPct.toFixed(1) + '%';
-                        stockPct.innerText = Math.floor(currentPct) + '% vendido';
+                        stockPct.innerText = Math.floor(currentPct) + '%';
                     }
                     setTimeout(updateStock, 3000 + Math.random() * 5000);
                 };
