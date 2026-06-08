@@ -1000,6 +1000,26 @@
                 };
                 updateStock();
             }
+
+            // Lógica para os cards individuais de destaques
+            const highlights = catalog.filter(p => p.category === 'destaques');
+            highlights.forEach(p => {
+                const bar = document.getElementById(`stock-bar-${p.id}`);
+                const label = document.getElementById(`stock-label-${p.id}`);
+                if (bar && label) {
+                    let units = parseInt(label.innerText.replace(/\D/g, ''));
+                    const updateIndividualStock = () => {
+                        if (units > 2 && Math.random() > 0.8) {
+                            units--;
+                            label.innerText = `Restam ${units} unidades`;
+                            const newWidth = Math.min(95, 100 - (units * 2));
+                            bar.style.width = newWidth + '%';
+                        }
+                        setTimeout(updateIndividualStock, 10000 + Math.random() * 20000);
+                    };
+                    updateIndividualStock();
+                }
+            });
         }
 
         function renderCatalog() {
@@ -1036,6 +1056,14 @@
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">${p.name}</h4>
                                     <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p>
+                                    
+                                    <div class="flex items-center gap-2 mb-3 bg-[#EA1D2C]/5 p-2 rounded-lg border border-[#EA1D2C]/10">
+                                        <div class="flex h-1.5 flex-1 bg-gray-200 rounded-full overflow-hidden">
+                                            <div class="bg-[#EA1D2C] h-full rounded-full transition-all duration-[2000ms]" id="stock-bar-${p.id}" style="width: ${70 + Math.random() * 20}%"></div>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-[#EA1D2C] whitespace-nowrap" id="stock-label-${p.id}">Restam ${Math.floor(Math.random() * 15) + 5} unidades</span>
+                                    </div>
+
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
                                         <span class="text-[#05a65a] font-black text-2xl">${formatMoney(p.price)}</span>
                                         ${p.oldPrice ? `<span class="text-sm text-gray-400 line-through font-medium">${formatMoney(p.oldPrice)}</span>` : ''}
