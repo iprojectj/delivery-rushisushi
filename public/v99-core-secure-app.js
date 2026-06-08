@@ -713,7 +713,6 @@
             var elPhone = document.getElementById('cust-phone');
             
             if(!elCep) { 
-                setTimeout(iniciarLogicaCEP, 500); 
                 return; 
             }
 
