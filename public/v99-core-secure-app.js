@@ -736,19 +736,25 @@
                     if(hood) hood.value = "...";
 
                     const preencherCampos = (logradouro, bairro, localidade) => {
+                        console.log('Preenchendo:', { logradouro, bairro, localidade });
                         if(street) {
                             street.value = logradouro || "";
                             street.dispatchEvent(new Event('input', { bubbles: true }));
+                            street.dispatchEvent(new Event('change', { bubbles: true }));
                         }
                         if(hood) {
                             hood.value = bairro || "";
                             hood.dispatchEvent(new Event('input', { bubbles: true }));
+                            hood.dispatchEvent(new Event('change', { bubbles: true }));
                         }
                         if(cityEl && localidade) {
                             cityEl.value = localidade;
                             cityEl.dispatchEvent(new Event('input', { bubbles: true }));
+                            cityEl.dispatchEvent(new Event('change', { bubbles: true }));
                         }
-                        if(numberEl) numberEl.focus();
+                        if(numberEl) {
+                            setTimeout(() => numberEl.focus(), 100);
+                        }
                     };
 
                     try {
