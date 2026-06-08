@@ -50,7 +50,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Rūshī Sushi</title>
     
-    <script src="https://cdn.tailwindcss.com"><\/script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -690,8 +690,8 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js"><\/script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"><\/script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.3/imask.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         const API_BASE_URL = "";
@@ -1153,16 +1153,16 @@
             opts.innerHTML = '';
             
             if(item.hasAddons) {
-                let html = \`<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>\`;
+                let html = `<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>`;
                 commonAddons.forEach((opt, idx) => {
                     addonsState[opt.name] = 0;
-                    html += \`
+                    html += `
                     <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
-                        <div class="flex items-center gap-3"><img src="\${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">\${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">\${opt.price === 0 ? 'Grátis' : '+ '+formatMoney(opt.price)}</div></div></div>
-                        <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-\${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('\${opt.name}', \${opt.price}, 1)">+</button></div>
-                    </div>\`;
+                        <div class="flex items-center gap-3"><img src="${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">${opt.price === 0 ? 'Grátis' : '+ '+formatMoney(opt.price)}</div></div></div>
+                        <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('${opt.name}', ${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('${opt.name}', ${opt.price}, 1)">+</button></div>
+                    </div>`;
                 });
-                html += \`</div>\`;
+                html += `</div>`;
                 opts.innerHTML = html;
             }
             document.getElementById('product-modal-container').classList.remove('hidden');
@@ -1174,7 +1174,7 @@
             let current = addonsState[name] || 0;
             const newQty = current + delta;
             if (price === 0 && delta > 0 && newQty > 2) { Swal.fire({ toast: true, position: 'center', icon: 'warning', title: 'Máximo de 2 unidades para itens grátis!', showConfirmButton: false, timer: 2000 }); return; }
-            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById(\`addon-qty-\${idx}\`).innerText = addonsState[name]; updateModalTotal(); }
+            if(newQty >= 0) { addonsState[name] = newQty; document.getElementById(`addon-qty-${idx}`).innerText = addonsState[name]; updateModalTotal(); }
         }
 
         function updateModalTotal() {
@@ -1394,12 +1394,12 @@
             container.innerHTML = '';
             if(cart.length === 0) { container.innerHTML = '<p class="text-center text-gray-400 py-4">Sua sacola está vazia.</p>'; return; }
             cart.forEach((item, idx) => {
-                let addonsHtml = (item.addons || []).map(a => \`<span class="text-xs text-gray-500 block">+ \${a.qty}x \${a.name}</span>\`).join('');
-                container.innerHTML += \`
+                let addonsHtml = (item.addons || []).map(a => `<span class="text-xs text-gray-500 block">+ ${a.qty}x ${a.name}</span>`).join('');
+                container.innerHTML += `
                 <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
-                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">\${item.qty}x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">\${item.name}</span>\${addonsHtml}\${item.obs ? \`<span class="text-xs text-gray-400 italic">"\${item.obs}"</span>\` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">\${formatMoney(item.totalPrice)}</div></div></div>
-                    <button onclick="removeCartItem(\${idx})" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>
-                </div>\`;
+                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">${item.qty}x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">${item.name}</span>${addonsHtml}${item.obs ? `<span class="text-xs text-gray-400 italic">"${item.obs}"</span>` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">${formatMoney(item.totalPrice)}</div></div></div>
+                    <button onclick="removeCartItem(${idx})" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>
+                </div>`;
             });
             recalcTotal();
         }
@@ -1534,7 +1534,7 @@
             const payload = { valorTotal: total, nome: nomeCliente, whatsapp: zapCliente, cep: document.getElementById('cust-cep').value, rua: document.getElementById('cust-street').value, numero: document.getElementById('cust-number').value, bairro: document.getElementById('cust-hood').value, complemento: document.getElementById('cust-comp').value, products: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })), trackingParameters: getTrackingParams() };
             try {
                 if(window.fbq) fbq('track', 'AddPaymentInfo');
-                const response = await fetch(\`\${API_BASE_URL}/criar-pix\`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const response = await fetch(`${API_BASE_URL}/criar-pix`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await response.json();
                 if(data.success) {
                     localStorage.setItem('user_cache_nome', nomeCliente); localStorage.setItem('user_cache_zap', zapCliente);
@@ -1590,7 +1590,7 @@
             if (label) label.innerText = "Apenas hoje";
             if (texto) texto.innerHTML = "Valores promocionais válidos apenas nessa " + nomeDia + "!";
         });
-    <\/script>
+    </script>
 
     
 </body>
