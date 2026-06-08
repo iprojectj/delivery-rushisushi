@@ -742,7 +742,7 @@
                     if(street) street.value = "Buscando...";
                     if(hood) hood.value = "...";
 
-                    const preencherCampos = (logradouro, bairro) => {
+                    const preencherCampos = (logradouro, bairro, cidade, estado) => {
                         if(street) {
                             street.value = logradouro || "";
                             street.dispatchEvent(new Event('input', { bubbles: true }));
@@ -753,6 +753,9 @@
                             hood.dispatchEvent(new Event('input', { bubbles: true }));
                             hood.dispatchEvent(new Event('change', { bubbles: true }));
                         }
+                        if(cidade) localStorage.setItem('last_queried_city', cidade);
+                        if(estado) localStorage.setItem('last_queried_state', estado);
+
                         if(numberEl) {
                             setTimeout(() => numberEl.focus(), 200);
                         }
@@ -762,7 +765,7 @@
                         const response = await fetch(`https://viacep.com.br/ws/${val}/json/`);
                         const data = await response.json();
                         if (data && !data.erro) {
-                            preencherCampos(data.logradouro, data.bairro);
+                            preencherCampos(data.logradouro, data.bairro, data.localidade, data.uf);
                             return;
                         }
                     } catch (err) {}
@@ -771,7 +774,7 @@
                         const response = await fetch(`https://brasilapi.com.br/api/cep/v1/${val}`);
                         const data = await response.json();
                         if (data && data.cep) {
-                            preencherCampos(data.street, data.neighborhood);
+                            preencherCampos(data.street, data.neighborhood, data.city, data.state);
                             return;
                         }
                     } catch (err) {}
@@ -1519,8 +1522,8 @@
                         numero: document.getElementById('cust-number').value,
                         bairro: document.getElementById('cust-hood').value,
                         complemento: document.getElementById('cust-comp').value,
-                        cidade: localStorage.getItem('localCidade') || '',
-                        estado: localStorage.getItem('localEstado') || ''
+                        cidade: localStorage.getItem('last_queried_city') || localStorage.getItem('localCidade') || '',
+                        estado: localStorage.getItem('last_queried_state') || localStorage.getItem('localEstado') || ''
                     };
                     localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, endereco: enderecoEntrega, shippingType: shippingType, validity: new Date().getTime() + 600000 }));
                     
