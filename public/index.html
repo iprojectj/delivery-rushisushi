@@ -716,10 +716,14 @@
                 if(elCep) IMask(elCep, { mask: '00000-000' });
             }
 
-            elCep.addEventListener('input', async function() {
-                var val = this.value.replace(/D/g, '');
+            const handleCEP = async function() {
+                var rawValue = elCep.value || "";
+                var val = rawValue.replace(/\D/g, '');
                 
                 if (val.length === 8) {
+                    if (window.lastSearchedCEP === val) return;
+                    window.lastSearchedCEP = val;
+
                     var street = document.getElementById('cust-street');
                     var hood = document.getElementById('cust-hood');
                     var numberEl = document.getElementById('cust-number');
@@ -727,49 +731,49 @@
                     if(street) street.value = "Buscando...";
                     if(hood) hood.value = "...";
 
-                    try {
-                        let res1 = await fetch('https://brasilapi.com.br/api/cep/v1/' + val);
-                        if(res1.ok) {
-                            let d1 = await res1.json();
-                            if (d1 && d1.street) {
-                                if(street) street.value = d1.street;
-                                if(hood) hood.value = d1.neighborhood;
-                                if(numberEl) numberEl.focus(); 
-                                return;
-                            }
+                    const preencherCampos = (logradouro, bairro) => {
+                        if(street) {
+                            street.value = logradouro || "";
+                            street.dispatchEvent(new Event('input', { bubbles: true }));
+                            street.dispatchEvent(new Event('change', { bubbles: true }));
                         }
-                    } catch(e) {}
+                        if(hood) {
+                            hood.value = bairro || "";
+                            hood.dispatchEvent(new Event('input', { bubbles: true }));
+                            hood.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                        if(numberEl) {
+                            setTimeout(() => numberEl.focus(), 200);
+                        }
+                    };
 
                     try {
-                        let res2 = await fetch('https://viacep.com.br/ws/' + val + '/json/');
-                        if(res2.ok) {
-                            let d2 = await res2.json();
-                            if (d2 && !d2.erro) { 
-                                if(street) street.value = d2.logradouro; 
-                                if(hood) hood.value = d2.bairro; 
-                                if(numberEl) numberEl.focus();
-                                return;
-                            }
+                        const res = await fetch(`https://viacep.com.br/ws/${val}/json/`);
+                        const data = await res.json();
+                        if (data && !data.erro) {
+                            preencherCampos(data.logradouro, data.bairro);
+                            return;
                         }
-                    } catch(e) {}
-                    
-                    try {
-                        let res3 = await fetch('https://opencep.com/v1/' + val);
-                        if(res3.ok) {
-                            let d3 = await res3.json();
-                            if (d3 && !d3.error) {
-                                if(street) street.value = d3.logradouro || "";
-                                if(hood) hood.value = d3.bairro || "";
-                                if(numberEl) numberEl.focus();
-                                return;
-                            }
-                        }
-                    } catch(e) {}
+                    } catch (err) {}
 
-                    if(street) street.value = ""; 
-                    if(hood) hood.value = ""; 
+                    try {
+                        const res = await fetch(`https://brasilapi.com.br/api/cep/v1/${val}`);
+                        const data = await res.json();
+                        if (data && data.cep) {
+                            preencherCampos(data.street, data.neighborhood);
+                            return;
+                        }
+                    } catch (err) {}
+
+                    if(street && street.value === "Buscando...") street.value = ""; 
+                    if(hood && hood.value === "...") hood.value = ""; 
+                } else if (val.length < 8) {
+                    window.lastSearchedCEP = null;
                 }
-            });
+            };
+
+            elCep.addEventListener('input', handleCEP);
+            elCep.addEventListener('blur', handleCEP);
         }
 
         async function fetchLocation() {
