@@ -190,53 +190,56 @@
     <div class="px-4 mt-5">
       <div class="bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgb(0,0,0,0.03)] overflow-hidden">
         <!-- Parte Superior: Meta Solidária -->
-        <div class="bg-gradient-to-br from-blue-50/50 via-white to-orange-50/50 p-5 relative overflow-hidden">
-          <!-- Decoração suave -->
-          <div class="absolute -top-6 -right-6 w-24 h-24 bg-blue-100/30 rounded-full blur-2xl"></div>
-          <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-orange-100/30 rounded-full blur-2xl"></div>
+        <div class="bg-gradient-to-br from-white to-orange-50/30 p-5 relative overflow-hidden">
+          <!-- Elementos decorativos de fundo -->
+          <div class="absolute -top-4 -right-4 w-20 h-20 bg-orange-100/20 rounded-full blur-2xl"></div>
+          <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-red-100/20 rounded-full blur-xl"></div>
           
           <div class="flex flex-col relative z-10">
               <div class="flex justify-between items-start mb-4">
                   <div class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center shadow-sm">
-                          <i class="fa-solid fa-paw text-white text-lg"></i>
+                      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-500 flex items-center justify-center shadow-md shadow-orange-200/50">
+                          <i class="fa-solid fa-paw text-white text-xl"></i>
                       </div>
                       <div>
-                          <span class="block text-[10px] font-bold text-orange-600 uppercase tracking-wider mb-0.5">🐾 Oferta Solidária</span>
-                          <h4 class="text-sm font-bold text-gray-800 leading-tight">Meta Amigo de Patas</h4>
+                          <span class="block text-[10px] font-black text-orange-500 uppercase tracking-[0.15em] mb-0.5">🐾 Oferta Solidária</span>
+                          <h4 class="text-base font-black text-gray-800 leading-tight">Meta Amigo de Patas</h4>
                       </div>
                   </div>
                   <div class="flex flex-col items-end">
-                      <div class="flex items-center gap-1.5 bg-orange-100/50 px-2.5 py-1 rounded-lg border border-orange-200/30">
-                          <i class="fa-solid fa-hourglass-half text-orange-600 text-[10px] animate-pulse"></i>
-                          <span id="countdown-timer" class="text-[11px] font-bold text-orange-700 tabular-nums">00:00:00</span>
+                      <div class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full shadow-sm border border-orange-100">
+                          <i class="fa-solid fa-clock text-orange-500 text-[10px] animate-pulse"></i>
+                          <span id="countdown-timer" class="text-[12px] font-black text-orange-600 tabular-nums">00:00:00</span>
                       </div>
                   </div>
               </div>
 
-              <div class="bg-white/60 backdrop-blur-sm rounded-xl p-3 border border-gray-100/50 mb-4">
-                  <p class="text-[11px] text-gray-600 leading-relaxed">
-                      Cada pedido ajuda a bater nossa meta de doação para abrigos locais. <span class="text-orange-600 font-bold">Falta pouco!</span>
+              <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-3.5 border border-orange-50 mb-5 relative z-10">
+                  <p class="text-[12px] text-gray-700 leading-relaxed">
+                      Cada pedido aproxima nossa meta de ajudar os peludinhos. <span class="text-orange-600 font-black italic">A oferta expira quando a meta for atingida!</span>
                   </p>
               </div>
               
-              <!-- Barra de Meta Amigável -->
-              <div class="relative pt-1">
-                  <div class="flex items-center justify-between mb-2">
+              <!-- Barra de Meta Premium -->
+              <div class="relative z-10">
+                  <div class="flex items-center justify-between mb-2.5 px-0.5">
                       <div class="flex items-center gap-1.5">
-                          <i class="fa-solid fa-heart text-red-400 text-[10px]"></i>
-                          <span class="text-[10px] font-bold text-gray-500 uppercase tracking-tight">Progresso da Meta</span>
+                          <i class="fa-solid fa-fire-flame-curved text-orange-500 text-[10px] animate-bounce"></i>
+                          <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Estoque da Promoção</span>
                       </div>
                       <div class="flex items-center gap-1">
-                        <span id="stock-percentage" class="text-[11px] font-bold text-orange-600">94%</span>
-                        <span class="text-[9px] text-gray-400 font-medium">concluído</span>
+                        <span id="stock-percentage" class="text-[12px] font-black text-orange-600">94%</span>
+                        <span class="text-[9px] text-gray-400 font-bold uppercase tracking-tighter">concluído</span>
                       </div>
                   </div>
-                  <div class="w-full bg-gray-100 rounded-full h-2.5 p-0.5 border border-gray-200/30">
-                      <div id="stock-progress-bar" class="bg-gradient-to-r from-orange-400 via-orange-500 to-orange-400 h-full rounded-full transition-all duration-1000 ease-out shadow-sm relative overflow-hidden" style="width: 94%">
+                  <div class="w-full bg-gray-100 rounded-full h-4 p-1 shadow-inner border border-gray-100">
+                      <div id="stock-progress-bar" class="bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 h-full rounded-full transition-all duration-1000 ease-out shadow-sm relative overflow-hidden" style="width: 94%">
                           <!-- Brilho animado na barra -->
-                          <div class="absolute inset-0 bg-white/20 w-1/2 -skew-x-12 animate-[shimmer_2s_infinite]"></div>
+                          <div class="absolute inset-0 bg-white/30 w-1/3 -skew-x-[20deg] animate-[shimmer_2s_infinite]"></div>
                       </div>
+                  </div>
+                  <div class="mt-2.5 flex justify-center">
+                      <span class="text-[9px] font-bold text-gray-400 italic">🔥 Mais de 14 pessoas estão finalizando o pedido agora!</span>
                   </div>
               </div>
           </div>
