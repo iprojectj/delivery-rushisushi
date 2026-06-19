@@ -89,7 +89,11 @@
 
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f7f7f7; user-select: none; -webkit-user-select: none; }
+        body { font-family: 'Inter', sans-serif; background-color: #f7f7f7; user-select: none; -webkit-user-select: none; overscroll-behavior: none; overflow-x: hidden; }
+        @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+        .skeleton-bg { background: linear-gradient(90deg, #ececec 0px, #f7f7f7 200px, #ececec 400px); background-size: 800px 100%; animation: shimmer 1.4s linear infinite; }
+        #urgency-bar-fill { transition: width 1s linear, background-color 0.6s ease; }
+        .resumo-thumb { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #f3f4f6; }
         @keyframes pulse-red {
             0% { box-shadow: 0 0 0 0 rgba(234, 29, 44, 0.4); }
             70% { box-shadow: 0 0 0 8px rgba(234, 29, 44, 0); }
