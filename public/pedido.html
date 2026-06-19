@@ -44,7 +44,39 @@
         
     
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <style>
+      html, body { touch-action: pan-x pan-y; -ms-touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+      * { -webkit-touch-callout: none; }
+      input, textarea, select { font-size: 16px !important; } /* evita zoom no iOS ao focar */
+    </style>
+    <script>
+      (function(){
+        // Bloqueia pinch-zoom (gesture events do Safari)
+        ['gesturestart','gesturechange','gestureend'].forEach(function(ev){
+          document.addEventListener(ev, function(e){ e.preventDefault(); }, { passive:false });
+        });
+        // Bloqueia double-tap zoom no iOS
+        var lastTouch = 0;
+        document.addEventListener('touchend', function(e){
+          var now = Date.now();
+          if (now - lastTouch <= 350) { e.preventDefault(); }
+          lastTouch = now;
+        }, { passive:false });
+        // Bloqueia pinch com múltiplos toques
+        document.addEventListener('touchmove', function(e){
+          if (e.touches && e.touches.length > 1) { e.preventDefault(); }
+        }, { passive:false });
+        // Bloqueia zoom via Ctrl+scroll / Ctrl+/- no desktop
+        document.addEventListener('wheel', function(e){
+          if (e.ctrlKey) { e.preventDefault(); }
+        }, { passive:false });
+        document.addEventListener('keydown', function(e){
+          if ((e.ctrlKey || e.metaKey) && ['+','-','=','0'].indexOf(e.key) !== -1) { e.preventDefault(); }
+        });
+      })();
+    </script>
+
     <title>Pagamento Seguro | Rūshī Sushi</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
