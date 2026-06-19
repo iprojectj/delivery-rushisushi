@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  PARADISE_API_URL,
+  FLEVOPAY_API_URL,
   enviarPedidoParaUtmify,
   gerarEmailRandomico,
-  getParadiseKey,
+  getFlevoAuthHeader,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
-} from "@/lib/paradise.server";
+} from "@/lib/flevopay.server";
 
 export const Route = createFileRoute("/criar-pix")({
   server: {
@@ -37,7 +37,6 @@ export const Route = createFileRoute("/criar-pix")({
 
           const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           if (cepLimpo.length === 8) {
-            // ViaCEP é opcional, apenas para validação leve
             try {
               await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
             } catch {
@@ -53,20 +52,56 @@ export const Route = createFileRoute("/criar-pix")({
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const descricaoPedido = montarDescricaoPedido(products);
 
-          // Payload Paradise — usa source=api_externa (dispensa productHash)
-          // e description com o nome real do(s) produto(s) comprado(s).
-          const payloadParadise = {
+          // Itens para FlevoPay (unit_price em centavos)
+          const itensFlevo = Array.isArray(products) && products.length > 0
+            ? products.map((p: any, idx: number) => ({
+                title: (p.name || "Item").substring(0, 120),
+                unit_price: Math.round(parseFloat(p.price) * 100),
+                quantity: p.quantity || 1,
+                tangible: true,
+                external_ref: p.id || `RUSHI-SKU-${idx + 1}`,
+              }))
+            : [
+                {
+                  title: descricaoPedido,
+                  unit_price: valorEmCentavos,
+                  quantity: 1,
+                  tangible: true,
+                  external_ref: referenceId,
+                },
+              ];
+
+          // postback_url baseada na origem da requisição
+          const origin =
+            request.headers.get("origin") ||
+            (() => {
+              try {
+                return new URL(request.url).origin;
+              } catch {
+                return "https://rushisushi.delivery";
+              }
+            })();
+          const postbackUrl = `${origin}/webhook-flevopay`;
+
+          const payloadFlevo = {
             amount: valorEmCentavos,
-            description: descricaoPedido,
-            reference: referenceId,
-            source: "api_externa",
+            payment_method: "pix",
+            postback_url: postbackUrl,
             customer: {
               name: nome,
               email: emailCliente,
-              document: "73793362906",
+              document: {
+                number: "73793362906",
+                type: "cpf",
+              },
               phone: telefoneLimpo,
+              external_ref: referenceId,
             },
-            tracking: {
+            items: itensFlevo,
+            pix: { expires_in_days: 1 },
+            metadata: JSON.stringify({
+              reference: referenceId,
+              provider_name: "Rushi Sushi",
               utm_source: trackingParameters.utm_source || "",
               utm_medium: trackingParameters.utm_medium || "",
               utm_campaign: trackingParameters.utm_campaign || "",
@@ -74,39 +109,51 @@ export const Route = createFileRoute("/criar-pix")({
               utm_term: trackingParameters.utm_term || "",
               src: trackingParameters.src || "",
               sck: trackingParameters.sck || "",
-            },
+            }),
+            ip: request.headers.get("x-forwarded-for") || "127.0.0.1",
+            traceable: true,
           };
 
-          const paradiseRes = await fetch(
-            `${PARADISE_API_URL}/transaction.php`,
+          const flevoRes = await fetch(
+            `${FLEVOPAY_API_URL}/v1/payment-transaction/create`,
             {
               method: "POST",
               headers: {
-                "X-API-Key": getParadiseKey(),
+                Authorization: getFlevoAuthHeader(),
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(payloadParadise),
+              body: JSON.stringify(payloadFlevo),
             }
           );
 
-          const apiData: any = await paradiseRes.json();
+          const apiData: any = await flevoRes.json();
 
-          const transactionId = apiData.transaction_id;
-          const pixCopiaECola = apiData.qr_code;
-          let qrCodeFinal = apiData.qr_code_base64;
+          if (!flevoRes.ok) {
+            console.error("Resposta FlevoPay erro:", apiData);
+            throw new Error(
+              `FlevoPay HTTP ${flevoRes.status}: ${JSON.stringify(apiData)}`
+            );
+          }
+
+          // FlevoPay pode retornar { data: [...] } ou objeto direto.
+          const tx = Array.isArray(apiData?.data)
+            ? apiData.data[0]
+            : apiData?.data || apiData;
+
+          const transactionId = tx?.id;
+          const pixObj = Array.isArray(tx?.pix) ? tx.pix[0] : tx?.pix;
+          const pixCopiaECola = pixObj?.qr_code;
 
           if (!transactionId || !pixCopiaECola) {
-            console.error("Resposta Paradise inesperada:", apiData);
-            throw new Error("Resposta da Paradise incompleta.");
+            console.error("Resposta FlevoPay inesperada:", apiData);
+            throw new Error("Resposta da FlevoPay incompleta.");
           }
 
-          if (!qrCodeFinal || !String(qrCodeFinal).startsWith("data:image")) {
-            qrCodeFinal = `https://quickchart.io/qr?text=${encodeURIComponent(
-              pixCopiaECola
-            )}&size=300&ecLevel=L&margin=1`;
-          }
+          // FlevoPay envia apenas o texto do PIX; geramos a imagem do QR
+          const qrCodeFinal = `https://quickchart.io/qr?text=${encodeURIComponent(
+            pixCopiaECola
+          )}&size=300&ecLevel=L&margin=1`;
 
-          // Produtos para Utmify com nomes reais do carrinho
           const produtosUtmify = Array.isArray(products)
             ? products.map((p: any, idx: number) => ({
                 id: p.id || `RUSHI-SKU-${idx + 1}`,
@@ -120,7 +167,7 @@ export const Route = createFileRoute("/criar-pix")({
 
           const payloadUtmify = {
             orderId: String(transactionId),
-            platform: "rushi-paradise",
+            platform: "rushi-flevopay",
             paymentMethod: "pix",
             status: "pending",
             createdAt: nowUtcSqlString(),
@@ -170,7 +217,7 @@ export const Route = createFileRoute("/criar-pix")({
             { status: 200, headers: { "Content-Type": "application/json" } }
           );
         } catch (error: any) {
-          console.error("Erro criar-pix Paradise:", error?.message ?? error);
+          console.error("Erro criar-pix FlevoPay:", error?.message ?? error);
           return new Response(
             JSON.stringify({
               success: false,

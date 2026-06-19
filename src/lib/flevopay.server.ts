@@ -1,15 +1,38 @@
-// Configuração compartilhada da Paradise + Utmify e store em memória de pedidos
-// pendentes. Bom o bastante para a janela curta entre criação do PIX e webhook.
+// Configuração da FlevoPay + Utmify e store em memória de pedidos pendentes.
+// Documentação: https://flevopay.readme.io/reference/introdu%C3%A7%C3%A3o
 
-export const PARADISE_API_URL = "https://multi.paradisepags.com/api/v1";
+export const FLEVOPAY_API_URL = "https://api.flevopay.com";
 export const UTMIFY_API_URL =
   "https://api.utmify.com.br/api-credentials/orders";
 
-export function getParadiseKey() {
+export function getFlevoPublicKey() {
   return (
-    process.env.PARADISE_SECRET_KEY ||
-    "sk_786bdaeb9a5c572a3e54b82a51b6462eb637f216822e12c11bcdf3c24dc066ce"
+    process.env.FLEVOPAY_PUBLIC_KEY ||
+    "flevopay_live_Qcdafra0guJhYJr2YS1y9IkFrcUbNR5z"
   );
+}
+
+export function getFlevoSecretKey() {
+  return (
+    process.env.FLEVOPAY_SECRET_KEY ||
+    "sk_live_nf6gCoRH0KFUpcVNm07iadPboIKQ3yu7"
+  );
+}
+
+export function getFlevoCompanyId() {
+  return (
+    process.env.FLEVOPAY_COMPANY_ID || "2263cc49a86a4df8927f88eaf0d500be"
+  );
+}
+
+export function getFlevoAuthHeader() {
+  const raw = `${getFlevoPublicKey()}:${getFlevoSecretKey()}`;
+  // btoa funciona no runtime do Worker
+  const b64 =
+    typeof Buffer !== "undefined"
+      ? Buffer.from(raw).toString("base64")
+      : btoa(raw);
+  return `Basic ${b64}`;
 }
 
 export function getUtmifyToken() {
@@ -47,7 +70,10 @@ export async function enviarPedidoParaUtmify(payload: any) {
       );
     } else {
       const result = await res.json().catch(() => ({}));
-      console.log(`[UTMIFY] Pedido ${payload.orderId} enviado com sucesso. Resposta:`, JSON.stringify(result));
+      console.log(
+        `[UTMIFY] Pedido ${payload.orderId} enviado com sucesso. Resposta:`,
+        JSON.stringify(result)
+      );
     }
   } catch (error: any) {
     console.error(
@@ -61,15 +87,12 @@ export function nowUtcSqlString() {
   return new Date().toISOString().replace("T", " ").substring(0, 19);
 }
 
-// Gera email aleatório para evitar duplicidade entre pedidos
 export function gerarEmailRandomico(prefixo = "cliente") {
   return `${prefixo}.${Date.now()}.${Math.floor(
     Math.random() * 9999
   )}@rushisushi.site`;
 }
 
-// Monta uma descrição curta a partir dos produtos do carrinho.
-// Ex.: "Combo Salmão (x2), Hot Roll (x1) + 1 item"
 export function montarDescricaoPedido(
   products: Array<{ name: string; quantity: number }> | undefined
 ): string {
@@ -86,6 +109,5 @@ export function montarDescricaoPedido(
   const restantes = products.length - 2;
   let desc = principais.join(", ");
   if (restantes > 0) desc += ` + ${restantes} item${restantes > 1 ? "s" : ""}`;
-  // Paradise aceita string; mantemos limite razoável
   return desc.length > 180 ? desc.substring(0, 177) + "..." : desc;
 }
