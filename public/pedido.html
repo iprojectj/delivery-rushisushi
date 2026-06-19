@@ -648,12 +648,17 @@
                     
                     const itemPrice = item.totalPrice || item.price || item.valor || 0;
                     
+                    const imgSrc = item.img || item.image || '';
+                    const imgHtml = imgSrc ? `<img src="${imgSrc}" alt="${item.name}" class="resumo-thumb" onerror="this.style.display='none'">` : '';
                     itemsHtml += `
-                        <div class="flex justify-between items-start border-b border-gray-100 pb-2 last:border-0">
-                            <div class="flex gap-2">
-                                <span class="font-bold text-gray-400 text-xs mt-0.5">${item.qty}x</span>
-                                <div>
-                                    <span class="text-[#3e3e3e] font-medium text-xs block">${item.name}</span>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0 gap-2">
+                            <div class="flex items-center gap-2 min-w-0">
+                                ${imgHtml}
+                                <div class="min-w-0">
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="font-bold text-gray-400 text-xs">${item.qty}x</span>
+                                        <span class="text-[#3e3e3e] font-medium text-xs truncate">${item.name}</span>
+                                    </div>
                                     ${addonsText}
                                 </div>
                             </div>
