@@ -148,9 +148,13 @@
                 <h1 class="text-xl font-bold text-[#3e3e3e] mb-1">Aguardando Pagamento</h1>
                 <p class="text-sm text-gray-500 mb-5">Escaneie o QR Code para liberar seu pedido</p>
                 
-                <div class="inline-flex items-center gap-2 bg-[#fff0f1] border border-red-100 text-[#EA1D2C] px-4 py-2 rounded-full text-sm font-bold timer-pulse shadow-sm mb-6">
+                <div class="inline-flex items-center gap-2 bg-[#fff0f1] border border-red-100 text-[#EA1D2C] px-4 py-2 rounded-full text-sm font-bold timer-pulse shadow-sm mb-3">
                     <i class="fa-regular fa-clock"></i> Expira em <span id="pix-timer">5:00</span>
                 </div>
+                <div class="w-full max-w-[260px] mx-auto h-1.5 bg-gray-100 rounded-full overflow-hidden mb-5">
+                    <div id="urgency-bar-fill" class="h-full bg-[#05a65a] rounded-full" style="width:100%"></div>
+                </div>
+                <p id="urgency-msg" class="text-[11px] text-gray-400 -mt-3 mb-5">Seu pedido será cancelado quando o tempo zerar.</p>
 
                 <div class="bg-white p-2 rounded-xl border border-gray-200 mb-5 flex flex-col items-center relative shadow-sm">
                     <img id="qr-image" src="" class="w-56 h-56 object-contain opacity-50 transition-opacity duration-500">
