@@ -3,23 +3,25 @@ import {
   enviarPedidoParaUtmify,
   nowUtcSqlString,
   pendingOrders,
-} from "@/lib/paradise.server";
+} from "@/lib/flevopay.server";
 
-export const Route = createFileRoute("/webhook-paradise")({
+export const Route = createFileRoute("/webhook-flevopay")({
   server: {
     handlers: {
       POST: async ({ request }) => {
         try {
           const evento: any = await request.json();
           console.log(
-            "🔔 Webhook Paradise Recebido:",
+            "🔔 Webhook FlevoPay Recebido:",
             JSON.stringify(evento, null, 2)
           );
 
-          const status = evento.status;
-          const transactionId = evento.transaction_id;
+          const status = String(
+            evento.Status ?? evento.status ?? ""
+          ).toUpperCase();
+          const transactionId = evento.Id ?? evento.id;
 
-          if (status === "approved") {
+          if (status === "PAID" && transactionId) {
             console.log(`✅ Pagamento APROVADO ID: ${transactionId}`);
             const pedidoPendente = pendingOrders[transactionId];
             if (pedidoPendente) {
@@ -35,7 +37,7 @@ export const Route = createFileRoute("/webhook-paradise")({
           }
           return new Response("ok", { status: 200 });
         } catch (e: any) {
-          console.error("Erro webhook Paradise:", e?.message ?? e);
+          console.error("Erro webhook FlevoPay:", e?.message ?? e);
           return new Response("error", { status: 500 });
         }
       },
