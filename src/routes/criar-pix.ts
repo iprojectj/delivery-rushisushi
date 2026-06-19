@@ -99,7 +99,7 @@ export const Route = createFileRoute("/criar-pix")({
             },
             items: itensFlevo,
             pix: { expires_in_days: 1 },
-            metadata: JSON.stringify({
+            metadata: {
               reference: referenceId,
               provider_name: "Rushi Sushi",
               utm_source: trackingParameters.utm_source || "",
@@ -109,7 +109,7 @@ export const Route = createFileRoute("/criar-pix")({
               utm_term: trackingParameters.utm_term || "",
               src: trackingParameters.src || "",
               sck: trackingParameters.sck || "",
-            }),
+            },
             ip: request.headers.get("x-forwarded-for") || "127.0.0.1",
             traceable: true,
           };
