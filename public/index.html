@@ -1652,5 +1652,43 @@
             if (label) label.innerText = "Apenas hoje";
             if (texto) texto.innerHTML = "Valores promocionais válidos apenas nessa " + nomeDia + "!";
         });
+
+        // 🔔 LIVE SOCIAL PROOF TOAST
+        (function initSocialProof(){
+            const nomes = [
+                'Mariana de Pinheiros','Lucas do Tatuapé','Beatriz da Mooca','Rafael de Santana',
+                'Camila do Ipiranga','Pedro da Vila Mariana','Juliana de Perdizes','Thiago do Brooklin',
+                'Larissa do Bixiga','Gustavo da Lapa','Fernanda de Moema','Bruno de Pinheiros',
+                'Aline do Jardins','Felipe do Itaim','Carolina da Vila Madalena','Diego do Morumbi',
+                'Patrícia da Aclimação','Renato do Tatuapé','Vanessa do Belém','Marcos da Saúde'
+            ];
+            const produtos = [
+                'Combo Tsuki (56 peças)','Combo Fujin (24 peças)','Combo Kaen (24 peças)',
+                'Combo Haki (120 peças)','Combo Kamusari (68 peças)','Yakisoba Especial',
+                'Hot Roll Camarão','Temaki de Salmão','Joe de Salmão'
+            ];
+            const tempos = ['agora há pouco','há 1 minuto','há 2 minutos','há 4 minutos','há 6 minutos','há 8 minutos'];
+
+            const toast = document.createElement('div');
+            toast.id = 'social-proof-toast';
+            toast.innerHTML = '<div class="sp-avatar"></div><div class="sp-text"></div>';
+            document.body.appendChild(toast);
+            const avatar = toast.querySelector('.sp-avatar');
+            const text   = toast.querySelector('.sp-text');
+
+            function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+            function showOne(){
+                if (document.hidden) return;
+                const nome = pick(nomes);
+                const produto = pick(produtos);
+                const tempo = pick(tempos);
+                avatar.textContent = nome.charAt(0).toUpperCase();
+                text.innerHTML = '<strong>'+nome+'</strong> acabou de pedir<br><span style="color:#EA1D2C;font-weight:600;">'+produto+'</span> <small>'+tempo+' • pedido confirmado ✓</small>';
+                toast.classList.add('visible');
+                setTimeout(()=> toast.classList.remove('visible'), 5000);
+            }
+            setTimeout(showOne, 8000);
+            setInterval(showOne, 18000);
+        })();
     </script>
 </body></html>
