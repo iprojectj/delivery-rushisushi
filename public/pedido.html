@@ -341,6 +341,7 @@
                     const originalText = btnCopy.innerHTML;
                     btnCopy.innerHTML = 'Copiado!';
                     btnCopy.style.backgroundColor = "#05a65a";
+                    try { if(navigator.vibrate) navigator.vibrate([15, 40, 15]); } catch(_){}
                     
                     setTimeout(() => {
                         btnCopy.innerHTML = originalText;
