@@ -89,7 +89,11 @@
 
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f7f7f7; user-select: none; -webkit-user-select: none; }
+        body { font-family: 'Inter', sans-serif; background-color: #f7f7f7; user-select: none; -webkit-user-select: none; overscroll-behavior: none; overflow-x: hidden; }
+        @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+        .skeleton-bg { background: linear-gradient(90deg, #ececec 0px, #f7f7f7 200px, #ececec 400px); background-size: 800px 100%; animation: shimmer 1.4s linear infinite; }
+        #urgency-bar-fill { transition: width 1s linear, background-color 0.6s ease; }
+        .resumo-thumb { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #f3f4f6; }
         @keyframes pulse-red {
             0% { box-shadow: 0 0 0 0 rgba(234, 29, 44, 0.4); }
             70% { box-shadow: 0 0 0 8px rgba(234, 29, 44, 0); }
@@ -144,13 +148,17 @@
                 <h1 class="text-xl font-bold text-[#3e3e3e] mb-1">Aguardando Pagamento</h1>
                 <p class="text-sm text-gray-500 mb-5">Escaneie o QR Code para liberar seu pedido</p>
                 
-                <div class="inline-flex items-center gap-2 bg-[#fff0f1] border border-red-100 text-[#EA1D2C] px-4 py-2 rounded-full text-sm font-bold timer-pulse shadow-sm mb-6">
+                <div class="inline-flex items-center gap-2 bg-[#fff0f1] border border-red-100 text-[#EA1D2C] px-4 py-2 rounded-full text-sm font-bold timer-pulse shadow-sm mb-3">
                     <i class="fa-regular fa-clock"></i> Expira em <span id="pix-timer">5:00</span>
                 </div>
+                <div class="w-full max-w-[260px] mx-auto h-1.5 bg-gray-100 rounded-full overflow-hidden mb-5">
+                    <div id="urgency-bar-fill" class="h-full bg-[#05a65a] rounded-full" style="width:100%"></div>
+                </div>
+                <p id="urgency-msg" class="text-[11px] text-gray-400 -mt-3 mb-5">Seu pedido será cancelado quando o tempo zerar.</p>
 
                 <div class="bg-white p-2 rounded-xl border border-gray-200 mb-5 flex flex-col items-center relative shadow-sm">
                     <img id="qr-image" src="" class="w-56 h-56 object-contain opacity-50 transition-opacity duration-500">
-                    <div id="qr-loading" class="absolute inset-0 flex flex-col items-center justify-center bg-white/95 rounded-xl">
+                    <div id="qr-loading" class="absolute inset-0 flex flex-col items-center justify-center rounded-xl skeleton-bg">
                         <div class="w-8 h-8 border-4 border-[#EA1D2C] border-t-transparent rounded-full animate-spin mb-2"></div>
                         <span class="text-xs text-gray-500 font-medium">Gerando Código...</span>
                     </div>
@@ -209,7 +217,7 @@
                 </span>
             </div>
             <div id="delivery-map" class="w-full h-48 bg-gray-100 relative">
-                <div id="map-loading" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-[400]">
+                <div id="map-loading" class="absolute inset-0 flex flex-col items-center justify-center skeleton-bg z-[400]">
                     <div class="w-6 h-6 border-3 border-[#EA1D2C] border-t-transparent rounded-full animate-spin mb-2"></div>
                     <span class="text-[11px] text-gray-500 font-medium">Localizando endereço...</span>
                 </div>
@@ -333,6 +341,7 @@
                     const originalText = btnCopy.innerHTML;
                     btnCopy.innerHTML = 'Copiado!';
                     btnCopy.style.backgroundColor = "#05a65a";
+                    try { if(navigator.vibrate) navigator.vibrate([15, 40, 15]); } catch(_){}
                     
                     setTimeout(() => {
                         btnCopy.innerHTML = originalText;
@@ -517,11 +526,16 @@
         function startTimer() {
             const timerEl = document.getElementById('pix-timer');
             if(!timerEl) return;
-            
+            const totalTime = timeLeft;
+            const barFill = document.getElementById('urgency-bar-fill');
+            const urgencyMsg = document.getElementById('urgency-msg');
+
             const interval = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(interval);
                     timerEl.innerText = "EXPIRADO";
+                    if(barFill) { barFill.style.width = '0%'; barFill.style.backgroundColor = '#9ca3af'; }
+                    if(urgencyMsg) urgencyMsg.innerText = 'Pedido cancelado por inatividade.';
                     const card = document.getElementById('payment-card');
                     if(card) card.classList.add('opacity-50', 'pointer-events-none');
                     return;
@@ -530,6 +544,16 @@
                 const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
                 const s = (timeLeft % 60).toString().padStart(2, '0');
                 timerEl.innerText = `${m}:${s}`;
+                if (barFill) {
+                    const pct = Math.max(0, (timeLeft / totalTime) * 100);
+                    barFill.style.width = pct + '%';
+                    if (pct > 50)      barFill.style.backgroundColor = '#05a65a';
+                    else if (pct > 20) barFill.style.backgroundColor = '#f59e0b';
+                    else               barFill.style.backgroundColor = '#EA1D2C';
+                }
+                if (urgencyMsg && timeLeft === 60) {
+                    urgencyMsg.innerHTML = '<strong class="text-[#EA1D2C]">Atenção:</strong> menos de 1 minuto para confirmar o pagamento.';
+                }
             }, 1000);
         }
 
@@ -624,12 +648,17 @@
                     
                     const itemPrice = item.totalPrice || item.price || item.valor || 0;
                     
+                    const imgSrc = item.img || item.image || '';
+                    const imgHtml = imgSrc ? `<img src="${imgSrc}" alt="${item.name}" class="resumo-thumb" onerror="this.style.display='none'">` : '';
                     itemsHtml += `
-                        <div class="flex justify-between items-start border-b border-gray-100 pb-2 last:border-0">
-                            <div class="flex gap-2">
-                                <span class="font-bold text-gray-400 text-xs mt-0.5">${item.qty}x</span>
-                                <div>
-                                    <span class="text-[#3e3e3e] font-medium text-xs block">${item.name}</span>
+                        <div class="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0 gap-2">
+                            <div class="flex items-center gap-2 min-w-0">
+                                ${imgHtml}
+                                <div class="min-w-0">
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="font-bold text-gray-400 text-xs">${item.qty}x</span>
+                                        <span class="text-[#3e3e3e] font-medium text-xs truncate">${item.name}</span>
+                                    </div>
                                     ${addonsText}
                                 </div>
                             </div>
