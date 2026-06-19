@@ -122,6 +122,16 @@
         @keyframes pulse-premium { 0% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } 50% { transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234, 29, 44, 0.4); border-color: #EA1D2C; } 100% { transform: scale(1); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); } }
         .card-destaque-master { animation: pulse-premium 2s infinite ease-in-out; border: 1px solid #ffe4e6 !important; background: linear-gradient(to bottom right, #fff, #fff1f2); }
         @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        /* Social proof toast */
+        #social-proof-toast { position: fixed; left: 12px; bottom: 16px; z-index: 70; max-width: 92vw; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 10px 25px -10px rgba(0,0,0,0.18); padding: 10px 12px; display: flex; align-items: center; gap: 10px; transform: translateY(140%); opacity: 0; transition: transform .4s ease, opacity .4s ease; pointer-events: none; }
+        #social-proof-toast.visible { transform: translateY(0); opacity: 1; }
+        #social-proof-toast .sp-avatar { width: 34px; height: 34px; border-radius: 50%; background: #fff0f1; color: #EA1D2C; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; flex-shrink: 0; border: 1px solid #ffe4e6; }
+        #social-proof-toast .sp-text { font-size: 12px; line-height: 1.2; color: #3e3e3e; }
+        #social-proof-toast .sp-text strong { font-weight: 700; }
+        #social-proof-toast .sp-text small { color: #9ca3af; font-size: 10px; display: block; margin-top: 2px; }
+        @media (min-width: 1024px) { #social-proof-toast { left: 24px; bottom: 24px; } }
+        /* Bag thumb */
+        .bag-thumb { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #f3f4f6; }
     </style>
     <script>
     (function(){
