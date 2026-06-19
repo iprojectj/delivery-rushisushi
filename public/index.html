@@ -1451,10 +1451,12 @@
             if(cart.length === 0) { container.innerHTML = '<p class="text-center text-gray-400 py-4">Sua sacola está vazia.</p>'; return; }
             cart.forEach((item, idx) => {
                 let addonsHtml = (item.addons || []).map(a => `<span class="text-xs text-gray-500 block">+ ${a.qty}x ${a.name}</span>`).join('');
+                const imgSrc = item.img || '';
+                const imgHtml = imgSrc ? `<img src="${imgSrc}" alt="${item.name}" class="bag-thumb" onerror="this.style.display='none'">` : '';
                 container.innerHTML += `
                 <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
-                    <div class="flex gap-3"><span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">${item.qty}x</span><div><span class="text-[#3e3e3e] font-medium text-sm block">${item.name}</span>${addonsHtml}${item.obs ? `<span class="text-xs text-gray-400 italic">"${item.obs}"</span>` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">${formatMoney(item.totalPrice)}</div></div></div>
-                    <button onclick="removeCartItem(${idx})" class="text-gray-400 text-sm"><i class="fa-solid fa-trash-can"></i></button>
+                    <div class="flex gap-3 min-w-0">${imgHtml}<span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">${item.qty}x</span><div class="min-w-0"><span class="text-[#3e3e3e] font-medium text-sm block">${item.name}</span>${addonsHtml}${item.obs ? `<span class="text-xs text-gray-400 italic">"${item.obs}"</span>` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">${formatMoney(item.totalPrice)}</div></div></div>
+                    <button onclick="removeCartItem(${idx})" class="text-gray-400 text-sm shrink-0 ml-2"><i class="fa-solid fa-trash-can"></i></button>
                 </div>`;
             });
             recalcTotal();
