@@ -823,6 +823,18 @@
 
             elCep.addEventListener('input', handleCEP);
             elCep.addEventListener('blur', handleCEP);
+
+            // Auto-focus jump: number -> complement
+            var elNum = document.getElementById('cust-number');
+            var elComp = document.getElementById('cust-comp');
+            if (elNum && elComp && !elNum.dataset.autojump) {
+                elNum.dataset.autojump = '1';
+                elNum.addEventListener('blur', function(){
+                    if (elNum.value.trim().length > 0) {
+                        setTimeout(function(){ elComp.focus(); }, 100);
+                    }
+                });
+            }
         }
 
         async function fetchLocation() {
