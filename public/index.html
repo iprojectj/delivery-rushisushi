@@ -155,6 +155,23 @@
 </head>
 <body class="pb-24 bg-white" id="main-body">
 
+    <style>
+        #copa-ribbon { position: relative; z-index: 60; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 36px 6px 12px; font-size: 12px; font-weight: 700; color: #fff; letter-spacing: .2px; background: linear-gradient(90deg, #009C3B 0%, #009C3B 33%, #FFDF00 33%, #FFDF00 66%, #002776 66%, #002776 100%); text-shadow: 0 1px 2px rgba(0,0,0,.35); overflow: hidden; }
+        #copa-ribbon .copa-msg { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; animation: copaSlide 18s linear infinite; }
+        #copa-ribbon .copa-ball { display: inline-block; animation: copaSpin 2.4s linear infinite; }
+        #copa-ribbon .copa-close { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.18); color: #fff; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; line-height: 1; cursor: pointer; border: 0; }
+        #copa-ribbon .copa-close:hover { background: rgba(0,0,0,.32); }
+        @keyframes copaSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes copaSlide { 0%,8% { transform: translateX(0); } 50%,58% { transform: translateX(0); } 100% { transform: translateX(0); } }
+    </style>
+    <div id="copa-ribbon" role="banner" aria-label="Torcida pelo Brasil">
+        <span class="copa-msg"><span class="copa-ball">⚽</span> Vai, Brasil! 🇧🇷 Em dia de jogo, seu japa chega antes do apito final</span>
+        <button class="copa-close" aria-label="Fechar" onclick="(function(){document.getElementById('copa-ribbon').style.display='none';try{localStorage.setItem('copaRibbonClosed','1');}catch(e){}})()">×</button>
+    </div>
+    <script>(function(){try{if(localStorage.getItem('copaRibbonClosed')==='1'){var r=document.getElementById('copa-ribbon');if(r)r.style.display='none';}}catch(e){}})();</script>
+
+
+
     <div id="app-loader" class="fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500">
         <div class="w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center">
             <img src="images/ifood-white.webp" class="w-full object-contain">
