@@ -526,11 +526,16 @@
         function startTimer() {
             const timerEl = document.getElementById('pix-timer');
             if(!timerEl) return;
-            
+            const totalTime = timeLeft;
+            const barFill = document.getElementById('urgency-bar-fill');
+            const urgencyMsg = document.getElementById('urgency-msg');
+
             const interval = setInterval(() => {
                 if (timeLeft <= 0) {
                     clearInterval(interval);
                     timerEl.innerText = "EXPIRADO";
+                    if(barFill) { barFill.style.width = '0%'; barFill.style.backgroundColor = '#9ca3af'; }
+                    if(urgencyMsg) urgencyMsg.innerText = 'Pedido cancelado por inatividade.';
                     const card = document.getElementById('payment-card');
                     if(card) card.classList.add('opacity-50', 'pointer-events-none');
                     return;
@@ -539,6 +544,16 @@
                 const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
                 const s = (timeLeft % 60).toString().padStart(2, '0');
                 timerEl.innerText = `${m}:${s}`;
+                if (barFill) {
+                    const pct = Math.max(0, (timeLeft / totalTime) * 100);
+                    barFill.style.width = pct + '%';
+                    if (pct > 50)      barFill.style.backgroundColor = '#05a65a';
+                    else if (pct > 20) barFill.style.backgroundColor = '#f59e0b';
+                    else               barFill.style.backgroundColor = '#EA1D2C';
+                }
+                if (urgencyMsg && timeLeft === 60) {
+                    urgencyMsg.innerHTML = '<strong class="text-[#EA1D2C]">Atenção:</strong> menos de 1 minuto para confirmar o pagamento.';
+                }
             }, 1000);
         }
 
