@@ -1550,6 +1550,9 @@
             if(footEl) footEl.innerText = formatMoney(total);
         }
 
+        // Haptic helper
+        window.haptic = function(pattern){ try{ if(navigator.vibrate) navigator.vibrate(pattern || 20); }catch(_){ } };
+
         // 🔥 LÓGICA DO ORDER BUMP
         window.submitOrder = function() {
                     const name = document.getElementById('cust-name').value;
@@ -1557,10 +1560,11 @@
                     const rua = document.getElementById('cust-street').value;
                     const num = document.getElementById('cust-number').value;
                     if(!name || !cep || !rua || !num) { 
+                        window.haptic([30,40,30]);
                         Swal.fire({ toast: true, position: 'top', icon: 'warning', title: 'Preencha os dados de entrega!', showConfirmButton: false, timer: 3000 }); 
                         return; 
                     }
-                    
+                    window.haptic(25);
                     // Fluxo direto para finalização sem oferta de interrupção
                     setBagStep(3); 
                     setTimeout(() => sendToAPI(), 2000);
