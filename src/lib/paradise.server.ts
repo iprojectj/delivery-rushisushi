@@ -1,38 +1,19 @@
-// Configuração da FlevoPay + Utmify e store em memória de pedidos pendentes.
-// Documentação: https://flevopay.readme.io/reference/introdu%C3%A7%C3%A3o
+// Paradise Pagamentos + Utmify helpers.
+// Docs: https://multi.paradisepags.com/documentation
 
-export const FLEVOPAY_API_URL = "https://api.flevopay.com";
+export const PARADISE_API_URL = "https://multi.paradisepags.com";
 export const UTMIFY_API_URL =
   "https://api.utmify.com.br/api-credentials/orders";
 
-export function getFlevoPublicKey() {
+export function getParadiseSecretKey() {
   return (
-    process.env.FLEVOPAY_PUBLIC_KEY ||
-    "flevopay_live_Qcdafra0guJhYJr2YS1y9IkFrcUbNR5z"
+    process.env.PARADISE_SECRET_KEY ||
+    "sk_786bdaeb9a5c572a3e54b82a51b6462eb637f216822e12c11bcdf3c24dc066ce"
   );
 }
 
-export function getFlevoSecretKey() {
-  return (
-    process.env.FLEVOPAY_SECRET_KEY ||
-    "sk_live_nf6gCoRH0KFUpcVNm07iadPboIKQ3yu7"
-  );
-}
-
-export function getFlevoCompanyId() {
-  return (
-    process.env.FLEVOPAY_COMPANY_ID || "2263cc49a86a4df8927f88eaf0d500be"
-  );
-}
-
-export function getFlevoAuthHeader() {
-  const raw = `${getFlevoPublicKey()}:${getFlevoSecretKey()}`;
-  // btoa funciona no runtime do Worker
-  const b64 =
-    typeof Buffer !== "undefined"
-      ? Buffer.from(raw).toString("base64")
-      : btoa(raw);
-  return `Basic ${b64}`;
+export function getParadiseAccountId() {
+  return process.env.PARADISE_ACCOUNT_ID || "4838";
 }
 
 export function getUtmifyToken() {
