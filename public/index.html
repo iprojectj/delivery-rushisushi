@@ -856,7 +856,7 @@
                         if (!estado) return "SP";
                         if (estado.length === 2) return estado.toUpperCase();
                         
-                        const normalizado = estado.normalize("NFD").replace(/[u0300-u036f]/g, "").toLowerCase();
+                        const normalizado = estado.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
                         const mapa = {
                               "acre": "AC", "alagoas": "AL", "amapa": "AP", "amazonas": "AM",
                               "bahia": "BA", "ceara": "CE", "distrito federal": "DF", "espirito santo": "ES",
