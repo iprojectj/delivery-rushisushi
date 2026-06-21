@@ -68,6 +68,7 @@ export const Route = createFileRoute("/criar-pix")({
             description: descricaoPedido,
             reference: referenceId,
             source: "api_externa",
+            productHash: "prod_d9f9e0dcba8c763c",
             postback_url: postbackUrl,
             customer: {
               name: nome,
