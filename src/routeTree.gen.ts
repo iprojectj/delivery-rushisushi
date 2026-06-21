@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WebhookParadiseRouteImport } from './routes/webhook-paradise'
 import { Route as PedidoRouteImport } from './routes/pedido'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as CriarPixRouteImport } from './routes/criar-pix'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
 
+const WebhookParadiseRoute = WebhookParadiseRouteImport.update({
+  id: '/webhook-paradise',
+  path: '/webhook-paradise',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PedidoRoute = PedidoRouteImport.update({
   id: '/pedido',
   path: '/pedido',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
+  '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
+  '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
 export interface FileRoutesById {
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
+  '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
 export interface FileRouteTypes {
@@ -70,15 +79,23 @@ export interface FileRouteTypes {
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
+    | '/webhook-paradise'
     | '/verificar-status/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/criar-pix' | '/obrigado' | '/pedido' | '/verificar-status/$id'
+  to:
+    | '/'
+    | '/criar-pix'
+    | '/obrigado'
+    | '/pedido'
+    | '/webhook-paradise'
+    | '/verificar-status/$id'
   id:
     | '__root__'
     | '/'
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
+    | '/webhook-paradise'
     | '/verificar-status/$id'
   fileRoutesById: FileRoutesById
 }
@@ -87,11 +104,19 @@ export interface RootRouteChildren {
   CriarPixRoute: typeof CriarPixRoute
   ObrigadoRoute: typeof ObrigadoRoute
   PedidoRoute: typeof PedidoRoute
+  WebhookParadiseRoute: typeof WebhookParadiseRoute
   VerificarStatusIdRoute: typeof VerificarStatusIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/webhook-paradise': {
+      id: '/webhook-paradise'
+      path: '/webhook-paradise'
+      fullPath: '/webhook-paradise'
+      preLoaderRoute: typeof WebhookParadiseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pedido': {
       id: '/pedido'
       path: '/pedido'
@@ -135,18 +160,9 @@ const rootRouteChildren: RootRouteChildren = {
   CriarPixRoute: CriarPixRoute,
   ObrigadoRoute: ObrigadoRoute,
   PedidoRoute: PedidoRoute,
+  WebhookParadiseRoute: WebhookParadiseRoute,
   VerificarStatusIdRoute: VerificarStatusIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
