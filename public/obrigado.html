@@ -143,9 +143,25 @@
                     <div class="tl-conn"><span class="tl-conn-fill" data-conn="2"></span></div>
                     <div class="tl-node" data-step="3"><div class="tl-icon"><i class="fa-solid fa-motorcycle"></i></div><div class="tl-label">A caminho</div></div>
                     <div class="tl-conn"><span class="tl-conn-fill" data-conn="3"></span></div>
-                    <div class="tl-node" data-step="4"><div class="tl-icon"><i class="fa-solid fa-house-user"></i></div><div class="tl-label">Entregue</div></div>
+                    <div class="tl-node" data-step="4"><div class="tl-icon"><i class="fa-solid fa-triangle-exclamation"></i></div><div class="tl-label">Status final</div></div>
                 </div>
             </div>
+        </div>
+
+        <!-- REFUND BANNER (aparece quando entrega falha) -->
+        <div id="refund-banner" class="hidden bg-white rounded-2xl shadow-sm border border-red-100 p-4 fade-in">
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#EA1D2C] flex-shrink-0">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="min-w-0">
+                    <div class="text-sm font-extrabold text-[#3e3e3e]">O motoboy não conseguiu realizar sua entrega</div>
+                    <p class="text-xs text-gray-500 leading-snug mt-1">Não se preocupe: você tem direito ao reembolso integral do pedido + <b class="text-[#3e3e3e]">R$ 50,00</b> de bônus como pedido de desculpas pelo transtorno.</p>
+                </div>
+            </div>
+            <button onclick="startRefund()" class="mt-3 w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[.99] text-white font-extrabold text-sm py-3 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition">
+                <i class="fa-solid fa-hand-holding-dollar"></i> Solicitar seu reembolso!
+            </button>
         </div>
 
         <!-- MAPA -->
@@ -266,11 +282,11 @@
             { key:'preparing', label:'Preparando seu pedido', desc:'Nossos sushimen estão preparando tudo com carinho.', at: 2 },
             { key:'shipping',  label:'Pedido saiu para entrega', desc:'O entregador está a caminho do seu endereço.', at: 27 },
             { key:'nearby',    label:'O entregador está chegando', desc:'Fique atento! Sua entrega chega em instantes.', at: 27 + deliveryMinutes - 4 },
-            { key:'delivered', label:'Pedido entregue', desc:'Bom apetite! Obrigado por escolher a Rūshī.', at: 27 + deliveryMinutes }
+            { key:'failed',    label:'Entrega não realizada', desc:'Infelizmente o entregador não conseguiu concluir a entrega do seu pedido.', at: 27 + deliveryMinutes }
         ];
 
-        // Timeline horizontal usa 5 ícones (une "chegando" e "entregue" em "Entregue")
-        var TL_STEPS = ['confirmed','accepted','preparing','shipping','delivered'];
+        // Timeline horizontal usa 5 ícones (une "chegando" e "failed" no último ícone)
+        var TL_STEPS = ['confirmed','accepted','preparing','shipping','failed'];
 
         // ============================================================
         // HELPERS
@@ -334,7 +350,7 @@
                 preparing: 'Preparando seu pedido',
                 shipping:  'Seu pedido está indo até você',
                 nearby:    'O entregador está chegando',
-                delivered: 'Pedido entregue — bom apetite!'
+                failed:    'Entrega não realizada — solicite seu reembolso'
             };
             var etaEl = document.getElementById('eta-status-text');
             if (etaEl) etaEl.textContent = shortMap[stage.key] || stage.label;
@@ -343,8 +359,12 @@
             var mh = document.getElementById('map-hint');
             if (stage.key === 'shipping') mh.textContent = 'A caminho de você';
             else if (stage.key === 'nearby') mh.textContent = 'Chegando…';
-            else if (stage.key === 'delivered') mh.textContent = 'Entregue';
+            else if (stage.key === 'failed') mh.textContent = 'Entrega não concluída';
             else mh.textContent = 'Preparando o pedido';
+
+            // Banner de reembolso
+            var banner = document.getElementById('refund-banner');
+            if (banner) banner.classList.toggle('hidden', stage.key !== 'failed');
         }
 
         function renderVSteps(){
@@ -448,8 +468,7 @@
             L.marker(restLatLng, { icon: makePinIcon('#3e3e3e','fa-store') }).addTo(mapObj);
             L.marker(homeLatLng, { icon: makePinIcon('#EA1D2C','fa-house-user') }).addTo(mapObj);
 
-            // Linha tracejada (rota planejada)
-            routeLine = L.polyline([restLatLng, homeLatLng], { color:'#EA1D2C', weight:3, opacity:.4, dashArray:'6,8' }).addTo(mapObj);
+            // Linha de rota removida (invisível) — evita mostrar trajeto em linha reta.
 
             mapObj.fitBounds(L.latLngBounds([restLatLng, homeLatLng]).pad(0.3));
             setTimeout(function(){ mapObj.invalidateSize(); }, 200);
@@ -465,7 +484,7 @@
             if (stageKey === 'shipping' || stageKey === 'nearby') {
                 // Fração de progresso dentro da fase de entrega
                 var startAt = STAGES.find(function(s){return s.key==='shipping';}).at;
-                var endAt = STAGES.find(function(s){return s.key==='delivered';}).at;
+                var endAt = STAGES.find(function(s){return s.key==='failed';}).at;
                 var frac = Math.max(0, Math.min(1, (currentElapsedMin() - startAt) / (endAt - startAt)));
 
                 var lat = restLatLng.lat + (homeLatLng.lat - restLatLng.lat) * frac;
@@ -474,13 +493,14 @@
                 if (!motoMarker) { motoMarker = L.marker([lat,lng], { icon: makeMotoIcon() }).addTo(mapObj); }
                 else motoMarker.setLatLng([lat,lng]);
 
-                // Linha vermelha sólida do trajeto percorrido
-                if (movingLine) mapObj.removeLayer(movingLine);
-                movingLine = L.polyline([restLatLng, [lat,lng]], { color:'#EA1D2C', weight:4, opacity:.9 }).addTo(mapObj);
-
                 if (mapObj) mapObj.fitBounds(L.latLngBounds([restLatLng, homeLatLng]).pad(0.3));
-            } else if (stageKey === 'delivered') {
-                if (motoMarker) motoMarker.setLatLng(homeLatLng);
+            } else if (stageKey === 'failed') {
+                // Motoboy parado próximo do trajeto (não chegou)
+                if (motoMarker) {
+                    var lat = restLatLng.lat + (homeLatLng.lat - restLatLng.lat) * 0.85;
+                    var lng = restLatLng.lng + (homeLatLng.lng - restLatLng.lng) * 0.85;
+                    motoMarker.setLatLng([lat,lng]);
+                }
             }
         }
 
@@ -556,6 +576,59 @@
             }, 400);
         }
         window.openChat = openChat; window.closeChat = closeChat; window.sendChat = sendChat;
+
+        // ============================================================
+        // FLUXO DE REEMBOLSO
+        // ============================================================
+        function startRefund(){
+            var refundKey = 'nobre_refund_' + (orderData.id || 'anon');
+            if (localStorage.getItem(refundKey) === 'done') { showRefundDone(); return; }
+
+            var steps = [
+                { icon:'fa-paper-plane',  title:'Solicitando reembolso…',        desc:'Enviando sua solicitação ao restaurante.' },
+                { icon:'fa-gears spin-slow', title:'Processando reembolso…',     desc:'Validando os dados do seu pedido junto ao sistema financeiro.' },
+                { icon:'fa-shield-halved', title:'Confirmando com a operadora…', desc:'Estamos autorizando o estorno com a instituição do seu Pix.' }
+            ];
+            var i = 0;
+            function renderStep(){
+                var s = steps[i];
+                Swal.fire({
+                    html: '<div style="padding:12px 4px;text-align:center;">' +
+                          '  <div style="width:64px;height:64px;border-radius:9999px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;">' +
+                          '    <i class="fa-solid '+s.icon+'"></i>' +
+                          '  </div>' +
+                          '  <div style="font-weight:800;color:#3e3e3e;font-size:15px;margin-bottom:6px;">'+s.title+'</div>' +
+                          '  <div style="font-size:12px;color:#6b7280;line-height:1.35;">'+s.desc+'</div>' +
+                          '  <div style="margin-top:14px;height:4px;background:#e5e7eb;border-radius:9999px;overflow:hidden;">' +
+                          '    <div style="height:100%;width:'+Math.round(((i+1)/steps.length)*100)+'%;background:#059669;transition:width .5s;"></div>' +
+                          '  </div>' +
+                          '</div>',
+                    showConfirmButton:false, allowOutsideClick:false, allowEscapeKey:false
+                });
+                setTimeout(function(){
+                    i++;
+                    if (i < steps.length) renderStep();
+                    else { try { localStorage.setItem(refundKey,'done'); } catch(e){} showRefundDone(); }
+                }, 1800);
+            }
+            renderStep();
+        }
+        function showRefundDone(){
+            Swal.fire({
+                html: '<div style="padding:12px 4px;text-align:center;">' +
+                      '  <div style="width:72px;height:72px;border-radius:9999px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;">' +
+                      '    <i class="fa-solid fa-circle-check"></i>' +
+                      '  </div>' +
+                      '  <div style="font-weight:800;color:#3e3e3e;font-size:17px;margin-bottom:8px;">Reembolso aprovado!</div>' +
+                      '  <div style="font-size:13px;color:#4b5563;line-height:1.45;">Seu reembolso será efetuado <b>automaticamente em até 7 dias úteis</b> na mesma chave Pix usada no pagamento.</div>' +
+                      '  <div style="margin-top:12px;background:#fef2f2;border:1px dashed #EA1D2C;border-radius:12px;padding:10px 12px;color:#3e3e3e;font-size:12px;">' +
+                      '    <b style="color:#EA1D2C;">+ R$ 50,00 de bônus</b> serão enviados junto ao estorno como nosso pedido de desculpas pelo transtorno.' +
+                      '  </div>' +
+                      '</div>',
+                confirmButtonText:'Entendi', confirmButtonColor:'#059669'
+            });
+        }
+        window.startRefund = startRefund;
 
         // ============================================================
         // LOOP
