@@ -148,20 +148,16 @@
 
             <!-- Horizontal timeline -->
             <div class="pt-4 pb-1">
-                <div class="tl-track"><div class="tl-fill" id="tl-fill" style="width:0%"></div></div>
-                <div class="tl-icons" id="tl-icons">
-                    <div class="tl-icon" data-step="0"><i class="fa-solid fa-circle-check"></i></div>
-                    <div class="tl-icon" data-step="1"><i class="fa-solid fa-store"></i></div>
-                    <div class="tl-icon" data-step="2"><i class="fa-solid fa-utensils"></i></div>
-                    <div class="tl-icon" data-step="3"><i class="fa-solid fa-motorcycle"></i></div>
-                    <div class="tl-icon" data-step="4"><i class="fa-solid fa-house-user"></i></div>
-                </div>
-                <div class="tl-labels" id="tl-labels">
-                    <div class="tl-label" data-step="0">Confirmado</div>
-                    <div class="tl-label" data-step="1">Aceito</div>
-                    <div class="tl-label" data-step="2">Preparando</div>
-                    <div class="tl-label" data-step="3">A caminho</div>
-                    <div class="tl-label" data-step="4">Entregue</div>
+                <div class="tl-row" id="tl-row">
+                    <div class="tl-node" data-step="0"><div class="tl-icon"><i class="fa-solid fa-circle-check"></i></div><div class="tl-label">Confirmado</div></div>
+                    <div class="tl-conn"><span class="tl-conn-fill" data-conn="0"></span></div>
+                    <div class="tl-node" data-step="1"><div class="tl-icon"><i class="fa-solid fa-store"></i></div><div class="tl-label">Aceito</div></div>
+                    <div class="tl-conn"><span class="tl-conn-fill" data-conn="1"></span></div>
+                    <div class="tl-node" data-step="2"><div class="tl-icon"><i class="fa-solid fa-utensils"></i></div><div class="tl-label">Preparando</div></div>
+                    <div class="tl-conn"><span class="tl-conn-fill" data-conn="2"></span></div>
+                    <div class="tl-node" data-step="3"><div class="tl-icon"><i class="fa-solid fa-motorcycle"></i></div><div class="tl-label">A caminho</div></div>
+                    <div class="tl-conn"><span class="tl-conn-fill" data-conn="3"></span></div>
+                    <div class="tl-node" data-step="4"><div class="tl-icon"><i class="fa-solid fa-house-user"></i></div><div class="tl-label">Entregue</div></div>
                 </div>
             </div>
         </div>
