@@ -1,8 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-  PARADISE_API_URL,
-  getParadiseSecretKey,
-} from "@/lib/paradise.server";
+import { VENOPAY_API_URL, getVenopayApiKey } from "@/lib/venopay.server";
 
 export const Route = createFileRoute("/verificar-status/$id")({
   server: {
@@ -11,21 +8,28 @@ export const Route = createFileRoute("/verificar-status/$id")({
         try {
           const { id } = params;
           const res = await fetch(
-            `${PARADISE_API_URL}/api/v1/query.php?action=get_transaction&id=${encodeURIComponent(
-              id
-            )}`,
+            `${VENOPAY_API_URL}/api/v1/pix/${encodeURIComponent(id)}/status`,
             {
-              headers: { "X-API-Key": getParadiseSecretKey() },
+              headers: { Authorization: `Bearer ${getVenopayApiKey()}` },
             }
           );
-          const data: any = await res.json();
+          const data: any = await res.json().catch(() => ({}));
           const raw = String(data?.status ?? "").toLowerCase();
           let statusFinal: string = raw;
-          if (raw === "approved" || raw === "paid") statusFinal = "paid";
-          else if (raw === "pending" || raw === "processing" || raw === "under_review")
+          if (raw === "paid" || raw === "captured") statusFinal = "paid";
+          else if (
+            raw === "pending" ||
+            raw === "authorized" ||
+            raw === "disputed"
+          )
             statusFinal = "pending";
-          else if (raw === "refunded") statusFinal = "refunded";
-          else if (raw === "failed" || raw === "chargeback")
+          else if (raw === "refunded" || raw === "chargeback")
+            statusFinal = "refunded";
+          else if (
+            raw === "expired" ||
+            raw === "cancelled" ||
+            raw === "denied"
+          )
             statusFinal = "failed";
           return new Response(JSON.stringify({ status: statusFinal }), {
             status: 200,
@@ -33,7 +37,7 @@ export const Route = createFileRoute("/verificar-status/$id")({
           });
         } catch (error: any) {
           console.error(
-            `Erro status Paradise ID ${params.id}:`,
+            `Erro status VenoPay ID ${params.id}:`,
             error?.message ?? error
           );
           return new Response(JSON.stringify({ status: "error" }), {

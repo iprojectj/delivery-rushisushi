@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  PARADISE_API_URL,
+  VENOPAY_API_URL,
   enviarPedidoParaUtmify,
   gerarEmailRandomico,
-  getParadiseSecretKey,
+  getVenopayApiKey,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
-} from "@/lib/paradise.server";
+} from "@/lib/venopay.server";
 
 export const Route = createFileRoute("/criar-pix")({
   server: {
@@ -35,13 +35,9 @@ export const Route = createFileRoute("/criar-pix")({
             );
           }
 
-          const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
-          if (cepLimpo.length === 8) {
-            try {
-              await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
-            } catch {
-              /* noop */
-            }
+          const apiKey = getVenopayApiKey();
+          if (!apiKey) {
+            throw new Error("VENOPAY_API_KEY não configurada.");
           }
 
           const valorEmCentavos = Math.round(parseFloat(valorTotal) * 100);
@@ -50,6 +46,7 @@ export const Route = createFileRoute("/criar-pix")({
           )}`;
           const emailCliente = gerarEmailRandomico();
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
+          const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           const descricaoPedido = montarDescricaoPedido(products);
 
           const origin =
@@ -61,67 +58,59 @@ export const Route = createFileRoute("/criar-pix")({
                 return "https://rushisushi.delivery";
               }
             })();
-          const postbackUrl = `${origin}/webhook-paradise`;
+          const callbackUrl = `${origin}/webhook-venopay`;
 
-          const payloadParadise = {
+          const payloadVenopay: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
-            reference: referenceId,
-            source: "api_externa",
-            productHash: "prod_d9f9e0dcba8c763c",
-            postback_url: postbackUrl,
-            customer: {
+            external_id: referenceId,
+            callback_url: callbackUrl,
+            payer: {
               name: nome,
               email: emailCliente,
-              phone: telefoneLimpo,
               document: "73793362906",
+              phone: telefoneLimpo,
+              zip_code: cepLimpo || undefined,
             },
-            tracking: {
-              utm_source: trackingParameters.utm_source || "",
-              utm_medium: trackingParameters.utm_medium || "",
-              utm_campaign: trackingParameters.utm_campaign || "",
-              utm_content: trackingParameters.utm_content || "",
-              utm_term: trackingParameters.utm_term || "",
-              src: trackingParameters.src || "",
-              sck: trackingParameters.sck || "",
-            },
+            utm_source: trackingParameters.utm_source || undefined,
+            utm_medium: trackingParameters.utm_medium || undefined,
+            utm_campaign: trackingParameters.utm_campaign || undefined,
+            utm_content: trackingParameters.utm_content || undefined,
+            utm_term: trackingParameters.utm_term || undefined,
+            src: trackingParameters.src || undefined,
+            sck: trackingParameters.sck || undefined,
           };
 
-          const paradiseRes = await fetch(
-            `${PARADISE_API_URL}/api/v1/transaction.php`,
-            {
-              method: "POST",
-              headers: {
-                "X-API-Key": getParadiseSecretKey(),
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(payloadParadise),
-            }
-          );
+          const venoRes = await fetch(`${VENOPAY_API_URL}/api/v1/pix`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payloadVenopay),
+          });
 
-          const apiData: any = await paradiseRes.json();
+          const apiData: any = await venoRes.json().catch(() => ({}));
 
-          if (!paradiseRes.ok || apiData?.status === "error") {
-            console.error("Resposta Paradise erro:", apiData);
+          if (!venoRes.ok) {
+            console.error("Resposta VenoPay erro:", venoRes.status, apiData);
             throw new Error(
-              `Paradise HTTP ${paradiseRes.status}: ${JSON.stringify(apiData)}`
+              `VenoPay HTTP ${venoRes.status}: ${JSON.stringify(apiData)}`
             );
           }
 
-          const transactionId = apiData?.transaction_id;
-          const pixCopiaECola = apiData?.qr_code;
-          const qrCodeBase64 = apiData?.qr_code_base64;
+          const transactionId = apiData?.id;
+          const pixCopiaECola =
+            apiData?.pix_copy_paste || apiData?.qr_code_image || apiData?.qr_code;
 
           if (!transactionId || !pixCopiaECola) {
-            console.error("Resposta Paradise inesperada:", apiData);
-            throw new Error("Resposta da Paradise incompleta.");
+            console.error("Resposta VenoPay inesperada:", apiData);
+            throw new Error("Resposta da VenoPay incompleta.");
           }
 
-          const qrCodeFinal =
-            qrCodeBase64 ||
-            `https://quickchart.io/qr?text=${encodeURIComponent(
-              pixCopiaECola
-            )}&size=300&ecLevel=L&margin=1`;
+          const qrCodeFinal = `https://quickchart.io/qr?text=${encodeURIComponent(
+            pixCopiaECola
+          )}&size=300&ecLevel=L&margin=1`;
 
           const produtosUtmify = Array.isArray(products)
             ? products.map((p: any, idx: number) => ({
@@ -136,7 +125,7 @@ export const Route = createFileRoute("/criar-pix")({
 
           const payloadUtmify = {
             orderId: String(transactionId),
-            platform: "rushi-paradise",
+            platform: "rushi-venopay",
             paymentMethod: "pix",
             status: "pending",
             createdAt: nowUtcSqlString(),
@@ -186,7 +175,7 @@ export const Route = createFileRoute("/criar-pix")({
             { status: 200, headers: { "Content-Type": "application/json" } }
           );
         } catch (error: any) {
-          console.error("Erro criar-pix Paradise:", error?.message ?? error);
+          console.error("Erro criar-pix VenoPay:", error?.message ?? error);
           return new Response(
             JSON.stringify({
               success: false,

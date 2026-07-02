@@ -1,19 +1,11 @@
-// Paradise Pagamentos + Utmify helpers.
-// Docs: https://multi.paradisepags.com/documentation
+// VenoPay Gateway helpers. Docs: https://beta.venopayments.com/llms.txt
 
-export const PARADISE_API_URL = "https://multi.paradisepags.com";
+export const VENOPAY_API_URL = "https://beta.venopayments.com";
 export const UTMIFY_API_URL =
   "https://api.utmify.com.br/api-credentials/orders";
 
-export function getParadiseSecretKey() {
-  return (
-    process.env.PARADISE_SECRET_KEY ||
-    "sk_786bdaeb9a5c572a3e54b82a51b6462eb637f216822e12c11bcdf3c24dc066ce"
-  );
-}
-
-export function getParadiseAccountId() {
-  return process.env.PARADISE_ACCOUNT_ID || "4838";
+export function getVenopayApiKey() {
+  return process.env.VENOPAY_API_KEY || "";
 }
 
 export function getUtmifyToken() {
@@ -50,11 +42,7 @@ export async function enviarPedidoParaUtmify(payload: any) {
         text
       );
     } else {
-      const result = await res.json().catch(() => ({}));
-      console.log(
-        `[UTMIFY] Pedido ${payload.orderId} enviado com sucesso. Resposta:`,
-        JSON.stringify(result)
-      );
+      console.log(`[UTMIFY] Pedido ${payload.orderId} enviado.`);
     }
   } catch (error: any) {
     console.error(
