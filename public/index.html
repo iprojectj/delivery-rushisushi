@@ -1133,7 +1133,9 @@
                             
                             const freeCokes = (p.id === 'barca-ostentacao' || p.id === 'combo-rodízio') ? 2 : 1;
                             const cokeDesc = freeCokes === 2 ? ' 🥤 Ganhe 2 Coca-Colas Lata GRÁTIS!' : ' 🥤 Ganhe 1 Coca-Cola Lata GRÁTIS!';
-                            const cansHtml = `<img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-single" alt="Coca-Cola grátis">`;
+                            const cansHtml = freeCokes === 2
+                                ? `<div class="brinde-duo"><img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-back" alt=""><img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-front" alt="2 Coca-Colas grátis"></div>`
+                                : `<img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-single" alt="Coca-Cola grátis">`;
 
                             html += `
                             <div onclick="openProductModal('${p.id}')" class="${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-visible flex flex-col mb-2 mt-6">
