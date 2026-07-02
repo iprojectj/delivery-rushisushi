@@ -391,6 +391,13 @@
                 var isLast = i === STAGES.length - 1;
                 var timeLabel = '';
                 if (i <= idx) { var t = new Date(startedAt + s.at * 60000); timeLabel = fmtTime(t); }
+                // A última etapa só revela o estado "Entrega não realizada" quando é atingida.
+                var stepLabel = s.label;
+                var stepDesc  = s.desc;
+                if (s.key === 'failed' && i !== idx) {
+                    stepLabel = 'Pedido entregue';
+                    stepDesc  = 'Seu pedido será entregue no endereço informado.';
+                }
                 html += '<div class="vstep">' +
                         '  <div class="vcol">' +
                         '    <div class="vdot '+cls+'">'+(i < idx ? '<i class="fa-solid fa-check text-[10px]"></i>' : (i+1))+'</div>' +
@@ -398,10 +405,10 @@
                         '  </div>' +
                         '  <div class="vcontent">' +
                         '    <div class="flex justify-between items-baseline gap-2">' +
-                        '      <div class="text-sm font-bold text-[#3e3e3e]">'+s.label+'</div>' +
+                        '      <div class="text-sm font-bold text-[#3e3e3e]">'+stepLabel+'</div>' +
                         '      <div class="text-[10px] text-gray-400 font-mono">'+timeLabel+'</div>' +
                         '    </div>' +
-                        '    <div class="text-xs text-gray-500 leading-snug">'+s.desc+'</div>' +
+                        '    <div class="text-xs text-gray-500 leading-snug">'+stepDesc+'</div>' +
                         '  </div>' +
                         '</div>';
             });
