@@ -350,7 +350,7 @@
                 preparing: 'Preparando seu pedido',
                 shipping:  'Seu pedido está indo até você',
                 nearby:    'O entregador está chegando',
-                delivered: 'Pedido entregue — bom apetite!'
+                failed:    'Entrega não realizada — solicite seu reembolso'
             };
             var etaEl = document.getElementById('eta-status-text');
             if (etaEl) etaEl.textContent = shortMap[stage.key] || stage.label;
@@ -359,8 +359,12 @@
             var mh = document.getElementById('map-hint');
             if (stage.key === 'shipping') mh.textContent = 'A caminho de você';
             else if (stage.key === 'nearby') mh.textContent = 'Chegando…';
-            else if (stage.key === 'delivered') mh.textContent = 'Entregue';
+            else if (stage.key === 'failed') mh.textContent = 'Entrega não concluída';
             else mh.textContent = 'Preparando o pedido';
+
+            // Banner de reembolso
+            var banner = document.getElementById('refund-banner');
+            if (banner) banner.classList.toggle('hidden', stage.key !== 'failed');
         }
 
         function renderVSteps(){
