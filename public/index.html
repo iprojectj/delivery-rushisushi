@@ -1224,6 +1224,27 @@
             document.getElementById('modal-qty').innerText = 1;
             document.getElementById('modal-btn-price').innerText = formatMoney(item.price);
             document.getElementById('modal-obs').value = '';
+
+            const brindeEl = document.getElementById('modal-brinde');
+            if (item.category === 'destaques') {
+                const freeCokes = (item.id === 'barca-ostentacao' || item.id === 'combo-rodízio') ? 2 : 1;
+                const cansMarkup = freeCokes === 2
+                    ? `<div class="relative w-14 h-14 flex-shrink-0"><img src="images/coca-lata-brinde.png" class="absolute top-1 left-0 w-9 h-auto -rotate-[16deg] drop-shadow"><img src="images/coca-lata-brinde.png" class="absolute top-0 right-0 w-11 h-auto rotate-[8deg] drop-shadow"></div>`
+                    : `<img src="images/coca-lata-brinde.png" class="w-11 h-auto -rotate-[8deg] drop-shadow flex-shrink-0">`;
+                brindeEl.innerHTML = `
+                    <div class="flex items-center gap-3 bg-gradient-to-r from-red-50 to-white border border-red-200 rounded-xl p-3">
+                        ${cansMarkup}
+                        <div class="flex-1">
+                            <div class="text-[11px] font-bold text-[#EA1D2C] uppercase tracking-wide">Brinde incluso</div>
+                            <div class="text-sm font-extrabold text-[#3e3e3e] leading-tight">Ganhe ${freeCokes === 2 ? '2 Coca-Colas' : '1 Coca-Cola'} Lata GRÁTIS</div>
+                            <div class="text-[11px] text-gray-500">Enviamos junto com seu pedido, sem custo.</div>
+                        </div>
+                    </div>`;
+                brindeEl.classList.remove('hidden');
+            } else {
+                brindeEl.innerHTML = '';
+                brindeEl.classList.add('hidden');
+            }
             
             const btnSpan = document.querySelector('#product-sheet button[onclick="addToCartCurrent()"] span:first-child');
             if(btnSpan) btnSpan.innerText = "Adicionar";
