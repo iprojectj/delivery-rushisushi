@@ -66,21 +66,23 @@
         .spin-slow { animation: spin 2.4s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Timeline horizontal iFood-style */
-        .tl-track { position:relative; height:4px; background:#e5e7eb; border-radius:9999px; margin: 0 22px; }
-        .tl-fill { position:absolute; inset:0 auto 0 0; background:#EA1D2C; border-radius:9999px; transition:width .8s ease; }
-        .tl-icons { display:flex; justify-content:space-between; margin-top:-18px; padding: 0 4px; }
-        .tl-icon { width:36px; height:36px; border-radius:9999px; background:#fff; border:2px solid #e5e7eb; color:#9ca3af; display:flex; align-items:center; justify-content:center; font-size:14px; transition:all .3s; }
+        /* Timeline horizontal iFood-style: ícones + conectores entre eles */
+        .tl-row { display:flex; align-items:center; }
+        .tl-node { display:flex; flex-direction:column; align-items:center; flex-shrink:0; width:56px; }
+        .tl-icon { width:34px; height:34px; border-radius:9999px; background:#fff; border:2px solid #e5e7eb; color:#9ca3af; display:flex; align-items:center; justify-content:center; font-size:13px; transition:all .3s; }
         .tl-icon.done { background:#EA1D2C; border-color:#EA1D2C; color:#fff; }
         .tl-icon.active { background:#fff; border-color:#EA1D2C; color:#EA1D2C; box-shadow:0 0 0 4px rgba(234,29,44,.15); animation: pulseRed 2s infinite; }
-        .tl-labels { display:flex; justify-content:space-between; margin-top:6px; }
-        .tl-label { font-size:9px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:.02em; width:60px; text-align:center; line-height:1.15; }
+        .tl-label { font-size:9px; font-weight:700; color:#9ca3af; text-transform:uppercase; margin-top:6px; text-align:center; line-height:1.15; height:22px; }
         .tl-label.done, .tl-label.active { color:#3e3e3e; }
+        .tl-conn { flex:1; height:3px; background:#e5e7eb; border-radius:9999px; margin-bottom:22px; overflow:hidden; }
+        .tl-conn-fill { display:block; height:100%; width:0%; background:#EA1D2C; transition:width .8s ease; }
 
         /* Vertical steps */
-        .vstep { display:flex; gap:12px; padding:12px 0; position:relative; }
-        .vstep + .vstep::before { content:''; position:absolute; left:11px; top:-6px; bottom:calc(100% - 18px); width:2px; background:#e5e7eb; }
-        .vstep.done + .vstep::before, .vstep.done::before { background:#EA1D2C; }
+        .vstep { display:flex; gap:12px; }
+        .vcol { flex-shrink:0; display:flex; flex-direction:column; align-items:center; width:24px; }
+        .vline { flex:1; width:2px; background:#e5e7eb; min-height:24px; }
+        .vline.done { background:#EA1D2C; }
+        .vcontent { flex:1; min-width:0; padding-bottom:14px; padding-top:1px; }
         .vdot { flex-shrink:0; width:24px; height:24px; border-radius:9999px; border:2px solid #e5e7eb; background:#fff; display:flex; align-items:center; justify-content:center; font-size:11px; color:#9ca3af; }
         .vdot.done { background:#EA1D2C; border-color:#EA1D2C; color:#fff; }
         .vdot.active { border-color:#EA1D2C; color:#EA1D2C; box-shadow:0 0 0 4px rgba(234,29,44,.15); }
@@ -146,20 +148,16 @@
 
             <!-- Horizontal timeline -->
             <div class="pt-4 pb-1">
-                <div class="tl-track"><div class="tl-fill" id="tl-fill" style="width:0%"></div></div>
-                <div class="tl-icons" id="tl-icons">
-                    <div class="tl-icon" data-step="0"><i class="fa-solid fa-circle-check"></i></div>
-                    <div class="tl-icon" data-step="1"><i class="fa-solid fa-store"></i></div>
-                    <div class="tl-icon" data-step="2"><i class="fa-solid fa-utensils"></i></div>
-                    <div class="tl-icon" data-step="3"><i class="fa-solid fa-motorcycle"></i></div>
-                    <div class="tl-icon" data-step="4"><i class="fa-solid fa-house-user"></i></div>
-                </div>
-                <div class="tl-labels" id="tl-labels">
-                    <div class="tl-label" data-step="0">Confirmado</div>
-                    <div class="tl-label" data-step="1">Aceito</div>
-                    <div class="tl-label" data-step="2">Preparando</div>
-                    <div class="tl-label" data-step="3">A caminho</div>
-                    <div class="tl-label" data-step="4">Entregue</div>
+                <div class="tl-row" id="tl-row">
+                    <div class="tl-node" data-step="0"><div class="tl-icon"><i class="fa-solid fa-circle-check"></i></div><div class="tl-label">Confirmado</div></div>
+                    <div class="tl-conn"><span class="tl-conn-fill" data-conn="0"></span></div>
+                    <div class="tl-node" data-step="1"><div class="tl-icon"><i class="fa-solid fa-store"></i></div><div class="tl-label">Aceito</div></div>
+                    <div class="tl-conn"><span class="tl-conn-fill" data-conn="1"></span></div>
+                    <div class="tl-node" data-step="2"><div class="tl-icon"><i class="fa-solid fa-utensils"></i></div><div class="tl-label">Preparando</div></div>
+                    <div class="tl-conn"><span class="tl-conn-fill" data-conn="2"></span></div>
+                    <div class="tl-node" data-step="3"><div class="tl-icon"><i class="fa-solid fa-motorcycle"></i></div><div class="tl-label">A caminho</div></div>
+                    <div class="tl-conn"><span class="tl-conn-fill" data-conn="3"></span></div>
+                    <div class="tl-node" data-step="4"><div class="tl-icon"><i class="fa-solid fa-house-user"></i></div><div class="tl-label">Entregue</div></div>
                 </div>
             </div>
         </div>
@@ -321,24 +319,25 @@
         function renderTimeline(){
             var stageKey = STAGES[currentStageIndex()].key;
             var tlIdx = TL_STEPS.indexOf(stageKey);
-            // "nearby" ainda conta como "shipping" na track
             if (stageKey === 'nearby') tlIdx = TL_STEPS.indexOf('shipping');
             if (tlIdx < 0) tlIdx = 0;
 
-            var pct = TL_STEPS.length > 1 ? (tlIdx / (TL_STEPS.length - 1)) * 100 : 0;
-            document.getElementById('tl-fill').style.width = pct + '%';
-
-            document.querySelectorAll('#tl-icons .tl-icon').forEach(function(el){
-                var i = parseInt(el.dataset.step, 10);
-                el.classList.remove('done','active');
-                if (i < tlIdx) el.classList.add('done');
-                else if (i === tlIdx) el.classList.add('active');
+            document.querySelectorAll('#tl-row .tl-node').forEach(function(node){
+                var i = parseInt(node.dataset.step, 10);
+                var icon = node.querySelector('.tl-icon');
+                var label = node.querySelector('.tl-label');
+                icon.classList.remove('done','active');
+                label.classList.remove('done','active');
+                if (i < tlIdx)      { icon.classList.add('done');   label.classList.add('done'); }
+                else if (i === tlIdx){ icon.classList.add('active'); label.classList.add('active'); }
             });
-            document.querySelectorAll('#tl-labels .tl-label').forEach(function(el){
-                var i = parseInt(el.dataset.step, 10);
-                el.classList.remove('done','active');
-                if (i < tlIdx) el.classList.add('done');
-                else if (i === tlIdx) el.classList.add('active');
+            document.querySelectorAll('#tl-row .tl-conn-fill').forEach(function(el){
+                var i = parseInt(el.dataset.conn, 10);
+                // conector i liga node i → node i+1. Preenche 100% se i+1 já foi atingido, 50% se i é o atual.
+                var w = 0;
+                if (tlIdx > i)      w = 100;
+                else if (tlIdx === i + 0 && i + 1 <= TL_STEPS.length - 1) w = 0; // ainda no node i
+                el.style.width = w + '%';
             });
 
             // Status card
@@ -362,14 +361,16 @@
             var html = '';
             STAGES.forEach(function(s, i){
                 var cls = i < idx ? 'done' : (i === idx ? 'active' : '');
+                var lineCls = i < idx ? 'done' : '';
+                var isLast = i === STAGES.length - 1;
                 var timeLabel = '';
-                if (i <= idx) {
-                    var t = new Date(startedAt + s.at * 60000);
-                    timeLabel = fmtTime(t);
-                }
-                html += '<div class="vstep '+cls+'">' +
-                        '  <div class="vdot '+cls+'">'+(i < idx ? '<i class="fa-solid fa-check text-[10px]"></i>' : (i+1))+'</div>' +
-                        '  <div class="flex-1 min-w-0">' +
+                if (i <= idx) { var t = new Date(startedAt + s.at * 60000); timeLabel = fmtTime(t); }
+                html += '<div class="vstep">' +
+                        '  <div class="vcol">' +
+                        '    <div class="vdot '+cls+'">'+(i < idx ? '<i class="fa-solid fa-check text-[10px]"></i>' : (i+1))+'</div>' +
+                        (isLast ? '' : '<div class="vline '+lineCls+'"></div>') +
+                        '  </div>' +
+                        '  <div class="vcontent">' +
                         '    <div class="flex justify-between items-baseline gap-2">' +
                         '      <div class="text-sm font-bold text-[#3e3e3e]">'+s.label+'</div>' +
                         '      <div class="text-[10px] text-gray-400 font-mono">'+timeLabel+'</div>' +
