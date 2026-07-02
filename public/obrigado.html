@@ -319,24 +319,25 @@
         function renderTimeline(){
             var stageKey = STAGES[currentStageIndex()].key;
             var tlIdx = TL_STEPS.indexOf(stageKey);
-            // "nearby" ainda conta como "shipping" na track
             if (stageKey === 'nearby') tlIdx = TL_STEPS.indexOf('shipping');
             if (tlIdx < 0) tlIdx = 0;
 
-            var pct = TL_STEPS.length > 1 ? (tlIdx / (TL_STEPS.length - 1)) * 100 : 0;
-            document.getElementById('tl-fill').style.width = pct + '%';
-
-            document.querySelectorAll('#tl-icons .tl-icon').forEach(function(el){
-                var i = parseInt(el.dataset.step, 10);
-                el.classList.remove('done','active');
-                if (i < tlIdx) el.classList.add('done');
-                else if (i === tlIdx) el.classList.add('active');
+            document.querySelectorAll('#tl-row .tl-node').forEach(function(node){
+                var i = parseInt(node.dataset.step, 10);
+                var icon = node.querySelector('.tl-icon');
+                var label = node.querySelector('.tl-label');
+                icon.classList.remove('done','active');
+                label.classList.remove('done','active');
+                if (i < tlIdx)      { icon.classList.add('done');   label.classList.add('done'); }
+                else if (i === tlIdx){ icon.classList.add('active'); label.classList.add('active'); }
             });
-            document.querySelectorAll('#tl-labels .tl-label').forEach(function(el){
-                var i = parseInt(el.dataset.step, 10);
-                el.classList.remove('done','active');
-                if (i < tlIdx) el.classList.add('done');
-                else if (i === tlIdx) el.classList.add('active');
+            document.querySelectorAll('#tl-row .tl-conn-fill').forEach(function(el){
+                var i = parseInt(el.dataset.conn, 10);
+                // conector i liga node i → node i+1. Preenche 100% se i+1 já foi atingido, 50% se i é o atual.
+                var w = 0;
+                if (tlIdx > i)      w = 100;
+                else if (tlIdx === i + 0 && i + 1 <= TL_STEPS.length - 1) w = 0; // ainda no node i
+                el.style.width = w + '%';
             });
 
             // Status card
@@ -360,14 +361,16 @@
             var html = '';
             STAGES.forEach(function(s, i){
                 var cls = i < idx ? 'done' : (i === idx ? 'active' : '');
+                var lineCls = i < idx ? 'done' : '';
+                var isLast = i === STAGES.length - 1;
                 var timeLabel = '';
-                if (i <= idx) {
-                    var t = new Date(startedAt + s.at * 60000);
-                    timeLabel = fmtTime(t);
-                }
-                html += '<div class="vstep '+cls+'">' +
-                        '  <div class="vdot '+cls+'">'+(i < idx ? '<i class="fa-solid fa-check text-[10px]"></i>' : (i+1))+'</div>' +
-                        '  <div class="flex-1 min-w-0">' +
+                if (i <= idx) { var t = new Date(startedAt + s.at * 60000); timeLabel = fmtTime(t); }
+                html += '<div class="vstep">' +
+                        '  <div class="vcol">' +
+                        '    <div class="vdot '+cls+'">'+(i < idx ? '<i class="fa-solid fa-check text-[10px]"></i>' : (i+1))+'</div>' +
+                        (isLast ? '' : '<div class="vline '+lineCls+'"></div>') +
+                        '  </div>' +
+                        '  <div class="vcontent">' +
                         '    <div class="flex justify-between items-baseline gap-2">' +
                         '      <div class="text-sm font-bold text-[#3e3e3e]">'+s.label+'</div>' +
                         '      <div class="text-[10px] text-gray-400 font-mono">'+timeLabel+'</div>' +
