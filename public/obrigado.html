@@ -123,31 +123,20 @@
 
     <main class="max-w-md mx-auto w-full px-4 py-4 space-y-4 pb-24">
 
-        <!-- ESTIMATIVA -->
+        <!-- ESTIMATIVA + STATUS -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 fade-in">
-            <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold">Chega até</div>
-            <div class="text-[22px] font-extrabold text-[#3e3e3e] mt-0.5" id="eta-range">—</div>
-            <div class="mt-2 flex items-center gap-2 text-[12px] text-gray-500">
-                <i class="fa-solid fa-motorcycle text-[#EA1D2C]"></i>
-                <span id="eta-hint">Estimativa considera o preparo e o trajeto até você.</span>
-            </div>
-        </div>
-
-        <!-- STATUS CARD -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 fade-in">
-            <div class="flex items-center justify-between mb-3">
-                <div>
-                    <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold">Status atual</div>
-                    <div class="text-base font-extrabold text-[#3e3e3e]" id="status-title">Confirmando pagamento…</div>
-                    <div class="text-xs text-gray-500 mt-0.5" id="status-desc">Aguarde alguns segundos.</div>
-                </div>
-                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#EA1D2C]">
-                    <i id="status-icon" class="fa-solid fa-hourglass-half spin-slow"></i>
-                </div>
+            <div class="text-[12px] font-semibold text-gray-500">Previsão de entrega</div>
+            <div class="text-[26px] font-extrabold text-[#3e3e3e] mt-0.5 leading-tight" id="eta-range">—</div>
+            <div class="mt-3 flex items-center gap-2">
+                <span class="relative flex h-2.5 w-2.5 flex-shrink-0">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span class="text-[13px] font-semibold text-[#3e3e3e]" id="eta-status-text">Confirmando pagamento…</span>
             </div>
 
             <!-- Horizontal timeline -->
-            <div class="pt-4 pb-1">
+            <div class="pt-5 pb-1 mt-3 border-t border-gray-100">
                 <div class="tl-row" id="tl-row">
                     <div class="tl-node" data-step="0"><div class="tl-icon"><i class="fa-solid fa-circle-check"></i></div><div class="tl-label">Confirmado</div></div>
                     <div class="tl-conn"><span class="tl-conn-fill" data-conn="0"></span></div>
@@ -310,7 +299,7 @@
             var totalMin = 27 + deliveryMinutes; // ~77 (padrao) ou ~57 (rapida)
             var start = new Date(startedAt + totalMin * 60000);
             var end   = new Date(startedAt + (totalMin + 30) * 60000);
-            document.getElementById('eta-range').textContent = fmtTime(start) + ' às ' + fmtTime(end);
+            document.getElementById('eta-range').textContent = fmtTime(start) + ' - ' + fmtTime(end);
         }
 
         // ============================================================
@@ -340,12 +329,18 @@
                 el.style.width = w + '%';
             });
 
-            // Status card
+            // Status text curto (ao lado do ponto pulsante)
             var stage = STAGES[currentStageIndex()];
-            document.getElementById('status-title').textContent = stage.label;
-            document.getElementById('status-desc').textContent = stage.desc;
-            var iconMap = { confirmed:'fa-circle-check', accepted:'fa-store', preparing:'fa-utensils spin-slow', shipping:'fa-motorcycle', nearby:'fa-location-crosshairs', delivered:'fa-house-chimney' };
-            document.getElementById('status-icon').className = 'fa-solid ' + (iconMap[stage.key] || 'fa-hourglass-half');
+            var shortMap = {
+                confirmed: 'Pedido confirmado',
+                accepted:  'Restaurante aceitou seu pedido',
+                preparing: 'Preparando seu pedido',
+                shipping:  'Seu pedido está indo até você',
+                nearby:    'O entregador está chegando',
+                delivered: 'Pedido entregue — bom apetite!'
+            };
+            var etaEl = document.getElementById('eta-status-text');
+            if (etaEl) etaEl.textContent = shortMap[stage.key] || stage.label;
 
             // Map hint
             var mh = document.getElementById('map-hint');
