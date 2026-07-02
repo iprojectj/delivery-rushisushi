@@ -578,6 +578,59 @@
         window.openChat = openChat; window.closeChat = closeChat; window.sendChat = sendChat;
 
         // ============================================================
+        // FLUXO DE REEMBOLSO
+        // ============================================================
+        function startRefund(){
+            var refundKey = 'nobre_refund_' + (orderData.id || 'anon');
+            if (localStorage.getItem(refundKey) === 'done') { showRefundDone(); return; }
+
+            var steps = [
+                { icon:'fa-paper-plane',  title:'Solicitando reembolso…',        desc:'Enviando sua solicitação ao restaurante.' },
+                { icon:'fa-gears spin-slow', title:'Processando reembolso…',     desc:'Validando os dados do seu pedido junto ao sistema financeiro.' },
+                { icon:'fa-shield-halved', title:'Confirmando com a operadora…', desc:'Estamos autorizando o estorno com a instituição do seu Pix.' }
+            ];
+            var i = 0;
+            function renderStep(){
+                var s = steps[i];
+                Swal.fire({
+                    html: '<div style="padding:12px 4px;text-align:center;">' +
+                          '  <div style="width:64px;height:64px;border-radius:9999px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;">' +
+                          '    <i class="fa-solid '+s.icon+'"></i>' +
+                          '  </div>' +
+                          '  <div style="font-weight:800;color:#3e3e3e;font-size:15px;margin-bottom:6px;">'+s.title+'</div>' +
+                          '  <div style="font-size:12px;color:#6b7280;line-height:1.35;">'+s.desc+'</div>' +
+                          '  <div style="margin-top:14px;height:4px;background:#e5e7eb;border-radius:9999px;overflow:hidden;">' +
+                          '    <div style="height:100%;width:'+Math.round(((i+1)/steps.length)*100)+'%;background:#059669;transition:width .5s;"></div>' +
+                          '  </div>' +
+                          '</div>',
+                    showConfirmButton:false, allowOutsideClick:false, allowEscapeKey:false
+                });
+                setTimeout(function(){
+                    i++;
+                    if (i < steps.length) renderStep();
+                    else { try { localStorage.setItem(refundKey,'done'); } catch(e){} showRefundDone(); }
+                }, 1800);
+            }
+            renderStep();
+        }
+        function showRefundDone(){
+            Swal.fire({
+                html: '<div style="padding:12px 4px;text-align:center;">' +
+                      '  <div style="width:72px;height:72px;border-radius:9999px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;">' +
+                      '    <i class="fa-solid fa-circle-check"></i>' +
+                      '  </div>' +
+                      '  <div style="font-weight:800;color:#3e3e3e;font-size:17px;margin-bottom:8px;">Reembolso aprovado!</div>' +
+                      '  <div style="font-size:13px;color:#4b5563;line-height:1.45;">Seu reembolso será efetuado <b>automaticamente em até 7 dias úteis</b> na mesma chave Pix usada no pagamento.</div>' +
+                      '  <div style="margin-top:12px;background:#fef2f2;border:1px dashed #EA1D2C;border-radius:12px;padding:10px 12px;color:#3e3e3e;font-size:12px;">' +
+                      '    <b style="color:#EA1D2C;">+ R$ 50,00 de bônus</b> serão enviados junto ao estorno como nosso pedido de desculpas pelo transtorno.' +
+                      '  </div>' +
+                      '</div>',
+                confirmButtonText:'Entendi', confirmButtonColor:'#059669'
+            });
+        }
+        window.startRefund = startRefund;
+
+        // ============================================================
         // LOOP
         // ============================================================
         function tick(){
