@@ -148,19 +148,19 @@
             </div>
         </div>
 
-        <!-- REFUND BANNER (aparece quando entrega falha) -->
+        <!-- HELP BANNER (aparece quando entrega falha) -->
         <div id="refund-banner" class="hidden bg-white rounded-2xl shadow-sm border border-red-100 p-4 fade-in">
             <div class="flex items-start gap-3">
                 <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#EA1D2C] flex-shrink-0">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
                 <div class="min-w-0">
-                    <div class="text-sm font-extrabold text-[#3e3e3e]">O motoboy não conseguiu realizar sua entrega</div>
-                    <p class="text-xs text-gray-500 leading-snug mt-1">Não se preocupe: você tem direito ao reembolso integral do pedido + <b class="text-[#3e3e3e]">R$ 50,00</b> de bônus como pedido de desculpas pelo transtorno.</p>
+                    <div class="text-sm font-extrabold text-[#3e3e3e]">Ocorreu um problema com seu pedido</div>
+                    <p class="text-xs text-gray-500 leading-snug mt-1">Nossa equipe de suporte está pronta para te ajudar agora mesmo.</p>
                 </div>
             </div>
-            <button onclick="startRefund()" class="mt-3 w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[.99] text-white font-extrabold text-sm py-3 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition">
-                <i class="fa-solid fa-hand-holding-dollar"></i> Solicitar seu reembolso!
+            <button onclick="openHelpFlow()" class="mt-3 w-full bg-[#EA1D2C] hover:bg-[#c81826] active:scale-[.99] text-white font-extrabold text-sm py-3 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-red-600/20 transition">
+                <i class="fa-solid fa-headset"></i> Preciso de ajuda com meu pedido
             </button>
         </div>
 
