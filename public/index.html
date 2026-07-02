@@ -1231,7 +1231,7 @@
             if (item.category === 'destaques') {
                 const freeCokes = (item.id === 'barca-ostentacao' || item.id === 'combo-rodízio') ? 2 : 1;
                 const cansMarkup = freeCokes === 2
-                    ? `<div class="relative w-14 h-14 flex-shrink-0"><img src="images/coca-lata-brinde.png" class="absolute top-1 left-0 w-9 h-auto -rotate-[16deg] drop-shadow"><img src="images/coca-lata-brinde.png" class="absolute top-0 right-0 w-11 h-auto rotate-[8deg] drop-shadow"></div>`
+                    ? `<div class="relative w-12 h-14 flex-shrink-0"><img src="images/coca-lata-brinde.png" class="absolute top-1 left-0 w-8 h-auto -rotate-[16deg] drop-shadow"><img src="images/coca-lata-brinde.png" class="absolute top-0 right-0 w-9 h-auto rotate-[8deg] drop-shadow"></div>`
                     : `<img src="images/coca-lata-brinde.png" class="w-11 h-auto -rotate-[8deg] drop-shadow flex-shrink-0">`;
                 brindeEl.innerHTML = `
                     <div class="flex items-center ${freeCokes === 2 ? 'gap-2 pr-3' : 'gap-3'} bg-gradient-to-r from-red-50 to-white border border-red-200 rounded-xl p-3">
