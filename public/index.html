@@ -1138,14 +1138,13 @@
                             <div onclick="openProductModal('${p.id}')" class="${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-visible flex flex-col mb-2 mt-6">
                                 <div class="brinde-wrap">
                                     ${cansHtml}
-                                    <div class="brinde-tag"><i class="fa-solid fa-gift text-[9px]"></i> GRÁTIS ${freeCokes>1?'x'+freeCokes:''}</div>
                                 </div>
                                 <div class="w-full h-48 relative bg-gray-100 z-10 rounded-t-2xl overflow-hidden">
                                     <img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
                                 </div>
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa] rounded-b-2xl">
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">${p.name}</h4>
-                                    <p class="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-3">${p.desc}<span class="text-[#EA1D2C] font-bold">${cokeDesc}</span></p>
+                                    <p class="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-3">${p.desc}<span class="block mt-0.5 text-[#EA1D2C] font-bold text-xs">${cokeDesc.trim()}</span></p>
                                     
                                     <div class="flex items-center gap-2 mb-3 h-6 flex-wrap">
                                         <div class="flex items-center gap-1.5 px-2 py-0.5 bg-amber-50 rounded-full border border-amber-100/50">
