@@ -342,6 +342,20 @@
                 el.style.width = w + '%';
             });
 
+
+            // Última etapa: exibe "Entregue" até ser atingida; ao atingir, vira "Não entregue"
+            var lastIcon = document.getElementById('tl-last-icon');
+            var lastLabel = document.getElementById('tl-last-label');
+            if (lastIcon && lastLabel) {
+                if (stageKey === 'failed') {
+                    lastIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                    lastLabel.textContent = 'Não entregue';
+                } else {
+                    lastIcon.innerHTML = '<i class="fa-solid fa-flag-checkered"></i>';
+                    lastLabel.textContent = 'Entregue';
+                }
+            }
+
             // Status text curto (ao lado do ponto pulsante)
             var stage = STAGES[currentStageIndex()];
             var shortMap = {
