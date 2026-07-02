@@ -633,6 +633,13 @@
             icon.classList.toggle('rotate-180');
         }
 
+        function getFreeCansPedido(item) {
+            if (!item || item.category !== 'destaques') return 0;
+            const doubles = ['barca-ostentacao', 'combo-rodízio'];
+            const per = doubles.indexOf(item.id) !== -1 ? 2 : 1;
+            return per * (item.qty || 1);
+        }
+
         function populateResumo(items, total) {
             const content = document.getElementById('resumo-content');
             if (!content) return;
@@ -645,26 +652,38 @@
                     if(item.addons && item.addons.length > 0) {
                         addonsText = item.addons.map(a => `<br><span class="text-xs text-gray-400">+ ${a.qty}x ${a.name}</span>`).join('');
                     }
-                    
+
                     const itemPrice = item.totalPrice || item.price || item.valor || 0;
-                    
+
                     const imgSrc = item.img || item.image || '';
                     const imgHtml = imgSrc ? `<img src="${imgSrc}" alt="${item.name}" class="resumo-thumb" onerror="this.style.display='none'">` : '';
-                    itemsHtml += `
-                        <div class="flex justify-between items-center border-b border-gray-100 pb-2 last:border-0 gap-2">
-                            <div class="flex items-center gap-2 min-w-0">
-                                ${imgHtml}
-                                <div class="min-w-0">
-                                    <div class="flex items-baseline gap-1">
-                                        <span class="font-bold text-gray-400 text-xs">${item.qty}x</span>
-                                        <span class="text-[#3e3e3e] font-medium text-xs truncate">${item.name}</span>
-                                    </div>
-                                    ${addonsText}
-                                </div>
-                            </div>
-                            <span class="text-[#3e3e3e] font-medium text-xs whitespace-nowrap">
-                                ${itemPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    const cans = getFreeCansPedido(item);
+                    const brindeHtml = cans > 0 ? `
+                        <div class="flex justify-between items-center gap-2 mt-1.5 pl-1">
+                            <span class="text-[11px] text-[#3e3e3e] font-medium flex items-center gap-1.5">
+                                <img src="images/coca-lata-brinde.png" class="w-4 h-auto -rotate-6" alt="">
+                                +${cans} Coca-Cola Lata
                             </span>
+                            <span class="text-[10px] font-extrabold text-[#EA1D2C] tracking-wide">BRINDE</span>
+                        </div>` : '';
+                    itemsHtml += `
+                        <div class="border-b border-gray-100 pb-2 last:border-0">
+                            <div class="flex justify-between items-center gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    ${imgHtml}
+                                    <div class="min-w-0">
+                                        <div class="flex items-baseline gap-1">
+                                            <span class="font-bold text-gray-400 text-xs">${item.qty}x</span>
+                                            <span class="text-[#3e3e3e] font-medium text-xs truncate">${item.name}</span>
+                                        </div>
+                                        ${addonsText}
+                                    </div>
+                                </div>
+                                <span class="text-[#3e3e3e] font-medium text-xs whitespace-nowrap">
+                                    ${itemPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                                </span>
+                            </div>
+                            ${brindeHtml}
                         </div>
                     `;
                 });
