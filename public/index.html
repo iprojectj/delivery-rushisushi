@@ -1490,23 +1490,62 @@
         window.nextBagStep = function() { if(bagStep === 1 && cart.length > 0) setBagStep(2); }
         window.prevBagStep = function() { if(bagStep === 2) setBagStep(1); }
 
+        function getFreeCans(item) {
+            if (!item || item.category !== 'destaques') return 0;
+            const doubles = ['barca-ostentacao', 'combo-rodízio'];
+            const per = doubles.indexOf(item.id) !== -1 ? 2 : 1;
+            return per * (item.qty || 1);
+        }
+
         function renderBagItems() {
             const container = document.getElementById('bag-list-items');
-            if(!container) return;
-            container.innerHTML = '';
-            if(cart.length === 0) { container.innerHTML = '<p class="text-center text-gray-400 py-4">Sua sacola está vazia.</p>'; return; }
+            const finalC = document.getElementById('final-items');
+            if(container) container.innerHTML = '';
+            if(finalC) finalC.innerHTML = '';
+            if(cart.length === 0) {
+                if(container) container.innerHTML = '<p class="text-center text-gray-400 py-4">Sua sacola está vazia.</p>';
+                recalcTotal();
+                return;
+            }
             cart.forEach((item, idx) => {
                 let addonsHtml = (item.addons || []).map(a => `<span class="text-xs text-gray-500 block">+ ${a.qty}x ${a.name}</span>`).join('');
                 const imgSrc = item.img || '';
                 const imgHtml = imgSrc ? `<img src="${imgSrc}" alt="${item.name}" class="bag-thumb" onerror="this.style.display='none'">` : '';
-                container.innerHTML += `
-                <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
-                    <div class="flex gap-3 min-w-0">${imgHtml}<span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">${item.qty}x</span><div class="min-w-0"><span class="text-[#3e3e3e] font-medium text-sm block">${item.name}</span>${addonsHtml}${item.obs ? `<span class="text-xs text-gray-400 italic">"${item.obs}"</span>` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">${formatMoney(item.totalPrice)}</div></div></div>
-                    <button onclick="removeCartItem(${idx})" class="text-gray-400 text-sm shrink-0 ml-2"><i class="fa-solid fa-trash-can"></i></button>
-                </div>`;
+                const cans = getFreeCans(item);
+                const brindeLine = cans > 0 ? `
+                    <div class="mt-1.5 flex items-center gap-2 bg-red-50 border border-red-100 rounded-md px-2 py-1">
+                        <img src="images/coca-lata-brinde.png" class="w-5 h-auto -rotate-6 drop-shadow" alt="">
+                        <span class="text-[11px] font-semibold text-[#EA1D2C] flex-1">+ ${cans}x Coca-Cola Lata <span class="text-[10px] text-red-500/80">(brinde)</span></span>
+                        <span class="text-[11px] font-bold text-[#05a65a]">GRÁTIS</span>
+                    </div>` : '';
+                if(container) {
+                    container.innerHTML += `
+                    <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
+                        <div class="flex gap-3 min-w-0">${imgHtml}<span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">${item.qty}x</span><div class="min-w-0"><span class="text-[#3e3e3e] font-medium text-sm block">${item.name}</span>${addonsHtml}${item.obs ? `<span class="text-xs text-gray-400 italic">"${item.obs}"</span>` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">${formatMoney(item.totalPrice)}</div>${brindeLine}</div></div>
+                        <button onclick="removeCartItem(${idx})" class="text-gray-400 text-sm shrink-0 ml-2"><i class="fa-solid fa-trash-can"></i></button>
+                    </div>`;
+                }
+                if(finalC) {
+                    finalC.innerHTML += `
+                    <div class="py-1.5">
+                        <div class="flex justify-between items-start gap-2 text-[13px]">
+                            <span class="text-[#3e3e3e] flex-1"><span class="font-bold">${item.qty}x</span> ${item.name}</span>
+                            <span class="text-[#3e3e3e] font-semibold shrink-0">${formatMoney(item.totalPrice)}</span>
+                        </div>
+                        ${cans > 0 ? `
+                        <div class="flex justify-between items-center gap-2 mt-1 pl-4">
+                            <span class="text-[12px] text-[#EA1D2C] font-semibold flex items-center gap-1.5">
+                                <img src="images/coca-lata-brinde.png" class="w-4 h-auto -rotate-6" alt="">
+                                + ${cans}x Coca-Cola Lata <span class="text-[10px] text-gray-400 font-normal">(brinde)</span>
+                            </span>
+                            <span class="text-[12px] font-bold text-[#05a65a]">GRÁTIS</span>
+                        </div>` : ''}
+                    </div>`;
+                }
             });
             recalcTotal();
         }
+
 
         window.removeCartItem = function(idx) { cart.splice(idx, 1); renderBagItems(); updateCartBar(); if(cart.length === 0) closeBag(); }
 
