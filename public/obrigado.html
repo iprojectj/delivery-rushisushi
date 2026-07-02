@@ -329,12 +329,18 @@
                 el.style.width = w + '%';
             });
 
-            // Status card
+            // Status text curto (ao lado do ponto pulsante)
             var stage = STAGES[currentStageIndex()];
-            document.getElementById('status-title').textContent = stage.label;
-            document.getElementById('status-desc').textContent = stage.desc;
-            var iconMap = { confirmed:'fa-circle-check', accepted:'fa-store', preparing:'fa-utensils spin-slow', shipping:'fa-motorcycle', nearby:'fa-location-crosshairs', delivered:'fa-house-chimney' };
-            document.getElementById('status-icon').className = 'fa-solid ' + (iconMap[stage.key] || 'fa-hourglass-half');
+            var shortMap = {
+                confirmed: 'Pedido confirmado',
+                accepted:  'Restaurante aceitou seu pedido',
+                preparing: 'Preparando seu pedido',
+                shipping:  'Seu pedido está indo até você',
+                nearby:    'O entregador está chegando',
+                delivered: 'Pedido entregue — bom apetite!'
+            };
+            var etaEl = document.getElementById('eta-status-text');
+            if (etaEl) etaEl.textContent = shortMap[stage.key] || stage.label;
 
             // Map hint
             var mh = document.getElementById('map-hint');
