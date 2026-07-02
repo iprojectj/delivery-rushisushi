@@ -269,8 +269,8 @@
             { key:'failed',    label:'Entrega não realizada', desc:'Infelizmente o entregador não conseguiu concluir a entrega do seu pedido.', at: 27 + deliveryMinutes }
         ];
 
-        // Timeline horizontal usa 5 ícones (une "chegando" e "entregue" em "Entregue")
-        var TL_STEPS = ['confirmed','accepted','preparing','shipping','delivered'];
+        // Timeline horizontal usa 5 ícones (une "chegando" e "failed" no último ícone)
+        var TL_STEPS = ['confirmed','accepted','preparing','shipping','failed'];
 
         // ============================================================
         // HELPERS
