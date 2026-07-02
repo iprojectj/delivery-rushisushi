@@ -465,6 +465,7 @@
                 <div class="px-5 py-6 relative -mt-6 bg-white rounded-t-3xl z-10">
                     <h2 id="modal-title" class="text-2xl font-bold text-[#3e3e3e] mb-2 leading-tight"></h2>
                     <p id="modal-desc" class="text-gray-500 text-sm leading-relaxed mb-4"></p>
+                    <div id="modal-brinde" class="hidden mb-4"></div>
                     <div class="flex items-center gap-2 mb-6"><span id="modal-price" class="text-[#05a65a] font-bold text-xl"></span><span id="modal-old-price" class="text-gray-400 text-sm line-through"></span></div>
                     <div id="modal-options" class="space-y-4 border-t border-gray-100 pt-6"></div>
                     <div class="mt-6 border-t border-gray-100 pt-6">
@@ -1223,6 +1224,27 @@
             document.getElementById('modal-qty').innerText = 1;
             document.getElementById('modal-btn-price').innerText = formatMoney(item.price);
             document.getElementById('modal-obs').value = '';
+
+            const brindeEl = document.getElementById('modal-brinde');
+            if (item.category === 'destaques') {
+                const freeCokes = (item.id === 'barca-ostentacao' || item.id === 'combo-rodízio') ? 2 : 1;
+                const cansMarkup = freeCokes === 2
+                    ? `<div class="relative w-14 h-14 flex-shrink-0"><img src="images/coca-lata-brinde.png" class="absolute top-1 left-0 w-9 h-auto -rotate-[16deg] drop-shadow"><img src="images/coca-lata-brinde.png" class="absolute top-0 right-0 w-11 h-auto rotate-[8deg] drop-shadow"></div>`
+                    : `<img src="images/coca-lata-brinde.png" class="w-11 h-auto -rotate-[8deg] drop-shadow flex-shrink-0">`;
+                brindeEl.innerHTML = `
+                    <div class="flex items-center gap-3 bg-gradient-to-r from-red-50 to-white border border-red-200 rounded-xl p-3">
+                        ${cansMarkup}
+                        <div class="flex-1">
+                            <div class="text-[11px] font-bold text-[#EA1D2C] uppercase tracking-wide">Brinde incluso</div>
+                            <div class="text-sm font-extrabold text-[#3e3e3e] leading-tight">Ganhe ${freeCokes === 2 ? '2 Coca-Colas' : '1 Coca-Cola'} Lata GRÁTIS</div>
+                            <div class="text-[11px] text-gray-500">Enviamos junto com seu pedido, sem custo.</div>
+                        </div>
+                    </div>`;
+                brindeEl.classList.remove('hidden');
+            } else {
+                brindeEl.innerHTML = '';
+                brindeEl.classList.add('hidden');
+            }
             
             const btnSpan = document.querySelector('#product-sheet button[onclick="addToCartCurrent()"] span:first-child');
             if(btnSpan) btnSpan.innerText = "Adicionar";
