@@ -10,7 +10,7 @@ export function getVenopayApiKey() {
 
 export function getUtmifyToken() {
   return (
-    process.env.UTMIFY_API_TOKEN || "CnLVH7UAgf5Zi3tljtwDTx8FDQCAvH8vG4h8"
+    process.env.UTMIFY_API_TOKEN || "uPiTze9M8IsOlMxtyqabrMvaXyOEUIqwVKrV"
   );
 }
 
