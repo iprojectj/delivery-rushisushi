@@ -986,6 +986,28 @@
             { id: "agua-com-gas", category: "bebidas", name: "Água com gás", desc: "Bebida Gelada.", price: 2.50, img: "images/bebida_6-CBZjy4rh.webp" }
         ];
 
+        // Randomiza os centavos (70-99) dos produtos em destaque, persistindo por lead via localStorage
+        (function randomizeDestaquesCents() {
+            try {
+                const STORAGE_KEY = 'rs_destaques_cents_v1';
+                let saved = {};
+                try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {}; } catch(e) { saved = {}; }
+                let changed = false;
+                catalog.forEach(function(p) {
+                    if (p.category !== 'destaques') return;
+                    let cents = saved[p.id];
+                    if (typeof cents !== 'number' || cents < 70 || cents > 99) {
+                        cents = Math.floor(Math.random() * 30) + 70; // 70..99
+                        saved[p.id] = cents;
+                        changed = true;
+                    }
+                    const base = Math.floor(p.price); // parte inteira
+                    p.price = parseFloat((base + cents / 100).toFixed(2));
+                });
+                if (changed) localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+            } catch(e) { /* silencioso: mantém preços originais */ }
+        })();
+
         let cart = [];
         let currentItem = null;
         let currentQty = 1;
