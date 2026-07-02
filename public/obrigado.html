@@ -11,7 +11,7 @@
       defer
     ></script>
 
-    <!-- TikTok Pixel Code Start -->
+    <!-- TikTok Pixel -->
     <script>
     !function (w, d, t) {
       w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
@@ -21,449 +21,583 @@
       ttq.page();
     }(window, document, 'ttq');
     </script>
-    <!-- TikTok Pixel Code End -->
 
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '967099279440605');
-    fbq('track', 'PageView');
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '967099279440605'); fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=967099279440605&ev=PageView&noscript=1"></noscript>
-    <!-- End Meta Pixel Code -->
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <style>
-      html, body { touch-action: pan-x pan-y; -ms-touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+      html, body { touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
       * { -webkit-touch-callout: none; }
-      input, textarea, select { font-size: 16px !important; } /* evita zoom no iOS ao focar */
+      input, textarea, select { font-size: 16px !important; }
     </style>
     <script>
       (function(){
-        // Bloqueia pinch-zoom (gesture events do Safari)
-        ['gesturestart','gesturechange','gestureend'].forEach(function(ev){
-          document.addEventListener(ev, function(e){ e.preventDefault(); }, { passive:false });
-        });
-        // Bloqueia double-tap zoom no iOS
-        var lastTouch = 0;
-        document.addEventListener('touchend', function(e){
-          var now = Date.now();
-          if (now - lastTouch <= 350) { e.preventDefault(); }
-          lastTouch = now;
-        }, { passive:false });
-        // Bloqueia pinch com múltiplos toques
-        document.addEventListener('touchmove', function(e){
-          if (e.touches && e.touches.length > 1) { e.preventDefault(); }
-        }, { passive:false });
-        // Bloqueia zoom via Ctrl+scroll / Ctrl+/- no desktop
-        document.addEventListener('wheel', function(e){
-          if (e.ctrlKey) { e.preventDefault(); }
-        }, { passive:false });
-        document.addEventListener('keydown', function(e){
-          if ((e.ctrlKey || e.metaKey) && ['+','-','=','0'].indexOf(e.key) !== -1) { e.preventDefault(); }
-        });
+        ['gesturestart','gesturechange','gestureend'].forEach(function(ev){ document.addEventListener(ev, function(e){ e.preventDefault(); }, { passive:false }); });
+        var lastTouch=0; document.addEventListener('touchend', function(e){ var n=Date.now(); if(n-lastTouch<=350)e.preventDefault(); lastTouch=n; }, { passive:false });
+        document.addEventListener('touchmove', function(e){ if(e.touches&&e.touches.length>1)e.preventDefault(); }, { passive:false });
+        document.addEventListener('wheel', function(e){ if(e.ctrlKey)e.preventDefault(); }, { passive:false });
+        document.addEventListener('keydown', function(e){ if((e.ctrlKey||e.metaKey)&&['+','-','=','0'].indexOf(e.key)!==-1)e.preventDefault(); });
       })();
     </script>
 
-    <title>Processando Pedido | Rūshī Sushi</title>
+    <title>Acompanhe seu pedido | Rūshī Sushi</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f7f7f7; user-select: none; -webkit-user-select: none; }
-        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: 'Inter', sans-serif; background:#f2f2f2; user-select:none; -webkit-user-select:none; }
+        .fade-in { animation: fadeIn .5s ease-out forwards; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
         .pulse-red { animation: pulseRed 2s infinite; }
-        @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(234, 29, 44, 0.5); } 70% { box-shadow: 0 0 0 12px rgba(234, 29, 44, 0); } 100% { box-shadow: 0 0 0 0 rgba(234, 29, 44, 0); } }
-        .shake { animation: shake 0.5s ease-in-out; }
-        @keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-4px);} 75%{transform:translateX(4px);} }
+        @keyframes pulseRed { 0%{box-shadow:0 0 0 0 rgba(234,29,44,.5);} 70%{box-shadow:0 0 0 12px rgba(234,29,44,0);} 100%{box-shadow:0 0 0 0 rgba(234,29,44,0);} }
         .blink-dot { animation: blink 1.2s infinite; }
-        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+        @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+        .spin-slow { animation: spin 2.4s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Mapa estilizado */
-        .map-bg {
-            background:
-              radial-gradient(circle at 30% 40%, rgba(234,29,44,0.08) 0, transparent 40%),
-              radial-gradient(circle at 70% 70%, rgba(5,166,90,0.08) 0, transparent 40%),
-              repeating-linear-gradient(0deg, #e5e7eb 0 1px, transparent 1px 30px),
-              repeating-linear-gradient(90deg, #e5e7eb 0 1px, transparent 1px 30px),
-              #f3f4f6;
-        }
-        .pin { position:absolute; transform:translate(-50%,-100%); }
+        /* Timeline horizontal iFood-style */
+        .tl-track { position:relative; height:4px; background:#e5e7eb; border-radius:9999px; margin: 0 22px; }
+        .tl-fill { position:absolute; inset:0 auto 0 0; background:#EA1D2C; border-radius:9999px; transition:width .8s ease; }
+        .tl-icons { display:flex; justify-content:space-between; margin-top:-18px; padding: 0 4px; }
+        .tl-icon { width:36px; height:36px; border-radius:9999px; background:#fff; border:2px solid #e5e7eb; color:#9ca3af; display:flex; align-items:center; justify-content:center; font-size:14px; transition:all .3s; }
+        .tl-icon.done { background:#EA1D2C; border-color:#EA1D2C; color:#fff; }
+        .tl-icon.active { background:#fff; border-color:#EA1D2C; color:#EA1D2C; box-shadow:0 0 0 4px rgba(234,29,44,.15); animation: pulseRed 2s infinite; }
+        .tl-labels { display:flex; justify-content:space-between; margin-top:6px; }
+        .tl-label { font-size:9px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:.02em; width:60px; text-align:center; line-height:1.15; }
+        .tl-label.done, .tl-label.active { color:#3e3e3e; }
 
+        /* Vertical steps */
+        .vstep { display:flex; gap:12px; padding:12px 0; position:relative; }
+        .vstep + .vstep::before { content:''; position:absolute; left:11px; top:-6px; bottom:calc(100% - 18px); width:2px; background:#e5e7eb; }
+        .vstep.done + .vstep::before, .vstep.done::before { background:#EA1D2C; }
+        .vdot { flex-shrink:0; width:24px; height:24px; border-radius:9999px; border:2px solid #e5e7eb; background:#fff; display:flex; align-items:center; justify-content:center; font-size:11px; color:#9ca3af; }
+        .vdot.done { background:#EA1D2C; border-color:#EA1D2C; color:#fff; }
+        .vdot.active { border-color:#EA1D2C; color:#EA1D2C; box-shadow:0 0 0 4px rgba(234,29,44,.15); }
+
+        #delivery-map { width:100%; height:100%; z-index:1; }
+        .leaflet-container { background:#e8eef2; }
+        .moto-marker { filter: drop-shadow(0 3px 6px rgba(0,0,0,.25)); }
+
+        .chat-bubble-in { background:#f3f4f6; border-radius:14px 14px 14px 4px; padding:8px 12px; max-width:80%; font-size:13px; color:#3e3e3e; }
+        .chat-bubble-out { background:#EA1D2C; color:#fff; border-radius:14px 14px 4px 14px; padding:8px 12px; max-width:80%; font-size:13px; margin-left:auto; }
     </style>
+
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 </head>
-<body class="bg-[#f7f7f7] min-h-screen flex flex-col" oncontextmenu="return false">
+<body class="min-h-screen flex flex-col" oncontextmenu="return false">
 
-
-    <!-- TELA 1: SUCESSO -->
-    <div id="screen-success" class="flex-1 flex flex-col items-center justify-center p-6 text-center transition-all duration-500">
-        <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 animate-bounce">
-            <i class="fa-solid fa-check text-5xl text-[#05a65a]"></i>
-        </div>
-        <h1 class="text-2xl font-bold text-[#3e3e3e] mb-2">Pagamento Confirmado!</h1>
-        <p class="text-gray-500 mb-8">Localizando a unidade mais próxima de você...</p>
-        <div class="w-full max-w-xs bg-gray-200 h-2 rounded-full overflow-hidden">
-            <div id="prog-bar" class="h-full bg-[#05a65a] w-0 transition-all duration-3000 ease-out"></div>
-        </div>
-    </div>
-
-    <!-- TELA 2: UPSELL - LOJA FECHADA -->
-    <div id="screen-upsell" class="hidden flex-1 flex flex-col p-4 fade-in">
-
-        <!-- ALERTA TOPO -->
-        <div class="bg-red-50 border-l-4 border-[#EA1D2C] p-4 mb-5 rounded shadow-sm pulse-red rounded-lg">
-            <div class="flex items-start">
-                <div class="flex-shrink-0 mt-0.5">
-                    <i class="fa-solid fa-triangle-exclamation text-[#EA1D2C] text-xl"></i>
+    <!-- HEADER -->
+    <header class="bg-white shadow-sm sticky top-0 z-20">
+        <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-[#EA1D2C] flex items-center justify-center text-white">
+                    <i class="fa-solid fa-check text-sm"></i>
                 </div>
-                <div class="ml-3">
-                    <h3 class="text-sm font-extrabold text-[#EA1D2C] uppercase tracking-wide">Atenção: Unidade mais próxima FECHADA</h3>
-                    <p class="text-xs text-red-700 mt-1 leading-relaxed">
-                        A loja mais perto do seu endereço já encerrou os pedidos de hoje. Para que seu sushi <strong>não seja cancelado</strong>, vamos despachar de outra filial.
-                    </p>
+                <div class="leading-tight">
+                    <div class="text-[10px] uppercase tracking-wide text-gray-400 font-bold">Pedido</div>
+                    <div class="text-sm font-extrabold text-[#3e3e3e]" id="hdr-order-id">#—</div>
+                </div>
+            </div>
+            <span class="flex items-center gap-1 text-[10px] bg-red-50 text-[#EA1D2C] px-2 py-1 rounded-full font-bold">
+                <span class="w-1.5 h-1.5 bg-[#EA1D2C] rounded-full blink-dot"></span> AO VIVO
+            </span>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto w-full px-4 py-4 space-y-4 pb-24">
+
+        <!-- ESTIMATIVA -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 fade-in">
+            <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold">Chega até</div>
+            <div class="text-[22px] font-extrabold text-[#3e3e3e] mt-0.5" id="eta-range">—</div>
+            <div class="mt-2 flex items-center gap-2 text-[12px] text-gray-500">
+                <i class="fa-solid fa-motorcycle text-[#EA1D2C]"></i>
+                <span id="eta-hint">Estimativa considera o preparo e o trajeto até você.</span>
+            </div>
+        </div>
+
+        <!-- STATUS CARD -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 fade-in">
+            <div class="flex items-center justify-between mb-3">
+                <div>
+                    <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold">Status atual</div>
+                    <div class="text-base font-extrabold text-[#3e3e3e]" id="status-title">Confirmando pagamento…</div>
+                    <div class="text-xs text-gray-500 mt-0.5" id="status-desc">Aguarde alguns segundos.</div>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#EA1D2C]">
+                    <i id="status-icon" class="fa-solid fa-hourglass-half spin-slow"></i>
+                </div>
+            </div>
+
+            <!-- Horizontal timeline -->
+            <div class="pt-4 pb-1">
+                <div class="tl-track"><div class="tl-fill" id="tl-fill" style="width:0%"></div></div>
+                <div class="tl-icons" id="tl-icons">
+                    <div class="tl-icon" data-step="0"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="tl-icon" data-step="1"><i class="fa-solid fa-store"></i></div>
+                    <div class="tl-icon" data-step="2"><i class="fa-solid fa-utensils"></i></div>
+                    <div class="tl-icon" data-step="3"><i class="fa-solid fa-motorcycle"></i></div>
+                    <div class="tl-icon" data-step="4"><i class="fa-solid fa-house-user"></i></div>
+                </div>
+                <div class="tl-labels" id="tl-labels">
+                    <div class="tl-label" data-step="0">Confirmado</div>
+                    <div class="tl-label" data-step="1">Aceito</div>
+                    <div class="tl-label" data-step="2">Preparando</div>
+                    <div class="tl-label" data-step="3">A caminho</div>
+                    <div class="tl-label" data-step="4">Entregue</div>
                 </div>
             </div>
         </div>
 
-        <!-- MAPA SIMULADO -->
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden mb-5">
-            <div class="bg-[#3e3e3e] p-3 text-white flex items-center justify-between">
+        <!-- MAPA -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden fade-in">
+            <div class="px-4 py-3 flex items-center justify-between border-b border-gray-100">
                 <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-route"></i>
-                    <span class="font-bold text-sm uppercase">Nova rota de entrega</span>
+                    <i class="fa-solid fa-route text-[#EA1D2C]"></i>
+                    <span class="font-extrabold text-sm text-[#3e3e3e]">Rota da entrega</span>
                 </div>
-                <span class="flex items-center gap-1 text-[10px] bg-red-600 px-2 py-1 rounded-full">
-                    <span class="w-2 h-2 bg-white rounded-full blink-dot"></span> AO VIVO
-                </span>
+                <span class="text-[10px] text-gray-400 font-bold uppercase" id="map-hint">Aguardando saída</span>
             </div>
-
-            <div class="relative map-bg h-52">
-                <!-- Filial fechada -->
-                <div class="pin" style="left:28%; top:38%;">
-                    <div class="flex flex-col items-center">
-                        <div class="bg-gray-400 text-white text-[9px] font-bold px-2 py-0.5 rounded mb-1">FECHADA</div>
-                        <i class="fa-solid fa-store-slash text-gray-500 text-2xl"></i>
-                    </div>
-                </div>
-                <!-- Cliente -->
-                <div class="pin" style="left:55%; top:60%;">
-                    <div class="flex flex-col items-center">
-                        <div class="bg-[#05a65a] text-white text-[9px] font-bold px-2 py-0.5 rounded mb-1">VOCÊ</div>
-                        <i class="fa-solid fa-house-user text-[#05a65a] text-2xl"></i>
-                    </div>
-                </div>
-                <!-- Filial distante -->
-                <div class="pin" style="left:82%; top:25%;">
-                    <div class="flex flex-col items-center">
-                        <div class="bg-[#EA1D2C] text-white text-[9px] font-bold px-2 py-0.5 rounded mb-1">ABERTA</div>
-                        <i class="fa-solid fa-store text-[#EA1D2C] text-2xl"></i>
-                    </div>
-                </div>
-
-                <!-- Linha tracejada -->
-                <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-                    <path d="M82,25 Q70,45 55,60" stroke="#EA1D2C" stroke-width="0.6" fill="none" stroke-dasharray="2,2"/>
-                </svg>
-            </div>
-
-            <!-- INFOS -->
-            <div class="p-4 grid grid-cols-3 gap-2 border-t border-gray-100 text-center">
-                <div>
-                    <div class="text-[10px] text-gray-400 uppercase font-bold">Distância extra</div>
-                    <div class="text-sm font-extrabold text-[#3e3e3e] mt-0.5"><span id="info-km">8,2</span> km</div>
-                </div>
-                <div>
-                    <div class="text-[10px] text-gray-400 uppercase font-bold">Tempo</div>
-                    <div class="text-sm font-extrabold text-[#3e3e3e] mt-0.5">+ 25 min</div>
-                </div>
-                <div>
-                    <div class="text-[10px] text-gray-400 uppercase font-bold">Filial</div>
-                    <div class="text-sm font-extrabold text-[#EA1D2C] mt-0.5">Distante</div>
+            <div class="relative h-56 bg-gray-100">
+                <div id="delivery-map"></div>
+                <div id="map-loading" class="absolute inset-0 flex flex-col items-center justify-center text-gray-400 bg-gray-50">
+                    <i class="fa-solid fa-map-location-dot text-3xl mb-1"></i>
+                    <span class="text-[11px]">Carregando mapa…</span>
                 </div>
             </div>
         </div>
 
-        <!-- CARD OFERTA -->
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden mb-5">
-            <div class="bg-gradient-to-r from-[#EA1D2C] to-[#b81322] p-3 text-white text-center">
-                <span class="font-extrabold text-sm uppercase tracking-wide">Taxa de entrega — Filial Distante</span>
-            </div>
+        <!-- ETAPAS VERTICAL -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 fade-in">
+            <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold mb-1">Detalhes do progresso</div>
+            <div id="vsteps"></div>
+        </div>
 
-            <div class="p-5">
-                <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                    Para que o motoboy possa sair da outra filial e levar seu pedido <strong>ainda hoje</strong>, é necessário complementar uma <strong>taxa única de entrega</strong>.
-                </p>
-
-                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border border-gray-200 mb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-white p-2 rounded border border-gray-200">
-                            <i class="fa-solid fa-motorcycle text-[#EA1D2C] text-lg"></i>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-xs text-gray-500 font-bold uppercase">Taxa única</span>
-                            <span class="text-sm text-gray-800 font-medium">Pagamento PIX</span>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-end">
-                        <span class="text-[10px] text-gray-400 line-through">R$ 19,90</span>
-                        <span class="text-xl font-black text-[#EA1D2C]">R$ 9,89</span>
-                    </div>
+        <!-- ENDEREÇO -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 fade-in">
+            <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-[#EA1D2C] flex-shrink-0">
+                    <i class="fa-solid fa-location-dot"></i>
                 </div>
-
-                <!-- Benefícios -->
-                <ul class="space-y-2 mb-5">
-                    <li class="flex items-start gap-2 text-xs text-gray-700">
-                        <i class="fa-solid fa-circle-check text-[#05a65a] mt-0.5"></i>
-                        <span>Entrega <strong>garantida hoje</strong> pela filial mais distante</span>
-                    </li>
-                    <li class="flex items-start gap-2 text-xs text-gray-700">
-                        <i class="fa-solid fa-circle-check text-[#05a65a] mt-0.5"></i>
-                        <span>Box térmica <strong>incluída sem custo</strong></span>
-                    </li>
-                    <li class="flex items-start gap-2 text-xs text-gray-700">
-                        <i class="fa-solid fa-circle-check text-[#05a65a] mt-0.5"></i>
-                        <span>Motoboy exclusivo para sua rota</span>
-                    </li>
-                </ul>
-
-                <!-- ÁREA PAGAMENTO -->
-                <div id="loading-pix" class="text-center py-4">
-                    <div class="w-8 h-8 border-4 border-[#EA1D2C] border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p class="text-xs text-gray-400 mt-2">Gerando PIX da taxa de entrega...</p>
-                </div>
-
-                <div id="payment-area" class="hidden flex-col items-center">
-                    <div class="mb-4 p-2 bg-white border border-gray-200 rounded-lg shadow-sm">
-                        <img id="qr-code-img" src="" class="w-40 h-40 object-contain">
-                    </div>
-
-                    <div class="w-full flex gap-2 mb-2">
-                        <input type="text" id="pix-copia-cola" class="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-3 text-xs text-gray-600 outline-none truncate font-mono" readonly>
-                        <button id="btn-copy" class="bg-[#EA1D2C] text-white px-4 py-3 rounded-lg font-bold shadow-lg shadow-red-100 active:scale-95 transition flex items-center gap-2">
-                            <span class="hidden sm:inline">PAGAR</span> <i class="fa-regular fa-copy"></i>
-                        </button>
-                    </div>
-                    <p class="text-[10px] text-gray-400 text-center">Pagamento instantâneo. Despacho automático após confirmação.</p>
+                <div class="min-w-0">
+                    <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold">Endereço de entrega</div>
+                    <p class="text-sm font-semibold text-[#3e3e3e] leading-snug" id="addr-line1">—</p>
+                    <p class="text-xs text-gray-500 leading-snug" id="addr-line2"></p>
                 </div>
             </div>
         </div>
 
-        <!-- COUNTDOWN -->
-        <div class="text-center space-y-2 px-4 pb-6">
-            <p class="text-xs text-gray-500">Tempo restante para despacho da filial:</p>
-            <div class="text-3xl font-mono font-extrabold text-[#EA1D2C]" id="countdown">05:00</div>
-            <p class="text-[11px] text-gray-400">Após o tempo, o pedido será <strong>cancelado e estornado em até 7 dias úteis</strong>.</p>
-
-            <button onclick="recusarOferta()" class="text-[10px] text-gray-400 underline mt-3 hover:text-red-500 transition">
-                Não quero pagar a taxa e cancelar meu pedido
+        <!-- RESUMO -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden fade-in">
+            <button onclick="toggleResumo()" class="w-full px-4 py-3 flex items-center justify-between text-left">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-receipt text-[#EA1D2C]"></i>
+                    <span class="font-extrabold text-sm text-[#3e3e3e]">Ver detalhes do pedido</span>
+                </div>
+                <i id="resumo-icon" class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
             </button>
+            <div id="resumo-content" class="hidden px-4 pb-4 border-t border-gray-100 pt-3"></div>
         </div>
 
+        <!-- AJUDA -->
+        <button onclick="openChat()" class="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-[#EA1D2C]">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <div class="text-left">
+                    <div class="text-sm font-extrabold text-[#3e3e3e]">Precisa de ajuda?</div>
+                    <div class="text-[11px] text-gray-500">Fale com o restaurante</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-gray-300"></i>
+        </button>
+
+    </main>
+
+    <!-- CHAT MODAL -->
+    <div id="chat-modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl flex flex-col" style="height: 80vh; max-height: 640px;">
+            <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-[#EA1D2C] flex items-center justify-center text-white font-bold">R</div>
+                    <div>
+                        <div class="text-sm font-extrabold text-[#3e3e3e]">Rūshī Sushi</div>
+                        <div class="text-[11px] text-[#05a65a] flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#05a65a]"></span> Online agora</div>
+                    </div>
+                </div>
+                <button onclick="closeChat()" class="text-gray-400 hover:text-gray-600 text-xl px-2"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-2"></div>
+            <div class="p-3 border-t border-gray-100 flex gap-2">
+                <input id="chat-input" type="text" placeholder="Digite sua mensagem…" class="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm outline-none" onkeydown="if(event.key==='Enter')sendChat()">
+                <button onclick="sendChat()" class="w-10 h-10 rounded-full bg-[#EA1D2C] text-white flex items-center justify-center active:scale-95"><i class="fa-solid fa-paper-plane text-sm"></i></button>
+            </div>
+        </div>
     </div>
 
     <script>
-        const API_BASE_URL = "";
-        const UPSELL_VALUE = 9.89;
+        // ============================================================
+        // DADOS DO PEDIDO
+        // ============================================================
+        var orderData = {};
+        try { orderData = JSON.parse(localStorage.getItem('nobre_pix_data') || '{}'); } catch(e) {}
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Distância aleatória plausível
-            const km = (Math.random() * 6 + 5).toFixed(1).replace('.', ',');
-            setTimeout(() => {
-                const el = document.getElementById('info-km');
-                if (el) el.textContent = km;
-            }, 3100);
+        var shippingType = orderData.shippingType || 'padrao'; // padrao=grátis, rapida=paga
+        var deliveryMinutes = shippingType === 'rapida' ? 30 : 50;
 
-            const progressBar = document.getElementById('prog-bar');
-            if(progressBar) setTimeout(() => { progressBar.style.width = "92%"; }, 100);
+        // Estado persistente do tracking (para sobreviver refresh)
+        var trackKey = 'nobre_track_' + (orderData.id || 'anon');
+        var trackData = {};
+        try { trackData = JSON.parse(localStorage.getItem(trackKey) || '{}'); } catch(e) {}
+        if (!trackData.startedAt) {
+            trackData = { startedAt: Date.now(), shippingType: shippingType };
+            try { localStorage.setItem(trackKey, JSON.stringify(trackData)); } catch(e) {}
+        }
+        var startedAt = trackData.startedAt;
 
-            // FALLBACK PIXEL: Se o purchase do pedido principal não foi disparado na tela anterior, dispara aqui.
-            if(window.fbq) {
-                fbq('trackCustom', 'VisualizouTaxaFilial');
-                
-                try {
-                    const dataStr = localStorage.getItem('nobre_pix_data');
-                    if (dataStr) {
-                        const data = JSON.parse(dataStr);
-                        const lastId = localStorage.getItem('last_purchase_id');
-                        
-                        // Se temos dados do pedido e o ID é diferente do último disparado
-                        if (data.id && data.id !== lastId) {
-                            const items = data.items || data.itens || data.products || data.carrinho || [];
-                            fbq('track', 'Purchase', {
-                                value: data.total,
-                                currency: 'BRL',
-                                content_type: 'product',
-                                content_ids: items.map(i => i.id || i.name),
-                                contents: items.map(i => ({ id: i.id || i.name, quantity: i.qty, item_price: i.unitPrice || i.price })),
-                                num_items: items.reduce((acc, i) => acc + (i.qty || 1), 0)
-                            }, { eventID: data.id });
-                            
-                            localStorage.setItem('last_purchase_id', data.id);
-                        }
-                    }
-                } catch(e) { console.error("Erro fallback pixel", e); }
-            }
+        // ============================================================
+        // STAGES: tempos em minutos desde o startedAt
+        // Preparo: ~25min. Saída→entrega: ~50min (padrao) ou 30min (rapida).
+        // Aceito é rápido (30s).
+        // ============================================================
+        var STAGES = [
+            { key:'confirmed', label:'Pedido confirmado', desc:'Recebemos seu pagamento com sucesso.', at: 0 },
+            { key:'accepted',  label:'Restaurante aceitou seu pedido', desc:'A cozinha já foi notificada.', at: 0.5 },
+            { key:'preparing', label:'Preparando seu pedido', desc:'Nossos sushimen estão preparando tudo com carinho.', at: 2 },
+            { key:'shipping',  label:'Pedido saiu para entrega', desc:'O entregador está a caminho do seu endereço.', at: 27 },
+            { key:'nearby',    label:'O entregador está chegando', desc:'Fique atento! Sua entrega chega em instantes.', at: 27 + deliveryMinutes - 4 },
+            { key:'delivered', label:'Pedido entregue', desc:'Bom apetite! Obrigado por escolher a Rūshī.', at: 27 + deliveryMinutes }
+        ];
 
-            setTimeout(() => {
-                document.getElementById('screen-success').classList.add('hidden');
-                document.getElementById('screen-upsell').classList.remove('hidden');
-                iniciarCountdown();
-                gerarPixTaxa();
-            }, 3000);
-        });
+        // Timeline horizontal usa 5 ícones (une "chegando" e "entregue" em "Entregue")
+        var TL_STEPS = ['confirmed','accepted','preparing','shipping','delivered'];
 
-        function iniciarCountdown() {
-            let timer = 300;
-            const el = document.getElementById('countdown');
-            const interval = setInterval(() => {
-                if(timer <= 0) {
-                    clearInterval(interval);
-                    el.innerText = "EXPIRADO";
-                    return;
+        // ============================================================
+        // HELPERS
+        // ============================================================
+        function fmtTime(d){ return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0'); }
+
+        function currentElapsedMin(){ return (Date.now() - startedAt) / 60000; }
+        function reached(stageAt){ return currentElapsedMin() >= stageAt; }
+
+        function currentStageIndex(){
+            var idx = 0;
+            for (var i=0; i<STAGES.length; i++) if (reached(STAGES[i].at)) idx = i;
+            return idx;
+        }
+
+        // ============================================================
+        // HEADER + ETA
+        // ============================================================
+        function renderHeader(){
+            var id = orderData.id || '';
+            document.getElementById('hdr-order-id').textContent = '#' + (id ? id.toString().slice(-8).toUpperCase() : '--------');
+
+            var totalMin = 27 + deliveryMinutes; // ~77 (padrao) ou ~57 (rapida)
+            var start = new Date(startedAt + totalMin * 60000);
+            var end   = new Date(startedAt + (totalMin + 30) * 60000);
+            document.getElementById('eta-range').textContent = fmtTime(start) + ' às ' + fmtTime(end);
+        }
+
+        // ============================================================
+        // TIMELINE
+        // ============================================================
+        function renderTimeline(){
+            var stageKey = STAGES[currentStageIndex()].key;
+            var tlIdx = TL_STEPS.indexOf(stageKey);
+            // "nearby" ainda conta como "shipping" na track
+            if (stageKey === 'nearby') tlIdx = TL_STEPS.indexOf('shipping');
+            if (tlIdx < 0) tlIdx = 0;
+
+            var pct = TL_STEPS.length > 1 ? (tlIdx / (TL_STEPS.length - 1)) * 100 : 0;
+            document.getElementById('tl-fill').style.width = pct + '%';
+
+            document.querySelectorAll('#tl-icons .tl-icon').forEach(function(el){
+                var i = parseInt(el.dataset.step, 10);
+                el.classList.remove('done','active');
+                if (i < tlIdx) el.classList.add('done');
+                else if (i === tlIdx) el.classList.add('active');
+            });
+            document.querySelectorAll('#tl-labels .tl-label').forEach(function(el){
+                var i = parseInt(el.dataset.step, 10);
+                el.classList.remove('done','active');
+                if (i < tlIdx) el.classList.add('done');
+                else if (i === tlIdx) el.classList.add('active');
+            });
+
+            // Status card
+            var stage = STAGES[currentStageIndex()];
+            document.getElementById('status-title').textContent = stage.label;
+            document.getElementById('status-desc').textContent = stage.desc;
+            var iconMap = { confirmed:'fa-circle-check', accepted:'fa-store', preparing:'fa-utensils spin-slow', shipping:'fa-motorcycle', nearby:'fa-location-crosshairs', delivered:'fa-house-chimney' };
+            document.getElementById('status-icon').className = 'fa-solid ' + (iconMap[stage.key] || 'fa-hourglass-half');
+
+            // Map hint
+            var mh = document.getElementById('map-hint');
+            if (stage.key === 'shipping') mh.textContent = 'A caminho de você';
+            else if (stage.key === 'nearby') mh.textContent = 'Chegando…';
+            else if (stage.key === 'delivered') mh.textContent = 'Entregue';
+            else mh.textContent = 'Preparando o pedido';
+        }
+
+        function renderVSteps(){
+            var container = document.getElementById('vsteps');
+            var idx = currentStageIndex();
+            var html = '';
+            STAGES.forEach(function(s, i){
+                var cls = i < idx ? 'done' : (i === idx ? 'active' : '');
+                var timeLabel = '';
+                if (i <= idx) {
+                    var t = new Date(startedAt + s.at * 60000);
+                    timeLabel = fmtTime(t);
                 }
-                timer--;
-                const m = Math.floor(timer / 60).toString().padStart(2, '0');
-                const s = (timer % 60).toString().padStart(2, '0');
-                el.innerText = `${m}:${s}`;
-                if(timer < 60) el.classList.add('shake');
-            }, 1000);
+                html += '<div class="vstep '+cls+'">' +
+                        '  <div class="vdot '+cls+'">'+(i < idx ? '<i class="fa-solid fa-check text-[10px]"></i>' : (i+1))+'</div>' +
+                        '  <div class="flex-1 min-w-0">' +
+                        '    <div class="flex justify-between items-baseline gap-2">' +
+                        '      <div class="text-sm font-bold text-[#3e3e3e]">'+s.label+'</div>' +
+                        '      <div class="text-[10px] text-gray-400 font-mono">'+timeLabel+'</div>' +
+                        '    </div>' +
+                        '    <div class="text-xs text-gray-500 leading-snug">'+s.desc+'</div>' +
+                        '  </div>' +
+                        '</div>';
+            });
+            container.innerHTML = html;
         }
 
-        function gerarCPF() {
-            const r = (n) => Math.floor(Math.random() * n);
-            return `${r(9)}${r(9)}${r(9)}.${r(9)}${r(9)}${r(9)}.${r(9)}${r(9)}${r(9)}-${r(9)}${r(9)}`;
-        }
+        // ============================================================
+        // MAPA + MOTOBOY
+        // ============================================================
+        var mapObj = null, motoMarker = null, restLatLng = null, homeLatLng = null, routeLine = null, movingLine = null;
 
-        async function gerarPixTaxa() {
-            const nome = localStorage.getItem('user_cache_nome') || "Cliente";
-            const zap = localStorage.getItem('user_cache_zap') || "11999999999";
-            const zapClean = zap.replace(/D/g, '');
+        async function fetchJson(url){ var r = await fetch(url); if(!r.ok) throw new Error(r.status); return r.json(); }
 
-            const payload = {
-                valorTotal: UPSELL_VALUE,
-                nome: nome,
-                whatsapp: zapClean,
-                cpf: gerarCPF().replace(/D/g, ''),
-                cep: "01001000",
-                rua: "Taxa Entrega Filial",
-                numero: "100",
-                bairro: "Centro",
-                complemento: "Filial Distante",
-                products: [{ name: "TAXA LOGISTICA", price: UPSELL_VALUE, quantity: 1 }],
-                trackingParameters: { src: "upsell_filial", utm_source: "upsell_system" }
-            };
+        function normalizeState(s){ if(!s) return ''; return String(s).trim().toUpperCase().slice(0,2); }
+        function clean(v){ return v ? String(v).trim() : ''; }
 
-            try {
-                const response = await fetch(`${API_BASE_URL}/criar-pix`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const data = await response.json();
-
-                if(data.success) {
-                    document.getElementById('loading-pix').classList.add('hidden');
-                    const pa = document.getElementById('payment-area');
-                    pa.classList.remove('hidden');
-                    pa.classList.add('flex');
-
-                    document.getElementById('qr-code-img').src = data.qrCodeData;
-                    document.getElementById('pix-copia-cola').value = data.pixCopiaECola;
-
-                    new ClipboardJS('#btn-copy', {
-                        text: function() { return data.pixCopiaECola; }
-                    }).on('success', function() {
-                        Swal.fire({ toast: true, position: 'top', icon: 'success', title: 'PIX copiado!', showConfirmButton: false, timer: 1500 });
-                    });
-
-                    monitorarPagamento(data.transactionId);
-                } else {
-                    document.getElementById('loading-pix').innerText = "Erro ao gerar taxa. Atualize a página.";
-                }
-            } catch(e) {
-                console.error("Erro API Upsell", e);
-            }
-        }
-
-        function monitorarPagamento(id) {
-            const check = setInterval(async () => {
+        async function resolveCoords(endereco){
+            var cep = (endereco.cep || '').replace(/\D/g,'');
+            if (cep.length === 8) {
                 try {
-                    const res = await fetch(`${API_BASE_URL}/verificar-status/${id}`);
-                    const d = await res.json();
-                    if (d.status === 'paid' || d.status === 'approved') {
-                        clearInterval(check);
-                        sucessoPagamento(id);
+                    var d = await fetchJson('https://brasilapi.com.br/api/cep/v2/' + cep);
+                    var c = d && d.location && d.location.coordinates;
+                    var lat = parseFloat(c && c.latitude), lon = parseFloat(c && c.longitude);
+                    if (isFinite(lat) && isFinite(lon)) return { lat: lat, lon: lon };
+                } catch(e) {}
+            }
+            var rua = clean(endereco.rua), num = clean(endereco.numero), bairro = clean(endereco.bairro), cidade = clean(endereco.cidade)||'São Paulo', estado = normalizeState(endereco.estado);
+            var qs = [ [rua,num,bairro,cidade,estado,'Brasil'], [rua,bairro,cidade,estado,'Brasil'], [bairro,cidade,estado,'Brasil'], [cidade,estado,'Brasil'] ]
+                     .map(function(p){ return p.filter(Boolean).join(', '); });
+            for (var i=0; i<qs.length; i++) {
+                try {
+                    var r = await fetchJson('https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=br&addressdetails=1&q=' + encodeURIComponent(qs[i]));
+                    if (r && r.length) {
+                        var la = parseFloat(r[0].lat), lo = parseFloat(r[0].lon);
+                        if (isFinite(la) && isFinite(lo)) return { lat: la, lon: lo };
                     }
                 } catch(e) {}
-            }, 2500);
+            }
+            return null;
         }
 
-        function sucessoPagamento(id) {
-            if(window.fbq) {
-                fbq('track', 'Purchase', {
-                    value: UPSELL_VALUE, currency: 'BRL',
-                    content_name: 'Taxa Filial Distante'
-                }, { eventID: id });
-            }
-            if(window.ttq) {
-                ttq.track('Purchase', {
-                    value: UPSELL_VALUE, currency: 'BRL',
-                    content_type: 'product', content_name: 'Taxa Filial Distante'
-                });
-            }
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Pagamento Confirmado!',
-                html: '<p style="font-size:14px;color:#3e3e3e">Motoboy a caminho da filial distante.<br><strong>Tempo estimado: 45-60 minutos.</strong></p>',
-                confirmButtonColor: '#EA1D2C',
-                confirmButtonText: 'OK, vou aguardar'
-            }).then(() => {
-                try { localStorage.removeItem('nobre_pix_data'); } catch(e) {}
-                window.location.href = "/";
+        function makePinIcon(color, faIcon){
+            return L.divIcon({
+                className: 'custom-pin',
+                html: '<div style="position:relative;width:36px;height:48px;"><div style="position:absolute;left:50%;top:0;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;background:'+color+';border:3px solid #fff;box-shadow:0 4px 10px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;"><i class="fa-solid '+faIcon+'"></i></div><div style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid '+color+';"></div></div>',
+                iconSize:[36,48], iconAnchor:[18,48]
+            });
+        }
+        function makeMotoIcon(){
+            return L.divIcon({
+                className:'moto-marker',
+                html:'<div style="width:38px;height:38px;border-radius:50%;background:#EA1D2C;border:3px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;box-shadow:0 4px 12px rgba(234,29,44,.5);"><i class="fa-solid fa-motorcycle"></i></div>',
+                iconSize:[38,38], iconAnchor:[19,19]
             });
         }
 
-        window.recusarOferta = function() {
-            Swal.fire({
-                title: 'Cancelar pedido?',
-                text: "Sem a taxa de entrega, seu pedido será cancelado e o valor estornado em até 7 dias úteis.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#05a65a',
-                confirmButtonText: 'Sim, cancelar pedido',
-                cancelButtonText: 'Não, quero receber hoje'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    try { localStorage.removeItem('nobre_pix_data'); } catch(e) {}
-                    window.location.href = "/";
+        async function initMap(){
+            var endereco = orderData.endereco;
+            if (!endereco) { document.getElementById('map-loading').innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl mb-1"></i><span class="text-[11px]">Endereço não encontrado</span>'; return; }
+
+            // Preenche endereço nos cards
+            var line1 = [clean(endereco.rua), clean(endereco.numero)].filter(Boolean).join(', ');
+            var line2 = [clean(endereco.bairro), clean(endereco.cidade), normalizeState(endereco.estado)].filter(Boolean).join(' • ');
+            document.getElementById('addr-line1').textContent = line1 || 'Endereço de entrega';
+            document.getElementById('addr-line2').textContent = line2 || '';
+
+            var coords = await resolveCoords(endereco);
+            if (!coords) { document.getElementById('map-loading').innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl mb-1"></i><span class="text-[11px]">Mapa indisponível no momento</span>'; return; }
+
+            homeLatLng = L.latLng(coords.lat, coords.lon);
+            // Restaurante ~3.5km ao noroeste
+            restLatLng = L.latLng(coords.lat + 0.025, coords.lon - 0.020);
+
+            document.getElementById('map-loading').style.display = 'none';
+            mapObj = L.map('delivery-map', { zoomControl:false, attributionControl:false, scrollWheelZoom:false, dragging:true, tap:false });
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19 }).addTo(mapObj);
+
+            L.marker(restLatLng, { icon: makePinIcon('#3e3e3e','fa-store') }).addTo(mapObj);
+            L.marker(homeLatLng, { icon: makePinIcon('#EA1D2C','fa-house-user') }).addTo(mapObj);
+
+            // Linha tracejada (rota planejada)
+            routeLine = L.polyline([restLatLng, homeLatLng], { color:'#EA1D2C', weight:3, opacity:.4, dashArray:'6,8' }).addTo(mapObj);
+
+            mapObj.fitBounds(L.latLngBounds([restLatLng, homeLatLng]).pad(0.3));
+            setTimeout(function(){ mapObj.invalidateSize(); }, 200);
+
+            updateMoto();
+        }
+
+        function updateMoto(){
+            if (!mapObj || !homeLatLng || !restLatLng) return;
+            var idx = currentStageIndex();
+            var stageKey = STAGES[idx].key;
+
+            if (stageKey === 'shipping' || stageKey === 'nearby') {
+                // Fração de progresso dentro da fase de entrega
+                var startAt = STAGES.find(function(s){return s.key==='shipping';}).at;
+                var endAt = STAGES.find(function(s){return s.key==='delivered';}).at;
+                var frac = Math.max(0, Math.min(1, (currentElapsedMin() - startAt) / (endAt - startAt)));
+
+                var lat = restLatLng.lat + (homeLatLng.lat - restLatLng.lat) * frac;
+                var lng = restLatLng.lng + (homeLatLng.lng - restLatLng.lng) * frac;
+
+                if (!motoMarker) { motoMarker = L.marker([lat,lng], { icon: makeMotoIcon() }).addTo(mapObj); }
+                else motoMarker.setLatLng([lat,lng]);
+
+                // Linha vermelha sólida do trajeto percorrido
+                if (movingLine) mapObj.removeLayer(movingLine);
+                movingLine = L.polyline([restLatLng, [lat,lng]], { color:'#EA1D2C', weight:4, opacity:.9 }).addTo(mapObj);
+
+                if (mapObj) mapObj.fitBounds(L.latLngBounds([restLatLng, homeLatLng]).pad(0.3));
+            } else if (stageKey === 'delivered') {
+                if (motoMarker) motoMarker.setLatLng(homeLatLng);
+            }
+        }
+
+        // ============================================================
+        // RESUMO DO PEDIDO
+        // ============================================================
+        function getFreeCans(item){
+            if (!item || item.category !== 'destaques') return 0;
+            var doubles = ['barca-ostentacao','combo-rodízio'];
+            var per = doubles.indexOf(item.id) !== -1 ? 2 : 1;
+            return per * (item.qty || 1);
+        }
+        function toggleResumo(){ document.getElementById('resumo-content').classList.toggle('hidden'); document.getElementById('resumo-icon').classList.toggle('rotate-180'); }
+        window.toggleResumo = toggleResumo;
+
+        function renderResumo(){
+            var items = orderData.items || [];
+            var total = orderData.total || 0;
+            var html = '';
+            if (!items.length) html = '<p class="text-center text-gray-400 text-xs italic py-2">Itens não detalhados.</p>';
+            items.forEach(function(item){
+                var addons = (item.addons||[]).map(function(a){ return '<br><span class="text-xs text-gray-400">+ '+a.qty+'x '+a.name+'</span>'; }).join('');
+                var price = item.totalPrice || item.price || 0;
+                var img = item.img || item.image || '';
+                var imgHtml = img ? '<img src="'+img+'" class="w-9 h-9 rounded-md object-cover" onerror="this.style.display=\'none\'">' : '';
+                var cans = getFreeCans(item);
+                var brinde = cans>0 ? '<div class="flex justify-between items-center gap-2 mt-1.5 pl-1"><span class="text-[11px] text-[#3e3e3e] font-medium flex items-center gap-1.5"><img src="images/coca-lata-brinde.png" class="w-4 h-auto -rotate-6" alt="">+'+cans+' Coca-Cola Lata</span><span class="text-[10px] font-extrabold text-[#EA1D2C]">BRINDE</span></div>' : '';
+                html += '<div class="border-b border-gray-100 pb-2 last:border-0 mb-2">' +
+                        '  <div class="flex justify-between items-center gap-2">' +
+                        '    <div class="flex items-center gap-2 min-w-0">'+imgHtml+
+                        '      <div class="min-w-0"><div class="flex items-baseline gap-1"><span class="font-bold text-gray-400 text-xs">'+(item.qty||1)+'x</span><span class="text-[#3e3e3e] font-medium text-xs truncate">'+item.name+'</span></div>'+addons+'</div>' +
+                        '    </div>' +
+                        '    <span class="text-[#3e3e3e] font-medium text-xs whitespace-nowrap">'+price.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})+'</span>' +
+                        '  </div>'+brinde+
+                        '</div>';
+            });
+            html += '<div class="flex justify-between items-center font-bold text-[#3e3e3e] pt-2 border-t border-gray-200 mt-1"><span>Total</span><span>'+total.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})+'</span></div>';
+            document.getElementById('resumo-content').innerHTML = html;
+        }
+
+        // ============================================================
+        // CHAT FICTÍCIO
+        // ============================================================
+        function openChat(){
+            document.getElementById('chat-modal').classList.remove('hidden');
+            var msgs = document.getElementById('chat-messages');
+            if (!msgs.dataset.init) {
+                msgs.innerHTML = '<div class="chat-bubble-in">Olá! Aqui é a equipe da Rūshī Sushi 👋<br>Como podemos te ajudar com o seu pedido?</div>';
+                msgs.dataset.init = '1';
+            }
+        }
+        function closeChat(){ document.getElementById('chat-modal').classList.add('hidden'); }
+        function sendChat(){
+            var input = document.getElementById('chat-input');
+            var text = (input.value||'').trim();
+            if (!text) return;
+            var msgs = document.getElementById('chat-messages');
+            var out = document.createElement('div');
+            out.className = 'chat-bubble-out'; out.textContent = text;
+            msgs.appendChild(out);
+            input.value = ''; msgs.scrollTop = msgs.scrollHeight;
+            setTimeout(function(){
+                var typing = document.createElement('div');
+                typing.className = 'chat-bubble-in text-gray-400'; typing.textContent = 'digitando…';
+                msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
+                setTimeout(function(){
+                    typing.remove();
+                    var reply = document.createElement('div');
+                    reply.className = 'chat-bubble-in';
+                    reply.innerHTML = 'O restaurante recebeu sua mensagem ✅<br>Um atendente responderá em instantes. Enquanto isso, você pode acompanhar seu pedido em tempo real por aqui.';
+                    msgs.appendChild(reply); msgs.scrollTop = msgs.scrollHeight;
+                }, 1400);
+            }, 400);
+        }
+        window.openChat = openChat; window.closeChat = closeChat; window.sendChat = sendChat;
+
+        // ============================================================
+        // LOOP
+        // ============================================================
+        function tick(){
+            renderTimeline();
+            renderVSteps();
+            updateMoto();
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            // Fallback pixel (caso o Purchase não tenha disparado na tela anterior)
+            try {
+                if (window.fbq && orderData.id) {
+                    var last = localStorage.getItem('last_purchase_id');
+                    if (orderData.id !== last) {
+                        var items = orderData.items || [];
+                        fbq('track', 'Purchase', {
+                            value: orderData.total, currency:'BRL', content_type:'product',
+                            content_ids: items.map(function(i){return i.id||i.name;}),
+                            contents: items.map(function(i){return {id:i.id||i.name, quantity:i.qty, item_price:i.unitPrice||i.price};}),
+                            num_items: items.reduce(function(a,i){return a+(i.qty||1);},0)
+                        }, { eventID: orderData.id });
+                        localStorage.setItem('last_purchase_id', orderData.id);
+                    }
                 }
-            });
-        }
+            } catch(e){}
+
+            renderHeader();
+            renderResumo();
+            tick();
+            initMap();
+
+            setInterval(tick, 15000); // atualiza a cada 15s
+        });
     </script>
 </body>
-</html>`;
-
-    document.open();
-    document.write(payload);
-</body></html>
+</html>
