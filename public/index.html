@@ -236,11 +236,11 @@
 
           <div class="flex items-center justify-between mb-2">
             <span id="stock-label" class="text-[12px] text-gray-600 font-semibold">Restam 14 de 50 combos</span>
-            <span id="stock-percentage" class="text-[12px] font-bold text-[#EA1D2C]">28%</span>
+            <span id="stock-percentage" class="text-[12px] font-bold text-[#EA1D2C]">72% vendidos</span>
           </div>
 
           <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
-            <div id="stock-progress-bar" class="bg-[#EA1D2C] h-full rounded-full transition-all duration-1000 ease-out" style="width: 28%"></div>
+            <div id="stock-progress-bar" class="bg-[#EA1D2C] h-full rounded-full transition-all duration-1000 ease-out" style="width: 72%"></div>
           </div>
         </div>
       </div>
@@ -1028,9 +1028,10 @@
             let restantes = 14;
 
             const render = () => {
-                const pct = Math.round((restantes / total) * 100);
+                const vendidos = total - restantes;
+                const pct = Math.round((vendidos / total) * 100);
                 if (stockBar) stockBar.style.width = pct + '%';
-                if (stockPct) stockPct.innerText = pct + '%';
+                if (stockPct) stockPct.innerText = pct + '% vendidos';
                 if (stockLabel) stockLabel.innerText = `Restam ${restantes} de ${total} combos`;
             };
             render();
