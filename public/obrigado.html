@@ -299,7 +299,7 @@
             var totalMin = 27 + deliveryMinutes; // ~77 (padrao) ou ~57 (rapida)
             var start = new Date(startedAt + totalMin * 60000);
             var end   = new Date(startedAt + (totalMin + 30) * 60000);
-            document.getElementById('eta-range').textContent = fmtTime(start) + ' às ' + fmtTime(end);
+            document.getElementById('eta-range').textContent = fmtTime(start) + ' - ' + fmtTime(end);
         }
 
         // ============================================================
