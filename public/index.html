@@ -1120,23 +1120,38 @@
                                 highlightClass = 'card-destaque-master border-2 border-[#EA1D2C] bg-white'; 
                             }
                             
+                            const freeCokes = (p.id === 'barca-ostentacao' || p.id === 'combo-rodízio') ? 2 : 1;
+                            const freeLabel = freeCokes === 2 ? '2 Coca-Colas Lata' : '1 Coca-Cola Lata';
+
                             html += `
                             <div onclick="openProductModal('${p.id}')" class="${highlightClass} rounded-2xl border shadow-lg cursor-pointer active:scale-[0.98] transition-transform duration-200 relative overflow-hidden flex flex-col mb-2">
                                 <div class="w-full h-48 relative bg-gray-100 z-10">
                                     <img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'">
-                                    
+                                    <div class="brinde-badge absolute bottom-2 left-2 flex items-center gap-2 pl-1.5 pr-3 py-1.5 rounded-full shadow-lg">
+                                        <span class="brinde-icon flex items-center justify-center w-7 h-7 rounded-full bg-white text-[#EA1D2C] text-[13px] font-black shadow-inner">
+                                            <i class="fa-solid fa-gift"></i>
+                                        </span>
+                                        <div class="flex flex-col leading-none text-white">
+                                            <span class="text-[9px] font-bold uppercase tracking-wider opacity-90">Brinde grátis</span>
+                                            <span class="text-[11px] font-extrabold">${freeLabel}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa]">
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">${p.name}</h4>
                                     <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p>
                                     
-                                    <div class="flex items-center gap-2 mb-3 h-6">
+                                    <div class="flex items-center gap-2 mb-3 h-6 flex-wrap">
                                         <div class="flex items-center gap-1.5 px-2 py-0.5 bg-amber-50 rounded-full border border-amber-100/50">
                                             <span class="relative flex h-1.5 w-1.5">
                                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                                                 <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
                                             </span>
                                             <span class="text-[10px] font-bold text-amber-700 whitespace-nowrap" id="stock-label-${p.id}">Restam ${[4,3,3,2,2][items.indexOf(p)] || 2} unidades</span>
+                                        </div>
+                                        <div class="flex items-center gap-1 px-2 py-0.5 bg-red-50 rounded-full border border-red-100">
+                                            <i class="fa-solid fa-gift text-[9px] text-[#EA1D2C]"></i>
+                                            <span class="text-[10px] font-bold text-[#EA1D2C] whitespace-nowrap">+${freeCokes} Coca Lata Grátis</span>
                                         </div>
                                     </div>
 
