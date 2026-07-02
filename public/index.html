@@ -128,11 +128,12 @@
         /* Brinde lata Coca */
         @keyframes brinde-float { 0%,100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-4px) rotate(-8deg); } }
         @keyframes brinde-tag-pulse { 0%,100% { box-shadow: 0 4px 10px -2px rgba(234,29,44,0.5); } 50% { box-shadow: 0 4px 14px -2px rgba(234,29,44,0.8); } }
-        .brinde-wrap { position: absolute; top: -18px; right: 10px; z-index: 30; display: flex; flex-direction: column; align-items: center; pointer-events: none; }
-        .brinde-can { width: 88px; height: auto; filter: drop-shadow(0 8px 10px rgba(0,0,0,0.38)); animation: brinde-float 3s ease-in-out infinite; }
+        .brinde-wrap { position: absolute; top: -18px; right: 10px; z-index: 30; pointer-events: none; }
+        .brinde-can { width: 88px; height: auto; filter: drop-shadow(0 8px 10px rgba(0,0,0,0.38)); animation: brinde-float 3s ease-in-out infinite; display: block; }
         .brinde-can-single { transform: rotate(-8deg); }
-        .brinde-can-back { position: absolute; top: 0; left: -18px; width: 54px; transform: rotate(-18deg); opacity: 0.95; z-index: 1; }
-        .brinde-can-front { position: relative; z-index: 2; transform: rotate(-4deg); }
+        .brinde-duo { position: relative; width: 118px; height: 110px; }
+        .brinde-can-back { position: absolute; top: 6px; left: 0; width: 78px; transform: rotate(-16deg); z-index: 1; animation-delay: -1.5s; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.32)); }
+        .brinde-can-front { position: absolute; top: 0; right: 0; width: 88px; transform: rotate(6deg); z-index: 2; }
         .brinde-tag { margin-top: -6px; background: linear-gradient(135deg,#EA1D2C,#b3121e); color:#fff; font-weight:800; font-size:10px; padding: 3px 8px; border-radius: 999px; letter-spacing: .5px; border: 1.5px solid #fff; animation: brinde-tag-pulse 2s infinite ease-in-out; white-space: nowrap; }
     </style>
     <script>
