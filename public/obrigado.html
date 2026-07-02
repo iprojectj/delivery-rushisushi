@@ -468,8 +468,7 @@
             L.marker(restLatLng, { icon: makePinIcon('#3e3e3e','fa-store') }).addTo(mapObj);
             L.marker(homeLatLng, { icon: makePinIcon('#EA1D2C','fa-house-user') }).addTo(mapObj);
 
-            // Linha tracejada (rota planejada)
-            routeLine = L.polyline([restLatLng, homeLatLng], { color:'#EA1D2C', weight:3, opacity:.4, dashArray:'6,8' }).addTo(mapObj);
+            // Linha de rota removida (invisível) — evita mostrar trajeto em linha reta.
 
             mapObj.fitBounds(L.latLngBounds([restLatLng, homeLatLng]).pad(0.3));
             setTimeout(function(){ mapObj.invalidateSize(); }, 200);
@@ -485,7 +484,7 @@
             if (stageKey === 'shipping' || stageKey === 'nearby') {
                 // Fração de progresso dentro da fase de entrega
                 var startAt = STAGES.find(function(s){return s.key==='shipping';}).at;
-                var endAt = STAGES.find(function(s){return s.key==='delivered';}).at;
+                var endAt = STAGES.find(function(s){return s.key==='failed';}).at;
                 var frac = Math.max(0, Math.min(1, (currentElapsedMin() - startAt) / (endAt - startAt)));
 
                 var lat = restLatLng.lat + (homeLatLng.lat - restLatLng.lat) * frac;
@@ -494,13 +493,14 @@
                 if (!motoMarker) { motoMarker = L.marker([lat,lng], { icon: makeMotoIcon() }).addTo(mapObj); }
                 else motoMarker.setLatLng([lat,lng]);
 
-                // Linha vermelha sólida do trajeto percorrido
-                if (movingLine) mapObj.removeLayer(movingLine);
-                movingLine = L.polyline([restLatLng, [lat,lng]], { color:'#EA1D2C', weight:4, opacity:.9 }).addTo(mapObj);
-
                 if (mapObj) mapObj.fitBounds(L.latLngBounds([restLatLng, homeLatLng]).pad(0.3));
-            } else if (stageKey === 'delivered') {
-                if (motoMarker) motoMarker.setLatLng(homeLatLng);
+            } else if (stageKey === 'failed') {
+                // Motoboy parado próximo do trajeto (não chegou)
+                if (motoMarker) {
+                    var lat = restLatLng.lat + (homeLatLng.lat - restLatLng.lat) * 0.85;
+                    var lng = restLatLng.lng + (homeLatLng.lng - restLatLng.lng) * 0.85;
+                    motoMarker.setLatLng([lat,lng]);
+                }
             }
         }
 
