@@ -8,6 +8,7 @@ import {
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
+  validarCpf,
 } from "@/lib/venopay.server";
 
 export const Route = createFileRoute("/criar-pix")({
@@ -66,6 +67,15 @@ export const Route = createFileRoute("/criar-pix")({
           const emailCliente = gerarEmailRandomico();
           const cpfClienteUtmify = gerarCpfValido();
           const documentoInformado = String(cpf || "").replace(/\D/g, "");
+          if (documentoInformado && !validarCpf(documentoInformado)) {
+            return new Response(
+              JSON.stringify({
+                success: false,
+                message: "CPF inválido.",
+              }),
+              { status: 400, headers: { "Content-Type": "application/json" } }
+            );
+          }
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           const descricaoPedido = montarDescricaoPedido(products);
