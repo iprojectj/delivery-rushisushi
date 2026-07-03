@@ -7,13 +7,22 @@ export const Route = createFileRoute("/verificar-status/$id")({
       GET: async ({ params }) => {
         try {
           const { id } = params;
-          const res = await fetch(
-            `${VENOPAY_API_URL}/api/v1/pix/${encodeURIComponent(id)}/status`,
-            {
-              headers: { Authorization: `Bearer ${getVenopayApiKey()}` },
-            }
+          const apiKey = getVenopayApiKey();
+          const headers = { Authorization: `Bearer ${apiKey}` };
+          let res = await fetch(
+            `${VENOPAY_API_URL}/api/v1/charges/${encodeURIComponent(id)}`,
+            { headers }
           );
-          const data: any = await res.json().catch(() => ({}));
+          let data: any = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            res = await fetch(
+              `${VENOPAY_API_URL}/api/v1/pix/${encodeURIComponent(id)}/status`,
+              { headers }
+            );
+            data = await res.json().catch(() => ({}));
+          }
+
           const raw = String(data?.status ?? "").toLowerCase();
           let statusFinal: string = raw;
           if (raw === "paid" || raw === "captured") statusFinal = "paid";
