@@ -70,7 +70,7 @@ export const Route = createFileRoute("/criar-pix")({
             payer: {
               name: nome,
               email: emailCliente,
-              document: "73793362906",
+              document: cpfCliente,
               phone: telefoneLimpo,
               zip_code: cepLimpo || undefined,
             },
@@ -137,7 +137,7 @@ export const Route = createFileRoute("/criar-pix")({
               name: nome,
               email: emailCliente,
               phone: telefoneLimpo,
-              document: "73793362906",
+              document: cpfCliente,
               country: "BR",
               ip: request.headers.get("x-forwarded-for") || null,
             },
