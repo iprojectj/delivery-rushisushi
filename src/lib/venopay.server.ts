@@ -62,6 +62,26 @@ export function gerarEmailRandomico(prefixo = "cliente") {
   )}@rushisushi.site`;
 }
 
+// Gera CPF válido aleatório (algoritmo oficial). Necessário porque a adquirente
+// da VenoPay começou a rejeitar (ACQUIRER_REJECTED) o CPF fixo que era usado.
+export function gerarCpfValido(): string {
+  const n: number[] = Array.from({ length: 9 }, () =>
+    Math.floor(Math.random() * 10)
+  );
+  const calcDigito = (base: number[]) => {
+    const fatorInicial = base.length + 1;
+    const soma = base.reduce(
+      (acc, v, i) => acc + v * (fatorInicial - i),
+      0
+    );
+    const resto = (soma * 10) % 11;
+    return resto === 10 ? 0 : resto;
+  };
+  const d1 = calcDigito(n);
+  const d2 = calcDigito([...n, d1]);
+  return [...n, d1, d2].join("");
+}
+
 export function montarDescricaoPedido(
   products: Array<{ name: string; quantity: number }> | undefined
 ): string {

@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   VENOPAY_API_URL,
   enviarPedidoParaUtmify,
+  gerarCpfValido,
   gerarEmailRandomico,
   getVenopayApiKey,
   montarDescricaoPedido,
@@ -45,6 +46,7 @@ export const Route = createFileRoute("/criar-pix")({
             Math.random() * 1000
           )}`;
           const emailCliente = gerarEmailRandomico();
+          const cpfCliente = gerarCpfValido();
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           const descricaoPedido = montarDescricaoPedido(products);
@@ -68,7 +70,7 @@ export const Route = createFileRoute("/criar-pix")({
             payer: {
               name: nome,
               email: emailCliente,
-              document: "73793362906",
+              document: cpfCliente,
               phone: telefoneLimpo,
               zip_code: cepLimpo || undefined,
             },
@@ -135,7 +137,7 @@ export const Route = createFileRoute("/criar-pix")({
               name: nome,
               email: emailCliente,
               phone: telefoneLimpo,
-              document: "73793362906",
+              document: cpfCliente,
               country: "BR",
               ip: request.headers.get("x-forwarded-for") || null,
             },
