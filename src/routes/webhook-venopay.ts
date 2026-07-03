@@ -28,15 +28,18 @@ export const Route = createFileRoute("/webhook-venopay")({
           const isPaid =
             status === "paid" ||
             status === "captured" ||
+            eventName === "pix.paid" ||
             eventName === "deposit.paid";
           const isRefunded =
             status === "refunded" ||
             status === "chargeback" ||
+            eventName === "pix.refunded" ||
             eventName === "deposit.refunded";
           const isFailed =
             status === "expired" ||
             status === "cancelled" ||
             status === "denied" ||
+            eventName === "pix.expired" ||
             eventName === "deposit.expired" ||
             eventName === "deposit.cancelled";
 

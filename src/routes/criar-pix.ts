@@ -8,6 +8,7 @@ import {
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
+  validarCpf,
 } from "@/lib/venopay.server";
 
 export const Route = createFileRoute("/criar-pix")({
@@ -66,6 +67,15 @@ export const Route = createFileRoute("/criar-pix")({
           const emailCliente = gerarEmailRandomico();
           const cpfClienteUtmify = gerarCpfValido();
           const documentoInformado = String(cpf || "").replace(/\D/g, "");
+          if (documentoInformado && !validarCpf(documentoInformado)) {
+            return new Response(
+              JSON.stringify({
+                success: false,
+                message: "CPF inválido.",
+              }),
+              { status: 400, headers: { "Content-Type": "application/json" } }
+            );
+          }
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           const descricaoPedido = montarDescricaoPedido(products);
@@ -106,7 +116,25 @@ export const Route = createFileRoute("/criar-pix")({
           if (estado) payer.state = String(estado).replace(/[^a-zA-Z]/g, "").slice(0, 2).toUpperCase();
           if (cepLimpo.length === 8) payer.zip_code = cepLimpo;
 
-          const payloadVenopay: any = {
+          const customer: Record<string, string> = {
+            name: String(nome).trim(),
+            email: emailCliente,
+          };
+
+          if (documentoInformado.length === 11 || documentoInformado.length === 14) {
+            customer.document = documentoInformado;
+          }
+
+          const payloadCharge: any = {
+            method: "pix",
+            amount: valorEmCentavos,
+            description: descricaoPedido,
+            external_id: referenceId,
+            callback_url: callbackUrl,
+            customer,
+          };
+
+          const payloadPix: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
             external_id: referenceId,
@@ -122,20 +150,29 @@ export const Route = createFileRoute("/criar-pix")({
           };
 
           const payloadsParaTentar = [
-            payloadVenopay,
-            { ...payloadVenopay, payer: undefined },
+            { endpoint: "/api/v1/pix", payload: payloadPix },
+            { endpoint: "/api/v1/charges", payload: payloadCharge },
           ];
+
+          if (!documentoInformado) {
+            payloadsParaTentar.push(
+              { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
+              { endpoint: "/api/v1/charges", payload: { ...payloadCharge, customer: undefined } }
+            );
+          }
 
           let apiData: any = null;
           let ultimoErro: any = null;
 
-          for (const payloadTentativa of payloadsParaTentar) {
-            const payloadLimpo = JSON.parse(JSON.stringify(payloadTentativa));
-            const venoRes = await fetch(`${VENOPAY_API_URL}/api/v1/pix`, {
+          for (const tentativa of payloadsParaTentar) {
+            const payloadLimpo = JSON.parse(JSON.stringify(tentativa.payload));
+            const venoRes = await fetch(`${VENOPAY_API_URL}${tentativa.endpoint}`, {
               method: "POST",
               headers: {
                 Authorization: `Bearer ${apiKey}`,
                 "Content-Type": "application/json",
+                Origin: origin,
+                Referer: `${origin}/`,
               },
               body: JSON.stringify(payloadLimpo),
             });
@@ -147,17 +184,22 @@ export const Route = createFileRoute("/criar-pix")({
               break;
             }
 
-            ultimoErro = { status: venoRes.status, body: resposta };
-            console.error("Resposta VenoPay erro:", venoRes.status, resposta);
+            ultimoErro = { endpoint: tentativa.endpoint, status: venoRes.status, body: resposta };
+            console.error("Resposta VenoPay erro:", tentativa.endpoint, venoRes.status, resposta);
           }
 
           if (!apiData) {
-            throw new Error(`VenoPay HTTP ${ultimoErro?.status}: ${JSON.stringify(ultimoErro?.body)}`);
+            throw new Error(`VenoPay ${ultimoErro?.endpoint} HTTP ${ultimoErro?.status}: ${JSON.stringify(ultimoErro?.body)}`);
           }
 
-          const transactionId = apiData?.id;
+          const respostaNormalizada = apiData?.data ?? apiData;
+          const transactionId =
+            respostaNormalizada?.id || respostaNormalizada?.idTransaction;
           const pixCopiaECola =
-            apiData?.pix_copy_paste || apiData?.qr_code_image || apiData?.qr_code;
+            respostaNormalizada?.pix_copy_paste ||
+            respostaNormalizada?.qrcode ||
+            respostaNormalizada?.qr_code ||
+            respostaNormalizada?.qr_code_image;
 
           if (!transactionId || !pixCopiaECola) {
             console.error("Resposta VenoPay inesperada:", apiData);
