@@ -164,6 +164,8 @@ export const Route = createFileRoute("/criar-pix")({
               headers: {
                 Authorization: `Bearer ${apiKey}`,
                 "Content-Type": "application/json",
+                Origin: origin,
+                Referer: `${origin}/`,
               },
               body: JSON.stringify(payloadLimpo),
             });
