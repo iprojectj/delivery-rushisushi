@@ -42,7 +42,7 @@ export const Route = createFileRoute("/criar-pix")({
 
           const apiKey = getVenopayApiKey();
           if (!apiKey) {
-            throw new Error("VENOPAY_API_KEY não configurada.");
+            throw new Error("Token VenoPay não configurado.");
           }
 
           const valorNumerico = Number.parseFloat(String(valorTotal).replace(",", "."));
