@@ -1354,7 +1354,7 @@
             if(checkoutStep === 2) {
                 var nome = document.getElementById('cust-name').value.trim();
                 var cpf = (document.getElementById('cust-cpf') || {}).value.replace(/\D/g,'');
-                var fone = document.getElementById('cust-phone').value.replace(/\\D/g,'');
+                var fone = document.getElementById('cust-phone').value.replace(/\D/g,'');
                 if(!nome || nome.split(' ').length < 2) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe seu nome completo', showConfirmButton:false, timer:2500 }); return; }
                 if(cpf.length !== 11) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe um CPF válido', showConfirmButton:false, timer:2500 }); return; }
                 if(fone.length < 10) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe um WhatsApp válido', showConfirmButton:false, timer:2500 }); return; }
