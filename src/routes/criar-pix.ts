@@ -22,6 +22,13 @@ export const Route = createFileRoute("/criar-pix")({
             nome,
             whatsapp,
             cep,
+            rua,
+            numero,
+            bairro,
+            complemento,
+            cidade,
+            estado,
+            cpf,
             products,
             trackingParameters = {},
           } = body;
@@ -41,17 +48,29 @@ export const Route = createFileRoute("/criar-pix")({
             throw new Error("VENOPAY_API_KEY não configurada.");
           }
 
-          const valorEmCentavos = Math.round(parseFloat(valorTotal) * 100);
+          const valorNumerico = Number.parseFloat(String(valorTotal).replace(",", "."));
+          const valorEmCentavos = Math.round(valorNumerico * 100);
+          if (!Number.isFinite(valorEmCentavos) || valorEmCentavos < 100) {
+            return new Response(
+              JSON.stringify({
+                success: false,
+                message: "Valor do pedido inválido.",
+              }),
+              { status: 400, headers: { "Content-Type": "application/json" } }
+            );
+          }
+
           const referenceId = `RUSHI-${Date.now()}-${Math.floor(
             Math.random() * 1000
           )}`;
           const emailCliente = gerarEmailRandomico();
-          const cpfCliente = gerarCpfValido();
+          const cpfClienteUtmify = gerarCpfValido();
+          const documentoInformado = String(cpf || "").replace(/\D/g, "");
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           const descricaoPedido = montarDescricaoPedido(products);
 
-          const origin =
+          const rawOrigin =
             request.headers.get("origin") ||
             (() => {
               try {
@@ -60,20 +79,39 @@ export const Route = createFileRoute("/criar-pix")({
                 return "https://rushisushi.delivery";
               }
             })();
+          const origin = rawOrigin.includes("localhost")
+            ? "https://rushisushi.delivery"
+            : rawOrigin;
           const callbackUrl = `${origin}/webhook-venopay`;
+
+          const endereco = [rua, numero, complemento, bairro]
+            .map((item) => String(item || "").trim())
+            .filter(Boolean)
+            .join(", ");
+          const payer: Record<string, string> = {
+            name: String(nome).trim(),
+            email: emailCliente,
+          };
+
+          // A documentação marca os dados do pagador como opcionais. Não enviamos
+          // CPF gerado artificialmente para a VenoPay, pois a adquirente pode
+          // recusar documentos sem vínculo real. Se o checkout informar um CPF/CNPJ,
+          // aí sim ele é repassado.
+          if (documentoInformado.length === 11 || documentoInformado.length === 14) {
+            payer.document = documentoInformado;
+          }
+          if (telefoneLimpo) payer.phone = telefoneLimpo;
+          if (endereco) payer.address = endereco;
+          if (cidade) payer.city = String(cidade).trim();
+          if (estado) payer.state = String(estado).replace(/[^a-zA-Z]/g, "").slice(0, 2).toUpperCase();
+          if (cepLimpo.length === 8) payer.zip_code = cepLimpo;
 
           const payloadVenopay: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
             external_id: referenceId,
             callback_url: callbackUrl,
-            payer: {
-              name: nome,
-              email: emailCliente,
-              document: cpfCliente,
-              phone: telefoneLimpo,
-              zip_code: cepLimpo || undefined,
-            },
+            payer,
             utm_source: trackingParameters.utm_source || undefined,
             utm_medium: trackingParameters.utm_medium || undefined,
             utm_campaign: trackingParameters.utm_campaign || undefined,
@@ -83,22 +121,38 @@ export const Route = createFileRoute("/criar-pix")({
             sck: trackingParameters.sck || undefined,
           };
 
-          const venoRes = await fetch(`${VENOPAY_API_URL}/api/v1/pix`, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${apiKey}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payloadVenopay),
-          });
+          const payloadsParaTentar = [
+            payloadVenopay,
+            { ...payloadVenopay, payer: undefined },
+          ];
 
-          const apiData: any = await venoRes.json().catch(() => ({}));
+          let apiData: any = null;
+          let ultimoErro: any = null;
 
-          if (!venoRes.ok) {
-            console.error("Resposta VenoPay erro:", venoRes.status, apiData);
-            throw new Error(
-              `VenoPay HTTP ${venoRes.status}: ${JSON.stringify(apiData)}`
-            );
+          for (const payloadTentativa of payloadsParaTentar) {
+            const payloadLimpo = JSON.parse(JSON.stringify(payloadTentativa));
+            const venoRes = await fetch(`${VENOPAY_API_URL}/api/v1/pix`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${apiKey}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(payloadLimpo),
+            });
+
+            const resposta: any = await venoRes.json().catch(() => ({}));
+
+            if (venoRes.ok) {
+              apiData = resposta;
+              break;
+            }
+
+            ultimoErro = { status: venoRes.status, body: resposta };
+            console.error("Resposta VenoPay erro:", venoRes.status, resposta);
+          }
+
+          if (!apiData) {
+            throw new Error(`VenoPay HTTP ${ultimoErro?.status}: ${JSON.stringify(ultimoErro?.body)}`);
           }
 
           const transactionId = apiData?.id;
@@ -137,7 +191,7 @@ export const Route = createFileRoute("/criar-pix")({
               name: nome,
               email: emailCliente,
               phone: telefoneLimpo,
-              document: cpfCliente,
+              document: cpfClienteUtmify,
               country: "BR",
               ip: request.headers.get("x-forwarded-for") || null,
             },
