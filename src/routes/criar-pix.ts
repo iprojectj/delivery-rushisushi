@@ -142,6 +142,14 @@ export const Route = createFileRoute("/criar-pix")({
           const payloadsParaTentar = [
             { endpoint: "/api/v1/charges", payload: payloadCharge },
             { endpoint: "/api/v1/charges", payload: { ...payloadCharge, customer: undefined } },
+            {
+              endpoint: "/api/v1/charges",
+              payload: {
+                method: "pix",
+                amount: valorEmCentavos,
+                external_id: referenceId,
+              },
+            },
             { endpoint: "/api/v1/pix", payload: payloadPix },
             { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
           ];
