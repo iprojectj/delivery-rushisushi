@@ -10,14 +10,14 @@ export const Route = createFileRoute("/verificar-status/$id")({
           const apiKey = getVenopayApiKey();
           const headers = { Authorization: `Bearer ${apiKey}` };
           let res = await fetch(
-            `${VENOPAY_API_URL}/api/v1/charges/${encodeURIComponent(id)}`,
+            `${VENOPAY_API_URL}/api/v1/pix/${encodeURIComponent(id)}/status`,
             { headers }
           );
           let data: any = await res.json().catch(() => ({}));
 
           if (!res.ok) {
             res = await fetch(
-              `${VENOPAY_API_URL}/api/v1/pix/${encodeURIComponent(id)}/status`,
+              `${VENOPAY_API_URL}/api/v1/charges/${encodeURIComponent(id)}`,
               { headers }
             );
             data = await res.json().catch(() => ({}));

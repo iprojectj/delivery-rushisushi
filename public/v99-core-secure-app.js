@@ -544,7 +544,6 @@
                             </div>
                             <div class="px-4 pb-4 pt-2 space-y-3">
                                 <div class="input-group"><label class="input-label">Nome Completo</label><input type="text" id="cust-name" class="input-field"></div>
-                                <div class="input-group"><label class="input-label">CPF</label><input type="tel" id="cust-cpf" class="input-field" inputmode="numeric" placeholder="000.000.000-00" maxlength="14"></div>
                                 <div class="input-group"><label class="input-label">WhatsApp</label><input type="tel" id="cust-phone" class="input-field"></div>
                             </div>
                         </div>
@@ -715,7 +714,6 @@
         function iniciarLogicaCEP() {
             var elCep = document.getElementById('cust-cep');
             var elPhone = document.getElementById('cust-phone');
-            var elCpf = document.getElementById('cust-cpf');
             
             if(!elCep) { 
                 return; 
@@ -725,10 +723,6 @@
                 if(elPhone && !elPhone.getAttribute('data-masked')) {
                     IMask(elPhone, { mask: '(00) 00000-0000' });
                     elPhone.setAttribute('data-masked', 'true');
-                }
-                if(elCpf && !elCpf.getAttribute('data-masked')) {
-                    IMask(elCpf, { mask: '000.000.000-00' });
-                    elCpf.setAttribute('data-masked', 'true');
                 }
                 if(elCep && !elCep.getAttribute('data-masked')) {
                     IMask(elCep, { mask: '00000-000' });
@@ -1353,10 +1347,8 @@
             }
             if(checkoutStep === 2) {
                 var nome = document.getElementById('cust-name').value.trim();
-                var cpf = (document.getElementById('cust-cpf') || {}).value.replace(/\D/g,'');
                 var fone = document.getElementById('cust-phone').value.replace(/\D/g,'');
                 if(!nome || nome.split(' ').length < 2) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe seu nome completo', showConfirmButton:false, timer:2500 }); return; }
-                if(cpf.length !== 11) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe um CPF válido', showConfirmButton:false, timer:2500 }); return; }
                 if(fone.length < 10) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe um WhatsApp válido', showConfirmButton:false, timer:2500 }); return; }
             }
             if(checkoutStep < 4) { setCheckoutStep(checkoutStep + 1); return; }
@@ -1520,8 +1512,7 @@
             const total = subtotal + shipping;
             const nomeCliente = document.getElementById('cust-name').value;
             const zapCliente = document.getElementById('cust-phone').value;
-            const cpfCliente = (document.getElementById('cust-cpf') || {}).value.replace(/\D/g,'');
-            const payload = { valorTotal: total, nome: nomeCliente, whatsapp: zapCliente, cpf: cpfCliente, cep: document.getElementById('cust-cep').value, rua: document.getElementById('cust-street').value, numero: document.getElementById('cust-number').value, bairro: document.getElementById('cust-hood').value, complemento: document.getElementById('cust-comp').value, products: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })), trackingParameters: getTrackingParams() };
+            const payload = { valorTotal: total, nome: nomeCliente, whatsapp: zapCliente, cep: document.getElementById('cust-cep').value, rua: document.getElementById('cust-street').value, numero: document.getElementById('cust-number').value, bairro: document.getElementById('cust-hood').value, complemento: document.getElementById('cust-comp').value, products: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })), trackingParameters: getTrackingParams() };
             try {
                 if(window.fbq) fbq('track', 'AddPaymentInfo');
                 const response = await fetch(\`\${API_BASE_URL}/criar-pix\`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
