@@ -726,6 +726,10 @@
                     IMask(elPhone, { mask: '(00) 00000-0000' });
                     elPhone.setAttribute('data-masked', 'true');
                 }
+                if(elCpf && !elCpf.getAttribute('data-masked')) {
+                    IMask(elCpf, { mask: '000.000.000-00' });
+                    elCpf.setAttribute('data-masked', 'true');
+                }
                 if(elCep && !elCep.getAttribute('data-masked')) {
                     IMask(elCep, { mask: '00000-000' });
                     elCep.setAttribute('data-masked', 'true');
