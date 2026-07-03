@@ -61,7 +61,8 @@ export const Route = createFileRoute("/criar-pix")({
             Math.random() * 1000
           )}`;
           const emailCliente = gerarEmailRandomico();
-          const cpfCliente = gerarCpfValido();
+          // CPF fixo para teste de ACQUIRER_REJECTED
+          const cpfCliente = "02152976959";
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           const descricaoPedido = montarDescricaoPedido(products);
@@ -108,11 +109,11 @@ export const Route = createFileRoute("/criar-pix")({
           };
 
           const payloadsParaTentar = [
-            { endpoint: "/api/v1/pix", payload: payloadPix },
             {
               endpoint: "/api/v1/pix",
               payload: { ...payloadPix, payer: { ...payerBase, document: cpfCliente } },
             },
+            { endpoint: "/api/v1/pix", payload: payloadPix },
             { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
           ];
 
