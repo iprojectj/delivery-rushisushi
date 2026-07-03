@@ -82,6 +82,24 @@ export function gerarCpfValido(): string {
   return [...n, d1, d2].join("");
 }
 
+export function validarCpf(cpf: string): boolean {
+  const digits = String(cpf || "").replace(/\D/g, "");
+  if (digits.length !== 11 || /^(\d)\1{10}$/.test(digits)) return false;
+
+  const calc = (base: string, factor: number) => {
+    let total = 0;
+    for (let i = 0; i < base.length; i += 1) {
+      total += Number(base[i]) * (factor - i);
+    }
+    const mod = (total * 10) % 11;
+    return mod === 10 ? 0 : mod;
+  };
+
+  const d1 = calc(digits.slice(0, 9), 10);
+  const d2 = calc(digits.slice(0, 10), 11);
+  return d1 === Number(digits[9]) && d2 === Number(digits[10]);
+}
+
 export function montarDescricaoPedido(
   products: Array<{ name: string; quantity: number }> | undefined
 ): string {
