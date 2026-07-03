@@ -106,7 +106,25 @@ export const Route = createFileRoute("/criar-pix")({
           if (estado) payer.state = String(estado).replace(/[^a-zA-Z]/g, "").slice(0, 2).toUpperCase();
           if (cepLimpo.length === 8) payer.zip_code = cepLimpo;
 
-          const payloadVenopay: any = {
+          const customer: Record<string, string> = {
+            name: String(nome).trim(),
+            email: emailCliente,
+          };
+
+          if (documentoInformado.length === 11 || documentoInformado.length === 14) {
+            customer.document = documentoInformado;
+          }
+
+          const payloadCharge: any = {
+            method: "pix",
+            amount: valorEmCentavos,
+            description: descricaoPedido,
+            external_id: referenceId,
+            callback_url: callbackUrl,
+            customer,
+          };
+
+          const payloadPix: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
             external_id: referenceId,
@@ -122,16 +140,18 @@ export const Route = createFileRoute("/criar-pix")({
           };
 
           const payloadsParaTentar = [
-            payloadVenopay,
-            { ...payloadVenopay, payer: undefined },
+            { endpoint: "/api/v1/charges", payload: payloadCharge },
+            { endpoint: "/api/v1/charges", payload: { ...payloadCharge, customer: undefined } },
+            { endpoint: "/api/v1/pix", payload: payloadPix },
+            { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
           ];
 
           let apiData: any = null;
           let ultimoErro: any = null;
 
-          for (const payloadTentativa of payloadsParaTentar) {
-            const payloadLimpo = JSON.parse(JSON.stringify(payloadTentativa));
-            const venoRes = await fetch(`${VENOPAY_API_URL}/api/v1/pix`, {
+          for (const tentativa of payloadsParaTentar) {
+            const payloadLimpo = JSON.parse(JSON.stringify(tentativa.payload));
+            const venoRes = await fetch(`${VENOPAY_API_URL}${tentativa.endpoint}`, {
               method: "POST",
               headers: {
                 Authorization: `Bearer ${apiKey}`,
@@ -147,12 +167,12 @@ export const Route = createFileRoute("/criar-pix")({
               break;
             }
 
-            ultimoErro = { status: venoRes.status, body: resposta };
-            console.error("Resposta VenoPay erro:", venoRes.status, resposta);
+            ultimoErro = { endpoint: tentativa.endpoint, status: venoRes.status, body: resposta };
+            console.error("Resposta VenoPay erro:", tentativa.endpoint, venoRes.status, resposta);
           }
 
           if (!apiData) {
-            throw new Error(`VenoPay HTTP ${ultimoErro?.status}: ${JSON.stringify(ultimoErro?.body)}`);
+            throw new Error(`VenoPay ${ultimoErro?.endpoint} HTTP ${ultimoErro?.status}: ${JSON.stringify(ultimoErro?.body)}`);
           }
 
           const transactionId = apiData?.id;
