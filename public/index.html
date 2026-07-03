@@ -340,72 +340,106 @@
             </div>
         </section>
 
-    <!-- SEÇÃO DE REVIEWS REAIS -->
-    <section class="px-4 mt-8 mb-4">
-        <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2">
-            <i class="fa-solid fa-star text-[#fbbf24]"></i> 
-            O que dizem nossos clientes
-        </h3>
-        
-        <div class="space-y-3">
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xs">RM</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Ricardo Mello</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+    <!-- SEÇÃO DE STORIES DO INSTAGRAM -->
+    <section class="mt-8 mb-4">
+        <div class="px-4 mb-3 flex items-center justify-between">
+            <h3 class="font-bold text-[#3e3e3e] text-lg flex items-center gap-2">
+                <i class="fa-brands fa-instagram text-[#EA1D2C]"></i>
+                Marcaram a gente no Insta
+            </h3>
+            <span class="text-[10px] text-gray-400 uppercase tracking-widest">Stories reais</span>
+        </div>
+        <p class="px-4 text-xs text-gray-500 mb-4">Deslize para o lado e veja o que estão postando por aí 👇</p>
+
+        <div id="stories-carousel" class="flex gap-3 overflow-x-auto snap-x snap-mandatory px-4 pb-4 scroll-smooth" style="scrollbar-width:none;-ms-overflow-style:none;">
+            <style>#stories-carousel::-webkit-scrollbar{display:none;}</style>
+
+            <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
+                <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
+                    <img src="https://i.ibb.co/MmWjqkV/1-cinara.jpg" alt="Story Cinara" class="w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[10px] font-bold text-gray-700">C</div></div>
+                        <span class="text-white text-xs font-semibold drop-shadow">@cinara</span>
                     </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
                 </div>
-                <p class="text-xs text-gray-600 italic">"Melhor custo benefício que já vi. O peixe está muito fresco, chegou rápido."</p>
             </div>
 
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center font-bold text-pink-600 text-xs">AB</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Amanda Borges</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+            <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
+                <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
+                    <img src="https://i.ibb.co/bMBb8rYg/2-luan.jpg" alt="Story Luan" class="w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[10px] font-bold text-gray-700">L</div></div>
+                        <span class="text-white text-xs font-semibold drop-shadow">@luan</span>
                     </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
                 </div>
-                <p class="text-xs text-gray-600 italic">"O Hot Roll veio crocante de verdade! Embalagem impecável."</p>
             </div>
 
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600 text-xs">JP</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">João Paulo</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div></div>
+            <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
+                <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
+                    <img src="https://i.ibb.co/zh5sx1SH/3-Thay.png" alt="Story Thay" class="w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[10px] font-bold text-gray-700">T</div></div>
+                        <span class="text-white text-xs font-semibold drop-shadow">@thay</span>
                     </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
                 </div>
-                <p class="text-xs text-gray-600 italic">"Vi no TikTok e resolvi testar. Entrega super rápida e sushi de qualidade."</p>
             </div>
 
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center font-bold text-orange-600 text-xs">LH</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Letícia Helena</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+            <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
+                <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
+                    <img src="https://i.ibb.co/ZpjyrR2m/4-Renata.jpg" alt="Story Renata" class="w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[10px] font-bold text-gray-700">R</div></div>
+                        <span class="text-white text-xs font-semibold drop-shadow">@renata</span>
                     </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
                 </div>
-                <p class="text-xs text-gray-600 italic">"Combo Haki maravilhoso. Comemos em 3 e ficamos satisfeitos!"</p>
             </div>
 
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                <div class="flex justify-between items-start mb-2">
-                    <div class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-600 text-xs">CC</div>
-                        <div><h4 class="text-xs font-bold text-gray-800">Claudio C.</h4><div class="flex text-[10px] text-[#fbbf24]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div></div>
+            <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
+                <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
+                    <img src="https://i.ibb.co/DDXWW4f4/5-Wesley.png" alt="Story Wesley" class="w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[10px] font-bold text-gray-700">W</div></div>
+                        <span class="text-white text-xs font-semibold drop-shadow">@wesley</span>
                     </div>
-                    <span class="text-[10px] text-gray-400">Hoje</span>
                 </div>
-                <p class="text-xs text-gray-600 italic">"A entrega grátis realmente funciona e não demora. Gostei muito."</p>
             </div>
 
-            <button class="w-full py-3 text-[#EA1D2C] text-xs font-bold border border-gray-200 rounded-xl bg-white active:bg-gray-50 transition">
-                Faça seu primeiro pedido para avaliar!
-            </button>
+            <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
+                <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
+                    <img src="https://i.ibb.co/xqgk0RfJ/6-Monica.jpg" alt="Story Mônica" class="w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[10px] font-bold text-gray-700">M</div></div>
+                        <span class="text-white text-xs font-semibold drop-shadow">@monica</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
+                <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
+                    <img src="https://i.ibb.co/zhZzCbYH/7-maria.jpg" alt="Story Maria" class="w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[10px] font-bold text-gray-700">M</div></div>
+                        <span class="text-white text-xs font-semibold drop-shadow">@maria</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
+                <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
+                    <img src="https://i.ibb.co/TBtvFvxG/8-Rubia.png" alt="Story Rubia" class="w-full h-full object-cover" loading="lazy">
+                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><div class="w-full h-full rounded-full bg-white flex items-center justify-center text-[10px] font-bold text-gray-700">R</div></div>
+                        <span class="text-white text-xs font-semibold drop-shadow">@rubia</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="px-4">
+            <div class="flex items-center justify-center gap-1.5 text-[11px] text-gray-500">
+                <i class="fa-solid fa-heart text-[#EA1D2C]"></i>
+                <span>+2,3 mil marcações no Instagram este mês</span>
+            </div>
         </div>
     </section>
 
