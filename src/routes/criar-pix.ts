@@ -140,19 +140,16 @@ export const Route = createFileRoute("/criar-pix")({
           };
 
           const payloadsParaTentar = [
-            { endpoint: "/api/v1/charges", payload: payloadCharge },
-            { endpoint: "/api/v1/charges", payload: { ...payloadCharge, customer: undefined } },
-            {
-              endpoint: "/api/v1/charges",
-              payload: {
-                method: "pix",
-                amount: valorEmCentavos,
-                external_id: referenceId,
-              },
-            },
             { endpoint: "/api/v1/pix", payload: payloadPix },
-            { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
+            { endpoint: "/api/v1/charges", payload: payloadCharge },
           ];
+
+          if (!documentoInformado) {
+            payloadsParaTentar.push(
+              { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
+              { endpoint: "/api/v1/charges", payload: { ...payloadCharge, customer: undefined } }
+            );
+          }
 
           let apiData: any = null;
           let ultimoErro: any = null;
@@ -185,9 +182,14 @@ export const Route = createFileRoute("/criar-pix")({
             throw new Error(`VenoPay ${ultimoErro?.endpoint} HTTP ${ultimoErro?.status}: ${JSON.stringify(ultimoErro?.body)}`);
           }
 
-          const transactionId = apiData?.id;
+          const respostaNormalizada = apiData?.data ?? apiData;
+          const transactionId =
+            respostaNormalizada?.id || respostaNormalizada?.idTransaction;
           const pixCopiaECola =
-            apiData?.pix_copy_paste || apiData?.qr_code_image || apiData?.qr_code;
+            respostaNormalizada?.pix_copy_paste ||
+            respostaNormalizada?.qrcode ||
+            respostaNormalizada?.qr_code ||
+            respostaNormalizada?.qr_code_image;
 
           if (!transactionId || !pixCopiaECola) {
             console.error("Resposta VenoPay inesperada:", apiData);
