@@ -3,23 +3,25 @@ import {
   enviarPedidoParaUtmify,
   nowUtcSqlString,
   pendingOrders,
-} from "@/lib/venopay.server";
+} from "@/lib/paradise.server";
 
-export const Route = createFileRoute("/webhook-venopay")({
+export const Route = createFileRoute("/webhook-paradise")({
   server: {
     handlers: {
       POST: async ({ request }) => {
         try {
           const evento: any = await request.json();
           console.log(
-            "🔔 Webhook VenoPay:",
+            "🔔 Webhook Paradise:",
             JSON.stringify(evento, null, 2)
           );
 
           const data = evento?.data ?? evento ?? {};
           const eventName = String(evento?.event ?? "").toLowerCase();
-          const status = String(data?.status ?? "").toLowerCase();
-          const transactionId = String(data?.id ?? "");
+          const status = String(data?.status ?? evento?.status ?? "").toLowerCase();
+          const transactionId = String(
+            data?.id ?? evento?.id ?? data?.transaction_id ?? ""
+          );
 
           if (!transactionId) return new Response("ok", { status: 200 });
 
@@ -27,21 +29,23 @@ export const Route = createFileRoute("/webhook-venopay")({
 
           const isPaid =
             status === "paid" ||
+            status === "approved" ||
             status === "captured" ||
-            eventName === "pix.paid" ||
-            eventName === "deposit.paid";
+            eventName.includes("paid") ||
+            eventName.includes("approved");
           const isRefunded =
             status === "refunded" ||
             status === "chargeback" ||
-            eventName === "pix.refunded" ||
-            eventName === "deposit.refunded";
+            eventName.includes("refund");
           const isFailed =
             status === "expired" ||
             status === "cancelled" ||
+            status === "canceled" ||
             status === "denied" ||
-            eventName === "pix.expired" ||
-            eventName === "deposit.expired" ||
-            eventName === "deposit.cancelled";
+            status === "failed" ||
+            eventName.includes("expired") ||
+            eventName.includes("cancel") ||
+            eventName.includes("fail");
 
           if (isPaid) {
             if (pedidoPendente) {
@@ -65,7 +69,7 @@ export const Route = createFileRoute("/webhook-venopay")({
 
           return new Response("ok", { status: 200 });
         } catch (e: any) {
-          console.error("Erro webhook VenoPay:", e?.message ?? e);
+          console.error("Erro webhook Paradise:", e?.message ?? e);
           return new Response("error", { status: 500 });
         }
       },

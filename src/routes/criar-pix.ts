@@ -1,14 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  VENOPAY_API_URL,
+  PARADISE_API_URL,
   enviarPedidoParaUtmify,
-  gerarCpfValido,
   gerarEmailRandomico,
-  getVenopayApiKey,
+  getParadiseAccountId,
+  getParadiseProductHash,
+  getParadiseSecretKey,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
-} from "@/lib/venopay.server";
+} from "@/lib/paradise.server";
 
 export const Route = createFileRoute("/criar-pix")({
   server: {
@@ -40,12 +41,16 @@ export const Route = createFileRoute("/criar-pix")({
             );
           }
 
-          const apiKey = getVenopayApiKey();
-          if (!apiKey) {
-            throw new Error("Token VenoPay não configurado.");
+          const secretKey = getParadiseSecretKey();
+          const accountId = getParadiseAccountId();
+          const productHash = getParadiseProductHash();
+          if (!secretKey) {
+            throw new Error("Chave secreta Paradise não configurada.");
           }
 
-          const valorNumerico = Number.parseFloat(String(valorTotal).replace(",", "."));
+          const valorNumerico = Number.parseFloat(
+            String(valorTotal).replace(",", ".")
+          );
           const valorEmCentavos = Math.round(valorNumerico * 100);
           if (!Number.isFinite(valorEmCentavos) || valorEmCentavos < 100) {
             return new Response(
@@ -61,7 +66,6 @@ export const Route = createFileRoute("/criar-pix")({
             Math.random() * 1000
           )}`;
           const emailCliente = gerarEmailRandomico();
-          // CPF fixo para teste de ACQUIRER_REJECTED
           const cpfCliente = "02152976959";
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
@@ -79,87 +83,86 @@ export const Route = createFileRoute("/criar-pix")({
           const origin = rawOrigin.includes("localhost")
             ? "https://rushisushi.delivery"
             : rawOrigin;
-          const callbackUrl = `${origin}/webhook-venopay`;
+          const postbackUrl = `${origin}/webhook-paradise`;
 
-          const endereco = [rua, numero, complemento, bairro]
+          const enderecoStr = [rua, numero, complemento, bairro]
             .map((item) => String(item || "").trim())
             .filter(Boolean)
             .join(", ");
-          const payerBase: Record<string, string> = {
-            name: String(nome).trim(),
-            email: emailCliente,
-          };
-          if (telefoneLimpo) payerBase.phone = telefoneLimpo;
-          if (endereco) payerBase.address = endereco;
-          if (cepLimpo.length === 8) payerBase.zip_code = cepLimpo;
 
-          const payloadPix: any = {
+          const payloadParadise: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
-            external_id: referenceId,
-            callback_url: callbackUrl,
-            payer: payerBase,
-            utm_source: trackingParameters.utm_source || undefined,
-            utm_medium: trackingParameters.utm_medium || undefined,
-            utm_campaign: trackingParameters.utm_campaign || undefined,
-            utm_content: trackingParameters.utm_content || undefined,
-            utm_term: trackingParameters.utm_term || undefined,
-            src: trackingParameters.src || undefined,
-            sck: trackingParameters.sck || undefined,
+            reference: referenceId,
+            source: "api_externa",
+            postback_url: postbackUrl,
+            customer: {
+              name: String(nome).trim(),
+              email: emailCliente,
+              document: cpfCliente,
+              phone: telefoneLimpo,
+              address: enderecoStr || undefined,
+              zip_code: cepLimpo.length === 8 ? cepLimpo : undefined,
+            },
+            tracking: {
+              utm_source: trackingParameters.utm_source || undefined,
+              utm_medium: trackingParameters.utm_medium || undefined,
+              utm_campaign: trackingParameters.utm_campaign || undefined,
+              utm_content: trackingParameters.utm_content || undefined,
+              utm_term: trackingParameters.utm_term || undefined,
+              src: trackingParameters.src || undefined,
+              sck: trackingParameters.sck || undefined,
+            },
           };
 
-          const payloadsParaTentar = [
+          if (productHash) payloadParadise.productHash = productHash;
+          if (accountId) payloadParadise.account_id = accountId;
+
+          const payloadLimpo = JSON.parse(JSON.stringify(payloadParadise));
+
+          const paradiseRes = await fetch(
+            `${PARADISE_API_URL}/api/v1/transaction.php`,
             {
-              endpoint: "/api/v1/pix",
-              payload: { ...payloadPix, payer: { ...payerBase, document: cpfCliente } },
-            },
-            { endpoint: "/api/v1/pix", payload: payloadPix },
-            { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
-          ];
-
-          let apiData: any = null;
-          let ultimoErro: any = null;
-
-          for (const tentativa of payloadsParaTentar) {
-            const payloadLimpo = JSON.parse(JSON.stringify(tentativa.payload));
-            const venoRes = await fetch(`${VENOPAY_API_URL}${tentativa.endpoint}`, {
               method: "POST",
               headers: {
-                Authorization: `Bearer ${apiKey}`,
+                "X-API-Key": secretKey,
                 "Content-Type": "application/json",
                 Origin: origin,
                 Referer: `${origin}/`,
               },
               body: JSON.stringify(payloadLimpo),
-            });
-
-            const resposta: any = await venoRes.json().catch(() => ({}));
-
-            if (venoRes.ok) {
-              apiData = resposta;
-              break;
             }
+          );
 
-            ultimoErro = { endpoint: tentativa.endpoint, status: venoRes.status, body: resposta };
-            console.error("Resposta VenoPay erro:", tentativa.endpoint, venoRes.status, resposta);
-          }
+          const apiData: any = await paradiseRes.json().catch(() => ({}));
 
-          if (!apiData) {
-            throw new Error(`VenoPay ${ultimoErro?.endpoint} HTTP ${ultimoErro?.status}: ${JSON.stringify(ultimoErro?.body)}`);
+          if (!paradiseRes.ok) {
+            console.error(
+              "Resposta Paradise erro:",
+              paradiseRes.status,
+              apiData
+            );
+            throw new Error(
+              `Paradise HTTP ${paradiseRes.status}: ${JSON.stringify(apiData)}`
+            );
           }
 
           const respostaNormalizada = apiData?.data ?? apiData;
           const transactionId =
-            respostaNormalizada?.id || respostaNormalizada?.idTransaction;
+            respostaNormalizada?.id ||
+            respostaNormalizada?.idTransaction ||
+            respostaNormalizada?.transaction_id ||
+            respostaNormalizada?.hash;
           const pixCopiaECola =
+            respostaNormalizada?.pix?.pix_qr_code ||
             respostaNormalizada?.pix_copy_paste ||
             respostaNormalizada?.qrcode ||
             respostaNormalizada?.qr_code ||
-            respostaNormalizada?.qr_code_image;
+            respostaNormalizada?.pix_code;
 
           if (!transactionId || !pixCopiaECola) {
-            console.error("Resposta VenoPay inesperada:", apiData);
-            throw new Error("Resposta da VenoPay incompleta.");
+            console.error("Resposta Paradise inesperada:", apiData);
+            throw new Error("Resposta da Paradise incompleta.");
           }
 
           const qrCodeFinal = `https://quickchart.io/qr?text=${encodeURIComponent(
@@ -179,7 +182,7 @@ export const Route = createFileRoute("/criar-pix")({
 
           const payloadUtmify = {
             orderId: String(transactionId),
-            platform: "rushi-venopay",
+            platform: "rushi-paradise",
             paymentMethod: "pix",
             status: "pending",
             createdAt: nowUtcSqlString(),
@@ -229,7 +232,7 @@ export const Route = createFileRoute("/criar-pix")({
             { status: 200, headers: { "Content-Type": "application/json" } }
           );
         } catch (error: any) {
-          console.error("Erro criar-pix VenoPay:", error?.message ?? error);
+          console.error("Erro criar-pix Paradise:", error?.message ?? error);
           return new Response(
             JSON.stringify({
               success: false,
