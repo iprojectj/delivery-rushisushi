@@ -8,7 +8,6 @@ import {
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
-  validarCpf,
 } from "@/lib/venopay.server";
 
 export const Route = createFileRoute("/criar-pix")({
@@ -27,9 +26,6 @@ export const Route = createFileRoute("/criar-pix")({
             numero,
             bairro,
             complemento,
-            cidade,
-            estado,
-            cpf,
             products,
             trackingParameters = {},
           } = body;
@@ -65,17 +61,7 @@ export const Route = createFileRoute("/criar-pix")({
             Math.random() * 1000
           )}`;
           const emailCliente = gerarEmailRandomico();
-          const cpfClienteUtmify = gerarCpfValido();
-          const documentoInformado = String(cpf || "").replace(/\D/g, "");
-          if (documentoInformado && !validarCpf(documentoInformado)) {
-            return new Response(
-              JSON.stringify({
-                success: false,
-                message: "CPF inválido.",
-              }),
-              { status: 400, headers: { "Content-Type": "application/json" } }
-            );
-          }
+          const cpfCliente = gerarCpfValido();
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           const descricaoPedido = montarDescricaoPedido(products);
@@ -98,48 +84,20 @@ export const Route = createFileRoute("/criar-pix")({
             .map((item) => String(item || "").trim())
             .filter(Boolean)
             .join(", ");
-          const payer: Record<string, string> = {
+          const payerBase: Record<string, string> = {
             name: String(nome).trim(),
             email: emailCliente,
           };
-
-          // A documentação marca os dados do pagador como opcionais. Não enviamos
-          // CPF gerado artificialmente para a VenoPay, pois a adquirente pode
-          // recusar documentos sem vínculo real. Se o checkout informar um CPF/CNPJ,
-          // aí sim ele é repassado.
-          if (documentoInformado.length === 11 || documentoInformado.length === 14) {
-            payer.document = documentoInformado;
-          }
-          if (telefoneLimpo) payer.phone = telefoneLimpo;
-          if (endereco) payer.address = endereco;
-          if (cidade) payer.city = String(cidade).trim();
-          if (estado) payer.state = String(estado).replace(/[^a-zA-Z]/g, "").slice(0, 2).toUpperCase();
-          if (cepLimpo.length === 8) payer.zip_code = cepLimpo;
-
-          const customer: Record<string, string> = {
-            name: String(nome).trim(),
-            email: emailCliente,
-          };
-
-          if (documentoInformado.length === 11 || documentoInformado.length === 14) {
-            customer.document = documentoInformado;
-          }
-
-          const payloadCharge: any = {
-            method: "pix",
-            amount: valorEmCentavos,
-            description: descricaoPedido,
-            external_id: referenceId,
-            callback_url: callbackUrl,
-            customer,
-          };
+          if (telefoneLimpo) payerBase.phone = telefoneLimpo;
+          if (endereco) payerBase.address = endereco;
+          if (cepLimpo.length === 8) payerBase.zip_code = cepLimpo;
 
           const payloadPix: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
             external_id: referenceId,
             callback_url: callbackUrl,
-            payer,
+            payer: payerBase,
             utm_source: trackingParameters.utm_source || undefined,
             utm_medium: trackingParameters.utm_medium || undefined,
             utm_campaign: trackingParameters.utm_campaign || undefined,
@@ -151,15 +109,12 @@ export const Route = createFileRoute("/criar-pix")({
 
           const payloadsParaTentar = [
             { endpoint: "/api/v1/pix", payload: payloadPix },
-            { endpoint: "/api/v1/charges", payload: payloadCharge },
+            {
+              endpoint: "/api/v1/pix",
+              payload: { ...payloadPix, payer: { ...payerBase, document: cpfCliente } },
+            },
+            { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
           ];
-
-          if (!documentoInformado) {
-            payloadsParaTentar.push(
-              { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
-              { endpoint: "/api/v1/charges", payload: { ...payloadCharge, customer: undefined } }
-            );
-          }
 
           let apiData: any = null;
           let ultimoErro: any = null;
@@ -233,7 +188,7 @@ export const Route = createFileRoute("/criar-pix")({
               name: nome,
               email: emailCliente,
               phone: telefoneLimpo,
-              document: cpfClienteUtmify,
+              document: cpfCliente,
               country: "BR",
               ip: request.headers.get("x-forwarded-for") || null,
             },
