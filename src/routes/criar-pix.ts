@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   VENOPAY_API_URL,
   enviarPedidoParaUtmify,
+  gerarCpfValido,
   gerarEmailRandomico,
   getVenopayApiKey,
   montarDescricaoPedido,
