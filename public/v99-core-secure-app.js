@@ -544,6 +544,7 @@
                             </div>
                             <div class="px-4 pb-4 pt-2 space-y-3">
                                 <div class="input-group"><label class="input-label">Nome Completo</label><input type="text" id="cust-name" class="input-field"></div>
+                                <div class="input-group"><label class="input-label">CPF</label><input type="tel" id="cust-cpf" class="input-field" inputmode="numeric" placeholder="000.000.000-00" maxlength="14"></div>
                                 <div class="input-group"><label class="input-label">WhatsApp</label><input type="tel" id="cust-phone" class="input-field"></div>
                             </div>
                         </div>
@@ -714,6 +715,7 @@
         function iniciarLogicaCEP() {
             var elCep = document.getElementById('cust-cep');
             var elPhone = document.getElementById('cust-phone');
+            var elCpf = document.getElementById('cust-cpf');
             
             if(!elCep) { 
                 return; 
