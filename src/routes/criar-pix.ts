@@ -109,11 +109,11 @@ export const Route = createFileRoute("/criar-pix")({
           };
 
           const payloadsParaTentar = [
-            { endpoint: "/api/v1/pix", payload: payloadPix },
             {
               endpoint: "/api/v1/pix",
               payload: { ...payloadPix, payer: { ...payerBase, document: cpfCliente } },
             },
+            { endpoint: "/api/v1/pix", payload: payloadPix },
             { endpoint: "/api/v1/pix", payload: { ...payloadPix, payer: undefined } },
           ];
 
