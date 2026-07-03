@@ -1,11 +1,19 @@
-// VenoPay Gateway helpers. Docs: https://beta.venopayments.com/llms.txt
+// Paradise Gateway helpers. Docs: https://multi.paradisepags.com/documentation
 
-export const VENOPAY_API_URL = "https://beta.venopayments.com";
+export const PARADISE_API_URL = "https://multi.paradisepags.com";
 export const UTMIFY_API_URL =
   "https://api.utmify.com.br/api-credentials/orders";
 
-export function getVenopayApiKey() {
-  return process.env.VENOPAY_LIVE_TOKEN || process.env.VENOPAY_API_KEY || "";
+export function getParadiseSecretKey() {
+  return process.env.PARADISE_SECRET_KEY || "";
+}
+
+export function getParadiseAccountId() {
+  return process.env.PARADISE_ACCOUNT_ID || "";
+}
+
+export function getParadiseProductHash() {
+  return process.env.PARADISE_PRODUCT_HASH || "";
 }
 
 export function getUtmifyToken() {
@@ -60,25 +68,6 @@ export function gerarEmailRandomico(prefixo = "cliente") {
   return `${prefixo}.${Date.now()}.${Math.floor(
     Math.random() * 9999
   )}@rushisushi.site`;
-}
-
-// Gera CPF válido aleatório (algoritmo oficial) para uso interno/fallback.
-export function gerarCpfValido(): string {
-  const n: number[] = Array.from({ length: 9 }, () =>
-    Math.floor(Math.random() * 10)
-  );
-  const calcDigito = (base: number[]) => {
-    const fatorInicial = base.length + 1;
-    const soma = base.reduce(
-      (acc, v, i) => acc + v * (fatorInicial - i),
-      0
-    );
-    const resto = (soma * 10) % 11;
-    return resto === 10 ? 0 : resto;
-  };
-  const d1 = calcDigito(n);
-  const d2 = calcDigito([...n, d1]);
-  return [...n, d1, d2].join("");
 }
 
 export function montarDescricaoPedido(

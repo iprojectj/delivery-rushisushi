@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { VENOPAY_API_URL, getVenopayApiKey } from "@/lib/venopay.server";
+import { PARADISE_API_URL, getParadiseSecretKey } from "@/lib/paradise.server";
 
 export const Route = createFileRoute("/verificar-status/$id")({
   server: {
@@ -7,29 +7,24 @@ export const Route = createFileRoute("/verificar-status/$id")({
       GET: async ({ params }) => {
         try {
           const { id } = params;
-          const apiKey = getVenopayApiKey();
-          const headers = { Authorization: `Bearer ${apiKey}` };
-          let res = await fetch(
-            `${VENOPAY_API_URL}/api/v1/pix/${encodeURIComponent(id)}/status`,
-            { headers }
-          );
-          let data: any = await res.json().catch(() => ({}));
+          const secretKey = getParadiseSecretKey();
+          const url = `${PARADISE_API_URL}/api/v1/query.php?action=get_transaction&id=${encodeURIComponent(
+            id
+          )}`;
+          const res = await fetch(url, {
+            headers: { "X-API-Key": secretKey },
+          });
+          const data: any = await res.json().catch(() => ({}));
+          const norm = data?.data ?? data;
+          const raw = String(norm?.status ?? "").toLowerCase();
 
-          if (!res.ok) {
-            res = await fetch(
-              `${VENOPAY_API_URL}/api/v1/charges/${encodeURIComponent(id)}`,
-              { headers }
-            );
-            data = await res.json().catch(() => ({}));
-          }
-
-          const raw = String(data?.status ?? "").toLowerCase();
           let statusFinal: string = raw;
-          if (raw === "paid" || raw === "captured") statusFinal = "paid";
+          if (raw === "paid" || raw === "approved" || raw === "captured")
+            statusFinal = "paid";
           else if (
             raw === "pending" ||
-            raw === "authorized" ||
-            raw === "disputed"
+            raw === "waiting_payment" ||
+            raw === "authorized"
           )
             statusFinal = "pending";
           else if (raw === "refunded" || raw === "chargeback")
@@ -37,16 +32,19 @@ export const Route = createFileRoute("/verificar-status/$id")({
           else if (
             raw === "expired" ||
             raw === "cancelled" ||
-            raw === "denied"
+            raw === "canceled" ||
+            raw === "denied" ||
+            raw === "failed"
           )
             statusFinal = "failed";
+
           return new Response(JSON.stringify({ status: statusFinal }), {
             status: 200,
             headers: { "Content-Type": "application/json" },
           });
         } catch (error: any) {
           console.error(
-            `Erro status VenoPay ID ${params.id}:`,
+            `Erro status Paradise ID ${params.id}:`,
             error?.message ?? error
           );
           return new Response(JSON.stringify({ status: "error" }), {
