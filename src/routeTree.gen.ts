@@ -16,6 +16,7 @@ import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as CriarPixRouteImport } from './routes/criar-pix'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
+import { Route as ApiPublicInvictusWebhookRouteImport } from './routes/api/public/invictus-webhook'
 
 const WebhookParadiseRoute = WebhookParadiseRouteImport.update({
   id: '/webhook-paradise',
@@ -52,6 +53,12 @@ const VerificarStatusIdRoute = VerificarStatusIdRouteImport.update({
   path: '/verificar-status/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicInvictusWebhookRoute =
+  ApiPublicInvictusWebhookRouteImport.update({
+    id: '/api/public/invictus-webhook',
+    path: '/api/public/invictus-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/api/public/invictus-webhook': typeof ApiPublicInvictusWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +78,7 @@ export interface FileRoutesByTo {
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/api/public/invictus-webhook': typeof ApiPublicInvictusWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +89,7 @@ export interface FileRoutesById {
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/api/public/invictus-webhook': typeof ApiPublicInvictusWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +101,7 @@ export interface FileRouteTypes {
     | '/reembolso-solicitado'
     | '/webhook-paradise'
     | '/verificar-status/$id'
+    | '/api/public/invictus-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +111,7 @@ export interface FileRouteTypes {
     | '/reembolso-solicitado'
     | '/webhook-paradise'
     | '/verificar-status/$id'
+    | '/api/public/invictus-webhook'
   id:
     | '__root__'
     | '/'
@@ -109,6 +121,7 @@ export interface FileRouteTypes {
     | '/reembolso-solicitado'
     | '/webhook-paradise'
     | '/verificar-status/$id'
+    | '/api/public/invictus-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +132,7 @@ export interface RootRouteChildren {
   ReembolsoSolicitadoRoute: typeof ReembolsoSolicitadoRoute
   WebhookParadiseRoute: typeof WebhookParadiseRoute
   VerificarStatusIdRoute: typeof VerificarStatusIdRoute
+  ApiPublicInvictusWebhookRoute: typeof ApiPublicInvictusWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerificarStatusIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/invictus-webhook': {
+      id: '/api/public/invictus-webhook'
+      path: '/api/public/invictus-webhook'
+      fullPath: '/api/public/invictus-webhook'
+      preLoaderRoute: typeof ApiPublicInvictusWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +204,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReembolsoSolicitadoRoute: ReembolsoSolicitadoRoute,
   WebhookParadiseRoute: WebhookParadiseRoute,
   VerificarStatusIdRoute: VerificarStatusIdRoute,
+  ApiPublicInvictusWebhookRoute: ApiPublicInvictusWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
