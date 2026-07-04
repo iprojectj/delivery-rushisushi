@@ -73,6 +73,24 @@ export function gerarEmailRandomico(prefixo = "cliente") {
   )}@rushisushi.site`;
 }
 
+// Gera CPF válido aleatório. Necessário para que a gateway NÃO deduplique
+// o cliente e sobrescreva o nome dos pedidos anteriores.
+export function gerarCpfValido(): string {
+  const rand = (n: number) => Math.floor(Math.random() * n);
+  const n = Array.from({ length: 9 }, () => rand(10));
+  const calcDv = (base: number[]) => {
+    const soma = base.reduce(
+      (acc, val, idx) => acc + val * (base.length + 1 - idx),
+      0
+    );
+    const resto = (soma * 10) % 11;
+    return resto === 10 ? 0 : resto;
+  };
+  const dv1 = calcDv(n);
+  const dv2 = calcDv([...n, dv1]);
+  return [...n, dv1, dv2].join("");
+}
+
 export function montarDescricaoPedido(
   products: Array<{ name: string; quantity: number }> | undefined
 ): string {
