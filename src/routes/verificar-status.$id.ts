@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PARADISE_API_URL, getParadiseSecretKey } from "@/lib/paradise.server";
+import {
+  INVICTUS_API_URL,
+  getInvictusToken,
+  normalizeInvictusStatus,
+} from "@/lib/invictus.server";
 
 export const Route = createFileRoute("/verificar-status/$id")({
   server: {
@@ -7,36 +11,18 @@ export const Route = createFileRoute("/verificar-status/$id")({
       GET: async ({ params }) => {
         try {
           const { id } = params;
-          const secretKey = getParadiseSecretKey();
-          const url = `${PARADISE_API_URL}/api/v1/query.php?action=get_transaction&id=${encodeURIComponent(
+          const apiToken = getInvictusToken();
+          const url = `${INVICTUS_API_URL}/transactions/${encodeURIComponent(
             id
-          )}`;
+          )}?api_token=${encodeURIComponent(apiToken)}`;
           const res = await fetch(url, {
-            headers: { "X-API-Key": secretKey },
+            headers: { Accept: "application/json" },
           });
           const data: any = await res.json().catch(() => ({}));
-          const norm = data?.data ?? data;
-          const raw = String(norm?.status ?? "").toLowerCase();
-
-          let statusFinal: string = raw;
-          if (raw === "paid" || raw === "approved" || raw === "captured")
-            statusFinal = "paid";
-          else if (
-            raw === "pending" ||
-            raw === "waiting_payment" ||
-            raw === "authorized"
-          )
-            statusFinal = "pending";
-          else if (raw === "refunded" || raw === "chargeback")
-            statusFinal = "refunded";
-          else if (
-            raw === "expired" ||
-            raw === "cancelled" ||
-            raw === "canceled" ||
-            raw === "denied" ||
-            raw === "failed"
-          )
-            statusFinal = "failed";
+          const raw = String(
+            data?.payment_status ?? data?.status ?? ""
+          ).toLowerCase();
+          const statusFinal = normalizeInvictusStatus(raw);
 
           return new Response(JSON.stringify({ status: statusFinal }), {
             status: 200,
@@ -44,7 +30,7 @@ export const Route = createFileRoute("/verificar-status/$id")({
           });
         } catch (error: any) {
           console.error(
-            `Erro status Paradise ID ${params.id}:`,
+            `Erro status Invictus ID ${params.id}:`,
             error?.message ?? error
           );
           return new Response(JSON.stringify({ status: "error" }), {

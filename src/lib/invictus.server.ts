@@ -1,19 +1,22 @@
-// Paradise Gateway helpers. Docs: https://multi.paradisepags.com/documentation
+// InvictusPay Gateway helpers. Docs: https://docs.invictuspay.app.br/
+// Base URL: https://api.invictuspay.app.br/api/public/v1
+// Auth: ?api_token=... (query string). Values in cents.
 
-export const PARADISE_API_URL = "https://multi.paradisepags.com";
+export const INVICTUS_API_URL =
+  "https://api.invictuspay.app.br/api/public/v1";
 export const UTMIFY_API_URL =
   "https://api.utmify.com.br/api-credentials/orders";
 
-export function getParadiseSecretKey() {
-  return process.env.PARADISE_SECRET_KEY || "";
+export function getInvictusToken() {
+  return process.env.INVICTUS_API_TOKEN || "";
 }
 
-export function getParadiseAccountId() {
-  return process.env.PARADISE_ACCOUNT_ID || "";
+export function getInvictusOfferHash() {
+  return process.env.INVICTUS_OFFER_HASH || "";
 }
 
-export function getParadiseProductHash() {
-  return process.env.PARADISE_PRODUCT_HASH || "";
+export function getInvictusProductHash() {
+  return process.env.INVICTUS_PRODUCT_HASH || "";
 }
 
 export function getUtmifyToken() {
@@ -22,7 +25,7 @@ export function getUtmifyToken() {
   );
 }
 
-// Store em memória (volátil) para casar webhook -> pedido pendente
+// In-memory store (volátil) para casar webhook -> pedido pendente
 export const pendingOrders: Record<string, any> = {};
 
 export async function enviarPedidoParaUtmify(payload: any) {
@@ -87,4 +90,22 @@ export function montarDescricaoPedido(
   let desc = principais.join(", ");
   if (restantes > 0) desc += ` + ${restantes} item${restantes > 1 ? "s" : ""}`;
   return desc.length > 180 ? desc.substring(0, 177) + "..." : desc;
+}
+
+// Normaliza status Invictus -> status Utmify/interno
+export function normalizeInvictusStatus(
+  raw: string
+): "pending" | "paid" | "refunded" | "failed" {
+  const s = String(raw || "").toLowerCase();
+  if (s === "paid" || s === "approved" || s === "captured") return "paid";
+  if (s === "refunded" || s === "chargeback") return "refunded";
+  if (
+    s === "expired" ||
+    s === "cancelled" ||
+    s === "canceled" ||
+    s === "denied" ||
+    s === "failed"
+  )
+    return "failed";
+  return "pending";
 }
