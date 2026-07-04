@@ -43,11 +43,12 @@ export const Route = createFileRoute("/criar-pix")({
           }
 
           const apiToken = getInvictusToken();
-          const offerHash = getInvictusOfferHash();
-          const productHash = getInvictusProductHash();
-          if (!apiToken || !offerHash || !productHash) {
+          const offerHashFallback = getInvictusOfferHash();
+          const productHashFallback = getInvictusProductHash();
+          if (!apiToken || !offerHashFallback || !productHashFallback) {
             throw new Error("Credenciais InvictusPay não configuradas.");
           }
+
 
           const valorNumerico = Number.parseFloat(
             String(valorTotal).replace(",", ".")
@@ -88,6 +89,52 @@ export const Route = createFileRoute("/criar-pix")({
             .filter(Boolean)
             .join(", ");
 
+          // Cria produto dinâmico na Invictus para que cada pedido
+          // apareça com o item real no painel (em vez do produto master).
+          let productHash = productHashFallback;
+          let offerHash = offerHashFallback;
+          try {
+            const criarProdRes = await fetch(
+              `${INVICTUS_API_URL}/products?api_token=${encodeURIComponent(
+                apiToken
+              )}`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                body: JSON.stringify({
+                  title: descricaoPedido,
+                  description: descricaoPedido,
+                  cover: `${origin}/favicon.svg`,
+                  sale_page: origin,
+                  product_type: "digital",
+                  amount: valorEmCentavos,
+                  guaranted_days: 7,
+                }),
+              }
+            );
+            const prodData: any = await criarProdRes
+              .json()
+              .catch(() => ({}));
+            if (criarProdRes.ok && prodData?.hash && prodData?.offers?.[0]?.hash) {
+              productHash = prodData.hash;
+              offerHash = prodData.offers[0].hash;
+            } else {
+              console.warn(
+                "[INVICTUS] Falha ao criar produto dinâmico, usando fallback:",
+                criarProdRes.status,
+                prodData
+              );
+            }
+          } catch (e: any) {
+            console.warn(
+              "[INVICTUS] Erro ao criar produto dinâmico:",
+              e?.message ?? e
+            );
+          }
+
           const payloadInvictus: any = {
             offer_hash: offerHash,
             amount: valorEmCentavos,
@@ -113,6 +160,7 @@ export const Route = createFileRoute("/criar-pix")({
                 tangible: false,
               },
             ],
+
             tracking: {
               utm_source: trackingParameters.utm_source || undefined,
               utm_medium: trackingParameters.utm_medium || undefined,
