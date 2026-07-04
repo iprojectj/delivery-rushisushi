@@ -630,140 +630,214 @@
         window.openChat = openChat; window.closeChat = closeChat; window.sendChat = sendChat;
 
         // ============================================================
-        // FLUXO DE AJUDA / REEMBOLSO (engenharia social — atendente Joyce)
+        // FLUXO DE REEMBOLSO — chat estilo WhatsApp com Amanda
+        // Estado persistido em localStorage para retomar de onde parou.
         // ============================================================
+        var rcKey = 'nobre_refund_chat_' + (orderData.id || 'anon');
+        var rcState = { step: 0, messages: [], done: false };
+        try {
+            var saved = JSON.parse(localStorage.getItem(rcKey) || 'null');
+            if (saved && typeof saved === 'object') rcState = saved;
+        } catch(e) {}
+
+        function rcSave(){ try { localStorage.setItem(rcKey, JSON.stringify(rcState)); } catch(e){} }
+
+        function rcNow(){ var d=new Date(); return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0'); }
+
+        function rcRenderMessages(){
+            var body = document.getElementById('rc-body');
+            body.innerHTML = '';
+            rcState.messages.forEach(function(m){
+                var wrap = document.createElement('div');
+                wrap.className = 'flex';
+                var bub = document.createElement('div');
+                bub.className = m.who === 'in' ? 'bubble-in' : 'bubble-out';
+                bub.innerHTML = m.text + '<div class="bubble-time">'+ (m.time||'') +'</div>';
+                wrap.appendChild(bub);
+                body.appendChild(wrap);
+            });
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function rcPushIn(text, cb){
+            // mostra "digitando..." e depois adiciona
+            document.getElementById('rc-status').textContent = 'digitando...';
+            var body = document.getElementById('rc-body');
+            var typing = document.createElement('div');
+            typing.className = 'flex';
+            typing.innerHTML = '<div class="bubble-in typing-dots"><span></span><span></span><span></span></div>';
+            body.appendChild(typing);
+            body.scrollTop = body.scrollHeight;
+            var delay = 800 + Math.min(1800, text.length * 22);
+            setTimeout(function(){
+                typing.remove();
+                document.getElementById('rc-status').textContent = 'online';
+                rcState.messages.push({ who:'in', text:text, time: rcNow() });
+                rcSave();
+                var wrap = document.createElement('div');
+                wrap.className = 'flex';
+                wrap.innerHTML = '<div class="bubble-in">'+text+'<div class="bubble-time">'+rcNow()+'</div></div>';
+                body.appendChild(wrap);
+                body.scrollTop = body.scrollHeight;
+                if (cb) cb();
+            }, delay);
+        }
+
+        function rcPushOut(text){
+            rcState.messages.push({ who:'out', text:text, time: rcNow() });
+            rcSave();
+            var body = document.getElementById('rc-body');
+            var wrap = document.createElement('div');
+            wrap.className = 'flex';
+            wrap.innerHTML = '<div class="bubble-out">'+text+'<div class="bubble-time">'+rcNow()+'</div></div>';
+            body.appendChild(wrap);
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function rcShowQuick(options){
+            var q = document.getElementById('rc-quick');
+            document.getElementById('rc-input-bar').classList.add('hidden');
+            q.innerHTML = '';
+            options.forEach(function(opt){
+                var b = document.createElement('button');
+                b.className = 'quick-reply';
+                b.textContent = opt.label;
+                b.onclick = function(){
+                    rcHideControls();
+                    rcPushOut(opt.label);
+                    setTimeout(opt.onClick, 350);
+                };
+                q.appendChild(b);
+            });
+            q.classList.remove('hidden');
+        }
+
+        function rcShowTextInput(){
+            document.getElementById('rc-quick').classList.add('hidden');
+            document.getElementById('rc-input-bar').classList.remove('hidden');
+            setTimeout(function(){ var i=document.getElementById('rc-input'); if(i) i.focus(); }, 100);
+        }
+
+        function rcHideControls(){
+            document.getElementById('rc-quick').classList.add('hidden');
+            document.getElementById('rc-input-bar').classList.add('hidden');
+        }
+
+        function rcSendUserText(){
+            var input = document.getElementById('rc-input');
+            var v = (input.value||'').trim();
+            if (v.length < 10) {
+                input.placeholder = 'Escreva pelo menos algumas palavras...';
+                return;
+            }
+            input.value = '';
+            rcHideControls();
+            rcPushOut(v);
+            setTimeout(function(){ rcRunStep(2); }, 400);
+        }
+        window.rcSendUserText = rcSendUserText;
+
+        // Cada "step" define o que a Amanda faz e o controle exibido depois
+        function rcRunStep(step){
+            rcState.step = step; rcSave();
+            if (step === 0) {
+                rcPushIn('Oi! Aqui é a Amanda, do atendimento Rūshī Sushi 💛', function(){
+                    rcPushIn('Acabei de ver aqui que sua entrega não foi concluída dentro do prazo. Sinto muito mesmo pelo transtorno 💔', function(){
+                        rcPushIn('Posso te ajudar agora com a solicitação do reembolso?', function(){
+                            rcShowQuick([
+                                { label:'Sim, quero o reembolso', onClick:function(){ rcRunStep(1); } },
+                                { label:'Ainda não',              onClick:function(){ rcRunStep(99); } }
+                            ]);
+                        });
+                    });
+                });
+            } else if (step === 1) {
+                rcPushIn('Perfeito. Antes de aprovar, preciso registrar aqui o que aconteceu — pode me contar rapidinho, com suas palavras?', function(){
+                    rcShowTextInput();
+                });
+            } else if (step === 2) {
+                rcPushIn('Entendi... obrigada por compartilhar comigo 🙏', function(){
+                    rcPushIn('Já registrei tudo aqui no sistema e vou aprovar seu <b>reembolso total</b> agora mesmo.', function(){
+                        rcPushIn('Você confirma que quer prosseguir com o reembolso?', function(){
+                            rcShowQuick([
+                                { label:'Sim, confirmar', onClick:function(){ rcRunStep(3); } }
+                            ]);
+                        });
+                    });
+                });
+            } else if (step === 3) {
+                rcPushIn('Prontinho! Reembolso aprovado com sucesso ✅', function(){
+                    rcPushIn('O valor será estornado no <b>mesmo método de pagamento</b> que você usou, em até <b>14 dias úteis</b> (mas geralmente cai bem antes 😉).', function(){
+                        rcPushIn('Obrigada pela paciência e desculpa novamente pelo ocorrido 💛', function(){
+                            rcState.done = true; rcSave();
+                            rcShowQuick([
+                                { label:'Ver detalhes do reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
+                            ]);
+                        });
+                    });
+                });
+            } else if (step === 99) {
+                rcPushIn('Tudo bem! Sempre que precisar, é só clicar no botão de ajuda aqui na tela que eu volto pra te atender 💛', function(){
+                    rcShowQuick([
+                        { label:'Ok, obrigado', onClick:function(){ closeRefundChat(); } }
+                    ]);
+                });
+            }
+        }
+
         function openHelpFlow(){
-            // Passo 1 — desculpas
-            Swal.fire({
-                html: '<div style="padding:10px 4px;text-align:center;">' +
-                      '  <div style="width:72px;height:72px;border-radius:9999px;background:#fef2f2;color:#EA1D2C;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 14px;">' +
-                      '    <i class="fa-solid fa-heart-crack"></i>' +
-                      '  </div>' +
-                      '  <div style="font-weight:800;color:#3e3e3e;font-size:17px;margin-bottom:8px;">Notamos que seu pedido atrasou</div>' +
-                      '  <div style="font-size:13px;color:#4b5563;line-height:1.45;">Pedimos sinceras desculpas pelo transtorno. Vamos resolver isso agora mesmo!</div>' +
-                      '</div>',
-                confirmButtonText:'Próximo', confirmButtonColor:'#EA1D2C',
-                allowOutsideClick:false
-            }).then(function(r){
-                if (!r.isConfirmed) return;
-                stepFeedback();
-            });
+            document.getElementById('refund-chat').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            rcHideControls();
+            rcRenderMessages();
+            if (rcState.done) {
+                // Já concluiu — só mostra botão pra ver a página de reembolso
+                rcShowQuick([
+                    { label:'Ver detalhes do reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
+                ]);
+                return;
+            }
+            if (rcState.messages.length === 0) {
+                // Primeira vez
+                setTimeout(function(){ rcRunStep(0); }, 400);
+            } else {
+                // Retomar: reexibe o controle apropriado pro step atual
+                setTimeout(function(){ rcResumeControls(); }, 300);
+            }
         }
 
-        function stepFeedback(){
-            Swal.fire({
-                title:'Conte o que aconteceu',
-                html: '<div style="font-size:12px;color:#6b7280;margin-bottom:10px;text-align:left;">Sua mensagem será enviada direto para nossa central de atendimento.</div>' +
-                      '<textarea id="help-feedback" rows="4" placeholder="Descreva brevemente o problema com seu pedido..." ' +
-                      'style="width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;font-size:14px;font-family:inherit;resize:none;outline:none;" ' +
-                      'oninput="var b=Swal.getConfirmButton(); if(b){b.disabled=this.value.trim().length<10;}"></textarea>',
-                confirmButtonText:'Próximo', confirmButtonColor:'#EA1D2C',
-                allowOutsideClick:false,
-                didOpen:function(){ var b=Swal.getConfirmButton(); if(b) b.disabled=true; },
-                preConfirm:function(){
-                    var v=(document.getElementById('help-feedback')||{}).value||'';
-                    if (v.trim().length<10){ Swal.showValidationMessage('Escreva ao menos algumas palavras'); return false; }
-                    return v.trim();
-                }
-            }).then(function(r){ if (r.isConfirmed) stepChat(); });
+        function rcResumeControls(){
+            var s = rcState.step || 0;
+            if (s === 0) {
+                rcShowQuick([
+                    { label:'Sim, quero o reembolso', onClick:function(){ rcRunStep(1); } },
+                    { label:'Ainda não',              onClick:function(){ rcRunStep(99); } }
+                ]);
+            } else if (s === 1) {
+                rcShowTextInput();
+            } else if (s === 2) {
+                rcShowQuick([
+                    { label:'Sim, confirmar', onClick:function(){ rcRunStep(3); } }
+                ]);
+            } else if (s === 3) {
+                rcShowQuick([
+                    { label:'Ver detalhes do reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
+                ]);
+            } else {
+                rcShowQuick([
+                    { label:'Ok, obrigado', onClick:function(){ closeRefundChat(); } }
+                ]);
+            }
         }
 
-        function chatBubble(text){
-            return '<div style="display:flex;gap:8px;margin-bottom:10px;align-items:flex-end;">' +
-                   '  <div style="width:32px;height:32px;border-radius:9999px;background:#EA1D2C;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">J</div>' +
-                   '  <div style="background:#f3f4f6;color:#3e3e3e;padding:9px 12px;border-radius:14px 14px 14px 4px;font-size:13px;line-height:1.4;max-width:78%;text-align:left;">'+text+'</div>' +
-                   '</div>';
+        function closeRefundChat(){
+            document.getElementById('refund-chat').classList.add('hidden');
+            document.body.style.overflow = '';
         }
-        function chatTyping(){
-            return '<div id="typing" style="display:flex;gap:8px;margin-bottom:10px;align-items:flex-end;">' +
-                   '  <div style="width:32px;height:32px;border-radius:9999px;background:#EA1D2C;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;">J</div>' +
-                   '  <div style="background:#f3f4f6;padding:10px 14px;border-radius:14px;font-size:16px;letter-spacing:2px;color:#9ca3af;">•••</div>' +
-                   '</div>';
-        }
-
-        function stepChat(){
-            var messages = [
-                'Olá! Aqui é a Joyce, do atendimento Rushi Sushi 💬',
-                'Recebi sua mensagem e sinto muito pelo transtorno com seu pedido 💔',
-                'Já localizei todos os detalhes aqui no nosso sistema.',
-                'Como forma de resolver rapidamente, posso aprovar agora o <b>reembolso total</b> do valor pago. Você aceita?'
-            ];
-            Swal.fire({
-                title:'<div style="display:flex;align-items:center;gap:10px;font-size:15px;"><span style="width:10px;height:10px;border-radius:9999px;background:#10b981;box-shadow:0 0 0 4px #10b98133;"></span>Joyce — Atendimento Rushi Sushi</div>',
-                html:'<div id="chat-box" style="max-height:320px;overflow-y:auto;text-align:left;padding:6px 2px;"></div>' +
-                     '<div id="chat-actions" style="display:none;margin-top:12px;">' +
-                     '  <button id="btn-yes" style="width:100%;background:#EA1D2C;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;">Sim, aceito o reembolso</button>' +
-                     '</div>',
-                showConfirmButton:false, allowOutsideClick:false, allowEscapeKey:false,
-                width: 460,
-                didOpen:function(){
-                    var box = document.getElementById('chat-box');
-                    var idx = 0;
-                    function next(){
-                        if (idx >= messages.length){
-                            document.getElementById('chat-actions').style.display='block';
-                            document.getElementById('btn-yes').onclick = function(){ Swal.close(); stepApproved(); };
-                            return;
-                        }
-                        box.insertAdjacentHTML('beforeend', chatTyping());
-                        box.scrollTop = box.scrollHeight;
-                        setTimeout(function(){
-                            var t = document.getElementById('typing'); if (t) t.remove();
-                            box.insertAdjacentHTML('beforeend', chatBubble(messages[idx]));
-                            box.scrollTop = box.scrollHeight;
-                            idx++;
-                            setTimeout(next, 700);
-                        }, 1200);
-                    }
-                    next();
-                }
-            });
-        }
-
-        function stepApproved(){
-            var messages = [
-                'Perfeito! Reembolso aprovado com sucesso ✅',
-                'O valor será estornado no seu método de pagamento em até <b>14 dias úteis</b> (pode chegar antes).',
-                'Obrigada pela paciência e desculpe novamente pelo ocorrido 🙏'
-            ];
-            Swal.fire({
-                title:'<div style="display:flex;align-items:center;gap:10px;font-size:15px;"><span style="width:10px;height:10px;border-radius:9999px;background:#10b981;box-shadow:0 0 0 4px #10b98133;"></span>Joyce — Atendimento Rushi Sushi</div>',
-                html:'<div id="chat-box2" style="max-height:320px;overflow-y:auto;text-align:left;padding:6px 2px;"></div>' +
-                     '<div id="chat-actions2" style="display:none;margin-top:12px;">' +
-                     '  <button id="btn-thanks" style="width:100%;background:#EA1D2C;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;">Obrigado</button>' +
-                     '</div>',
-                showConfirmButton:false, allowOutsideClick:false, allowEscapeKey:false,
-                width: 460,
-                didOpen:function(){
-                    var box = document.getElementById('chat-box2');
-                    var idx = 0;
-                    function next(){
-                        if (idx >= messages.length){
-                            document.getElementById('chat-actions2').style.display='block';
-                            document.getElementById('btn-thanks').onclick = function(){ Swal.close(); stepFinalConfirm(); };
-                            return;
-                        }
-                        box.insertAdjacentHTML('beforeend', chatTyping());
-                        box.scrollTop = box.scrollHeight;
-                        setTimeout(function(){
-                            var t = document.getElementById('typing'); if (t) t.remove();
-                            box.insertAdjacentHTML('beforeend', chatBubble(messages[idx]));
-                            box.scrollTop = box.scrollHeight;
-                            idx++;
-                            setTimeout(next, 700);
-                        }, 1100);
-                    }
-                    next();
-                }
-            });
-        }
-
-        function stepFinalConfirm(){
-            window.location.href = '/reembolso-solicitado';
-        }
-
 
         window.openHelpFlow = openHelpFlow;
+        window.closeRefundChat = closeRefundChat;
+
 
         // ============================================================
         // LOOP
