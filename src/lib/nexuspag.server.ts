@@ -15,9 +15,7 @@ export function getNexuspagWebhookSecret() {
 }
 
 export function getUtmifyToken() {
-  return (
-    process.env.UTMIFY_API_TOKEN || "uPiTze9M8IsOlMxtyqabrMvaXyOEUIqwVKrV"
-  );
+  return process.env.UTMIFY_API_TOKEN || "";
 }
 
 // In-memory store (volátil) para casar webhook -> pedido pendente
