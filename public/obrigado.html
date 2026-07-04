@@ -807,8 +807,7 @@
             var s = rcState.step || 0;
             if (s === 0) {
                 rcShowQuick([
-                    { label:'Sim, quero o reembolso', onClick:function(){ rcRunStep(1); } },
-                    { label:'Ainda não',              onClick:function(){ rcRunStep(99); } }
+                    { label:'Sim, quero o reembolso', onClick:function(){ rcRunStep(1); } }
                 ]);
             } else if (s === 1) {
                 rcShowTextInput();
@@ -820,11 +819,8 @@
                 rcShowQuick([
                     { label:'Ver detalhes do reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
                 ]);
-            } else {
-                rcShowQuick([
-                    { label:'Ok, obrigado', onClick:function(){ closeRefundChat(); } }
-                ]);
             }
+
         }
 
         function closeRefundChat(){
