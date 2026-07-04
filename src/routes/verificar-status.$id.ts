@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  INVICTUS_API_URL,
-  getInvictusToken,
-  normalizeInvictusStatus,
-} from "@/lib/invictus.server";
+  NEXUSPAG_API_URL,
+  getNexuspagApiKey,
+  normalizeNexuspagStatus,
+} from "@/lib/nexuspag.server";
 
 export const Route = createFileRoute("/verificar-status/$id")({
   server: {
@@ -11,18 +11,17 @@ export const Route = createFileRoute("/verificar-status/$id")({
       GET: async ({ params }) => {
         try {
           const { id } = params;
-          const apiToken = getInvictusToken();
-          const url = `${INVICTUS_API_URL}/transactions/${encodeURIComponent(
-            id
-          )}?api_token=${encodeURIComponent(apiToken)}`;
+          const apiKey = getNexuspagApiKey();
+          const url = `${NEXUSPAG_API_URL}/api/pix/${encodeURIComponent(id)}`;
           const res = await fetch(url, {
-            headers: { Accept: "application/json" },
+            headers: {
+              "x-api-key": apiKey,
+              Accept: "application/json",
+            },
           });
           const data: any = await res.json().catch(() => ({}));
-          const raw = String(
-            data?.payment_status ?? data?.status ?? ""
-          ).toLowerCase();
-          const statusFinal = normalizeInvictusStatus(raw);
+          const raw = String(data?.status ?? "").toLowerCase();
+          const statusFinal = normalizeNexuspagStatus(raw);
 
           return new Response(JSON.stringify({ status: statusFinal }), {
             status: 200,
@@ -30,7 +29,7 @@ export const Route = createFileRoute("/verificar-status/$id")({
           });
         } catch (error: any) {
           console.error(
-            `Erro status Invictus ID ${params.id}:`,
+            `Erro status NexusPag ID ${params.id}:`,
             error?.message ?? error
           );
           return new Response(JSON.stringify({ status: "error" }), {

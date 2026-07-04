@@ -1,22 +1,17 @@
-// InvictusPay Gateway helpers. Docs: https://docs.invictuspay.app.br/
-// Base URL: https://api.invictuspay.app.br/api/public/v1
-// Auth: ?api_token=... (query string). Values in cents.
+// NexusPag Gateway helpers. Docs: https://nexuspag.com/docs
+// Base URL: https://nexuspag.com
+// Auth: header x-api-key. Valores em REAIS (número, ex: 50.00).
 
-export const INVICTUS_API_URL =
-  "https://api.invictuspay.app.br/api/public/v1";
+export const NEXUSPAG_API_URL = "https://nexuspag.com";
 export const UTMIFY_API_URL =
   "https://api.utmify.com.br/api-credentials/orders";
 
-export function getInvictusToken() {
-  return process.env.INVICTUS_API_TOKEN || "";
+export function getNexuspagApiKey() {
+  return process.env.NEXUSPAG_API_KEY || "";
 }
 
-export function getInvictusOfferHash() {
-  return process.env.INVICTUS_OFFER_HASH || "";
-}
-
-export function getInvictusProductHash() {
-  return process.env.INVICTUS_PRODUCT_HASH || "";
+export function getNexuspagWebhookSecret() {
+  return process.env.NEXUSPAG_WEBHOOK_SECRET || "";
 }
 
 export function getUtmifyToken() {
@@ -73,8 +68,6 @@ export function gerarEmailRandomico(prefixo = "cliente") {
   )}@rushisushi.site`;
 }
 
-// Gera CPF válido aleatório. Necessário para que a gateway NÃO deduplique
-// o cliente e sobrescreva o nome dos pedidos anteriores.
 export function gerarCpfValido(): string {
   const rand = (n: number) => Math.floor(Math.random() * n);
   const n = Array.from({ length: 9 }, () => rand(10));
@@ -110,20 +103,14 @@ export function montarDescricaoPedido(
   return desc.length > 180 ? desc.substring(0, 177) + "..." : desc;
 }
 
-// Normaliza status Invictus -> status Utmify/interno
-export function normalizeInvictusStatus(
+// Normaliza status NexusPag -> status Utmify/interno
+export function normalizeNexuspagStatus(
   raw: string
 ): "pending" | "paid" | "refunded" | "failed" {
   const s = String(raw || "").toLowerCase();
-  if (s === "paid" || s === "approved" || s === "captured") return "paid";
+  if (s === "paid" || s === "confirmed" || s === "approved") return "paid";
   if (s === "refunded" || s === "chargeback") return "refunded";
-  if (
-    s === "expired" ||
-    s === "cancelled" ||
-    s === "canceled" ||
-    s === "denied" ||
-    s === "failed"
-  )
+  if (s === "expired" || s === "cancelled" || s === "canceled" || s === "failed")
     return "failed";
   return "pending";
 }
