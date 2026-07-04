@@ -48,7 +48,7 @@ export const Route = createFileRoute("/api/public/invictus-webhook")({
               pedidoPendente.status = finalStatus;
               if (finalStatus === "refunded")
                 pedidoPendente.refundedAt = nowUtcSqlString();
-              enviarPedidoParaUtmify(pedidoPendente);
+              await enviarPedidoParaUtmify(pedidoPendente);
               delete pendingOrders[transactionId];
             }
           }
