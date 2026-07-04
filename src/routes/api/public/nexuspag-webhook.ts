@@ -6,7 +6,7 @@ import {
   pendingOrders,
 } from "@/lib/invictus.server";
 
-export const Route = createFileRoute("/api/public/invictus-webhook")({
+export const Route = createFileRoute("/api/public/nexuspag-webhook")({
   server: {
     handlers: {
       POST: async ({ request }) => {

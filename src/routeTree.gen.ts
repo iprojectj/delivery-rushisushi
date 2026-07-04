@@ -15,7 +15,7 @@ import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as CriarPixRouteImport } from './routes/criar-pix'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
-import { Route as ApiPublicInvictusWebhookRouteImport } from './routes/api/public/invictus-webhook'
+import { Route as ApiPublicNexuspagWebhookRouteImport } from './routes/api/public/nexuspag-webhook'
 
 const ReembolsoSolicitadoRoute = ReembolsoSolicitadoRouteImport.update({
   id: '/reembolso-solicitado',
@@ -47,10 +47,10 @@ const VerificarStatusIdRoute = VerificarStatusIdRouteImport.update({
   path: '/verificar-status/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicInvictusWebhookRoute =
-  ApiPublicInvictusWebhookRouteImport.update({
-    id: '/api/public/invictus-webhook',
-    path: '/api/public/invictus-webhook',
+const ApiPublicNexuspagWebhookRoute =
+  ApiPublicNexuspagWebhookRouteImport.update({
+    id: '/api/public/nexuspag-webhook',
+    path: '/api/public/nexuspag-webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -61,7 +61,7 @@ export interface FileRoutesByFullPath {
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
-  '/api/public/invictus-webhook': typeof ApiPublicInvictusWebhookRoute
+  '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,7 +70,7 @@ export interface FileRoutesByTo {
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
-  '/api/public/invictus-webhook': typeof ApiPublicInvictusWebhookRoute
+  '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,7 +80,7 @@ export interface FileRoutesById {
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
-  '/api/public/invictus-webhook': typeof ApiPublicInvictusWebhookRoute
+  '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,7 +91,7 @@ export interface FileRouteTypes {
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
-    | '/api/public/invictus-webhook'
+    | '/api/public/nexuspag-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,7 +100,7 @@ export interface FileRouteTypes {
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
-    | '/api/public/invictus-webhook'
+    | '/api/public/nexuspag-webhook'
   id:
     | '__root__'
     | '/'
@@ -109,7 +109,7 @@ export interface FileRouteTypes {
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
-    | '/api/public/invictus-webhook'
+    | '/api/public/nexuspag-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,7 +119,7 @@ export interface RootRouteChildren {
   PedidoRoute: typeof PedidoRoute
   ReembolsoSolicitadoRoute: typeof ReembolsoSolicitadoRoute
   VerificarStatusIdRoute: typeof VerificarStatusIdRoute
-  ApiPublicInvictusWebhookRoute: typeof ApiPublicInvictusWebhookRoute
+  ApiPublicNexuspagWebhookRoute: typeof ApiPublicNexuspagWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -166,11 +166,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerificarStatusIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/invictus-webhook': {
-      id: '/api/public/invictus-webhook'
-      path: '/api/public/invictus-webhook'
-      fullPath: '/api/public/invictus-webhook'
-      preLoaderRoute: typeof ApiPublicInvictusWebhookRouteImport
+    '/api/public/nexuspag-webhook': {
+      id: '/api/public/nexuspag-webhook'
+      path: '/api/public/nexuspag-webhook'
+      fullPath: '/api/public/nexuspag-webhook'
+      preLoaderRoute: typeof ApiPublicNexuspagWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -183,7 +183,7 @@ const rootRouteChildren: RootRouteChildren = {
   PedidoRoute: PedidoRoute,
   ReembolsoSolicitadoRoute: ReembolsoSolicitadoRoute,
   VerificarStatusIdRoute: VerificarStatusIdRoute,
-  ApiPublicInvictusWebhookRoute: ApiPublicInvictusWebhookRoute,
+  ApiPublicNexuspagWebhookRoute: ApiPublicNexuspagWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
