@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  PARADISE_API_URL,
+  INVICTUS_API_URL,
   enviarPedidoParaUtmify,
   gerarEmailRandomico,
-  getParadiseAccountId,
-  getParadiseProductHash,
-  getParadiseSecretKey,
+  getInvictusOfferHash,
+  getInvictusProductHash,
+  getInvictusToken,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
-} from "@/lib/paradise.server";
+} from "@/lib/invictus.server";
 
 export const Route = createFileRoute("/criar-pix")({
   server: {
@@ -41,11 +41,11 @@ export const Route = createFileRoute("/criar-pix")({
             );
           }
 
-          const secretKey = getParadiseSecretKey();
-          const accountId = getParadiseAccountId();
-          const productHash = getParadiseProductHash();
-          if (!secretKey) {
-            throw new Error("Chave secreta Paradise não configurada.");
+          const apiToken = getInvictusToken();
+          const offerHash = getInvictusOfferHash();
+          const productHash = getInvictusProductHash();
+          if (!apiToken || !offerHash || !productHash) {
+            throw new Error("Credenciais InvictusPay não configuradas.");
           }
 
           const valorNumerico = Number.parseFloat(
@@ -62,9 +62,6 @@ export const Route = createFileRoute("/criar-pix")({
             );
           }
 
-          const referenceId = `RUSHI-${Date.now()}-${Math.floor(
-            Math.random() * 1000
-          )}`;
           const emailCliente = gerarEmailRandomico();
           const cpfCliente = "02152976959";
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
@@ -83,27 +80,38 @@ export const Route = createFileRoute("/criar-pix")({
           const origin = rawOrigin.includes("localhost")
             ? "https://rushisushi.delivery"
             : rawOrigin;
-          const postbackUrl = `${origin}/webhook-paradise`;
+          const postbackUrl = `${origin}/api/public/invictus-webhook`;
 
           const enderecoStr = [rua, numero, complemento, bairro]
             .map((item) => String(item || "").trim())
             .filter(Boolean)
             .join(", ");
 
-          const payloadParadise: any = {
+          const payloadInvictus: any = {
+            offer_hash: offerHash,
             amount: valorEmCentavos,
-            description: descricaoPedido,
-            reference: referenceId,
-            source: "api_externa",
+            payment_method: "pix",
+            installments: 1,
             postback_url: postbackUrl,
             customer: {
               name: String(nome).trim(),
               email: emailCliente,
               document: cpfCliente,
-              phone: telefoneLimpo,
-              address: enderecoStr || undefined,
+              document_type: "cpf",
+              phone_number: telefoneLimpo,
+              street_name: enderecoStr || undefined,
               zip_code: cepLimpo.length === 8 ? cepLimpo : undefined,
             },
+            cart: [
+              {
+                product_hash: productHash,
+                title: descricaoPedido,
+                price: valorEmCentavos,
+                quantity: 1,
+                operation_type: 1,
+                tangible: false,
+              },
+            ],
             tracking: {
               utm_source: trackingParameters.utm_source || undefined,
               utm_medium: trackingParameters.utm_medium || undefined,
@@ -115,54 +123,44 @@ export const Route = createFileRoute("/criar-pix")({
             },
           };
 
-          if (productHash) payloadParadise.productHash = productHash;
-          if (accountId) payloadParadise.account_id = accountId;
+          const payloadLimpo = JSON.parse(JSON.stringify(payloadInvictus));
 
-          const payloadLimpo = JSON.parse(JSON.stringify(payloadParadise));
-
-          const paradiseRes = await fetch(
-            `${PARADISE_API_URL}/api/v1/transaction.php`,
+          const invictusRes = await fetch(
+            `${INVICTUS_API_URL}/transactions?api_token=${encodeURIComponent(
+              apiToken
+            )}`,
             {
               method: "POST",
               headers: {
-                "X-API-Key": secretKey,
                 "Content-Type": "application/json",
-                Origin: origin,
-                Referer: `${origin}/`,
+                Accept: "application/json",
               },
               body: JSON.stringify(payloadLimpo),
             }
           );
 
-          const apiData: any = await paradiseRes.json().catch(() => ({}));
+          const apiData: any = await invictusRes.json().catch(() => ({}));
 
-          if (!paradiseRes.ok) {
+          if (!invictusRes.ok || apiData?.success === false) {
             console.error(
-              "Resposta Paradise erro:",
-              paradiseRes.status,
+              "Resposta InvictusPay erro:",
+              invictusRes.status,
               apiData
             );
             throw new Error(
-              `Paradise HTTP ${paradiseRes.status}: ${JSON.stringify(apiData)}`
+              `Invictus HTTP ${invictusRes.status}: ${JSON.stringify(apiData)}`
             );
           }
 
-          const respostaNormalizada = apiData?.data ?? apiData;
-          const transactionId =
-            respostaNormalizada?.id ||
-            respostaNormalizada?.idTransaction ||
-            respostaNormalizada?.transaction_id ||
-            respostaNormalizada?.hash;
+          const transactionId = apiData?.hash || apiData?.id;
           const pixCopiaECola =
-            respostaNormalizada?.pix?.pix_qr_code ||
-            respostaNormalizada?.pix_copy_paste ||
-            respostaNormalizada?.qrcode ||
-            respostaNormalizada?.qr_code ||
-            respostaNormalizada?.pix_code;
+            apiData?.pix?.pix_qr_code ||
+            apiData?.pix?.pix_url ||
+            apiData?.pix_code;
 
           if (!transactionId || !pixCopiaECola) {
-            console.error("Resposta Paradise inesperada:", apiData);
-            throw new Error("Resposta da Paradise incompleta.");
+            console.error("Resposta InvictusPay inesperada:", apiData);
+            throw new Error("Resposta da InvictusPay incompleta.");
           }
 
           const qrCodeFinal = `https://quickchart.io/qr?text=${encodeURIComponent(
@@ -182,7 +180,7 @@ export const Route = createFileRoute("/criar-pix")({
 
           const payloadUtmify = {
             orderId: String(transactionId),
-            platform: "rushi-paradise",
+            platform: "rushi-invictus",
             paymentMethod: "pix",
             status: "pending",
             createdAt: nowUtcSqlString(),
@@ -232,7 +230,7 @@ export const Route = createFileRoute("/criar-pix")({
             { status: 200, headers: { "Content-Type": "application/json" } }
           );
         } catch (error: any) {
-          console.error("Erro criar-pix Paradise:", error?.message ?? error);
+          console.error("Erro criar-pix Invictus:", error?.message ?? error);
           return new Response(
             JSON.stringify({
               success: false,
