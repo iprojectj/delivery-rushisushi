@@ -36,7 +36,7 @@ export const Route = createFileRoute("/api/public/invictus-webhook")({
             if (pedidoPendente) {
               pedidoPendente.status = "paid";
               pedidoPendente.approvedDate = nowUtcSqlString();
-              enviarPedidoParaUtmify(pedidoPendente);
+              await enviarPedidoParaUtmify(pedidoPendente);
               delete pendingOrders[transactionId];
             } else {
               console.error(
