@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WebhookParadiseRouteImport } from './routes/webhook-paradise'
+import { Route as ReembolsoSolicitadoRouteImport } from './routes/reembolso-solicitado'
 import { Route as PedidoRouteImport } from './routes/pedido'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as CriarPixRouteImport } from './routes/criar-pix'
@@ -19,6 +20,11 @@ import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status
 const WebhookParadiseRoute = WebhookParadiseRouteImport.update({
   id: '/webhook-paradise',
   path: '/webhook-paradise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReembolsoSolicitadoRoute = ReembolsoSolicitadoRouteImport.update({
+  id: '/reembolso-solicitado',
+  path: '/reembolso-solicitado',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PedidoRoute = PedidoRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
+  '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
+  '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
+  '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/webhook-paradise': typeof WebhookParadiseRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
+    | '/reembolso-solicitado'
     | '/webhook-paradise'
     | '/verificar-status/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
+    | '/reembolso-solicitado'
     | '/webhook-paradise'
     | '/verificar-status/$id'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
+    | '/reembolso-solicitado'
     | '/webhook-paradise'
     | '/verificar-status/$id'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   CriarPixRoute: typeof CriarPixRoute
   ObrigadoRoute: typeof ObrigadoRoute
   PedidoRoute: typeof PedidoRoute
+  ReembolsoSolicitadoRoute: typeof ReembolsoSolicitadoRoute
   WebhookParadiseRoute: typeof WebhookParadiseRoute
   VerificarStatusIdRoute: typeof VerificarStatusIdRoute
 }
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/webhook-paradise'
       fullPath: '/webhook-paradise'
       preLoaderRoute: typeof WebhookParadiseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reembolso-solicitado': {
+      id: '/reembolso-solicitado'
+      path: '/reembolso-solicitado'
+      fullPath: '/reembolso-solicitado'
+      preLoaderRoute: typeof ReembolsoSolicitadoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pedido': {
@@ -160,19 +180,10 @@ const rootRouteChildren: RootRouteChildren = {
   CriarPixRoute: CriarPixRoute,
   ObrigadoRoute: ObrigadoRoute,
   PedidoRoute: PedidoRoute,
+  ReembolsoSolicitadoRoute: ReembolsoSolicitadoRoute,
   WebhookParadiseRoute: WebhookParadiseRoute,
   VerificarStatusIdRoute: VerificarStatusIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

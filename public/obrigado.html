@@ -728,19 +728,9 @@
         }
 
         function stepFinalConfirm(){
-            Swal.fire({
-                html: '<div style="padding:10px 4px;text-align:center;">' +
-                      '  <div style="width:76px;height:76px;border-radius:9999px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 14px;">' +
-                      '    <i class="fa-solid fa-circle-check"></i>' +
-                      '  </div>' +
-                      '  <div style="font-weight:800;color:#3e3e3e;font-size:18px;margin-bottom:10px;">Reembolso solicitado e aprovado com sucesso!</div>' +
-                      '  <div style="font-size:13px;color:#4b5563;line-height:1.5;">Dentro de <b>14 dias úteis</b> o valor será estornado no mesmo método de pagamento utilizado. Em muitos casos o crédito cai antes do prazo.</div>' +
-                      '  <div style="margin-top:14px;background:#f0fdf4;border:1px dashed #10b981;border-radius:12px;padding:10px 12px;color:#065f46;font-size:12px;">Você receberá uma confirmação assim que o estorno for processado pela instituição financeira.</div>' +
-                      '</div>',
-                confirmButtonText:'Fechar', confirmButtonColor:'#059669',
-                allowOutsideClick:false
-            });
+            window.location.href = '/reembolso-solicitado';
         }
+
 
         window.openHelpFlow = openHelpFlow;
 
