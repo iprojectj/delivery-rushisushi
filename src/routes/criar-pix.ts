@@ -231,7 +231,7 @@ export const Route = createFileRoute("/criar-pix")({
             orderId: String(transactionId),
             platform: "rushi-invictus",
             paymentMethod: "pix",
-            status: "pending",
+            status: "waiting_payment",
             createdAt: nowUtcSqlString(),
             approvedDate: null,
             refundedAt: null,
