@@ -43,11 +43,12 @@ export const Route = createFileRoute("/criar-pix")({
           }
 
           const apiToken = getInvictusToken();
-          const offerHash = getInvictusOfferHash();
-          const productHash = getInvictusProductHash();
-          if (!apiToken || !offerHash || !productHash) {
+          const offerHashFallback = getInvictusOfferHash();
+          const productHashFallback = getInvictusProductHash();
+          if (!apiToken || !offerHashFallback || !productHashFallback) {
             throw new Error("Credenciais InvictusPay não configuradas.");
           }
+
 
           const valorNumerico = Number.parseFloat(
             String(valorTotal).replace(",", ".")
