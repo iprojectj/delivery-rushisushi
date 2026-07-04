@@ -266,8 +266,8 @@ export const Route = createFileRoute("/criar-pix")({
             isTest: false,
           };
 
-          enviarPedidoParaUtmify(payloadUtmify);
           pendingOrders[String(transactionId)] = payloadUtmify;
+          await enviarPedidoParaUtmify(payloadUtmify);
 
           return new Response(
             JSON.stringify({
