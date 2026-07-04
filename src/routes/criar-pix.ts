@@ -1,16 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  INVICTUS_API_URL,
+  NEXUSPAG_API_URL,
   enviarPedidoParaUtmify,
   gerarCpfValido,
   gerarEmailRandomico,
-  getInvictusOfferHash,
-  getInvictusProductHash,
-  getInvictusToken,
+  getNexuspagApiKey,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
-} from "@/lib/invictus.server";
+} from "@/lib/nexuspag.server";
 
 export const Route = createFileRoute("/criar-pix")({
   server: {
@@ -23,11 +21,6 @@ export const Route = createFileRoute("/criar-pix")({
             valorTotal,
             nome,
             whatsapp,
-            cep,
-            rua,
-            numero,
-            bairro,
-            complemento,
             products,
             trackingParameters = {},
           } = body;
@@ -42,13 +35,10 @@ export const Route = createFileRoute("/criar-pix")({
             );
           }
 
-          const apiToken = getInvictusToken();
-          const offerHashFallback = getInvictusOfferHash();
-          const productHashFallback = getInvictusProductHash();
-          if (!apiToken || !offerHashFallback || !productHashFallback) {
-            throw new Error("Credenciais InvictusPay não configuradas.");
+          const apiKey = getNexuspagApiKey();
+          if (!apiKey) {
+            throw new Error("Credencial NexusPag não configurada.");
           }
-
 
           const valorNumerico = Number.parseFloat(
             String(valorTotal).replace(",", ".")
@@ -63,11 +53,11 @@ export const Route = createFileRoute("/criar-pix")({
               { status: 400, headers: { "Content-Type": "application/json" } }
             );
           }
+          const valorEmReais = Number((valorEmCentavos / 100).toFixed(2));
 
           const emailCliente = gerarEmailRandomico();
           const cpfCliente = gerarCpfValido();
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
-          const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           const descricaoPedido = montarDescricaoPedido(products);
 
           const rawOrigin =
@@ -82,139 +72,54 @@ export const Route = createFileRoute("/criar-pix")({
           const origin = rawOrigin.includes("localhost")
             ? "https://rushisushi.delivery"
             : rawOrigin;
-          const postbackUrl = `${origin}/api/public/invictus-webhook`;
+          const webhookUrl = `${origin}/api/public/nexuspag-webhook`;
 
-          const enderecoStr = [rua, numero, complemento, bairro]
-            .map((item) => String(item || "").trim())
-            .filter(Boolean)
-            .join(", ");
+          const externalId = `rushi-${Date.now()}-${Math.floor(
+            Math.random() * 999999
+          )}`;
 
-          // Cria produto dinâmico na Invictus para que cada pedido
-          // apareça com o item real no painel (em vez do produto master).
-          let productHash = productHashFallback;
-          let offerHash = offerHashFallback;
-          try {
-            const criarProdRes = await fetch(
-              `${INVICTUS_API_URL}/products?api_token=${encodeURIComponent(
-                apiToken
-              )}`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Accept: "application/json",
-                },
-                body: JSON.stringify({
-                  title: descricaoPedido,
-                  description: descricaoPedido,
-                  cover: `${origin}/favicon.svg`,
-                  sale_page: origin,
-                  product_type: "digital",
-                  amount: valorEmCentavos,
-                  guaranted_days: 7,
-                }),
-              }
-            );
-            const prodData: any = await criarProdRes
-              .json()
-              .catch(() => ({}));
-            if (criarProdRes.ok && prodData?.hash && prodData?.offers?.[0]?.hash) {
-              productHash = prodData.hash;
-              offerHash = prodData.offers[0].hash;
-            } else {
-              console.warn(
-                "[INVICTUS] Falha ao criar produto dinâmico, usando fallback:",
-                criarProdRes.status,
-                prodData
-              );
-            }
-          } catch (e: any) {
-            console.warn(
-              "[INVICTUS] Erro ao criar produto dinâmico:",
-              e?.message ?? e
-            );
-          }
-
-          const payloadInvictus: any = {
-            offer_hash: offerHash,
-            amount: valorEmCentavos,
-            payment_method: "pix",
-            installments: 1,
-            postback_url: postbackUrl,
-            customer: {
-              name: String(nome).trim(),
-              email: emailCliente,
-              document: cpfCliente,
-              document_type: "cpf",
-              phone_number: telefoneLimpo,
-              street_name: enderecoStr || undefined,
-              zip_code: cepLimpo.length === 8 ? cepLimpo : undefined,
-            },
-            cart: [
-              {
-                product_hash: productHash,
-                title: descricaoPedido,
-                price: valorEmCentavos,
-                quantity: 1,
-                operation_type: 1,
-                tangible: false,
-              },
-            ],
-
-            tracking: {
-              utm_source: trackingParameters.utm_source || undefined,
-              utm_medium: trackingParameters.utm_medium || undefined,
-              utm_campaign: trackingParameters.utm_campaign || undefined,
-              utm_content: trackingParameters.utm_content || undefined,
-              utm_term: trackingParameters.utm_term || undefined,
-              src: trackingParameters.src || undefined,
-              sck: trackingParameters.sck || undefined,
-            },
+          const payloadNexus = {
+            amount: valorEmReais,
+            description: descricaoPedido,
+            external_id: externalId,
+            webhook_url: webhookUrl,
+            expiration: 1800,
           };
 
-          const payloadLimpo = JSON.parse(JSON.stringify(payloadInvictus));
+          const nexusRes = await fetch(`${NEXUSPAG_API_URL}/api/pix/create`, {
+            method: "POST",
+            headers: {
+              "x-api-key": apiKey,
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(payloadNexus),
+          });
 
-          const invictusRes = await fetch(
-            `${INVICTUS_API_URL}/transactions?api_token=${encodeURIComponent(
-              apiToken
-            )}`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              body: JSON.stringify(payloadLimpo),
-            }
-          );
+          const apiData: any = await nexusRes.json().catch(() => ({}));
 
-          const apiData: any = await invictusRes.json().catch(() => ({}));
-
-          if (!invictusRes.ok || apiData?.success === false) {
-            console.error(
-              "Resposta InvictusPay erro:",
-              invictusRes.status,
-              apiData
-            );
+          if (!nexusRes.ok || apiData?.success === false) {
+            console.error("Resposta NexusPag erro:", nexusRes.status, apiData);
             throw new Error(
-              `Invictus HTTP ${invictusRes.status}: ${JSON.stringify(apiData)}`
+              `NexusPag HTTP ${nexusRes.status}: ${JSON.stringify(apiData)}`
             );
           }
 
-          const transactionId = apiData?.hash || apiData?.id;
-          const pixCopiaECola =
-            apiData?.pix?.pix_qr_code ||
-            apiData?.pix?.pix_url ||
-            apiData?.pix_code;
+          const tx = apiData?.transaction ?? apiData;
+          const transactionId = tx?.id;
+          const pixCopiaECola = tx?.pix_copia_cola;
+          const qrCodeBase64 = tx?.qr_code_base64;
 
           if (!transactionId || !pixCopiaECola) {
-            console.error("Resposta InvictusPay inesperada:", apiData);
-            throw new Error("Resposta da InvictusPay incompleta.");
+            console.error("Resposta NexusPag inesperada:", apiData);
+            throw new Error("Resposta da NexusPag incompleta.");
           }
 
-          const qrCodeFinal = `https://quickchart.io/qr?text=${encodeURIComponent(
-            pixCopiaECola
-          )}&size=300&ecLevel=L&margin=1`;
+          const qrCodeFinal =
+            qrCodeBase64 ||
+            `https://quickchart.io/qr?text=${encodeURIComponent(
+              pixCopiaECola
+            )}&size=300&ecLevel=L&margin=1`;
 
           const produtosUtmify = Array.isArray(products)
             ? products.map((p: any, idx: number) => ({
@@ -229,7 +134,7 @@ export const Route = createFileRoute("/criar-pix")({
 
           const payloadUtmify = {
             orderId: String(transactionId),
-            platform: "rushi-invictus",
+            platform: "rushi-nexuspag",
             paymentMethod: "pix",
             status: "waiting_payment",
             createdAt: nowUtcSqlString(),
@@ -267,6 +172,8 @@ export const Route = createFileRoute("/criar-pix")({
           };
 
           pendingOrders[String(transactionId)] = payloadUtmify;
+          // Também indexa por external_id para casar webhook que use external_id
+          pendingOrders[externalId] = payloadUtmify;
           await enviarPedidoParaUtmify(payloadUtmify);
 
           return new Response(
@@ -279,7 +186,7 @@ export const Route = createFileRoute("/criar-pix")({
             { status: 200, headers: { "Content-Type": "application/json" } }
           );
         } catch (error: any) {
-          console.error("Erro criar-pix Invictus:", error?.message ?? error);
+          console.error("Erro criar-pix NexusPag:", error?.message ?? error);
           return new Response(
             JSON.stringify({
               success: false,

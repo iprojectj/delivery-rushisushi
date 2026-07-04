@@ -1,61 +1,108 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { createHmac, timingSafeEqual } from "crypto";
 import {
   enviarPedidoParaUtmify,
-  normalizeInvictusStatus,
+  getNexuspagWebhookSecret,
+  normalizeNexuspagStatus,
   nowUtcSqlString,
   pendingOrders,
-} from "@/lib/invictus.server";
+} from "@/lib/nexuspag.server";
+
+function verificarAssinatura(
+  rawBody: string,
+  signatureHeader: string | null,
+  secret: string
+): boolean {
+  if (!secret) return true; // sem secret configurado, aceita
+  if (!signatureHeader) return false;
+  // Formato: t=<unix>,v1=<hmac_hex>
+  const parts = Object.fromEntries(
+    signatureHeader.split(",").map((p) => {
+      const [k, v] = p.split("=");
+      return [k.trim(), (v || "").trim()];
+    })
+  );
+  const t = parts.t;
+  const v1 = parts.v1;
+  if (!t || !v1) return false;
+  const expected = createHmac("sha256", secret)
+    .update(`${t}.${rawBody}`)
+    .digest("hex");
+  try {
+    const a = Buffer.from(v1, "hex");
+    const b = Buffer.from(expected, "hex");
+    if (a.length !== b.length) return false;
+    return timingSafeEqual(a, b);
+  } catch {
+    return false;
+  }
+}
 
 export const Route = createFileRoute("/api/public/nexuspag-webhook")({
   server: {
     handlers: {
       POST: async ({ request }) => {
         try {
-          const evento: any = await request.json().catch(() => ({}));
+          const rawBody = await request.text();
+          const secret = getNexuspagWebhookSecret();
+          const signature = request.headers.get("x-nexuspag-signature");
+
+          if (!verificarAssinatura(rawBody, signature, secret)) {
+            console.warn("[NEXUSPAG] Assinatura de webhook inválida.");
+            return new Response("invalid signature", { status: 401 });
+          }
+
+          const evento: any = JSON.parse(rawBody || "{}");
           console.log(
-            "🔔 Webhook InvictusPay:",
+            "🔔 Webhook NexusPag:",
             JSON.stringify(evento, null, 2)
           );
 
           const transactionId = String(
-            evento?.transaction_hash ??
-              evento?.hash ??
-              evento?.id ??
-              ""
+            evento?.transaction_id ?? evento?.id ?? ""
           );
-          const rawStatus = String(
-            evento?.status ?? evento?.payment_status ?? ""
-          );
+          const externalId = String(evento?.external_id ?? "");
+          const rawStatus = String(evento?.status ?? "");
+          const eventName = String(evento?.event ?? "");
 
-          if (!transactionId) return new Response("ok", { status: 200 });
+          if (!transactionId && !externalId) {
+            return new Response("ok", { status: 200 });
+          }
 
-          const finalStatus = normalizeInvictusStatus(rawStatus);
-          const pedidoPendente = pendingOrders[transactionId];
+          const finalStatus =
+            eventName === "payment.confirmed"
+              ? "paid"
+              : normalizeNexuspagStatus(rawStatus);
 
-          if (finalStatus === "paid") {
-            if (pedidoPendente) {
-              pedidoPendente.status = "paid";
-              pedidoPendente.approvedDate = nowUtcSqlString();
-              await enviarPedidoParaUtmify(pedidoPendente);
-              delete pendingOrders[transactionId];
-            } else {
-              console.error(
-                `[UTMIFY] Pedido ${transactionId} não encontrado nos pendentes.`
-              );
-            }
-          } else if (finalStatus === "refunded" || finalStatus === "failed") {
-            if (pedidoPendente) {
-              pedidoPendente.status = finalStatus;
-              if (finalStatus === "refunded")
-                pedidoPendente.refundedAt = nowUtcSqlString();
-              await enviarPedidoParaUtmify(pedidoPendente);
-              delete pendingOrders[transactionId];
-            }
+          const pedidoPendente =
+            pendingOrders[transactionId] ||
+            (externalId ? pendingOrders[externalId] : undefined);
+
+          if (finalStatus === "paid" && pedidoPendente) {
+            pedidoPendente.status = "paid";
+            pedidoPendente.approvedDate = nowUtcSqlString();
+            await enviarPedidoParaUtmify(pedidoPendente);
+            delete pendingOrders[transactionId];
+            if (externalId) delete pendingOrders[externalId];
+          } else if (
+            (finalStatus === "refunded" || finalStatus === "failed") &&
+            pedidoPendente
+          ) {
+            pedidoPendente.status = finalStatus;
+            if (finalStatus === "refunded")
+              pedidoPendente.refundedAt = nowUtcSqlString();
+            await enviarPedidoParaUtmify(pedidoPendente);
+            delete pendingOrders[transactionId];
+            if (externalId) delete pendingOrders[externalId];
+          } else if (!pedidoPendente) {
+            console.warn(
+              `[NEXUSPAG] Pedido ${transactionId}/${externalId} não encontrado nos pendentes.`
+            );
           }
 
           return new Response("ok", { status: 200 });
         } catch (e: any) {
-          console.error("Erro webhook Invictus:", e?.message ?? e);
+          console.error("Erro webhook NexusPag:", e?.message ?? e);
           return new Response("error", { status: 500 });
         }
       },
