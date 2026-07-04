@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   INVICTUS_API_URL,
   enviarPedidoParaUtmify,
+  gerarCpfValido,
   gerarEmailRandomico,
   getInvictusOfferHash,
   getInvictusProductHash,
