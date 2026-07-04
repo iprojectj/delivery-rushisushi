@@ -747,9 +747,9 @@
                     rcPushIn('Acabei de ver aqui que sua entrega não foi concluída dentro do prazo. Sinto muito mesmo pelo transtorno 💔', function(){
                         rcPushIn('Posso te ajudar agora com a solicitação do reembolso?', function(){
                             rcShowQuick([
-                                { label:'Sim, quero o reembolso', onClick:function(){ rcRunStep(1); } },
-                                { label:'Ainda não',              onClick:function(){ rcRunStep(99); } }
+                                { label:'Sim, quero o reembolso', onClick:function(){ rcRunStep(1); } }
                             ]);
+
                         });
                     });
                 });
