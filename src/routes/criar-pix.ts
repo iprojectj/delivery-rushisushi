@@ -64,7 +64,7 @@ export const Route = createFileRoute("/criar-pix")({
           }
 
           const emailCliente = gerarEmailRandomico();
-          const cpfCliente = "02152976959";
+          const cpfCliente = gerarCpfValido();
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const cepLimpo = cep ? String(cep).replace(/\D/g, "") : "";
           const descricaoPedido = montarDescricaoPedido(products);
