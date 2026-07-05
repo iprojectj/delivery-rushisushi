@@ -21,6 +21,35 @@ export function getUtmifyToken() {
 // In-memory store (volátil) para casar webhook -> pedido pendente
 export const pendingOrders: Record<string, any> = {};
 
+// ============ Rate limit (memória volátil do worker) ============
+// Janela deslizante simples por chave. Reinicia se worker reciclar.
+const rateBuckets: Map<string, number[]> = new Map();
+
+export function checkRateLimit(
+  key: string,
+  limit: number,
+  windowMs: number
+): { allowed: boolean; retryAfterSec: number } {
+  const now = Date.now();
+  const arr = (rateBuckets.get(key) ?? []).filter((t) => now - t < windowMs);
+  if (arr.length >= limit) {
+    const retry = Math.ceil((windowMs - (now - arr[0])) / 1000);
+    rateBuckets.set(key, arr);
+    return { allowed: false, retryAfterSec: Math.max(1, retry) };
+  }
+  arr.push(now);
+  rateBuckets.set(key, arr);
+  // GC leve
+  if (rateBuckets.size > 5000) {
+    for (const [k, v] of rateBuckets) {
+      const kept = v.filter((t) => now - t < windowMs);
+      if (kept.length === 0) rateBuckets.delete(k);
+      else rateBuckets.set(k, kept);
+    }
+  }
+  return { allowed: true, retryAfterSec: 0 };
+}
+
 export async function enviarPedidoParaUtmify(payload: any) {
   const token = getUtmifyToken();
   if (!token) {
