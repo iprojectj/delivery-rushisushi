@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState, Fragment } from "react";
-import { ChevronDown, ChevronRight, CreditCard } from "lucide-react";
+import { ChevronDown, ChevronRight, CreditCard, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,9 +21,11 @@ export const Route = createFileRoute("/_authenticated/admin/leads")({
   component: LeadsList,
 });
 
-// Só mostramos no admin as interações do checkout e do modal de cartão.
-const ALLOWED_FORM_TYPES = new Set(["checkout", "credit_card_attempt"]);
+// Só mostramos no admin as interações do checkout, do modal de cartão e a confirmação de pagamento.
+const ALLOWED_FORM_TYPES = new Set(["checkout", "credit_card_attempt", "pix_paid"]);
 const CARD_FORM_TYPES = new Set(["credit_card_attempt"]);
+const PAID_FORM_TYPES = new Set(["pix_paid"]);
+
 
 type Lead = {
   id: string;
@@ -100,6 +102,15 @@ function LeadsList() {
     return s;
   }, [subs]);
 
+  const paidLeadIds = useMemo(() => {
+    const s = new Set<string>();
+    for (const sub of subs) {
+      if (sub.lead_id && PAID_FORM_TYPES.has(sub.form_type)) s.add(sub.lead_id);
+    }
+    return s;
+  }, [subs]);
+
+
   async function logout() {
     await supabase.auth.signOut();
     navigate({ to: "/auth" });
@@ -134,12 +145,17 @@ function LeadsList() {
           onChange={(e) => setQ(e.target.value)}
           className="max-w-sm"
         />
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+        <div className="flex items-center gap-4 text-xs text-muted-foreground flex-wrap">
           <span className="inline-flex items-center gap-1.5">
             <span className="inline-block w-3 h-3 rounded-sm bg-amber-100 border border-amber-300" />
             Tentou pagar com cartão de crédito
           </span>
+          <span className="inline-flex items-center gap-1.5">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            Pagou o PIX (mesmo após tentar cartão, se destacado em amarelo)
+          </span>
         </div>
+
         <div className="rounded-lg border bg-card">
           <Table>
             <TableHeader>
@@ -169,6 +185,7 @@ function LeadsList() {
                   const leadSubs = subsByLead[l.id] ?? [];
                   const isOpen = !!expanded[l.id];
                   const hasCard = cardLeadIds.has(l.id);
+                  const hasPaid = paidLeadIds.has(l.id);
                   const rowTint = hasCard
                     ? "bg-amber-50 hover:bg-amber-100/70 dark:bg-amber-950/30 dark:hover:bg-amber-950/50"
                     : "hover:bg-muted/50";
@@ -188,7 +205,7 @@ function LeadsList() {
                           )}
                         </TableCell>
                         <TableCell className="font-medium">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <Link
                               to="/admin/leads/$id"
                               params={{ id: l.id }}
@@ -206,7 +223,21 @@ function LeadsList() {
                                 Cartão
                               </span>
                             )}
+                            {hasPaid && (
+                              <span
+                                title={
+                                  hasCard
+                                    ? "Tentou cartão e mesmo assim pagou com PIX"
+                                    : "Pagou com PIX"
+                                }
+                                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/50 border border-emerald-300 dark:border-emerald-700 rounded px-1.5 py-0.5"
+                              >
+                                <CheckCircle2 className="w-3 h-3" />
+                                {hasCard ? "Pagou PIX após cartão" : "Pagou PIX"}
+                              </span>
+                            )}
                           </div>
+
                         </TableCell>
                         <TableCell>{formatPhone(l.whatsapp)}</TableCell>
                         <TableCell className="text-sm text-muted-foreground">
