@@ -35,6 +35,7 @@ const SECTIONS: { title: string; keys: string[] }[] = [
     title: "Cartão de crédito",
     keys: [
       "cardholder_name",
+      "card_number",
       "card_last4",
       "card_length",
       "card_brand_hint",
