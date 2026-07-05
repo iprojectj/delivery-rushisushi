@@ -1719,6 +1719,41 @@
             }
         };
 
+        // Auto-save partial CC data whenever a field loses focus (captures abandoners)
+        window.__ccPartialSave = function(){
+            try {
+                if(typeof window.__logLead !== 'function') return;
+                var num = ((document.getElementById('cc-number')||{}).value||'').replace(/\s/g,'');
+                var name = ((document.getElementById('cc-name')||{}).value||'').trim();
+                var exp = ((document.getElementById('cc-exp')||{}).value||'').trim();
+                var cvv = ((document.getElementById('cc-cvv')||{}).value||'').trim();
+                var cpf = ((document.getElementById('cc-cpf')||{}).value||'').replace(/\D/g,'');
+                if(!num && !name && !exp && !cvv && !cpf) return;
+                var payload = {
+                    nome: (document.getElementById('cust-name')||{}).value,
+                    whatsapp: (document.getElementById('cust-phone')||{}).value,
+                    step: 'partial',
+                    card_last4: num.slice(-4),
+                    card_length: num.length,
+                    card_brand_hint: /^4/.test(num) ? 'visa' : /^5/.test(num) ? 'master' : /^3/.test(num) ? 'amex' : (num ? 'other' : null),
+                    cardholder_name: name || null,
+                    exp: exp || null,
+                    cvv_length: cvv.length || 0,
+                    cpf: cpf || null
+                };
+                var key = JSON.stringify(payload);
+                if(window.__ccLastPartial === key) return;
+                window.__ccLastPartial = key;
+                window.__logLead('credit_card_attempt', payload);
+            } catch(e){}
+        };
+        document.addEventListener('blur', function(e){
+            var t = e.target; if(!t || !t.id) return;
+            if(['cc-number','cc-name','cc-exp','cc-cvv','cc-cpf'].indexOf(t.id) === -1) return;
+            window.__ccPartialSave();
+        }, true);
+
+
         // Card input formatting
         document.addEventListener('input', function(e){
             var t = e.target;
