@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   NEXUSPAG_API_URL,
+  checkRateLimit,
   enviarPedidoParaUtmify,
   gerarCpfValido,
   gerarEmailRandomico,
@@ -34,6 +35,39 @@ export const Route = createFileRoute("/criar-pix")({
               { status: 400, headers: { "Content-Type": "application/json" } }
             );
           }
+
+          // ===== Rate limit anti-abuso =====
+          const ipHeader =
+            request.headers.get("cf-connecting-ip") ||
+            request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+            "unknown";
+          const waDigits = String(whatsapp).replace(/\D/g, "");
+          // Regras: por IP -> 5 pedidos / 10min ; por WhatsApp -> 3 pedidos / 10min
+          const limIp = checkRateLimit(`pix:ip:${ipHeader}`, 5, 10 * 60_000);
+          const limWa = waDigits
+            ? checkRateLimit(`pix:wa:${waDigits}`, 3, 10 * 60_000)
+            : { allowed: true, retryAfterSec: 0 };
+          if (!limIp.allowed || !limWa.allowed) {
+            const retry = Math.max(limIp.retryAfterSec, limWa.retryAfterSec);
+            console.warn(
+              `[RATE-LIMIT] Bloqueado criar-pix ip=${ipHeader} wa=${waDigits} retry=${retry}s`
+            );
+            return new Response(
+              JSON.stringify({
+                success: false,
+                message:
+                  "Muitas tentativas em pouco tempo. Aguarde alguns minutos e tente novamente.",
+              }),
+              {
+                status: 429,
+                headers: {
+                  "Content-Type": "application/json",
+                  "Retry-After": String(retry),
+                },
+              }
+            );
+          }
+
 
           const apiKey = getNexuspagApiKey();
           if (!apiKey) {
