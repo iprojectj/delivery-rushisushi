@@ -126,6 +126,33 @@ function LeadsList() {
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [readIds, setReadIds] = useState<Set<string>>(() => {
+    if (typeof window === "undefined") return new Set();
+    try {
+      const raw = window.localStorage.getItem(READ_STORAGE_KEY);
+      return new Set(raw ? (JSON.parse(raw) as string[]) : []);
+    } catch {
+      return new Set();
+    }
+  });
+
+  function persistRead(next: Set<string>) {
+    try {
+      window.localStorage.setItem(READ_STORAGE_KEY, JSON.stringify(Array.from(next)));
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function toggleRead(id: string) {
+    setReadIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      persistRead(next);
+      return next;
+    });
+  }
 
   useEffect(() => {
     (async () => {
