@@ -217,9 +217,16 @@ function LeadsList() {
     navigate({ to: "/auth" });
   }
 
+  const unreadCardIds = useMemo(() => {
+    const s = new Set<string>();
+    for (const id of cardLeadIds) if (!readIds.has(id)) s.add(id);
+    return s;
+  }, [cardLeadIds, readIds]);
+
   const filtered = useMemo(() => {
     return leads.filter((l) => {
       if (filter === "card" && !cardLeadIds.has(l.id)) return false;
+      if (filter === "unread" && !unreadCardIds.has(l.id)) return false;
       if (filter === "paid" && !paidLeadIds.has(l.id)) return false;
       if (filter === "card_then_pix" && !(cardLeadIds.has(l.id) && paidLeadIds.has(l.id)))
         return false;
@@ -230,7 +237,7 @@ function LeadsList() {
         (l.whatsapp ?? "").includes(s.replace(/\D/g, ""))
       );
     });
-  }, [leads, q, filter, cardLeadIds, paidLeadIds]);
+  }, [leads, q, filter, cardLeadIds, paidLeadIds, unreadCardIds]);
 
   const grouped = useMemo(() => {
     const map = new Map<string, Lead[]>();
@@ -244,6 +251,7 @@ function LeadsList() {
 
   const filterButtons: { key: FilterKey; label: string; count: number }[] = [
     { key: "all", label: "Todos", count: leads.length },
+    { key: "unread", label: "Não lidos (cartão)", count: unreadCardIds.size },
     { key: "card", label: "Tentou cartão", count: cardLeadIds.size },
     { key: "paid", label: "Pagou PIX", count: paidLeadIds.size },
     {
