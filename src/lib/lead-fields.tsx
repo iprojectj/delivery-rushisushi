@@ -6,7 +6,7 @@ const LABELS: Record<string, string> = {
   email: "E-mail",
   cpf: "CPF",
   pagamento: "Forma de pagamento",
-  step: "Etapa",
+  step: "Situação",
   // endereço
   cep: "CEP",
   rua: "Rua",
