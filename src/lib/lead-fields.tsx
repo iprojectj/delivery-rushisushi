@@ -6,7 +6,7 @@ const LABELS: Record<string, string> = {
   email: "E-mail",
   cpf: "CPF",
   pagamento: "Forma de pagamento",
-  step: "Etapa",
+  step: "Situação",
   // endereço
   cep: "CEP",
   rua: "Rua",
@@ -58,12 +58,22 @@ function maskCard(v: string) {
   return d.replace(/(.{4})/g, "$1 ").trim();
 }
 
+const STEP_LABELS: Record<string, string> = {
+  submitted: "Pedido finalizado (gerou PIX)",
+  pix_generated: "PIX gerado",
+  pix_paid: "PIX pago",
+  credit_card_attempt: "Tentou pagar com cartão",
+  form_opened: "Abriu o formulário",
+  checkout: "Preencheu checkout",
+};
+
 function formatValue(k: string, v: unknown): ReactNode {
   if (v == null || v === "") return <span className="text-muted-foreground">—</span>;
   if (typeof v === "boolean") return v ? "Sim" : "Não";
   if (typeof v === "string") {
     if (k === "cpf") return maskCpf(v);
     if (k === "card_number") return <span className="font-mono">{maskCard(v)}</span>;
+    if (k === "step") return STEP_LABELS[v] ?? v;
     return v;
   }
   if (typeof v === "number") return String(v);
