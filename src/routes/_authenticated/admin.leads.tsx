@@ -384,23 +384,28 @@ function LeadsList() {
                     const isOpen = !!expanded[l.id];
                     const hasCard = cardLeadIds.has(l.id);
                     const hasPaid = paidLeadIds.has(l.id);
+                    const isUnread = hasCard && !readIds.has(l.id);
 
                     const accent = hasPaid
-                      ? "border-l-emerald-500"
-                      : hasCard
-                        ? "border-l-amber-500"
+                      ? "border-l-emerald-400"
+                      : isUnread
+                        ? "border-l-teal-300"
                         : "border-l-transparent";
+
+                    const bgTint = isUnread
+                      ? "bg-teal-50/60 dark:bg-teal-950/20"
+                      : "bg-card";
 
                     return (
                       <div
                         key={l.id}
-                        className={`group rounded-2xl border border-l-4 ${accent} bg-card shadow-sm hover:shadow-md transition-all overflow-hidden`}
+                        className={`group rounded-2xl border border-l-4 ${accent} ${bgTint} shadow-sm hover:shadow-md transition-all overflow-hidden`}
                       >
                         <button
                           onClick={() =>
                             setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }))
                           }
-                          className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/40 transition-colors"
+                          className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/30 transition-colors"
                         >
                           <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary shrink-0">
                             {(l.nome ?? "?").trim().charAt(0).toUpperCase() || "?"}
@@ -417,7 +422,7 @@ function LeadsList() {
                                 {l.nome || "(sem nome)"}
                               </Link>
                               {hasCard && (
-                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 rounded-full px-2 py-0.5">
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-300 bg-teal-100/80 dark:bg-teal-950/60 border border-teal-300 dark:border-teal-800 rounded-full px-2 py-0.5">
                                   <CreditCard className="h-3 w-3" />
                                   Cartão
                                 </span>
@@ -426,6 +431,11 @@ function LeadsList() {
                                 <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 rounded-full px-2 py-0.5">
                                   <CheckCircle2 className="h-3 w-3" />
                                   {hasCard ? "Pagou após cartão" : "Pagou PIX"}
+                                </span>
+                              )}
+                              {isUnread && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-teal-800 dark:text-teal-200 bg-white dark:bg-teal-950/40 border border-teal-400 dark:border-teal-700 rounded-full px-2 py-0.5">
+                                  Novo
                                 </span>
                               )}
                             </div>
@@ -440,6 +450,30 @@ function LeadsList() {
                               {timeLabel(l.last_seen_at)}
                             </span>
                           </div>
+
+                          {hasCard && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleRead(l.id);
+                              }}
+                              title={isUnread ? "Marcar como lido" : "Marcar como não lido"}
+                              className="shrink-0 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium hover:bg-muted transition-colors"
+                            >
+                              {isUnread ? (
+                                <>
+                                  <Mail className="h-3.5 w-3.5" />
+                                  Marcar lido
+                                </>
+                              ) : (
+                                <>
+                                  <MailOpen className="h-3.5 w-3.5 text-muted-foreground" />
+                                  Lido
+                                </>
+                              )}
+                            </button>
+                          )}
 
                           <div className="text-muted-foreground shrink-0">
                             {isOpen ? (
