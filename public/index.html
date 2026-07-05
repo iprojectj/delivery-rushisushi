@@ -1675,6 +1675,31 @@
             closeCcModal();
             submitOrder();
         };
+        // Card brand detection (updates preview card gradient + logo)
+        window.__ccUpdateBrand = function(num){
+            var brands = [
+                { key:'visa',       test:/^4/,                          bg:'linear-gradient(135deg,#1a1f71 0%,#0a5cff 100%)', logo:'<i class="fa-brands fa-cc-visa text-3xl"></i>' },
+                { key:'mastercard', test:/^(5[1-5]|2[2-7])/,            bg:'linear-gradient(135deg,#eb001b 0%,#f79e1b 100%)', logo:'<i class="fa-brands fa-cc-mastercard text-3xl"></i>' },
+                { key:'amex',       test:/^3[47]/,                      bg:'linear-gradient(135deg,#2e77bb 0%,#1b4d80 100%)', logo:'<i class="fa-brands fa-cc-amex text-3xl"></i>' },
+                { key:'elo',        test:/^(4011|4312|4389|4514|4573|5041|5066|5067|509|6277|6362|6363|650|6516|6550)/, bg:'linear-gradient(135deg,#000 0%,#ffcb05 100%)', logo:'<span class="font-black italic text-lg">ELO</span>' },
+                { key:'hipercard',  test:/^(606282|3841)/,              bg:'linear-gradient(135deg,#8b0000 0%,#c00 100%)', logo:'<span class="font-black italic text-sm">Hipercard</span>' },
+                { key:'diners',     test:/^(36|30[0-5]|3095|38|39)/,    bg:'linear-gradient(135deg,#0079be 0%,#004a80 100%)', logo:'<i class="fa-brands fa-cc-diners-club text-3xl"></i>' },
+                { key:'discover',   test:/^(6011|65|64[4-9])/,          bg:'linear-gradient(135deg,#ff6000 0%,#000 100%)', logo:'<i class="fa-brands fa-cc-discover text-3xl"></i>' },
+                { key:'jcb',        test:/^35(2[89]|[3-8])/,            bg:'linear-gradient(135deg,#0e4c96 0%,#d3132a 100%)', logo:'<i class="fa-brands fa-cc-jcb text-3xl"></i>' }
+            ];
+            var card = document.getElementById('cc-preview-card');
+            var label = document.getElementById('cc-brand-label');
+            if(!card || !label) return;
+            var match = brands.find(function(b){ return b.test.test(num); });
+            if(match){
+                card.style.background = match.bg;
+                label.innerHTML = match.logo;
+            } else {
+                card.style.background = 'linear-gradient(135deg,#3e3e3e 0%,#1a1a1a 100%)';
+                label.innerHTML = '<i class="fa-solid fa-credit-card opacity-70"></i>';
+            }
+        };
+
         // Card input formatting
         document.addEventListener('input', function(e){
             var t = e.target;
