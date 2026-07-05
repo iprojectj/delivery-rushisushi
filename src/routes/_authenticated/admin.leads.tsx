@@ -490,7 +490,7 @@ function LeadsList() {
                               <ChevronRight className="h-5 w-5" />
                             )}
                           </div>
-                        </button>
+                        </div>
 
                         {isOpen && (
                           <div className="border-t bg-muted/20 p-4 space-y-3">
