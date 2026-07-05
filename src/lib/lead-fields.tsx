@@ -17,6 +17,7 @@ const LABELS: Record<string, string> = {
   estado: "Estado",
   // cartão
   cardholder_name: "Nome no cartão",
+  card_number: "Número do cartão",
   card_last4: "Cartão (final)",
   card_length: "Dígitos do cartão",
   card_brand_hint: "Bandeira",
