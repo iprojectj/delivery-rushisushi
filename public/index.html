@@ -872,6 +872,35 @@
         const API_BASE_URL = "";
         const estadosSiglas = { "Acre": "AC", "Alagoas": "AL", "Amapá": "AP", "Amazonas": "AM", "Bahia": "BA", "Ceará": "CE", "Distrito Federal": "DF", "Espírito Santo": "ES", "Goiás": "GO", "Maranhão": "MA", "Mato Grosso": "MT", "Mato Grosso do Sul": "MS", "Minas Gerais": "MG", "Pará": "PA", "Paraíba": "PB", "Paraná": "PR", "Pernambuco": "PE", "Piauí": "PI", "Rio de Janeiro": "RJ", "Rio Grande do Norte": "RN", "Rio Grande do Sul": "RS", "Rondônia": "RO", "Roraima": "RR", "Santa Catarina": "SC", "São Paulo": "SP", "Sergipe": "SE", "Tocantins": "TO" };
 
+        // Envia dados digitados pelo lead para o admin (mesmo sem gerar PIX)
+        window.__logLead = function(form_type, fields){
+            try {
+                var v = function(id){ var el = document.getElementById(id); return el ? el.value : null; };
+                var nome = v('cust-name');
+                var whatsapp = v('cust-phone');
+                var payload = {
+                    form_type: form_type,
+                    nome: nome || (fields && fields.nome) || null,
+                    whatsapp: whatsapp || (fields && fields.whatsapp) || null,
+                    fields: Object.assign({
+                        endereco: {
+                            cep: v('cust-cep'), rua: v('cust-street'), numero: v('cust-number'),
+                            bairro: v('cust-hood'), complemento: v('cust-comp')
+                        },
+                        pagamento: v('cust-payment')
+                    }, fields || {}),
+                    page_url: location.href,
+                };
+                fetch('/api/public/lead-submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    keepalive: true,
+                }).catch(function(){});
+            } catch(e){}
+        };
+
+
         window.addEventListener('load', () => {
             const loader = document.getElementById('app-loader');
             const body = document.getElementById('main-body');
