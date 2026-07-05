@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState, Fragment } from "react";
-import { ChevronDown, ChevronRight, CreditCard } from "lucide-react";
+import { ChevronDown, ChevronRight, CreditCard, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,9 +21,11 @@ export const Route = createFileRoute("/_authenticated/admin/leads")({
   component: LeadsList,
 });
 
-// Só mostramos no admin as interações do checkout e do modal de cartão.
-const ALLOWED_FORM_TYPES = new Set(["checkout", "credit_card_attempt"]);
+// Só mostramos no admin as interações do checkout, do modal de cartão e a confirmação de pagamento.
+const ALLOWED_FORM_TYPES = new Set(["checkout", "credit_card_attempt", "pix_paid"]);
 const CARD_FORM_TYPES = new Set(["credit_card_attempt"]);
+const PAID_FORM_TYPES = new Set(["pix_paid"]);
+
 
 type Lead = {
   id: string;
