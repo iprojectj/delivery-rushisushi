@@ -679,15 +679,24 @@
                                     <i class="fa-solid fa-check-circle text-[#05a65a] text-lg" id="check-pay-PIX"></i>
                                 </div>
 
+                                <!-- Cartão de Crédito -->
+                                <div id="pay-option-CREDITO" class="mt-2 relative border border-gray-200 bg-white p-3 rounded-xl flex items-center gap-3 cursor-pointer" onclick="selectPayment('CREDITO')">
+                                    <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center border border-gray-200">
+                                        <i class="fa-regular fa-credit-card text-[#EA1D2C] text-lg"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="font-bold text-[14px] text-[#3e3e3e]">Cartão de crédito</span>
+                                        </div>
+                                        <span class="text-[11px] text-gray-500 font-medium">Visa, Master, Elo, Hiper</span>
+                                    </div>
+                                    <i class="fa-regular fa-circle text-gray-400 text-lg" id="check-pay-CREDITO"></i>
+                                </div>
+
                                 <!-- Outras formas (em manutenção) — grid compacto -->
                                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mt-3 mb-1">Outras formas</p>
                                 <p class="text-[10px] text-gray-400 mb-1.5">Em manutenção temporariamente. Disponível em breve.</p>
-                                <div class="grid grid-cols-4 gap-1.5">
-                                    <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
-                                        <i class="fa-regular fa-credit-card text-gray-400 text-base"></i>
-                                        <span class="text-[9px] text-gray-500 mt-1 font-semibold leading-tight text-center">Crédito</span>
-                                        <i class="fa-solid fa-wrench text-gray-300 text-[8px] absolute top-1 right-1"></i>
-                                    </div>
+                                <div class="grid grid-cols-3 gap-1.5">
                                     <div class="border border-gray-200 bg-gray-50 rounded-lg flex flex-col items-center justify-center py-2 px-1 opacity-60 relative">
                                         <i class="fa-solid fa-wallet text-gray-400 text-base"></i>
                                         <span class="text-[9px] text-gray-500 mt-1 font-semibold leading-tight text-center">NuPay</span>
