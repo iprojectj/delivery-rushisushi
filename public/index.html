@@ -1301,10 +1301,9 @@
                             html += `
                             <div ${p.soldOut ? '' : `onclick="openProductModal('${p.id}')"`} class="${highlightClass} rounded-2xl border shadow-lg ${p.soldOut ? 'cursor-not-allowed' : 'cursor-pointer active:scale-[0.98]'} transition-transform duration-200 relative overflow-visible flex flex-col mb-2 mt-6">
                                 ${p.soldOut ? `
-                                <div class="absolute inset-0 z-30 rounded-2xl bg-black/60 backdrop-blur-[2px] flex items-center justify-center pointer-events-auto" style="cursor:not-allowed">
-                                    <div class="bg-white/95 border-2 border-[#EA1D2C] rounded-xl px-5 py-3 shadow-2xl -rotate-3">
-                                        <span class="text-[#EA1D2C] font-black text-xl uppercase tracking-wide">Esgotado</span>
-                                        <p class="text-[10px] text-gray-600 font-medium text-center mt-0.5">Temporariamente indisponível</p>
+                                <div class="absolute inset-0 z-30 rounded-2xl bg-white/20 backdrop-blur-[1px] flex items-center justify-center pointer-events-auto" style="cursor:not-allowed">
+                                    <div class="bg-white/95 border-2 border-[#EA1D2C] rounded-xl px-8 py-4 shadow-2xl -rotate-3">
+                                        <span class="text-[#EA1D2C] font-black text-3xl uppercase tracking-wide">Esgotado</span>
                                     </div>
                                 </div>` : ''}
                                 <div class="brinde-wrap">
