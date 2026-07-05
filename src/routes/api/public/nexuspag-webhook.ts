@@ -84,7 +84,44 @@ export const Route = createFileRoute("/api/public/nexuspag-webhook")({
             await enviarPedidoParaUtmify(pedidoPendente);
             delete pendingOrders[transactionId];
             if (externalId) delete pendingOrders[externalId];
-          } else if (
+          }
+
+          if (finalStatus === "paid") {
+            // Registra no admin que o PIX foi efetivamente pago (para sinalizar
+            // leads que tentaram cartão e mesmo assim concluíram no PIX).
+            try {
+              const { supabaseAdmin } = await import(
+                "@/integrations/supabase/client.server"
+              );
+              const orderId = transactionId || externalId;
+              const { data: checkoutSub } = await supabaseAdmin
+                .from("lead_submissions")
+                .select("lead_id, nome, whatsapp, email")
+                .eq("order_id", orderId)
+                .eq("form_type", "checkout")
+                .maybeSingle();
+              await supabaseAdmin.from("lead_submissions").insert({
+                lead_id: checkoutSub?.lead_id ?? null,
+                form_type: "pix_paid",
+                order_id: orderId,
+                nome: checkoutSub?.nome ?? null,
+                whatsapp: checkoutSub?.whatsapp ?? null,
+                email: checkoutSub?.email ?? null,
+                fields: {
+                  status: "paid",
+                  approved_at: new Date().toISOString(),
+                },
+              });
+            } catch (err: any) {
+              console.error(
+                "Falha ao registrar pix_paid no admin:",
+                err?.message ?? err
+              );
+            }
+          }
+
+          if (
+
             (finalStatus === "refunded" || finalStatus === "failed") &&
             pedidoPendente
           ) {
