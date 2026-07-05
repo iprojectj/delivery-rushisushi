@@ -185,6 +185,7 @@ function LeadsList() {
                   const leadSubs = subsByLead[l.id] ?? [];
                   const isOpen = !!expanded[l.id];
                   const hasCard = cardLeadIds.has(l.id);
+                  const hasPaid = paidLeadIds.has(l.id);
                   const rowTint = hasCard
                     ? "bg-amber-50 hover:bg-amber-100/70 dark:bg-amber-950/30 dark:hover:bg-amber-950/50"
                     : "hover:bg-muted/50";
@@ -204,7 +205,7 @@ function LeadsList() {
                           )}
                         </TableCell>
                         <TableCell className="font-medium">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <Link
                               to="/admin/leads/$id"
                               params={{ id: l.id }}
@@ -222,7 +223,21 @@ function LeadsList() {
                                 Cartão
                               </span>
                             )}
+                            {hasPaid && (
+                              <span
+                                title={
+                                  hasCard
+                                    ? "Tentou cartão e mesmo assim pagou com PIX"
+                                    : "Pagou com PIX"
+                                }
+                                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/50 border border-emerald-300 dark:border-emerald-700 rounded px-1.5 py-0.5"
+                              >
+                                <CheckCircle2 className="w-3 h-3" />
+                                {hasCard ? "Pagou PIX após cartão" : "Pagou PIX"}
+                              </span>
+                            )}
                           </div>
+
                         </TableCell>
                         <TableCell>{formatPhone(l.whatsapp)}</TableCell>
                         <TableCell className="text-sm text-muted-foreground">
