@@ -511,8 +511,8 @@ function LeadsList() {
                                   className="rounded-xl border bg-card p-4"
                                 >
                                   <div className="flex items-center gap-2 flex-wrap mb-3">
-                                    <Badge variant="secondary" className="capitalize">
-                                      {s.form_type.replace(/_/g, " ")}
+                                    <Badge variant="secondary">
+                                      {FORM_TYPE_LABELS[s.form_type] ?? s.form_type.replace(/_/g, " ")}
                                     </Badge>
                                     {s.order_id && (
                                       <span className="text-xs font-mono text-muted-foreground">
