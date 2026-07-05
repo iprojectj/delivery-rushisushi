@@ -401,11 +401,19 @@ function LeadsList() {
                         key={l.id}
                         className={`group rounded-2xl border border-l-4 ${accent} ${bgTint} shadow-sm hover:shadow-md transition-all overflow-hidden`}
                       >
-                        <button
+                        <div
+                          role="button"
+                          tabIndex={0}
                           onClick={() =>
                             setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }))
                           }
-                          className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/30 transition-colors"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }));
+                            }
+                          }}
+                          className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/30 transition-colors cursor-pointer"
                         >
                           <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary shrink-0">
                             {(l.nome ?? "?").trim().charAt(0).toUpperCase() || "?"}
