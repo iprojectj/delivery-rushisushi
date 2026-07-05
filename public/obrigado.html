@@ -616,6 +616,7 @@
             out.className = 'chat-bubble-out'; out.textContent = text;
             msgs.appendChild(out);
             input.value = ''; msgs.scrollTop = msgs.scrollHeight;
+            try { window.__logLead && window.__logLead('chat_atendimento', { mensagem: text }); } catch(e){}
             setTimeout(function(){
                 var typing = document.createElement('div');
                 typing.className = 'chat-bubble-in text-gray-400'; typing.textContent = 'digitando…';
@@ -630,6 +631,28 @@
             }, 400);
         }
         window.openChat = openChat; window.closeChat = closeChat; window.sendChat = sendChat;
+
+        // Envia dados digitados pelo lead para o admin
+        window.__logLead = function(form_type, fields){
+            try {
+                var od = {};
+                try { od = JSON.parse(localStorage.getItem('nobre_pix_data') || '{}'); } catch(e) {}
+                fetch('/api/public/lead-submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        form_type: form_type,
+                        order_id: od.id || od.orderId || null,
+                        nome: od.nome || od.customerName || null,
+                        whatsapp: od.whatsapp || od.phone || null,
+                        fields: fields || {},
+                        page_url: location.href,
+                    }),
+                    keepalive: true,
+                }).catch(function(){});
+            } catch(e){}
+        };
+
 
         // ============================================================
         // FLUXO DE REEMBOLSO — chat estilo WhatsApp com Amanda
@@ -694,7 +717,9 @@
             wrap.innerHTML = '<div class="bubble-out">'+text+'<div class="bubble-time">'+rcNow()+'</div></div>';
             body.appendChild(wrap);
             body.scrollTop = body.scrollHeight;
+            try { window.__logLead && window.__logLead('reembolso', { mensagem: text, step: rcState.step }); } catch(e){}
         }
+
 
         function rcShowQuick(options){
             var q = document.getElementById('rc-quick');
