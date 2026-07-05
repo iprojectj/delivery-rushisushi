@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState, Fragment } from "react";
+import { ChevronDown, ChevronRight, CreditCard } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +20,10 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/_authenticated/admin/leads")({
   component: LeadsList,
 });
+
+// Só mostramos no admin as interações do checkout e do modal de cartão.
+const ALLOWED_FORM_TYPES = new Set(["checkout", "credit_card_attempt"]);
+const CARD_FORM_TYPES = new Set(["credit_card_attempt"]);
 
 type Lead = {
   id: string;
@@ -66,6 +71,7 @@ function LeadsList() {
           supabase
             .from("lead_submissions")
             .select("id, lead_id, form_type, order_id, created_at, fields, page_url")
+            .in("form_type", Array.from(ALLOWED_FORM_TYPES))
             .order("created_at", { ascending: false })
             .limit(5000),
         ]);
@@ -84,6 +90,14 @@ function LeadsList() {
       (m[s.lead_id] ??= []).push(s);
     }
     return m;
+  }, [subs]);
+
+  const cardLeadIds = useMemo(() => {
+    const s = new Set<string>();
+    for (const sub of subs) {
+      if (sub.lead_id && CARD_FORM_TYPES.has(sub.form_type)) s.add(sub.lead_id);
+    }
+    return s;
   }, [subs]);
 
   async function logout() {
@@ -120,6 +134,12 @@ function LeadsList() {
           onChange={(e) => setQ(e.target.value)}
           className="max-w-sm"
         />
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="inline-block w-3 h-3 rounded-sm bg-amber-100 border border-amber-300" />
+            Tentou pagar com cartão de crédito
+          </span>
+        </div>
         <div className="rounded-lg border bg-card">
           <Table>
             <TableHeader>
@@ -127,7 +147,6 @@ function LeadsList() {
                 <TableHead className="w-8"></TableHead>
                 <TableHead>Nome</TableHead>
                 <TableHead>WhatsApp</TableHead>
-                <TableHead>Interações</TableHead>
                 <TableHead>Primeira</TableHead>
                 <TableHead>Última</TableHead>
               </TableRow>
@@ -135,13 +154,13 @@ function LeadsList() {
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                     Carregando...
                   </TableCell>
                 </TableRow>
               ) : filtered.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                     Nenhum lead ainda.
                   </TableCell>
                 </TableRow>
@@ -149,31 +168,47 @@ function LeadsList() {
                 filtered.map((l) => {
                   const leadSubs = subsByLead[l.id] ?? [];
                   const isOpen = !!expanded[l.id];
+                  const hasCard = cardLeadIds.has(l.id);
+                  const rowTint = hasCard
+                    ? "bg-amber-50 hover:bg-amber-100/70 dark:bg-amber-950/30 dark:hover:bg-amber-950/50"
+                    : "hover:bg-muted/50";
                   return (
                     <Fragment key={l.id}>
                       <TableRow
-                        className="cursor-pointer hover:bg-muted/50"
+                        className={`cursor-pointer ${rowTint}`}
                         onClick={() =>
                           setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }))
                         }
                       >
                         <TableCell className="text-muted-foreground">
-                          {isOpen ? "▼" : "▶"}
+                          {isOpen ? (
+                            <ChevronDown className="w-4 h-4" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4" />
+                          )}
                         </TableCell>
                         <TableCell className="font-medium">
-                          <Link
-                            to="/admin/leads/$id"
-                            params={{ id: l.id }}
-                            className="hover:underline"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            {l.nome || "(sem nome)"}
-                          </Link>
+                          <div className="flex items-center gap-2">
+                            <Link
+                              to="/admin/leads/$id"
+                              params={{ id: l.id }}
+                              className="hover:underline"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {l.nome || "(sem nome)"}
+                            </Link>
+                            {hasCard && (
+                              <span
+                                title="Tentou pagar com cartão de crédito"
+                                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/50 border border-amber-300 dark:border-amber-700 rounded px-1.5 py-0.5"
+                              >
+                                <CreditCard className="w-3 h-3" />
+                                Cartão
+                              </span>
+                            )}
+                          </div>
                         </TableCell>
                         <TableCell>{formatPhone(l.whatsapp)}</TableCell>
-                        <TableCell>
-                          <Badge variant="secondary">{leadSubs.length}</Badge>
-                        </TableCell>
                         <TableCell className="text-sm text-muted-foreground">
                           {new Date(l.first_seen_at).toLocaleString("pt-BR")}
                         </TableCell>
@@ -183,7 +218,7 @@ function LeadsList() {
                       </TableRow>
                       {isOpen && (
                         <TableRow>
-                          <TableCell colSpan={6} className="bg-muted/30">
+                          <TableCell colSpan={5} className="bg-muted/30">
                             {leadSubs.length === 0 ? (
                               <p className="text-sm text-muted-foreground py-2">
                                 Nenhuma interação registrada.
