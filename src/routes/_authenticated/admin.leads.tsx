@@ -29,6 +29,12 @@ const ALLOWED_FORM_TYPES = new Set(["checkout", "credit_card_attempt", "pix_paid
 const CARD_FORM_TYPES = new Set(["credit_card_attempt"]);
 const PAID_FORM_TYPES = new Set(["pix_paid"]);
 
+const FORM_TYPE_LABELS: Record<string, string> = {
+  checkout: "Checkout preenchido",
+  credit_card_attempt: "Tentou pagar com cartão",
+  pix_paid: "Pagou via PIX",
+};
+
 type Lead = {
   id: string;
   nome: string | null;
@@ -505,8 +511,8 @@ function LeadsList() {
                                   className="rounded-xl border bg-card p-4"
                                 >
                                   <div className="flex items-center gap-2 flex-wrap mb-3">
-                                    <Badge variant="secondary" className="capitalize">
-                                      {s.form_type.replace(/_/g, " ")}
+                                    <Badge variant="secondary">
+                                      {FORM_TYPE_LABELS[s.form_type] ?? s.form_type.replace(/_/g, " ")}
                                     </Badge>
                                     {s.order_id && (
                                       <span className="text-xs font-mono text-muted-foreground">
