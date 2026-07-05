@@ -13,10 +13,13 @@ import { Route as ReembolsoSolicitadoRouteImport } from './routes/reembolso-soli
 import { Route as PedidoRouteImport } from './routes/pedido'
 import { Route as ObrigadoRouteImport } from './routes/obrigado'
 import { Route as CriarPixRouteImport } from './routes/criar-pix'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
 import { Route as ApiPublicNexuspagWebhookRouteImport } from './routes/api/public/nexuspag-webhook'
 import { Route as ApiPublicLeadSubmitRouteImport } from './routes/api/public/lead-submit'
+import { Route as AuthenticatedAdminLeadsRouteImport } from './routes/_authenticated/admin.leads'
 
 const ReembolsoSolicitadoRoute = ReembolsoSolicitadoRouteImport.update({
   id: '/reembolso-solicitado',
@@ -36,6 +39,15 @@ const ObrigadoRoute = ObrigadoRouteImport.update({
 const CriarPixRoute = CriarPixRouteImport.update({
   id: '/criar-pix',
   path: '/criar-pix',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -59,35 +71,47 @@ const ApiPublicLeadSubmitRoute = ApiPublicLeadSubmitRouteImport.update({
   path: '/api/public/lead-submit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminLeadsRoute = AuthenticatedAdminLeadsRouteImport.update({
+  id: '/admin/leads',
+  path: '/admin/leads',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/admin/leads': typeof AuthenticatedAdminLeadsRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/admin/leads': typeof AuthenticatedAdminLeadsRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/criar-pix': typeof CriarPixRoute
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/_authenticated/admin/leads': typeof AuthenticatedAdminLeadsRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
 }
@@ -95,37 +119,46 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
+    | '/admin/leads'
     | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
+    | '/admin/leads'
     | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/criar-pix'
     | '/obrigado'
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
+    | '/_authenticated/admin/leads'
     | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   CriarPixRoute: typeof CriarPixRoute
   ObrigadoRoute: typeof ObrigadoRoute
   PedidoRoute: typeof PedidoRoute
@@ -165,6 +198,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CriarPixRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -193,11 +240,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicLeadSubmitRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/leads': {
+      id: '/_authenticated/admin/leads'
+      path: '/admin/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AuthenticatedAdminLeadsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminLeadsRoute: typeof AuthenticatedAdminLeadsRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminLeadsRoute: AuthenticatedAdminLeadsRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   CriarPixRoute: CriarPixRoute,
   ObrigadoRoute: ObrigadoRoute,
   PedidoRoute: PedidoRoute,
