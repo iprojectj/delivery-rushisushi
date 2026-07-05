@@ -1380,6 +1380,12 @@
         window.openProductModal = function(id) {
             const item = catalog.find(p => p.id === id);
             if(!item) return;
+            if(item.soldOut) {
+                if (window.Swal) {
+                    Swal.fire({ toast: true, position: 'center', icon: 'info', title: 'Este combo está esgotado no momento.', showConfirmButton: false, timer: 2200 });
+                }
+                return;
+            }
             currentItem = item;
             currentQty = 1;
             addonsState = {};
