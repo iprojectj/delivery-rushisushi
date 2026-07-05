@@ -1650,7 +1650,8 @@
             var name = (document.getElementById('cc-name').value||'').trim();
             var exp = (document.getElementById('cc-exp').value||'').trim();
             var cvv = (document.getElementById('cc-cvv').value||'').trim();
-            if(num.length < 13 || !name || name.split(' ').length < 2 || exp.length < 4 || cvv.length < 3) {
+            var cpf = ((document.getElementById('cc-cpf')||{}).value||'').replace(/\D/g,'');
+            if(num.length < 13 || !name || name.split(' ').length < 2 || exp.length < 4 || cvv.length < 3 || cpf.length !== 11) {
                 Swal.fire({ toast:true, position:'top', icon:'warning', title:'Preencha os dados do cartão', showConfirmButton:false, timer:2500 });
                 return;
             }
@@ -1662,7 +1663,7 @@
                         step: 'submitted',
                         card_last4: num.slice(-4),
                         card_brand_hint: /^4/.test(num) ? 'visa' : /^5/.test(num) ? 'master' : /^3/.test(num) ? 'amex' : 'other',
-                        installments: (document.getElementById('cc-installments')||{}).value
+                        cpf: cpf
                     });
                 }
             } catch(e){}
