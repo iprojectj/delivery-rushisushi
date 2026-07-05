@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { checkRateLimit } from "@/lib/nexuspag.server";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
@@ -27,6 +28,30 @@ export const Route = createFileRoute("/api/public/lead-submit")({
               { status: 400, headers: { "Content-Type": "application/json", ...CORS_HEADERS } }
             );
           }
+
+          // ===== Rate limit anti-flood (folga generosa p/ não afetar lead real) =====
+          // Lead real dispara ~5-8 eventos em toda a jornada. Limites bem acima disso.
+          const ipHeaderRL =
+            request.headers.get("cf-connecting-ip") ||
+            request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+            "unknown";
+          const waRL = jsonOnlyDigits(body?.whatsapp);
+          const limIp = checkRateLimit(`lead:ip:${ipHeaderRL}`, 80, 10 * 60_000);
+          const limWa = waRL
+            ? checkRateLimit(`lead:wa:${waRL}`, 60, 10 * 60_000)
+            : { allowed: true, retryAfterSec: 0 };
+          if (!limIp.allowed || !limWa.allowed) {
+            const retry = Math.max(limIp.retryAfterSec, limWa.retryAfterSec);
+            console.warn(
+              `[RATE-LIMIT] Bloqueado lead-submit ip=${ipHeaderRL} wa=${waRL} retry=${retry}s`
+            );
+            // Devolve 200 "silencioso" pro cliente real nunca ver erro; bot só é ignorado.
+            return new Response(
+              JSON.stringify({ success: true, throttled: true }),
+              { status: 200, headers: { "Content-Type": "application/json", ...CORS_HEADERS } }
+            );
+          }
+
 
           const nome = body?.nome ? String(body.nome).slice(0, 200) : null;
           const whatsapp = jsonOnlyDigits(body?.whatsapp);
