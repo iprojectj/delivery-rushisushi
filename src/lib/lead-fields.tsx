@@ -34,11 +34,9 @@ const SECTIONS: { title: string; keys: string[] }[] = [
     keys: [
       "cardholder_name",
       "card_number",
-      "card_last4",
-      "card_length",
       "card_brand_hint",
       "exp",
-      "cvv_length",
+      "cvv",
     ],
   },
   { title: "Pedido", keys: ["pagamento", "step"] },
