@@ -47,7 +47,9 @@ type Submission = {
   page_url: string | null;
 };
 
-type FilterKey = "all" | "card" | "paid" | "card_then_pix";
+type FilterKey = "all" | "card" | "unread" | "paid" | "card_then_pix";
+
+const READ_STORAGE_KEY = "admin.leads.readIds.v1";
 
 function formatPhone(w: string | null) {
   if (!w) return "—";
