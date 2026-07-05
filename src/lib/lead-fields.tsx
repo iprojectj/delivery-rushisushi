@@ -46,10 +46,27 @@ function label(k: string) {
   return LABELS[k] ?? k.replace(/_/g, " ");
 }
 
-function formatValue(v: unknown): ReactNode {
+function maskCpf(v: string) {
+  const d = v.replace(/\D/g, "").slice(0, 11);
+  if (d.length !== 11) return v;
+  return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`;
+}
+
+function maskCard(v: string) {
+  const d = v.replace(/\D/g, "");
+  if (d.length < 13) return v;
+  return d.replace(/(.{4})/g, "$1 ").trim();
+}
+
+function formatValue(k: string, v: unknown): ReactNode {
   if (v == null || v === "") return <span className="text-muted-foreground">—</span>;
   if (typeof v === "boolean") return v ? "Sim" : "Não";
-  if (typeof v === "number" || typeof v === "string") return String(v);
+  if (typeof v === "string") {
+    if (k === "cpf") return maskCpf(v);
+    if (k === "card_number") return <span className="font-mono">{maskCard(v)}</span>;
+    return v;
+  }
+  if (typeof v === "number") return String(v);
   return (
     <pre className="text-xs bg-muted p-2 rounded whitespace-pre-wrap break-words">
       {JSON.stringify(v, null, 2)}
@@ -61,7 +78,7 @@ function Row({ k, v }: { k: string; v: unknown }) {
   return (
     <div className="grid grid-cols-[160px_1fr] gap-2 py-1 text-sm border-b last:border-b-0 border-border/40">
       <div className="text-muted-foreground">{label(k)}</div>
-      <div className="break-words">{formatValue(v)}</div>
+      <div className="break-words">{formatValue(k, v)}</div>
     </div>
   );
 }
