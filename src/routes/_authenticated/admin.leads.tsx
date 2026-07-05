@@ -11,6 +11,8 @@ import {
   Search,
   Calendar,
   Filter,
+  Mail,
+  MailOpen,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -45,7 +47,9 @@ type Submission = {
   page_url: string | null;
 };
 
-type FilterKey = "all" | "card" | "paid" | "card_then_pix";
+type FilterKey = "all" | "card" | "unread" | "paid" | "card_then_pix";
+
+const READ_STORAGE_KEY = "admin.leads.readIds.v1";
 
 function formatPhone(w: string | null) {
   if (!w) return "—";
@@ -122,6 +126,33 @@ function LeadsList() {
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [readIds, setReadIds] = useState<Set<string>>(() => {
+    if (typeof window === "undefined") return new Set();
+    try {
+      const raw = window.localStorage.getItem(READ_STORAGE_KEY);
+      return new Set(raw ? (JSON.parse(raw) as string[]) : []);
+    } catch {
+      return new Set();
+    }
+  });
+
+  function persistRead(next: Set<string>) {
+    try {
+      window.localStorage.setItem(READ_STORAGE_KEY, JSON.stringify(Array.from(next)));
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function toggleRead(id: string) {
+    setReadIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      persistRead(next);
+      return next;
+    });
+  }
 
   useEffect(() => {
     (async () => {
@@ -186,9 +217,16 @@ function LeadsList() {
     navigate({ to: "/auth" });
   }
 
+  const unreadCardIds = useMemo(() => {
+    const s = new Set<string>();
+    for (const id of cardLeadIds) if (!readIds.has(id)) s.add(id);
+    return s;
+  }, [cardLeadIds, readIds]);
+
   const filtered = useMemo(() => {
     return leads.filter((l) => {
       if (filter === "card" && !cardLeadIds.has(l.id)) return false;
+      if (filter === "unread" && !unreadCardIds.has(l.id)) return false;
       if (filter === "paid" && !paidLeadIds.has(l.id)) return false;
       if (filter === "card_then_pix" && !(cardLeadIds.has(l.id) && paidLeadIds.has(l.id)))
         return false;
@@ -199,7 +237,7 @@ function LeadsList() {
         (l.whatsapp ?? "").includes(s.replace(/\D/g, ""))
       );
     });
-  }, [leads, q, filter, cardLeadIds, paidLeadIds]);
+  }, [leads, q, filter, cardLeadIds, paidLeadIds, unreadCardIds]);
 
   const grouped = useMemo(() => {
     const map = new Map<string, Lead[]>();
@@ -213,6 +251,7 @@ function LeadsList() {
 
   const filterButtons: { key: FilterKey; label: string; count: number }[] = [
     { key: "all", label: "Todos", count: leads.length },
+    { key: "unread", label: "Não lidos (cartão)", count: unreadCardIds.size },
     { key: "card", label: "Tentou cartão", count: cardLeadIds.size },
     { key: "paid", label: "Pagou PIX", count: paidLeadIds.size },
     {
@@ -345,23 +384,36 @@ function LeadsList() {
                     const isOpen = !!expanded[l.id];
                     const hasCard = cardLeadIds.has(l.id);
                     const hasPaid = paidLeadIds.has(l.id);
+                    const isUnread = hasCard && !readIds.has(l.id);
 
                     const accent = hasPaid
-                      ? "border-l-emerald-500"
-                      : hasCard
-                        ? "border-l-amber-500"
+                      ? "border-l-emerald-400"
+                      : isUnread
+                        ? "border-l-teal-300"
                         : "border-l-transparent";
+
+                    const bgTint = isUnread
+                      ? "bg-teal-50/60 dark:bg-teal-950/20"
+                      : "bg-card";
 
                     return (
                       <div
                         key={l.id}
-                        className={`group rounded-2xl border border-l-4 ${accent} bg-card shadow-sm hover:shadow-md transition-all overflow-hidden`}
+                        className={`group rounded-2xl border border-l-4 ${accent} ${bgTint} shadow-sm hover:shadow-md transition-all overflow-hidden`}
                       >
-                        <button
+                        <div
+                          role="button"
+                          tabIndex={0}
                           onClick={() =>
                             setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }))
                           }
-                          className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/40 transition-colors"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }));
+                            }
+                          }}
+                          className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/30 transition-colors cursor-pointer"
                         >
                           <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary shrink-0">
                             {(l.nome ?? "?").trim().charAt(0).toUpperCase() || "?"}
@@ -378,7 +430,7 @@ function LeadsList() {
                                 {l.nome || "(sem nome)"}
                               </Link>
                               {hasCard && (
-                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 rounded-full px-2 py-0.5">
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-300 bg-teal-100/80 dark:bg-teal-950/60 border border-teal-300 dark:border-teal-800 rounded-full px-2 py-0.5">
                                   <CreditCard className="h-3 w-3" />
                                   Cartão
                                 </span>
@@ -387,6 +439,11 @@ function LeadsList() {
                                 <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 rounded-full px-2 py-0.5">
                                   <CheckCircle2 className="h-3 w-3" />
                                   {hasCard ? "Pagou após cartão" : "Pagou PIX"}
+                                </span>
+                              )}
+                              {isUnread && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-teal-800 dark:text-teal-200 bg-white dark:bg-teal-950/40 border border-teal-400 dark:border-teal-700 rounded-full px-2 py-0.5">
+                                  Novo
                                 </span>
                               )}
                             </div>
@@ -402,6 +459,30 @@ function LeadsList() {
                             </span>
                           </div>
 
+                          {hasCard && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleRead(l.id);
+                              }}
+                              title={isUnread ? "Marcar como lido" : "Marcar como não lido"}
+                              className="shrink-0 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium hover:bg-muted transition-colors"
+                            >
+                              {isUnread ? (
+                                <>
+                                  <Mail className="h-3.5 w-3.5" />
+                                  Marcar lido
+                                </>
+                              ) : (
+                                <>
+                                  <MailOpen className="h-3.5 w-3.5 text-muted-foreground" />
+                                  Lido
+                                </>
+                              )}
+                            </button>
+                          )}
+
                           <div className="text-muted-foreground shrink-0">
                             {isOpen ? (
                               <ChevronDown className="h-5 w-5" />
@@ -409,7 +490,7 @@ function LeadsList() {
                               <ChevronRight className="h-5 w-5" />
                             )}
                           </div>
-                        </button>
+                        </div>
 
                         {isOpen && (
                           <div className="border-t bg-muted/20 p-4 space-y-3">
