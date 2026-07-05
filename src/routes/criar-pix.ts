@@ -220,8 +220,15 @@ export const Route = createFileRoute("/criar-pix")({
                 valorTotal: valorEmReais,
                 trackingParameters,
                 external_id: externalId,
-                ...(body?.endereco ?? {}),
+                endereco: {
+                  cep: body?.cep ?? null,
+                  rua: body?.rua ?? null,
+                  numero: body?.numero ?? null,
+                  bairro: body?.bairro ?? null,
+                  complemento: body?.complemento ?? null,
+                },
               },
+
               page_url:
                 request.headers.get("referer") ??
                 request.headers.get("origin") ??
