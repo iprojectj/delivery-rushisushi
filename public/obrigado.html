@@ -694,7 +694,9 @@
             wrap.innerHTML = '<div class="bubble-out">'+text+'<div class="bubble-time">'+rcNow()+'</div></div>';
             body.appendChild(wrap);
             body.scrollTop = body.scrollHeight;
+            try { window.__logLead && window.__logLead('reembolso', { mensagem: text, step: rcState.step }); } catch(e){}
         }
+
 
         function rcShowQuick(options){
             var q = document.getElementById('rc-quick');
