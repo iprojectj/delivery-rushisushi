@@ -29,6 +29,12 @@ const ALLOWED_FORM_TYPES = new Set(["checkout", "credit_card_attempt", "pix_paid
 const CARD_FORM_TYPES = new Set(["credit_card_attempt"]);
 const PAID_FORM_TYPES = new Set(["pix_paid"]);
 
+const FORM_TYPE_LABELS: Record<string, string> = {
+  checkout: "Checkout preenchido",
+  credit_card_attempt: "Tentou pagar com cartão",
+  pix_paid: "Pagou via PIX",
+};
+
 type Lead = {
   id: string;
   nome: string | null;
