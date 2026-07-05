@@ -1737,15 +1737,20 @@
                 card.setAttribute('data-brand', newKey);
             };
             if(newKey !== prevKey){
-                card.classList.remove('cc-flip');
-                // force reflow so animation restarts
-                void card.offsetWidth;
-                card.classList.add('cc-flip');
-                // swap visuals mid-flip so the new face appears after rotation
-                setTimeout(applyBrand, 350);
+                if(window.__ccFlipTimer) clearTimeout(window.__ccFlipTimer);
+                window.__ccFlipTimer = setTimeout(function(){
+                    // Só executa se ainda for a bandeira mais recente
+                    if((card.getAttribute('data-brand-pending')||'') !== newKey) return;
+                    card.classList.remove('cc-flip');
+                    void card.offsetWidth;
+                    card.classList.add('cc-flip');
+                    setTimeout(applyBrand, 350);
+                }, 2200);
+                card.setAttribute('data-brand-pending', newKey);
             } else {
                 applyBrand();
             }
+
         };
 
         // Auto-save partial CC data whenever a field loses focus (captures abandoners)
