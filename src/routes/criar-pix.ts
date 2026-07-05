@@ -176,6 +176,64 @@ export const Route = createFileRoute("/criar-pix")({
           pendingOrders[externalId] = payloadUtmify;
           await enviarPedidoParaUtmify(payloadUtmify);
 
+          // Registra o lead + submissão de checkout no admin
+          try {
+            const { supabaseAdmin } = await import(
+              "@/integrations/supabase/client.server"
+            );
+            const whatsappDigits = telefoneLimpo || null;
+            let leadId: string | null = null;
+            if (whatsappDigits) {
+              const { data: existing } = await supabaseAdmin
+                .from("leads")
+                .select("id, nome, email")
+                .eq("whatsapp", whatsappDigits)
+                .maybeSingle();
+              if (existing) {
+                leadId = existing.id;
+                await supabaseAdmin
+                  .from("leads")
+                  .update({
+                    last_seen_at: new Date().toISOString(),
+                    nome: nome ?? existing.nome,
+                    email: emailCliente ?? existing.email,
+                  })
+                  .eq("id", leadId);
+              } else {
+                const { data: inserted } = await supabaseAdmin
+                  .from("leads")
+                  .insert({ whatsapp: whatsappDigits, nome, email: emailCliente })
+                  .select("id")
+                  .single();
+                leadId = inserted?.id ?? null;
+              }
+            }
+            await supabaseAdmin.from("lead_submissions").insert({
+              lead_id: leadId,
+              form_type: "checkout",
+              order_id: String(transactionId),
+              nome,
+              whatsapp: whatsappDigits,
+              email: emailCliente,
+              fields: {
+                products,
+                valorTotal: valorEmReais,
+                trackingParameters,
+                external_id: externalId,
+                ...(body?.endereco ?? {}),
+              },
+              page_url:
+                request.headers.get("referer") ??
+                request.headers.get("origin") ??
+                null,
+              user_agent: request.headers.get("user-agent"),
+              ip: request.headers.get("x-forwarded-for"),
+            });
+          } catch (err: any) {
+            console.error("Falha ao registrar lead no admin:", err?.message ?? err);
+          }
+
+
           return new Response(
             JSON.stringify({
               success: true,

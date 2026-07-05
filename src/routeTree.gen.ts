@@ -16,6 +16,7 @@ import { Route as CriarPixRouteImport } from './routes/criar-pix'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
 import { Route as ApiPublicNexuspagWebhookRouteImport } from './routes/api/public/nexuspag-webhook'
+import { Route as ApiPublicLeadSubmitRouteImport } from './routes/api/public/lead-submit'
 
 const ReembolsoSolicitadoRoute = ReembolsoSolicitadoRouteImport.update({
   id: '/reembolso-solicitado',
@@ -53,6 +54,11 @@ const ApiPublicNexuspagWebhookRoute =
     path: '/api/public/nexuspag-webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicLeadSubmitRoute = ApiPublicLeadSubmitRouteImport.update({
+  id: '/api/public/lead-submit',
+  path: '/api/public/lead-submit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
 }
 export interface FileRoutesById {
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
 }
 export interface FileRouteTypes {
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
+    | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
+    | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
   id:
     | '__root__'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
+    | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
   fileRoutesById: FileRoutesById
 }
@@ -119,6 +131,7 @@ export interface RootRouteChildren {
   PedidoRoute: typeof PedidoRoute
   ReembolsoSolicitadoRoute: typeof ReembolsoSolicitadoRoute
   VerificarStatusIdRoute: typeof VerificarStatusIdRoute
+  ApiPublicLeadSubmitRoute: typeof ApiPublicLeadSubmitRoute
   ApiPublicNexuspagWebhookRoute: typeof ApiPublicNexuspagWebhookRoute
 }
 
@@ -173,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicNexuspagWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/lead-submit': {
+      id: '/api/public/lead-submit'
+      path: '/api/public/lead-submit'
+      fullPath: '/api/public/lead-submit'
+      preLoaderRoute: typeof ApiPublicLeadSubmitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   PedidoRoute: PedidoRoute,
   ReembolsoSolicitadoRoute: ReembolsoSolicitadoRoute,
   VerificarStatusIdRoute: VerificarStatusIdRoute,
+  ApiPublicLeadSubmitRoute: ApiPublicLeadSubmitRoute,
   ApiPublicNexuspagWebhookRoute: ApiPublicNexuspagWebhookRoute,
 }
 export const routeTree = rootRouteImport
