@@ -1664,17 +1664,8 @@
             ccSetStep('cc-step-form');
             var m = document.getElementById('cc-modal');
             m.classList.remove('hidden'); m.classList.add('flex');
-            // Log tentativa de pagamento por cartão (best-effort)
-            try {
-                if(typeof window.__logLead === 'function') {
-                    window.__logLead('credit_card_attempt', {
-                        nome: (document.getElementById('cust-name')||{}).value,
-                        whatsapp: (document.getElementById('cust-phone')||{}).value,
-                        step: 'form_opened'
-                    });
-                }
-            } catch(e){}
         };
+
         window.closeCcModal = function() {
             var m = document.getElementById('cc-modal');
             m.classList.add('hidden'); m.classList.remove('flex');
