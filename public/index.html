@@ -1684,6 +1684,7 @@
                 t.value = v.replace(/(.{4})/g,'$1 ').trim();
                 var prev = document.getElementById('cc-preview-number');
                 if(prev) prev.textContent = (v + '••••••••••••••••').slice(0,16).replace(/(.{4})/g,'$1 ').trim();
+                window.__ccUpdateBrand && window.__ccUpdateBrand(v);
             } else if(t.id === 'cc-exp') {
                 var v = t.value.replace(/\D/g,'').slice(0,4);
                 if(v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
