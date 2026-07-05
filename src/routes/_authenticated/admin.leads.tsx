@@ -12,6 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { LeadFields } from "@/lib/lead-fields";
+
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/leads")({
