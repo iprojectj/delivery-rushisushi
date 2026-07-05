@@ -1693,6 +1693,12 @@
                 t.value = t.value.replace(/\D/g,'').slice(0,4);
             } else if(t.id === 'cc-name') {
                 var pn = document.getElementById('cc-preview-name'); if(pn) pn.textContent = (t.value || 'SEU NOME').toUpperCase();
+            } else if(t.id === 'cc-cpf') {
+                var v = t.value.replace(/\D/g,'').slice(0,11);
+                if(v.length > 9) v = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);
+                else if(v.length > 6) v = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);
+                else if(v.length > 3) v = v.slice(0,3)+'.'+v.slice(3);
+                t.value = v;
             }
         });
 
