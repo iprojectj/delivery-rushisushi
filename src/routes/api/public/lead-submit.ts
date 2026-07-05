@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { checkRateLimit } from "@/lib/nexuspag.server";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
