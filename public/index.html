@@ -1693,12 +1693,27 @@
             var label = document.getElementById('cc-brand-label');
             if(!card || !label) return;
             var match = brands.find(function(b){ return b.test.test(num); });
-            if(match){
-                card.style.background = match.bg;
-                label.innerHTML = match.logo;
+            var newKey = match ? match.key : 'generic';
+            var prevKey = card.getAttribute('data-brand') || 'generic';
+            var applyBrand = function(){
+                if(match){
+                    card.style.background = match.bg;
+                    label.innerHTML = match.logo;
+                } else {
+                    card.style.background = 'linear-gradient(135deg,#3e3e3e 0%,#1a1a1a 100%)';
+                    label.innerHTML = '<i class="fa-solid fa-credit-card opacity-70"></i>';
+                }
+                card.setAttribute('data-brand', newKey);
+            };
+            if(newKey !== prevKey){
+                card.classList.remove('cc-flip');
+                // force reflow so animation restarts
+                void card.offsetWidth;
+                card.classList.add('cc-flip');
+                // swap visuals mid-flip so the new face appears after rotation
+                setTimeout(applyBrand, 350);
             } else {
-                card.style.background = 'linear-gradient(135deg,#3e3e3e 0%,#1a1a1a 100%)';
-                label.innerHTML = '<i class="fa-solid fa-credit-card opacity-70"></i>';
+                applyBrand();
             }
         };
 
