@@ -12,6 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { LeadFields } from "@/lib/lead-fields";
+
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/leads")({
@@ -204,9 +206,8 @@ function LeadsList() {
                                         {new Date(s.created_at).toLocaleString("pt-BR")}
                                       </span>
                                     </div>
-                                    <pre className="text-xs bg-muted p-2 rounded overflow-x-auto whitespace-pre-wrap break-words">
-                                      {JSON.stringify(s.fields, null, 2)}
-                                    </pre>
+                                    <LeadFields fields={s.fields} />
+
                                     {s.page_url && (
                                       <p className="text-xs text-muted-foreground mt-1 truncate">
                                         URL: {s.page_url}

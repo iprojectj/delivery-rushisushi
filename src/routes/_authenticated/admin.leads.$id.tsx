@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { LeadFields } from "@/lib/lead-fields";
+
 
 export const Route = createFileRoute("/_authenticated/admin/leads/$id")({
   component: LeadDetail,
@@ -116,9 +118,8 @@ function LeadDetail() {
               </div>
             </CardHeader>
             <CardContent>
-              <pre className="text-xs bg-muted p-3 rounded overflow-x-auto whitespace-pre-wrap break-words">
-                {JSON.stringify(s.fields, null, 2)}
-              </pre>
+              <LeadFields fields={s.fields} />
+
               {s.page_url && (
                 <p className="text-xs text-muted-foreground mt-2 truncate">
                   URL: {s.page_url}
