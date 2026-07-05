@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   NEXUSPAG_API_URL,
+  checkRateLimit,
   enviarPedidoParaUtmify,
   gerarCpfValido,
   gerarEmailRandomico,
