@@ -145,12 +145,17 @@ function LeadsList() {
           onChange={(e) => setQ(e.target.value)}
           className="max-w-sm"
         />
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+        <div className="flex items-center gap-4 text-xs text-muted-foreground flex-wrap">
           <span className="inline-flex items-center gap-1.5">
             <span className="inline-block w-3 h-3 rounded-sm bg-amber-100 border border-amber-300" />
             Tentou pagar com cartão de crédito
           </span>
+          <span className="inline-flex items-center gap-1.5">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            Pagou o PIX (mesmo após tentar cartão, se destacado em amarelo)
+          </span>
         </div>
+
         <div className="rounded-lg border bg-card">
           <Table>
             <TableHeader>
