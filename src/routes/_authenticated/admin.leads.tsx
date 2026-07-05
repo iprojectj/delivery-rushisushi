@@ -1,31 +1,31 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState, Fragment } from "react";
-import { ChevronDown, ChevronRight, CreditCard, CheckCircle2 } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  CreditCard,
+  CheckCircle2,
+  Users,
+  TrendingUp,
+  LogOut,
+  Search,
+  Calendar,
+  Filter,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { LeadFields } from "@/lib/lead-fields";
-
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/leads")({
   component: LeadsList,
 });
 
-// Só mostramos no admin as interações do checkout, do modal de cartão e a confirmação de pagamento.
 const ALLOWED_FORM_TYPES = new Set(["checkout", "credit_card_attempt", "pix_paid"]);
 const CARD_FORM_TYPES = new Set(["credit_card_attempt"]);
 const PAID_FORM_TYPES = new Set(["pix_paid"]);
-
 
 type Lead = {
   id: string;
@@ -45,6 +45,8 @@ type Submission = {
   page_url: string | null;
 };
 
+type FilterKey = "all" | "card" | "paid" | "card_then_pix";
+
 function formatPhone(w: string | null) {
   if (!w) return "—";
   const d = w.replace(/\D/g, "");
@@ -53,12 +55,72 @@ function formatPhone(w: string | null) {
   return w;
 }
 
+function dayKey(iso: string) {
+  const d = new Date(iso);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function dayLabel(key: string) {
+  const [y, m, d] = key.split("-").map(Number);
+  const date = new Date(y, m - 1, d);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diff = Math.round((today.getTime() - date.getTime()) / 86400000);
+  if (diff === 0) return "Hoje";
+  if (diff === 1) return "Ontem";
+  if (diff < 7) return `${diff} dias atrás`;
+  return date.toLocaleDateString("pt-BR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+  });
+}
+
+function timeLabel(iso: string) {
+  return new Date(iso).toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function StatCard({
+  label,
+  value,
+  icon: Icon,
+  gradient,
+}: {
+  label: string;
+  value: number | string;
+  icon: React.ComponentType<{ className?: string }>;
+  gradient: string;
+}) {
+  return (
+    <div className="relative overflow-hidden rounded-2xl border bg-card p-5 shadow-sm">
+      <div
+        className={`absolute -right-6 -top-6 h-24 w-24 rounded-full opacity-20 blur-2xl ${gradient}`}
+      />
+      <div className="relative flex items-center justify-between">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            {label}
+          </p>
+          <p className="mt-1 text-3xl font-bold tracking-tight">{value}</p>
+        </div>
+        <div className={`rounded-xl p-3 ${gradient}`}>
+          <Icon className="h-5 w-5 text-white" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LeadsList() {
   const navigate = useNavigate();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [subs, setSubs] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
+  const [filter, setFilter] = useState<FilterKey>("all");
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -110,189 +172,289 @@ function LeadsList() {
     return s;
   }, [subs]);
 
+  const stats = useMemo(() => {
+    const todayKey = dayKey(new Date().toISOString());
+    let todayCount = 0;
+    for (const l of leads) if (dayKey(l.first_seen_at) === todayKey) todayCount++;
+    const cardCount = cardLeadIds.size;
+    const paidCount = paidLeadIds.size;
+    return { total: leads.length, todayCount, cardCount, paidCount };
+  }, [leads, cardLeadIds, paidLeadIds]);
 
   async function logout() {
     await supabase.auth.signOut();
     navigate({ to: "/auth" });
   }
 
-  const filtered = leads.filter((l) => {
-    if (!q) return true;
-    const s = q.toLowerCase();
-    return (
-      (l.nome ?? "").toLowerCase().includes(s) ||
-      (l.whatsapp ?? "").includes(s.replace(/\D/g, ""))
-    );
-  });
+  const filtered = useMemo(() => {
+    return leads.filter((l) => {
+      if (filter === "card" && !cardLeadIds.has(l.id)) return false;
+      if (filter === "paid" && !paidLeadIds.has(l.id)) return false;
+      if (filter === "card_then_pix" && !(cardLeadIds.has(l.id) && paidLeadIds.has(l.id)))
+        return false;
+      if (!q) return true;
+      const s = q.toLowerCase();
+      return (
+        (l.nome ?? "").toLowerCase().includes(s) ||
+        (l.whatsapp ?? "").includes(s.replace(/\D/g, ""))
+      );
+    });
+  }, [leads, q, filter, cardLeadIds, paidLeadIds]);
+
+  const grouped = useMemo(() => {
+    const map = new Map<string, Lead[]>();
+    for (const l of filtered) {
+      const k = dayKey(l.last_seen_at);
+      if (!map.has(k)) map.set(k, []);
+      map.get(k)!.push(l);
+    }
+    return Array.from(map.entries()); // already ordered by last_seen desc
+  }, [filtered]);
+
+  const filterButtons: { key: FilterKey; label: string; count: number }[] = [
+    { key: "all", label: "Todos", count: leads.length },
+    { key: "card", label: "Tentou cartão", count: cardLeadIds.size },
+    { key: "paid", label: "Pagou PIX", count: paidLeadIds.size },
+    {
+      key: "card_then_pix",
+      label: "Cartão → PIX",
+      count: leads.filter((l) => cardLeadIds.has(l.id) && paidLeadIds.has(l.id)).length,
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-card px-6 py-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-bold">Leads</h1>
-          <p className="text-sm text-muted-foreground">
-            Todas as pessoas que interagiram com o site — clique numa linha para ver tudo
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+      {/* Header */}
+      <header className="border-b bg-card/60 backdrop-blur-xl sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg shadow-primary/20">
+              <Users className="h-5 w-5 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold tracking-tight">Painel de Leads</h1>
+              <p className="text-xs text-muted-foreground">
+                Acompanhe cada interação em tempo real
+              </p>
+            </div>
+          </div>
+          <Button variant="outline" size="sm" onClick={logout} className="gap-2">
+            <LogOut className="h-4 w-4" />
+            Sair
+          </Button>
         </div>
-        <Button variant="outline" onClick={logout}>
-          Sair
-        </Button>
       </header>
-      <main className="p-6 space-y-4 max-w-6xl mx-auto">
-        <Input
-          placeholder="Buscar por nome ou WhatsApp..."
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          className="max-w-sm"
-        />
-        <div className="flex items-center gap-4 text-xs text-muted-foreground flex-wrap">
-          <span className="inline-flex items-center gap-1.5">
-            <span className="inline-block w-3 h-3 rounded-sm bg-amber-100 border border-amber-300" />
-            Tentou pagar com cartão de crédito
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-            Pagou o PIX (mesmo após tentar cartão, se destacado em amarelo)
-          </span>
-        </div>
 
-        <div className="rounded-lg border bg-card">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-8"></TableHead>
-                <TableHead>Nome</TableHead>
-                <TableHead>WhatsApp</TableHead>
-                <TableHead>Primeira</TableHead>
-                <TableHead>Última</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {loading ? (
-                <TableRow>
-                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                    Carregando...
-                  </TableCell>
-                </TableRow>
-              ) : filtered.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                    Nenhum lead ainda.
-                  </TableCell>
-                </TableRow>
-              ) : (
-                filtered.map((l) => {
-                  const leadSubs = subsByLead[l.id] ?? [];
-                  const isOpen = !!expanded[l.id];
-                  const hasCard = cardLeadIds.has(l.id);
-                  const hasPaid = paidLeadIds.has(l.id);
-                  const rowTint = hasCard
-                    ? "bg-amber-50 hover:bg-amber-100/70 dark:bg-amber-950/30 dark:hover:bg-amber-950/50"
-                    : "hover:bg-muted/50";
-                  return (
-                    <Fragment key={l.id}>
-                      <TableRow
-                        className={`cursor-pointer ${rowTint}`}
-                        onClick={() =>
-                          setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }))
-                        }
+      <main className="max-w-7xl mx-auto p-6 space-y-6">
+        {/* Stats */}
+        <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <StatCard
+            label="Total de leads"
+            value={stats.total}
+            icon={Users}
+            gradient="bg-gradient-to-br from-blue-500 to-indigo-600"
+          />
+          <StatCard
+            label="Hoje"
+            value={stats.todayCount}
+            icon={TrendingUp}
+            gradient="bg-gradient-to-br from-fuchsia-500 to-pink-600"
+          />
+          <StatCard
+            label="Tentaram cartão"
+            value={stats.cardCount}
+            icon={CreditCard}
+            gradient="bg-gradient-to-br from-amber-500 to-orange-600"
+          />
+          <StatCard
+            label="Pagaram PIX"
+            value={stats.paidCount}
+            icon={CheckCircle2}
+            gradient="bg-gradient-to-br from-emerald-500 to-green-600"
+          />
+        </section>
+
+        {/* Search + filters */}
+        <section className="rounded-2xl border bg-card p-4 shadow-sm space-y-3">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Buscar por nome ou WhatsApp..."
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              className="pl-9 h-11 bg-background"
+            />
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <Filter className="h-4 w-4 text-muted-foreground" />
+            {filterButtons.map((f) => {
+              const active = filter === f.key;
+              return (
+                <button
+                  key={f.key}
+                  onClick={() => setFilter(f.key)}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
+                    active
+                      ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                      : "bg-muted text-muted-foreground hover:bg-muted/70"
+                  }`}
+                >
+                  {f.label}
+                  <span
+                    className={`inline-flex items-center justify-center rounded-full px-1.5 min-w-[20px] text-[10px] ${
+                      active ? "bg-primary-foreground/20" : "bg-background"
+                    }`}
+                  >
+                    {f.count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Leads grouped by day */}
+        <section className="space-y-6">
+          {loading ? (
+            <div className="rounded-2xl border bg-card p-12 text-center text-muted-foreground">
+              Carregando...
+            </div>
+          ) : grouped.length === 0 ? (
+            <div className="rounded-2xl border bg-card p-12 text-center text-muted-foreground">
+              Nenhum lead encontrado.
+            </div>
+          ) : (
+            grouped.map(([day, dayLeads]) => (
+              <div key={day} className="space-y-3">
+                <div className="flex items-center gap-3 sticky top-[73px] z-[5] py-2 bg-gradient-to-b from-background via-background to-transparent">
+                  <div className="flex items-center gap-2 rounded-full bg-card border px-3 py-1.5 shadow-sm">
+                    <Calendar className="h-3.5 w-3.5 text-primary" />
+                    <span className="text-sm font-semibold capitalize">
+                      {dayLabel(day)}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      · {dayLeads.length} {dayLeads.length === 1 ? "lead" : "leads"}
+                    </span>
+                  </div>
+                  <div className="flex-1 h-px bg-border" />
+                </div>
+
+                <div className="grid gap-3">
+                  {dayLeads.map((l) => {
+                    const leadSubs = subsByLead[l.id] ?? [];
+                    const isOpen = !!expanded[l.id];
+                    const hasCard = cardLeadIds.has(l.id);
+                    const hasPaid = paidLeadIds.has(l.id);
+
+                    const accent = hasPaid
+                      ? "border-l-emerald-500"
+                      : hasCard
+                        ? "border-l-amber-500"
+                        : "border-l-transparent";
+
+                    return (
+                      <div
+                        key={l.id}
+                        className={`group rounded-2xl border border-l-4 ${accent} bg-card shadow-sm hover:shadow-md transition-all overflow-hidden`}
                       >
-                        <TableCell className="text-muted-foreground">
-                          {isOpen ? (
-                            <ChevronDown className="w-4 h-4" />
-                          ) : (
-                            <ChevronRight className="w-4 h-4" />
-                          )}
-                        </TableCell>
-                        <TableCell className="font-medium">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <Link
-                              to="/admin/leads/$id"
-                              params={{ id: l.id }}
-                              className="hover:underline"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              {l.nome || "(sem nome)"}
-                            </Link>
-                            {hasCard && (
-                              <span
-                                title="Tentou pagar com cartão de crédito"
-                                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/50 border border-amber-300 dark:border-amber-700 rounded px-1.5 py-0.5"
-                              >
-                                <CreditCard className="w-3 h-3" />
-                                Cartão
-                              </span>
-                            )}
-                            {hasPaid && (
-                              <span
-                                title={
-                                  hasCard
-                                    ? "Tentou cartão e mesmo assim pagou com PIX"
-                                    : "Pagou com PIX"
-                                }
-                                className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/50 border border-emerald-300 dark:border-emerald-700 rounded px-1.5 py-0.5"
-                              >
-                                <CheckCircle2 className="w-3 h-3" />
-                                {hasCard ? "Pagou PIX após cartão" : "Pagou PIX"}
-                              </span>
-                            )}
+                        <button
+                          onClick={() =>
+                            setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }))
+                          }
+                          className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/40 transition-colors"
+                        >
+                          <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center text-sm font-bold text-primary shrink-0">
+                            {(l.nome ?? "?").trim().charAt(0).toUpperCase() || "?"}
                           </div>
 
-                        </TableCell>
-                        <TableCell>{formatPhone(l.whatsapp)}</TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {new Date(l.first_seen_at).toLocaleString("pt-BR")}
-                        </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {new Date(l.last_seen_at).toLocaleString("pt-BR")}
-                        </TableCell>
-                      </TableRow>
-                      {isOpen && (
-                        <TableRow>
-                          <TableCell colSpan={5} className="bg-muted/30">
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <Link
+                                to="/admin/leads/$id"
+                                params={{ id: l.id }}
+                                className="font-semibold truncate hover:underline"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {l.nome || "(sem nome)"}
+                              </Link>
+                              {hasCard && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-800 rounded-full px-2 py-0.5">
+                                  <CreditCard className="h-3 w-3" />
+                                  Cartão
+                                </span>
+                              )}
+                              {hasPaid && (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 rounded-full px-2 py-0.5">
+                                  <CheckCircle2 className="h-3 w-3" />
+                                  {hasCard ? "Pagou após cartão" : "Pagou PIX"}
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-sm text-muted-foreground mt-0.5">
+                              {formatPhone(l.whatsapp)}
+                            </div>
+                          </div>
+
+                          <div className="hidden sm:flex flex-col items-end text-xs text-muted-foreground shrink-0">
+                            <span>Última interação</span>
+                            <span className="font-medium text-foreground">
+                              {timeLabel(l.last_seen_at)}
+                            </span>
+                          </div>
+
+                          <div className="text-muted-foreground shrink-0">
+                            {isOpen ? (
+                              <ChevronDown className="h-5 w-5" />
+                            ) : (
+                              <ChevronRight className="h-5 w-5" />
+                            )}
+                          </div>
+                        </button>
+
+                        {isOpen && (
+                          <div className="border-t bg-muted/20 p-4 space-y-3">
                             {leadSubs.length === 0 ? (
-                              <p className="text-sm text-muted-foreground py-2">
+                              <p className="text-sm text-muted-foreground py-2 text-center">
                                 Nenhuma interação registrada.
                               </p>
                             ) : (
-                              <div className="space-y-3 py-2">
-                                {leadSubs.map((s) => (
-                                  <div
-                                    key={s.id}
-                                    className="rounded border bg-card p-3"
-                                  >
-                                    <div className="flex items-center gap-2 flex-wrap mb-2">
-                                      <Badge>{s.form_type}</Badge>
-                                      {s.order_id && (
-                                        <span className="text-xs font-mono text-muted-foreground">
-                                          #{s.order_id}
-                                        </span>
-                                      )}
-                                      <span className="text-xs text-muted-foreground ml-auto">
-                                        {new Date(s.created_at).toLocaleString("pt-BR")}
+                              leadSubs.map((s) => (
+                                <div
+                                  key={s.id}
+                                  className="rounded-xl border bg-card p-4"
+                                >
+                                  <div className="flex items-center gap-2 flex-wrap mb-3">
+                                    <Badge variant="secondary" className="capitalize">
+                                      {s.form_type.replace(/_/g, " ")}
+                                    </Badge>
+                                    {s.order_id && (
+                                      <span className="text-xs font-mono text-muted-foreground">
+                                        #{s.order_id}
                                       </span>
-                                    </div>
-                                    <LeadFields fields={s.fields} />
-
-                                    {s.page_url && (
-                                      <p className="text-xs text-muted-foreground mt-1 truncate">
-                                        URL: {s.page_url}
-                                      </p>
                                     )}
+                                    <span className="text-xs text-muted-foreground ml-auto">
+                                      {new Date(s.created_at).toLocaleString("pt-BR")}
+                                    </span>
                                   </div>
-                                ))}
-                              </div>
+                                  <LeadFields fields={s.fields} />
+                                  {s.page_url && (
+                                    <p className="text-xs text-muted-foreground mt-2 truncate">
+                                      URL: {s.page_url}
+                                    </p>
+                                  )}
+                                </div>
+                              ))
                             )}
-                          </TableCell>
-                        </TableRow>
-                      )}
-                    </Fragment>
-                  );
-                })
-              )}
-            </TableBody>
-          </Table>
-        </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))
+          )}
+        </section>
       </main>
     </div>
   );
