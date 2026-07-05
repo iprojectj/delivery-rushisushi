@@ -102,6 +102,15 @@ function LeadsList() {
     return s;
   }, [subs]);
 
+  const paidLeadIds = useMemo(() => {
+    const s = new Set<string>();
+    for (const sub of subs) {
+      if (sub.lead_id && PAID_FORM_TYPES.has(sub.form_type)) s.add(sub.lead_id);
+    }
+    return s;
+  }, [subs]);
+
+
   async function logout() {
     await supabase.auth.signOut();
     navigate({ to: "/auth" });
