@@ -1739,19 +1739,20 @@
                 card.setAttribute('data-brand', newKey);
             };
             if(newKey !== prevKey){
-                if(window.__ccFlipTimer) clearTimeout(window.__ccFlipTimer);
-                window.__ccFlipTimer = setTimeout(function(){
-                    // Só executa se ainda for a bandeira mais recente
-                    if((card.getAttribute('data-brand-pending')||'') !== newKey) return;
+                // Flip suave assim que 6 dígitos forem digitados (BIN completo)
+                if(num.length >= 6){
                     card.classList.remove('cc-flip');
                     void card.offsetWidth;
                     card.classList.add('cc-flip');
-                    setTimeout(applyBrand, 350);
-                }, 2200);
-                card.setAttribute('data-brand-pending', newKey);
+                    setTimeout(applyBrand, 300);
+                } else {
+                    // Antes de 6 dígitos, atualiza silenciosamente sem flip
+                    applyBrand();
+                }
             } else {
                 applyBrand();
             }
+
 
         };
         // (Removido) Auto-save parcial por blur — gerava muitas linhas poluindo o admin.
