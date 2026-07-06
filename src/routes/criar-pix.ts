@@ -219,7 +219,6 @@ export const Route = createFileRoute("/criar-pix")({
           pendingOrders[String(transactionId)] = payloadUtmify;
           // Também indexa por external_id para casar webhook que use external_id
           pendingOrders[externalId] = payloadUtmify;
-          await enviarPedidoParaUtmify(payloadUtmify);
 
           // Registra o lead + submissão de checkout no admin
           try {
@@ -285,6 +284,8 @@ export const Route = createFileRoute("/criar-pix")({
           } catch (err: any) {
             console.error("Falha ao registrar lead no admin:", err?.message ?? err);
           }
+
+          await enviarPedidoParaUtmify(payloadUtmify);
 
 
           return new Response(
