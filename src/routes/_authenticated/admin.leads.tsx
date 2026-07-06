@@ -236,23 +236,27 @@ function LeadsList() {
     navigate({ to: "/auth" });
   }
 
-  async function deleteLead(id: string, nome: string | null) {
-    const label = nome?.trim() || "este lead";
-    if (!window.confirm(`Apagar ${label}? Todas as interações também serão removidas. Essa ação não pode ser desfeita.`))
-      return;
+  async function confirmDeleteLead() {
+    if (!pendingDelete) return;
+    const id = pendingDelete.id;
+    setDeleting(true);
     const { error: se } = await supabase.from("lead_submissions").delete().eq("lead_id", id);
     if (se) {
       toast.error("Erro ao apagar interações", { description: se.message });
+      setDeleting(false);
       return;
     }
     const { error: le } = await supabase.from("leads").delete().eq("id", id);
     if (le) {
       toast.error("Erro ao apagar lead", { description: le.message });
+      setDeleting(false);
       return;
     }
     setLeads((prev) => prev.filter((l) => l.id !== id));
     setSubs((prev) => prev.filter((s) => s.lead_id !== id));
     toast.success("Lead apagado");
+    setDeleting(false);
+    setPendingDelete(null);
   }
 
   const unreadCardIds = useMemo(() => {
