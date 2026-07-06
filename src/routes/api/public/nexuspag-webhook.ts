@@ -11,25 +11,18 @@ import {
 function verificarAssinatura(
   rawBody: string,
   signatureHeader: string | null,
+  timestampHeader: string | null,
   secret: string
 ): boolean {
   if (!secret) return true; // sem secret configurado, aceita
-  if (!signatureHeader) return false;
-  // Formato: t=<unix>,v1=<hmac_hex>
-  const parts = Object.fromEntries(
-    signatureHeader.split(",").map((p) => {
-      const [k, v] = p.split("=");
-      return [k.trim(), (v || "").trim()];
-    })
-  );
-  const t = parts.t;
-  const v1 = parts.v1;
-  if (!t || !v1) return false;
+  if (!signatureHeader || !timestampHeader) return false;
+  // Documentação NexusPag: HMAC SHA-256 sobre `${x-nexuspag-timestamp}.${payload}`.
+  // O header x-nexuspag-signature vem como hex direto, não no formato t=...,v1=....
   const expected = createHmac("sha256", secret)
-    .update(`${t}.${rawBody}`)
+    .update(`${timestampHeader}.${rawBody}`)
     .digest("hex");
   try {
-    const a = Buffer.from(v1, "hex");
+    const a = Buffer.from(signatureHeader.trim(), "hex");
     const b = Buffer.from(expected, "hex");
     if (a.length !== b.length) return false;
     return timingSafeEqual(a, b);
@@ -46,8 +39,9 @@ export const Route = createFileRoute("/api/public/nexuspag-webhook")({
           const rawBody = await request.text();
           const secret = getNexuspagWebhookSecret();
           const signature = request.headers.get("x-nexuspag-signature");
+          const timestamp = request.headers.get("x-nexuspag-timestamp");
 
-          if (!verificarAssinatura(rawBody, signature, secret)) {
+          if (!verificarAssinatura(rawBody, signature, timestamp, secret)) {
             console.warn("[NEXUSPAG] Assinatura de webhook inválida.");
             return new Response("invalid signature", { status: 401 });
           }
@@ -59,11 +53,28 @@ export const Route = createFileRoute("/api/public/nexuspag-webhook")({
           );
 
           const transactionId = String(
-            evento?.transaction_id ?? evento?.id ?? ""
+            evento?.transaction_id ??
+              evento?.transaction?.id ??
+              evento?.payment?.id ??
+              evento?.data?.id ??
+              evento?.id ??
+              ""
           );
-          const externalId = String(evento?.external_id ?? "");
-          const rawStatus = String(evento?.status ?? "");
-          const eventName = String(evento?.event ?? "");
+          const externalId = String(
+            evento?.external_id ??
+              evento?.transaction?.external_id ??
+              evento?.payment?.external_id ??
+              evento?.data?.external_id ??
+              ""
+          );
+          const rawStatus = String(
+            evento?.status ??
+              evento?.transaction?.status ??
+              evento?.payment?.status ??
+              evento?.data?.status ??
+              ""
+          );
+          const eventName = String(evento?.event ?? evento?.type ?? "");
 
           if (!transactionId && !externalId) {
             return new Response("ok", { status: 200 });
@@ -86,13 +97,23 @@ export const Route = createFileRoute("/api/public/nexuspag-webhook")({
               const { supabaseAdmin } = await import(
                 "@/integrations/supabase/client.server"
               );
-              const lookupId = transactionId || externalId;
-              const { data: sub } = await supabaseAdmin
+              let lookupId = transactionId || externalId;
+              let { data: sub } = await supabaseAdmin
                 .from("lead_submissions")
                 .select("fields")
                 .eq("order_id", lookupId)
                 .eq("form_type", "checkout")
                 .maybeSingle();
+              if (!sub && externalId) {
+                const result = await supabaseAdmin
+                  .from("lead_submissions")
+                  .select("fields")
+                  .eq("fields->>external_id", externalId)
+                  .eq("form_type", "checkout")
+                  .maybeSingle();
+                sub = result.data;
+                lookupId = externalId;
+              }
               const saved = (sub?.fields as any)?.utmify_payload;
               if (saved) pedidoPendente = saved;
             } catch (err: any) {

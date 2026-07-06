@@ -211,7 +211,7 @@ export const Route = createFileRoute("/criar-pix")({
               totalPriceInCents: valorEmCentavos,
               gatewayFeeInCents: 0,
               userCommissionInCents: valorEmCentavos,
-              currency: "BRL",
+              currency: "BRL" as const,
             },
             isTest: false,
           };
