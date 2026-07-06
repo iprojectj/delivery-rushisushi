@@ -40,6 +40,7 @@ export const Route = createFileRoute("/criar-pix")({
           const ipHeader =
             request.headers.get("cf-connecting-ip") ||
             request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+            request.headers.get("x-real-ip") ||
             "unknown";
           const waDigits = String(whatsapp).replace(/\D/g, "");
           // Regras: por IP -> 5 pedidos / 10min ; por WhatsApp -> 3 pedidos / 10min
@@ -161,16 +162,30 @@ export const Route = createFileRoute("/criar-pix")({
                 name: p.name || "Produto",
                 planId: null,
                 planName: null,
-                quantity: p.quantity || 1,
-                priceInCents: Math.round(parseFloat(p.price) * 100),
+                quantity: Number(p.quantity) || 1,
+                priceInCents: Math.max(
+                  1,
+                  Math.round(Number.parseFloat(String(p.price || 0)) * 100)
+                ),
               }))
             : [];
 
+          if (produtosUtmify.length === 0) {
+            produtosUtmify.push({
+              id: "RUSHI-PEDIDO",
+              name: descricaoPedido,
+              planId: null,
+              planName: null,
+              quantity: 1,
+              priceInCents: valorEmCentavos,
+            });
+          }
+
           const payloadUtmify = {
             orderId: String(transactionId),
-            platform: "rushi-nexuspag",
-            paymentMethod: "pix",
-            status: "waiting_payment",
+            platform: "RushiSushi",
+            paymentMethod: "pix" as const,
+            status: "waiting_payment" as const,
             createdAt: nowUtcSqlString(),
             approvedDate: null,
             refundedAt: null,
@@ -191,15 +206,11 @@ export const Route = createFileRoute("/criar-pix")({
               utm_campaign: trackingParameters.utm_campaign || null,
               utm_content: trackingParameters.utm_content || null,
               utm_term: trackingParameters.utm_term || null,
-              fbclid: trackingParameters.fbclid || null,
-              gclid: trackingParameters.gclid || null,
-              ttclid: trackingParameters.ttclid || null,
-              xcod: trackingParameters.xcod || null,
             },
             commission: {
               totalPriceInCents: valorEmCentavos,
-              gatewayFeeInCents: 1,
-              userCommissionInCents: valorEmCentavos - 1,
+              gatewayFeeInCents: 0,
+              userCommissionInCents: valorEmCentavos,
               currency: "BRL",
             },
             isTest: false,
