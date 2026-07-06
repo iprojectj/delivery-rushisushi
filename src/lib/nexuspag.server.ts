@@ -18,6 +18,30 @@ export function getUtmifyToken() {
   return process.env.UTMIFY_API_TOKEN || "";
 }
 
+function normalizeUtmifyPayload(payload: any) {
+  const customer = { ...(payload?.customer ?? {}) };
+  const rawIp = String(customer.ip || "")
+    .split(",")[0]
+    .trim();
+
+  return {
+    ...payload,
+    status:
+      payload?.status === "failed"
+        ? "refused"
+        : payload?.status === "pending"
+          ? "waiting_payment"
+          : payload?.status,
+    customer: {
+      ...customer,
+      // A UTMify rejeita pedido pendente sem customer.ip. Em alguns ambientes
+      // o header x-forwarded-for não vem preenchido, então garantimos um IP
+      // válido para não perder o registro do pedido.
+      ip: rawIp || "127.0.0.1",
+    },
+  };
+}
+
 // In-memory store (volátil) para casar webhook -> pedido pendente
 export const pendingOrders: Record<string, any> = {};
 
@@ -56,9 +80,10 @@ export async function enviarPedidoParaUtmify(payload: any) {
     console.warn("[UTMIFY] Envio ignorado. Token não configurado.");
     return;
   }
+  const payloadFinal = normalizeUtmifyPayload(payload);
   try {
     console.log(
-      `[UTMIFY] Enviando pedido ${payload.orderId} com status [${payload.status}]...`
+      `[UTMIFY] Enviando pedido ${payloadFinal.orderId} com status [${payloadFinal.status}]...`
     );
     const res = await fetch(UTMIFY_API_URL, {
       method: "POST",
@@ -66,20 +91,20 @@ export async function enviarPedidoParaUtmify(payload: any) {
         "x-api-token": token,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payloadFinal),
     });
     if (!res.ok) {
       const text = await res.text();
       console.error(
-        `[UTMIFY] ERRO ${res.status} ao enviar ${payload.orderId}:`,
+        `[UTMIFY] ERRO ${res.status} ao enviar ${payloadFinal.orderId}:`,
         text
       );
     } else {
-      console.log(`[UTMIFY] Pedido ${payload.orderId} enviado.`);
+      console.log(`[UTMIFY] Pedido ${payloadFinal.orderId} enviado.`);
     }
   } catch (error: any) {
     console.error(
-      `[UTMIFY] ERRO ao enviar pedido ${payload.orderId}:`,
+      `[UTMIFY] ERRO ao enviar pedido ${payloadFinal.orderId}:`,
       error?.message ?? error
     );
   }

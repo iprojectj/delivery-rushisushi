@@ -180,7 +180,7 @@ export const Route = createFileRoute("/criar-pix")({
               phone: telefoneLimpo,
               document: cpfCliente,
               country: "BR",
-              ip: request.headers.get("x-forwarded-for") || null,
+              ip: ipHeader !== "unknown" ? ipHeader : "127.0.0.1",
             },
             products: produtosUtmify,
             trackingParameters: {
