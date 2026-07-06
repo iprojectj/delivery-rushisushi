@@ -1403,7 +1403,7 @@
 
             const brindeEl = document.getElementById('modal-brinde');
             if (item.category === 'destaques') {
-                const freeCokes = (item.id === 'barca-ostentacao' || item.id === 'combo-rodízio') ? 2 : 1;
+                const freeCokes = (item.id === 'combo-rodízio') ? 2 : 1;
                 const cansMarkup = freeCokes === 2
                     ? `<div class="relative w-12 h-14 flex-shrink-0"><img src="images/coca-lata-brinde.png" class="absolute top-1 left-0 w-8 h-auto -rotate-[16deg] drop-shadow"><img src="images/coca-lata-brinde.png" class="absolute top-0 right-0 w-9 h-auto rotate-[8deg] drop-shadow"></div>`
                     : `<img src="images/coca-lata-brinde.png" class="w-11 h-auto -rotate-[8deg] drop-shadow flex-shrink-0">`;
@@ -1807,7 +1807,7 @@
 
         function getFreeCans(item) {
             if (!item || item.category !== 'destaques') return 0;
-            const doubles = ['barca-ostentacao', 'combo-rodízio'];
+            const doubles = ['combo-rodízio'];
             const per = doubles.indexOf(item.id) !== -1 ? 2 : 1;
             return per * (item.qty || 1);
         }
