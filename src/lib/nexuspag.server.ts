@@ -6,6 +6,57 @@ export const NEXUSPAG_API_URL = "https://nexuspag.com";
 export const UTMIFY_API_URL =
   "https://api.utmify.com.br/api-credentials/orders";
 
+type UtmifyPaymentMethod = "credit_card" | "boleto" | "pix" | "paypal" | "free_price";
+type UtmifyStatus = "waiting_payment" | "paid" | "refused" | "refunded" | "chargedback";
+
+interface UtmifyPayload {
+  orderId: string;
+  platform: string;
+  paymentMethod: UtmifyPaymentMethod;
+  status: UtmifyStatus | "pending" | "failed";
+  createdAt: string;
+  approvedDate: string | null;
+  refundedAt: string | null;
+  customer: {
+    name: string;
+    email: string;
+    phone: string | null;
+    document: string | null;
+    country?: string;
+    ip?: string | null;
+  };
+  products: Array<{
+    id: string;
+    name: string;
+    planId: string | null;
+    planName: string | null;
+    quantity: number;
+    priceInCents: number;
+  }>;
+  trackingParameters: {
+    src: string | null;
+    sck: string | null;
+    utm_source: string | null;
+    utm_campaign: string | null;
+    utm_medium: string | null;
+    utm_content: string | null;
+    utm_term: string | null;
+  };
+  commission: {
+    totalPriceInCents: number;
+    gatewayFeeInCents: number;
+    userCommissionInCents: number;
+    currency?: "BRL" | "USD" | "EUR" | "GBP" | "ARS" | "CAD" | "COP" | "MXN" | "PYG" | "CLP" | "PEN" | "PLN";
+  };
+  isTest?: boolean;
+}
+
+export interface UtmifySendResult {
+  ok: boolean;
+  status: number;
+  body: string;
+}
+
 export function getNexuspagApiKey() {
   return process.env.NEXUSPAG_API_KEY || "";
 }
@@ -18,27 +69,65 @@ export function getUtmifyToken() {
   return process.env.UTMIFY_API_TOKEN || "";
 }
 
-function normalizeUtmifyPayload(payload: any) {
+function normalizeUtmifyStatus(status: unknown): UtmifyStatus {
+  const normalized = String(status || "").toLowerCase();
+  if (normalized === "paid") return "paid";
+  if (normalized === "refunded") return "refunded";
+  if (normalized === "chargedback" || normalized === "chargeback") return "chargedback";
+  if (normalized === "failed" || normalized === "refused") return "refused";
+  return "waiting_payment";
+}
+
+function normalizeStringOrNull(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  const text = String(value).trim();
+  return text || null;
+}
+
+function normalizeUtmifyPayload(payload: UtmifyPayload): UtmifyPayload {
   const customer = { ...(payload?.customer ?? {}) };
   const rawIp = String(customer.ip || "")
     .split(",")[0]
     .trim();
+  const tracking = payload?.trackingParameters ?? ({} as UtmifyPayload["trackingParameters"]);
+  const commission = payload?.commission ?? ({} as UtmifyPayload["commission"]);
 
   return {
-    ...payload,
-    status:
-      payload?.status === "failed"
-        ? "refused"
-        : payload?.status === "pending"
-          ? "waiting_payment"
-          : payload?.status,
+    orderId: String(payload.orderId),
+    platform: payload.platform || "RushiSushi",
+    paymentMethod: payload.paymentMethod || "pix",
+    status: normalizeUtmifyStatus(payload.status),
+    createdAt: payload.createdAt,
+    approvedDate: payload.approvedDate ?? null,
+    refundedAt: payload.refundedAt ?? null,
     customer: {
-      ...customer,
-      // A UTMify rejeita pedido pendente sem customer.ip. Em alguns ambientes
-      // o header x-forwarded-for não vem preenchido, então garantimos um IP
-      // válido para não perder o registro do pedido.
+      name: customer.name || "Cliente Rushi Sushi",
+      email: customer.email,
+      phone: normalizeStringOrNull(customer.phone),
+      document: normalizeStringOrNull(customer.document),
+      country: customer.country || "BR",
+      // A UTMify tem marcado customer.ip como obrigatório na validação prática,
+      // embora a documentação liste como opcional; por isso nunca enviamos null.
       ip: rawIp || "127.0.0.1",
     },
+    products: Array.isArray(payload.products) ? payload.products : [],
+    trackingParameters: {
+      src: normalizeStringOrNull(tracking.src),
+      sck: normalizeStringOrNull(tracking.sck),
+      utm_source: normalizeStringOrNull(tracking.utm_source),
+      utm_campaign: normalizeStringOrNull(tracking.utm_campaign),
+      utm_medium: normalizeStringOrNull(tracking.utm_medium),
+      utm_content: normalizeStringOrNull(tracking.utm_content),
+      utm_term: normalizeStringOrNull(tracking.utm_term),
+    },
+    commission: {
+      totalPriceInCents: Number(commission.totalPriceInCents) || 0,
+      gatewayFeeInCents: Math.max(0, Number(commission.gatewayFeeInCents) || 0),
+      userCommissionInCents:
+        Number(commission.userCommissionInCents) || Number(commission.totalPriceInCents) || 0,
+      currency: commission.currency || "BRL",
+    },
+    isTest: payload.isTest ?? false,
   };
 }
 
@@ -74,11 +163,11 @@ export function checkRateLimit(
   return { allowed: true, retryAfterSec: 0 };
 }
 
-export async function enviarPedidoParaUtmify(payload: any) {
+export async function enviarPedidoParaUtmify(payload: UtmifyPayload): Promise<UtmifySendResult> {
   const token = getUtmifyToken();
   if (!token) {
     console.warn("[UTMIFY] Envio ignorado. Token não configurado.");
-    return;
+    return { ok: false, status: 0, body: "Token não configurado" };
   }
   const payloadFinal = normalizeUtmifyPayload(payload);
   try {
@@ -99,14 +188,18 @@ export async function enviarPedidoParaUtmify(payload: any) {
         `[UTMIFY] ERRO ${res.status} ao enviar ${payloadFinal.orderId}:`,
         text
       );
+      return { ok: false, status: res.status, body: text };
     } else {
       console.log(`[UTMIFY] Pedido ${payloadFinal.orderId} enviado.`);
+      return { ok: true, status: res.status, body: await res.text().catch(() => "") };
     }
   } catch (error: any) {
+    const body = error?.message ?? String(error);
     console.error(
       `[UTMIFY] ERRO ao enviar pedido ${payloadFinal.orderId}:`,
-      error?.message ?? error
+      body
     );
+    return { ok: false, status: 0, body };
   }
 }
 
