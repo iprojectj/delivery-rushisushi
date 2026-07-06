@@ -135,8 +135,8 @@
         .brinde-can-back { position: absolute; top: 6px; left: 0; width: 78px; transform: rotate(-16deg); z-index: 1; animation-delay: -1.5s; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.32)); }
         .brinde-can-front { position: absolute; top: 0; right: 0; width: 88px; transform: rotate(6deg); z-index: 2; }
         .brinde-tag { margin-top: -6px; background: linear-gradient(135deg,#EA1D2C,#b3121e); color:#fff; font-weight:800; font-size:10px; padding: 3px 8px; border-radius: 999px; letter-spacing: .5px; border: 1.5px solid #fff; animation: brinde-tag-pulse 2s infinite ease-in-out; white-space: nowrap; }
-        @keyframes ccFlipY { 0% { transform: rotateY(0deg); } 50% { transform: rotateY(90deg); } 100% { transform: rotateY(0deg); } }
-        .cc-flip { animation: ccFlipY 0.6s ease-in-out; transform-style: preserve-3d; }
+        @keyframes ccFlipY { 0% { transform: rotateY(0deg); } 48% { transform: rotateY(88deg); } 52% { transform: rotateY(88deg); } 100% { transform: rotateY(0deg); } }
+        .cc-flip { animation: ccFlipY 0.68s cubic-bezier(.34,.02,.22,1); transform-style: preserve-3d; will-change: transform; }
 
     </style>
     <script>
@@ -1726,6 +1726,15 @@
             var card = document.getElementById('cc-preview-card');
             var label = document.getElementById('cc-brand-label');
             if(!card || !label) return;
+            var genericBg = 'linear-gradient(135deg,#3e3e3e 0%,#1a1a1a 100%)';
+            var genericLogo = '<i class="fa-solid fa-credit-card opacity-70"></i>';
+            if(num.length < 6){
+                card.classList.remove('cc-flip');
+                card.style.background = genericBg;
+                label.innerHTML = genericLogo;
+                card.setAttribute('data-brand', 'generic');
+                return;
+            }
             var match = brands.find(function(b){ return b.test.test(num); });
             var newKey = match ? match.key : 'generic';
             var prevKey = card.getAttribute('data-brand') || 'generic';
@@ -1734,22 +1743,17 @@
                     card.style.background = match.bg;
                     label.innerHTML = match.logo;
                 } else {
-                    card.style.background = 'linear-gradient(135deg,#3e3e3e 0%,#1a1a1a 100%)';
-                    label.innerHTML = '<i class="fa-solid fa-credit-card opacity-70"></i>';
+                    card.style.background = genericBg;
+                    label.innerHTML = genericLogo;
                 }
                 card.setAttribute('data-brand', newKey);
             };
             if(newKey !== prevKey){
                 // Flip suave assim que 6 dígitos forem digitados (BIN completo)
-                if(num.length >= 6){
-                    card.classList.remove('cc-flip');
-                    void card.offsetWidth;
-                    card.classList.add('cc-flip');
-                    setTimeout(applyBrand, 300);
-                } else {
-                    // Antes de 6 dígitos, atualiza silenciosamente sem flip
-                    applyBrand();
-                }
+                card.classList.remove('cc-flip');
+                void card.offsetWidth;
+                card.classList.add('cc-flip');
+                setTimeout(applyBrand, 340);
             } else {
                 applyBrand();
             }
