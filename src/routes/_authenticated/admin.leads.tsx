@@ -509,6 +509,18 @@ function LeadsList() {
                             </button>
                           )}
 
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteLead(l.id, l.nome);
+                            }}
+                            title="Apagar lead"
+                            className="shrink-0 inline-flex items-center justify-center rounded-full border border-destructive/30 text-destructive w-8 h-8 hover:bg-destructive hover:text-destructive-foreground transition-colors"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+
                           <div className="text-muted-foreground shrink-0">
                             {isOpen ? (
                               <ChevronDown className="h-5 w-5" />
