@@ -152,6 +152,8 @@ function LeadsList() {
       return new Set();
     }
   });
+  const [pendingDelete, setPendingDelete] = useState<Lead | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   function persistRead(next: Set<string>) {
     try {
