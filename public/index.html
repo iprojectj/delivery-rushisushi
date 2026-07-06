@@ -1232,7 +1232,7 @@
                 const vendidos = total - restantes;
                 const pct = Math.round((vendidos / total) * 100);
                 if (stockBar) stockBar.style.width = pct + '%';
-                if (stockPct) stockPct.innerText = pct + '% vendidos';
+                if (stockPct) stockPct.innerText = pct + '% reservado';
                 if (stockLabel) stockLabel.innerText = `Restam ${restantes} de ${total} combos`;
             };
             render();
