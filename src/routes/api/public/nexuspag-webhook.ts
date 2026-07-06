@@ -16,16 +16,27 @@ function verificarAssinatura(
 ): boolean {
   if (!secret) return true; // sem secret configurado, aceita
   if (!signatureHeader || !timestampHeader) return false;
-  // Documentação NexusPag: HMAC SHA-256 sobre `${x-nexuspag-timestamp}.${payload}`.
-  // O header x-nexuspag-signature vem como hex direto, não no formato t=...,v1=....
-  const expected = createHmac("sha256", secret)
-    .update(`${timestampHeader}.${rawBody}`)
-    .digest("hex");
+
+  const assinaturaRecebida = signatureHeader.trim();
+  const payloadsParaValidar = [rawBody];
   try {
-    const a = Buffer.from(signatureHeader.trim(), "hex");
-    const b = Buffer.from(expected, "hex");
-    if (a.length !== b.length) return false;
-    return timingSafeEqual(a, b);
+    const canonicalPayload = JSON.stringify(JSON.parse(rawBody));
+    if (canonicalPayload !== rawBody) payloadsParaValidar.push(canonicalPayload);
+  } catch {
+    // Se o corpo não for JSON válido, validamos apenas o rawBody.
+  }
+
+  try {
+    return payloadsParaValidar.some((payload) => {
+      // Documentação NexusPag: HMAC SHA-256 sobre `${x-nexuspag-timestamp}.${payload}`.
+      // O header x-nexuspag-signature vem como hex direto, não no formato t=...,v1=....
+      const expected = createHmac("sha256", secret)
+        .update(`${timestampHeader}.${payload}`)
+        .digest("hex");
+      const a = Buffer.from(assinaturaRecebida, "hex");
+      const b = Buffer.from(expected, "hex");
+      return a.length === b.length && timingSafeEqual(a, b);
+    });
   } catch {
     return false;
   }
