@@ -254,6 +254,7 @@ export const Route = createFileRoute("/criar-pix")({
                 valorTotal: valorEmReais,
                 trackingParameters,
                 external_id: externalId,
+                utmify_payload: payloadUtmify,
                 endereco: {
                   cep: body?.cep ?? null,
                   rua: body?.rua ?? null,

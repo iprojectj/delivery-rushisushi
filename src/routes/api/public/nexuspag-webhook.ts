@@ -74,9 +74,34 @@ export const Route = createFileRoute("/api/public/nexuspag-webhook")({
               ? "paid"
               : normalizeNexuspagStatus(rawStatus);
 
-          const pedidoPendente =
+          // Recupera payload UTMify — memória (mesmo isolate) OU Supabase (fallback
+          // obrigatório em Cloudflare Workers, pois o webhook geralmente cai em
+          // outro isolate e o Record em memória está vazio).
+          let pedidoPendente: any =
             pendingOrders[transactionId] ||
             (externalId ? pendingOrders[externalId] : undefined);
+
+          if (!pedidoPendente) {
+            try {
+              const { supabaseAdmin } = await import(
+                "@/integrations/supabase/client.server"
+              );
+              const lookupId = transactionId || externalId;
+              const { data: sub } = await supabaseAdmin
+                .from("lead_submissions")
+                .select("fields")
+                .eq("order_id", lookupId)
+                .eq("form_type", "checkout")
+                .maybeSingle();
+              const saved = (sub?.fields as any)?.utmify_payload;
+              if (saved) pedidoPendente = saved;
+            } catch (err: any) {
+              console.error(
+                "[NEXUSPAG] Falha ao carregar utmify_payload do Supabase:",
+                err?.message ?? err
+              );
+            }
+          }
 
           if (finalStatus === "paid" && pedidoPendente) {
             pedidoPendente.status = "paid";
@@ -121,11 +146,12 @@ export const Route = createFileRoute("/api/public/nexuspag-webhook")({
           }
 
           if (
-
             (finalStatus === "refunded" || finalStatus === "failed") &&
             pedidoPendente
           ) {
-            pedidoPendente.status = finalStatus;
+            // UTMify aceita: waiting_payment | paid | refused | refunded | chargedback
+            pedidoPendente.status =
+              finalStatus === "failed" ? "refused" : "refunded";
             if (finalStatus === "refunded")
               pedidoPendente.refundedAt = nowUtcSqlString();
             await enviarPedidoParaUtmify(pedidoPendente);
@@ -133,9 +159,10 @@ export const Route = createFileRoute("/api/public/nexuspag-webhook")({
             if (externalId) delete pendingOrders[externalId];
           } else if (!pedidoPendente) {
             console.warn(
-              `[NEXUSPAG] Pedido ${transactionId}/${externalId} não encontrado nos pendentes.`
+              `[NEXUSPAG] Pedido ${transactionId}/${externalId} não encontrado (memória + Supabase).`
             );
           }
+
 
           return new Response("ok", { status: 200 });
         } catch (e: any) {
