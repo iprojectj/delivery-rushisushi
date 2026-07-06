@@ -472,7 +472,7 @@
             <div class="flex items-center justify-between mb-1.5">
                 <div class="flex items-center gap-1.5 min-w-0">
                     <i id="cart-progress-icon" class="fa-solid fa-motorcycle text-[#EA1D2C] text-[11px]"></i>
-                    <span id="cart-progress-text" class="text-[11px] font-semibold text-[#3e3e3e] truncate">Faltam R$ 32,80 para entrega grátis</span>
+                    <span id="cart-progress-text" class="text-[11px] font-semibold text-[#3e3e3e] truncate">Faltam R$ 19,00 para entrega grátis</span>
                 </div>
                 <span id="cart-progress-percent" class="text-[10px] font-bold text-gray-400 ml-2 shrink-0">0%</span>
             </div>
@@ -1511,7 +1511,7 @@
             if (lbl) lbl.innerText = count + (count === 1 ? ' item' : ' itens');
 
             // Progresso entrega grátis
-            const META = (window.META_FRETE_GRATIS || 32.80);
+            const META = (window.META_FRETE_GRATIS || 19.00);
             const pct = Math.min(100, Math.round((total / META) * 100));
             const fill = document.getElementById('cart-progress-fill');
             const txt = document.getElementById('cart-progress-text');
@@ -1865,7 +1865,7 @@
 
         window.removeCartItem = function(idx) { cart.splice(idx, 1); renderBagItems(); updateCartBar(); if(cart.length === 0) closeBag(); }
 
-        window.META_FRETE_GRATIS = 32.80;
+        window.META_FRETE_GRATIS = 19.00;
         window.TAXA_PADRAO = 6.99;
 
         window.recalcTotal = function() {
