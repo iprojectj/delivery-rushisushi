@@ -1287,7 +1287,9 @@
                             }
                             
                             const freeCokes = (p.id === 'combo-rodízio') ? 2 : 1;
-                            const cokeDesc = freeCokes === 2 ? ' 🥤 Ganhe 2 Coca-Colas Lata GRÁTIS!' : ' 🥤 Ganhe 1 Coca-Cola Lata GRÁTIS!';
+                            const cortesiaLabel = freeCokes === 2
+                                ? 'Cortesia: 2 Coca-Cola Lata inclusas'
+                                : 'Cortesia: 1 Coca-Cola Lata inclusa';
                             const cansHtml = freeCokes === 2
                                 ? `<div class="brinde-duo"><img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-back" alt=""><img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-front" alt="2 Coca-Colas grátis"></div>`
                                 : `<img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-single" alt="Coca-Cola grátis">`;
@@ -1308,9 +1310,9 @@
                                 </div>
                                 <div class="p-4 flex flex-col flex-1 z-10 bg-[#fafafa] rounded-b-2xl">
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">${p.name}</h4>
-                                    <p class="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-3">${p.desc}<span class="block mt-0.5 text-[#EA1D2C] font-bold text-xs">${cokeDesc.trim()}</span></p>
-                                    
-                                    <div class="flex items-center gap-2 mb-3 h-6 flex-wrap">
+                                    <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p>
+
+                                    <div class="flex items-center gap-2 mb-3 flex-wrap">
                                         ${p.soldOut ? '' : `
                                         <div class="flex items-center gap-1.5 px-2 py-0.5 bg-amber-50 rounded-full border border-amber-100/50">
                                             <span class="relative flex h-1.5 w-1.5">
@@ -1319,7 +1321,12 @@
                                             </span>
                                             <span class="text-[10px] font-bold text-amber-700 whitespace-nowrap" id="stock-label-${p.id}">Restam ${({'combo-rodízio':4,'combo-ashura':6,'combo-rokugan':4})[p.id] || 3} unidades</span>
                                         </div>`}
+                                        <div class="flex items-center gap-1.5 px-2 py-0.5 bg-gradient-to-r from-[#fff5f5] to-[#ffecec] rounded-full border border-[#EA1D2C]/20">
+                                            <i class="fa-solid fa-gift text-[9px] text-[#EA1D2C]"></i>
+                                            <span class="text-[10px] font-bold text-[#EA1D2C] whitespace-nowrap tracking-tight">${cortesiaLabel}</span>
+                                        </div>
                                     </div>
+
 
 
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
