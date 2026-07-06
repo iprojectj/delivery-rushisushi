@@ -13,6 +13,7 @@ import {
   Filter,
   Mail,
   MailOpen,
+  Trash2,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -221,6 +222,25 @@ function LeadsList() {
   async function logout() {
     await supabase.auth.signOut();
     navigate({ to: "/auth" });
+  }
+
+  async function deleteLead(id: string, nome: string | null) {
+    const label = nome?.trim() || "este lead";
+    if (!window.confirm(`Apagar ${label}? Todas as interações também serão removidas. Essa ação não pode ser desfeita.`))
+      return;
+    const { error: se } = await supabase.from("lead_submissions").delete().eq("lead_id", id);
+    if (se) {
+      toast.error("Erro ao apagar interações", { description: se.message });
+      return;
+    }
+    const { error: le } = await supabase.from("leads").delete().eq("id", id);
+    if (le) {
+      toast.error("Erro ao apagar lead", { description: le.message });
+      return;
+    }
+    setLeads((prev) => prev.filter((l) => l.id !== id));
+    setSubs((prev) => prev.filter((s) => s.lead_id !== id));
+    toast.success("Lead apagado");
   }
 
   const unreadCardIds = useMemo(() => {
@@ -488,6 +508,18 @@ function LeadsList() {
                               )}
                             </button>
                           )}
+
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteLead(l.id, l.nome);
+                            }}
+                            title="Apagar lead"
+                            className="shrink-0 inline-flex items-center justify-center rounded-full border border-destructive/30 text-destructive w-8 h-8 hover:bg-destructive hover:text-destructive-foreground transition-colors"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
 
                           <div className="text-muted-foreground shrink-0">
                             {isOpen ? (
