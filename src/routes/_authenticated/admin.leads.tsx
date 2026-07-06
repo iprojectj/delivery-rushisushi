@@ -19,6 +19,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { LeadFields } from "@/lib/lead-fields";
 import { toast } from "sonner";
 
@@ -142,6 +152,8 @@ function LeadsList() {
       return new Set();
     }
   });
+  const [pendingDelete, setPendingDelete] = useState<Lead | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   function persistRead(next: Set<string>) {
     try {
@@ -224,23 +236,27 @@ function LeadsList() {
     navigate({ to: "/auth" });
   }
 
-  async function deleteLead(id: string, nome: string | null) {
-    const label = nome?.trim() || "este lead";
-    if (!window.confirm(`Apagar ${label}? Todas as interações também serão removidas. Essa ação não pode ser desfeita.`))
-      return;
+  async function confirmDeleteLead() {
+    if (!pendingDelete) return;
+    const id = pendingDelete.id;
+    setDeleting(true);
     const { error: se } = await supabase.from("lead_submissions").delete().eq("lead_id", id);
     if (se) {
       toast.error("Erro ao apagar interações", { description: se.message });
+      setDeleting(false);
       return;
     }
     const { error: le } = await supabase.from("leads").delete().eq("id", id);
     if (le) {
       toast.error("Erro ao apagar lead", { description: le.message });
+      setDeleting(false);
       return;
     }
     setLeads((prev) => prev.filter((l) => l.id !== id));
     setSubs((prev) => prev.filter((s) => s.lead_id !== id));
     toast.success("Lead apagado");
+    setDeleting(false);
+    setPendingDelete(null);
   }
 
   const unreadCardIds = useMemo(() => {
@@ -513,7 +529,7 @@ function LeadsList() {
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              deleteLead(l.id, l.nome);
+                              setPendingDelete(l);
                             }}
                             title="Apagar lead"
                             className="shrink-0 inline-flex items-center justify-center rounded-full border border-destructive/30 text-destructive w-8 h-8 hover:bg-destructive hover:text-destructive-foreground transition-colors"
@@ -573,8 +589,37 @@ function LeadsList() {
               </div>
             ))
           )}
-        </section>
+      </section>
       </main>
+
+      <AlertDialog
+        open={!!pendingDelete}
+        onOpenChange={(o) => !o && !deleting && setPendingDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Apagar este lead?</AlertDialogTitle>
+            <AlertDialogDescription>
+              {pendingDelete?.nome?.trim() || "Lead sem nome"} e todas as
+              interações associadas serão removidos permanentemente. Essa ação
+              não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleting}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              disabled={deleting}
+              onClick={(e) => {
+                e.preventDefault();
+                confirmDeleteLead();
+              }}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleting ? "Apagando..." : "Apagar"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
