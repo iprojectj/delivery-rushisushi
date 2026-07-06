@@ -529,7 +529,7 @@ function LeadsList() {
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              deleteLead(l.id, l.nome);
+                              setPendingDelete(l);
                             }}
                             title="Apagar lead"
                             className="shrink-0 inline-flex items-center justify-center rounded-full border border-destructive/30 text-destructive w-8 h-8 hover:bg-destructive hover:text-destructive-foreground transition-colors"
