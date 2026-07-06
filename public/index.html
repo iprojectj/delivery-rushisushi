@@ -1344,7 +1344,7 @@
                                     <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
                                         <span class="text-[#05a65a] font-black text-2xl">${formatMoney(p.price)}</span>
                                         ${p.oldPrice ? `<span class="text-sm text-gray-400 line-through font-medium">${formatMoney(p.oldPrice)}</span>` : ''}
-                                        ${p.isBait ? `<span class="text-[10px] font-bold ml-auto inline-flex items-center gap-1 bg-[#05a65a]/10 text-[#05a65a] px-1.5 py-0.5 rounded-md border border-[#05a65a]/20"><i class="fa-solid fa-ticket text-[8px]"></i> Cupom aplicado</span>` : ''}
+                                        ${p.isBait ? `<span class="relative ml-auto inline-flex items-center gap-1.5 bg-[#05a65a] text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_2px_8px_rgba(5,166,90,0.35)]"><span class="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-[#fafafa] rounded-full"></span><span class="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-[#fafafa] rounded-full"></span><i class="fa-solid fa-check text-[9px] bg-white/25 rounded-full w-3.5 h-3.5 flex items-center justify-center"></i>Cupom aplicado</span>` : ''}
                                     </div>
                                 </div>
                             </div>`;
