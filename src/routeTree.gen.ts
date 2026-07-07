@@ -21,6 +21,7 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as ApiPublicNexuspagWebhookRouteImport } from './routes/api/public/nexuspag-webhook'
 import { Route as ApiPublicLeadSubmitRouteImport } from './routes/api/public/lead-submit'
 import { Route as AuthenticatedAdminLeadsRouteImport } from './routes/_authenticated/admin.leads'
+import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
 import { Route as AuthenticatedAdminLeadsIdRouteImport } from './routes/_authenticated/admin.leads.$id'
 
 const ReembolsoSolicitadoRoute = ReembolsoSolicitadoRouteImport.update({
@@ -83,6 +84,12 @@ const AuthenticatedAdminLeadsRoute = AuthenticatedAdminLeadsRouteImport.update({
   path: '/admin/leads',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminDashboardRoute =
+  AuthenticatedAdminDashboardRouteImport.update({
+    id: '/admin/dashboard',
+    path: '/admin/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminLeadsIdRoute =
   AuthenticatedAdminLeadsIdRouteImport.update({
     id: '/$id',
@@ -98,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
@@ -112,6 +120,7 @@ export interface FileRoutesByTo {
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
@@ -128,6 +137,7 @@ export interface FileRoutesById {
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
+    | '/admin/dashboard'
     | '/admin/leads'
     | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
@@ -158,6 +169,7 @@ export interface FileRouteTypes {
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
+    | '/admin/dashboard'
     | '/admin/leads'
     | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
@@ -173,6 +185,7 @@ export interface FileRouteTypes {
     | '/pedido'
     | '/reembolso-solicitado'
     | '/verificar-status/$id'
+    | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/leads'
     | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
@@ -279,6 +292,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminLeadsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/dashboard': {
+      id: '/_authenticated/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/leads/$id': {
       id: '/_authenticated/admin/leads/$id'
       path: '/$id'
@@ -304,11 +324,13 @@ const AuthenticatedAdminLeadsRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
   AuthenticatedAdminLeadsRoute: typeof AuthenticatedAdminLeadsRouteWithChildren
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
   AuthenticatedAdminLeadsRoute: AuthenticatedAdminLeadsRouteWithChildren,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
