@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Rushi Sushi México — Sushi fresco entregado en minutos</title>
+<meta name="description" content="Kits de sushi premium con entrega rápida en CDMX, Monterrey y Guadalajara. Paga con SPEI, OXXO o tarjeta." />
+<meta name="theme-color" content="#E4002B" />
+<meta property="og:title" content="Rushi Sushi México — ¡Ordena ahora!" />
+<meta property="og:description" content="Sushi fresco, entrega rápida y pago seguro con SPEI, OXXO o tarjeta." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+  :root{
+    --rojo:#E4002B; --rojo-dark:#B80022; --amarillo:#FFC72C;
+    --tinta:#111827; --gris:#4B5563; --gris-suave:#F3F4F6; --linea:#E5E7EB;
+    --verde:#16A34A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--tinta);background:#fff;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1120px;margin:0 auto;padding:0 20px}
+
+  /* Top bar */
+  header{position:sticky;top:0;z-index:50;background:var(--rojo);color:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:1120px;margin:0 auto}
+  .logo{font-weight:900;font-size:22px;letter-spacing:-.5px;display:flex;align-items:center;gap:8px}
+  .logo span{background:#fff;color:var(--rojo);padding:2px 8px;border-radius:6px;font-weight:900}
+  .flag{font-size:20px}
+  .nav-cta{background:#fff;color:var(--rojo);padding:8px 16px;border-radius:999px;font-weight:800;font-size:14px}
+
+  /* Hero */
+  .hero{background:linear-gradient(135deg,#E4002B 0%,#B80022 100%);color:#fff;padding:56px 0 72px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,199,44,.25),transparent 60%);pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:32px;align-items:center;position:relative}
+  .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;margin-bottom:16px}
+  h1{font-size:clamp(32px,6vw,52px);line-height:1.05;font-weight:900;letter-spacing:-1px;margin-bottom:16px}
+  h1 em{font-style:normal;color:var(--amarillo)}
+  .sub{font-size:clamp(16px,2vw,19px);opacity:.95;margin-bottom:28px;max-width:520px}
+  .cta{display:inline-flex;align-items:center;gap:10px;background:var(--amarillo);color:var(--tinta);padding:16px 28px;border-radius:14px;font-weight:900;font-size:17px;box-shadow:0 8px 24px rgba(0,0,0,.2);transition:transform .15s}
+  .cta:hover{transform:translateY(-2px)}
+  .trust{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap;font-size:13px;opacity:.9}
+  .trust span{display:inline-flex;align-items:center;gap:6px}
+
+  /* Product cards */
+  .section{padding:64px 0}
+  .section h2{font-size:clamp(24px,3.5vw,34px);font-weight:900;letter-spacing:-.5px;margin-bottom:8px;text-align:center}
+  .section .lead{color:var(--gris);text-align:center;margin-bottom:36px;font-size:16px}
+  .cards{display:grid;grid-template-columns:1fr;gap:20px}
+  @media(min-width:720px){.cards{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:980px){.cards{grid-template-columns:repeat(3,1fr)}}
+  .card{background:#fff;border:1px solid var(--linea);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.08)}
+  .card-img{aspect-ratio:16/10;background:linear-gradient(135deg,#FDE68A,#FCA5A5);display:flex;align-items:center;justify-content:center;font-size:64px}
+  .card-body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .card h3{font-size:19px;font-weight:800}
+  .card p{color:var(--gris);font-size:14px;flex:1}
+  .price-row{display:flex;align-items:baseline;justify-content:space-between;margin-top:8px}
+  .price{font-size:24px;font-weight:900;color:var(--rojo)}
+  .price small{font-size:13px;font-weight:600;color:var(--gris);margin-left:4px}
+  .old{color:var(--gris);text-decoration:line-through;font-size:14px}
+  .buy{margin-top:12px;background:var(--rojo);color:#fff;text-align:center;padding:12px 16px;border-radius:12px;font-weight:800;font-size:15px;transition:background .15s}
+  .buy:hover{background:var(--rojo-dark)}
+
+  /* Beneficios */
+  .benefits{background:var(--gris-suave)}
+  .b-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  @media(min-width:720px){.b-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:980px){.b-grid{grid-template-columns:repeat(4,1fr)}}
+  .b{background:#fff;padding:24px;border-radius:16px;text-align:center}
+  .b-icon{font-size:36px;margin-bottom:10px}
+  .b h4{font-size:16px;font-weight:800;margin-bottom:6px}
+  .b p{color:var(--gris);font-size:14px}
+
+  /* Testimonios */
+  .t-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  @media(min-width:720px){.t-grid{grid-template-columns:repeat(3,1fr)}}
+  .t{background:#fff;border:1px solid var(--linea);padding:22px;border-radius:16px}
+  .stars{color:var(--amarillo);font-size:18px;margin-bottom:8px}
+  .t-text{font-size:15px;line-height:1.5;color:var(--tinta);margin-bottom:14px}
+  .t-author{display:flex;align-items:center;gap:12px}
+  .avatar{width:42px;height:42px;border-radius:50%;background:var(--rojo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+  .t-author strong{display:block;font-size:14px}
+  .t-author span{color:var(--gris);font-size:12px}
+
+  /* Pago */
+  .payments{background:var(--tinta);color:#fff;padding:48px 0;text-align:center}
+  .payments h3{font-size:22px;font-weight:800;margin-bottom:8px}
+  .payments p{opacity:.8;margin-bottom:24px}
+  .pay-methods{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+  .pm{background:rgba(255,255,255,.1);padding:12px 20px;border-radius:12px;font-weight:700;font-size:14px}
+
+  /* Footer */
+  footer{background:#0B0F19;color:#9CA3AF;padding:32px 0;text-align:center;font-size:13px}
+  footer strong{color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo"><span>R</span> Rushi Sushi <span class="flag">🇲🇽</span></div>
+    <a href="#productos" class="nav-cta">Pedir ahora</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="badge">🔥 Entrega en 40 min · CDMX · MTY · GDL</div>
+      <h1>Sushi <em>fresco</em>, hecho a mano<br>y entregado <em>rapidísimo</em>.</h1>
+      <p class="sub">Kits gourmet a precio increíble. Paga con SPEI, OXXO o tarjeta — sin filas, sin complicaciones.</p>
+      <a href="#productos" class="cta">🍣 Ver kits desde $349 MXN →</a>
+      <div class="trust">
+        <span>✅ Pago 100% seguro</span>
+        <span>🚚 Envío gratis en pedidos +$500</span>
+        <span>⭐ 4.9/5 (2,847 reseñas)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="productos">
+  <div class="container">
+    <h2>Nuestros kits más pedidos</h2>
+    <p class="lead">Ingredientes premium, porciones generosas, listos para disfrutar.</p>
+    <div class="cards">
+
+      <article class="card">
+        <div class="card-img">🍱</div>
+        <div class="card-body">
+          <h3>Kit Rushi Clásico</h3>
+          <p>20 piezas · Salmón, atún, aguacate y camarón tempura. Perfecto para 2 personas.</p>
+          <div class="price-row">
+            <div><span class="price">$349<small>MXN</small></span> <span class="old">$499</span></div>
+            <span style="color:var(--verde);font-weight:800;font-size:13px">-30%</span>
+          </div>
+          <a href="/mx/pedido?kit=clasico" class="buy">Pedir ahora</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">🍣</div>
+        <div class="card-body">
+          <h3>Kit Rushi Premium</h3>
+          <p>40 piezas · Salmón flameado, anguila, hass roll y makis especiales. Ideal para 3-4 personas.</p>
+          <div class="price-row">
+            <div><span class="price">$549<small>MXN</small></span> <span class="old">$799</span></div>
+            <span style="color:var(--verde);font-weight:800;font-size:13px">-31%</span>
+          </div>
+          <a href="/mx/pedido?kit=premium" class="buy">Pedir ahora</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-img">🥢</div>
+        <div class="card-body">
+          <h3>Kit Rushi Familiar</h3>
+          <p>60 piezas · Variedad completa + salsas + palillos. Fiesta de sushi para 5-6 personas.</p>
+          <div class="price-row">
+            <div><span class="price">$749<small>MXN</small></span> <span class="old">$1,099</span></div>
+            <span style="color:var(--verde);font-weight:800;font-size:13px">-32%</span>
+          </div>
+          <a href="/mx/pedido?kit=familiar" class="buy">Pedir ahora</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="section benefits">
+  <div class="container">
+    <h2>¿Por qué Rushi Sushi?</h2>
+    <p class="lead">Somos el favorito de miles de mexicanos amantes del sushi.</p>
+    <div class="b-grid">
+      <div class="b"><div class="b-icon">🚀</div><h4>Entrega en 40 min</h4><p>Cobertura en CDMX, Monterrey y Guadalajara.</p></div>
+      <div class="b"><div class="b-icon">🐟</div><h4>Ingredientes frescos</h4><p>Salmón noruego y atún importado, cortados al momento.</p></div>
+      <div class="b"><div class="b-icon">💳</div><h4>Paga fácil</h4><p>SPEI, OXXO Pay o tarjeta de crédito/débito.</p></div>
+      <div class="b"><div class="b-icon">🎁</div><h4>Envío gratis</h4><p>En pedidos superiores a $500 MXN.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>Lo que dicen nuestros clientes</h2>
+    <p class="lead">Miles de mexicanos ya son fans de Rushi Sushi.</p>
+    <div class="t-grid">
+      <div class="t">
+        <div class="stars">★★★★★</div>
+        <p class="t-text">"¡El mejor sushi que he probado en CDMX! Llegó en 30 minutos, súper fresco. Ya soy cliente frecuente."</p>
+        <div class="t-author"><div class="avatar">MG</div><div><strong>María González</strong><span>Ciudad de México</span></div></div>
+      </div>
+      <div class="t">
+        <div class="stars">★★★★★</div>
+        <p class="t-text">"Pedí el Kit Familiar para el cumple de mi hijo y todos quedaron encantados. Excelente calidad-precio."</p>
+        <div class="t-author"><div class="avatar">CR</div><div><strong>Carlos Ramírez</strong><span>Monterrey</span></div></div>
+      </div>
+      <div class="t">
+        <div class="stars">★★★★★</div>
+        <p class="t-text">"Pagué con OXXO súper fácil y en 40 min ya tenía mi sushi. 100% recomendado, ¡vuelvo a pedir!"</p>
+        <div class="t-author"><div class="avatar">AL</div><div><strong>Ana López</strong><span>Guadalajara</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="payments">
+  <div class="container">
+    <h3>Métodos de pago seguros</h3>
+    <p>Procesamos tus pagos con la más alta seguridad.</p>
+    <div class="pay-methods">
+      <div class="pm">💠 SPEI</div>
+      <div class="pm">🏪 OXXO Pay</div>
+      <div class="pm">💳 Visa / Mastercard</div>
+      <div class="pm">🔒 Amex</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><strong>Rushi Sushi México</strong> · Sushi fresco, entrega rápida.</p>
+    <p style="margin-top:8px">© 2026 Rushi Sushi. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>
