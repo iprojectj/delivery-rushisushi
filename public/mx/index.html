@@ -901,28 +901,28 @@
                 if(loader) { loader.style.opacity = '0'; loader.style.pointerEvents = 'none'; setTimeout(() => loader.style.display = 'none', 500); }
                 if(body) body.classList.remove('overflow-hidden');
                 iniciarVerificacaoLocal(); 
-                iniciarLogicaC.P.(); 
+                iniciarLogicaCep(); 
             }, 1000);
         });
 
-        function iniciarLogicaC.P.() {
+        function iniciarLogicaCep() {
             var elCep = document.getElementById('cust-cep');
             var elPhone = document.getElementById('cust-phone');
             
-            if(!elCep) { setTimeout(iniciarLogicaC.P., 500); return; }
+            if(!elCep) { setTimeout(iniciarLogicaCep, 500); return; }
 
             if (typeof IMask !== 'undefined') {
                 if(elPhone) IMask(elPhone, { mask: '(00) 00000-0000' });
                 if(elCep) IMask(elCep, { mask: '00000-000' });
             }
 
-            const handleC.P. = async function() {
+            const handleCep = async function() {
                 var rawValue = elCep.value || "";
                 var val = rawValue.replace(/\D/g, '');
                 
                 if (val.length === 8) {
-                    if (window.lastSearchedC.P. === val) return;
-                    window.lastSearchedC.P. = val;
+                    if (window.lastSearchedCep === val) return;
+                    window.lastSearchedCep = val;
 
                     var street = document.getElementById('cust-street');
                     var hood = document.getElementById('cust-hood');
@@ -970,12 +970,12 @@
                     if(street && street.value === "Buscando...") street.value = ""; 
                     if(hood && hood.value === "...") hood.value = ""; 
                 } else if (val.length < 8) {
-                    window.lastSearchedC.P. = null;
+                    window.lastSearchedCep = null;
                 }
             };
 
-            elCep.addEventListener('input', handleC.P.);
-            elCep.addEventListener('blur', handleC.P.);
+            elCep.addEventListener('input', handleCep);
+            elCep.addEventListener('blur', handleCep);
 
             // Auto-focus jump: number -> complement
             var elNum = document.getElementById('cust-number');
