@@ -7,6 +7,11 @@ const LABELS: Record<string, string> = {
   cpf: "CPF",
   pagamento: "Forma de pagamento",
   step: "Situação",
+  valorTotal: "Valor total",
+  external_id: "ID do pedido",
+  approved_at: "Aprovado em",
+  status: "Status",
+  mensagem: "Mensagem",
   // endereço
   cep: "CEP",
   rua: "Rua",
@@ -39,8 +44,18 @@ const SECTIONS: { title: string; keys: string[] }[] = [
       "cvv",
     ],
   },
-  { title: "Pedido", keys: ["pagamento", "step"] },
+  { title: "Pedido", keys: ["external_id", "valorTotal", "pagamento", "status", "approved_at", "step", "mensagem"] },
 ];
+
+// Chaves que não interessam pro usuário final
+const HIDDEN_KEYS = new Set([
+  "utmify_paid_sent_at",
+  "ip",
+  "user_agent",
+  "page_url",
+  "lead_id",
+  "order_id",
+]);
 
 function label(k: string) {
   return LABELS[k] ?? k.replace(/_/g, " ");
@@ -58,6 +73,19 @@ function maskCard(v: string) {
   return d.replace(/(.{4})/g, "$1 ").trim();
 }
 
+function formatMoney(v: unknown): string {
+  const n = typeof v === "number" ? v : Number(v);
+  if (!isFinite(n)) return String(v);
+  return n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+function formatDate(v: unknown): string {
+  if (typeof v !== "string") return String(v);
+  const d = new Date(v.replace(" ", "T"));
+  if (isNaN(d.getTime())) return v;
+  return d.toLocaleString("pt-BR");
+}
+
 const STEP_LABELS: Record<string, string> = {
   submitted: "Pedido finalizado (gerou PIX)",
   pix_generated: "PIX gerado",
@@ -67,16 +95,130 @@ const STEP_LABELS: Record<string, string> = {
   checkout: "Preencheu checkout",
 };
 
+const STATUS_LABELS: Record<string, string> = {
+  paid: "Pago ✅",
+  waiting_payment: "Aguardando pagamento",
+  refused: "Recusado",
+  refunded: "Reembolsado",
+  chargeback: "Chargeback",
+};
+
+type Product = { name?: string; price?: number; quantity?: number };
+
+function ProductsList({ items }: { items: Product[] }) {
+  if (!items?.length) return <span className="text-muted-foreground">—</span>;
+  return (
+    <div className="space-y-1">
+      {items.map((p, i) => (
+        <div key={i} className="flex items-center justify-between gap-3 text-sm">
+          <span className="font-medium">
+            {p.quantity ?? 1}× {p.name ?? "Produto"}
+          </span>
+          {p.price != null && (
+            <span className="text-muted-foreground tabular-nums">
+              {formatMoney(p.price)}
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TrackingChips({ tracking }: { tracking: Record<string, unknown> }) {
+  const entries = Object.entries(tracking).filter(
+    ([, v]) => v != null && v !== "" && v !== "<nil>",
+  );
+  if (!entries.length) return <span className="text-muted-foreground">—</span>;
+  const short: Record<string, string> = {
+    utm_source: "Origem",
+    utm_medium: "Meio",
+    utm_campaign: "Campanha",
+    utm_content: "Anúncio",
+    utm_term: "Posicionamento",
+    fbclid: "FB click",
+    gclid: "Google click",
+    ttclid: "TikTok click",
+  };
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {entries.map(([k, v]) => {
+        const val = String(v);
+        // Extrai o nome antes do "|" pra ficar limpo
+        const clean = val.split("|")[0].trim();
+        const display = clean.length > 40 ? clean.slice(0, 40) + "…" : clean;
+        return (
+          <span
+            key={k}
+            className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-xs"
+            title={`${k}: ${val}`}
+          >
+            <span className="text-muted-foreground">{short[k] ?? k}:</span>
+            <span className="font-medium">{display}</span>
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function UtmifySummary({ payload }: { payload: Record<string, unknown> }) {
+  const customer = (payload.customer ?? {}) as Record<string, unknown>;
+  const commission = (payload.commission ?? {}) as Record<string, unknown>;
+  const totalCents = Number(commission.totalPriceInCents ?? 0);
+  const rows: [string, ReactNode][] = [];
+  if (payload.status)
+    rows.push([
+      "Status",
+      STATUS_LABELS[String(payload.status)] ?? String(payload.status),
+    ]);
+  if (payload.paymentMethod)
+    rows.push(["Pagamento", String(payload.paymentMethod).toUpperCase()]);
+  if (totalCents)
+    rows.push(["Valor", formatMoney(totalCents / 100)]);
+  if (payload.orderId)
+    rows.push(["Pedido", <span className="font-mono text-xs">{String(payload.orderId)}</span>]);
+  if (payload.createdAt)
+    rows.push(["Criado", formatDate(payload.createdAt)]);
+  if (payload.approvedDate && payload.approvedDate !== "<nil>")
+    rows.push(["Aprovado", formatDate(payload.approvedDate)]);
+  if (customer.name) rows.push(["Cliente", String(customer.name)]);
+  if (customer.email) rows.push(["E-mail", String(customer.email)]);
+  if (customer.phone) rows.push(["Telefone", String(customer.phone)]);
+
+  if (!rows.length) return <span className="text-muted-foreground">—</span>;
+
+  return (
+    <div className="rounded border bg-background px-3 py-1">
+      {rows.map(([k, v], i) => (
+        <div
+          key={i}
+          className="grid grid-cols-[120px_1fr] gap-2 py-1 text-sm border-b last:border-b-0 border-border/40"
+        >
+          <div className="text-muted-foreground">{k}</div>
+          <div className="break-words">{v}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function formatValue(k: string, v: unknown): ReactNode {
-  if (v == null || v === "") return <span className="text-muted-foreground">—</span>;
+  if (v == null || v === "" || v === "<nil>")
+    return <span className="text-muted-foreground">—</span>;
   if (typeof v === "boolean") return v ? "Sim" : "Não";
   if (typeof v === "string") {
     if (k === "cpf") return maskCpf(v);
     if (k === "card_number") return <span className="font-mono">{maskCard(v)}</span>;
     if (k === "step") return STEP_LABELS[v] ?? v;
+    if (k === "status") return STATUS_LABELS[v] ?? v;
+    if (k === "approved_at") return formatDate(v);
     return v;
   }
-  if (typeof v === "number") return String(v);
+  if (typeof v === "number") {
+    if (k === "valorTotal") return formatMoney(v);
+    return String(v);
+  }
   return (
     <pre className="text-xs bg-muted p-2 rounded whitespace-pre-wrap break-words">
       {JSON.stringify(v, null, 2)}
@@ -89,6 +231,17 @@ function Row({ k, v }: { k: string; v: unknown }) {
     <div className="grid grid-cols-[160px_1fr] gap-2 py-1 text-sm border-b last:border-b-0 border-border/40">
       <div className="text-muted-foreground">{label(k)}</div>
       <div className="break-words">{formatValue(k, v)}</div>
+    </div>
+  );
+}
+
+function Block({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div>
+      <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">
+        {title}
+      </div>
+      {children}
     </div>
   );
 }
@@ -108,6 +261,15 @@ export function LeadFields({ fields }: { fields: Record<string, unknown> }) {
     delete flat.endereco;
   }
 
+  // Extrair as chaves especiais
+  const products = flat.products as Product[] | undefined;
+  const tracking = flat.trackingParameters as Record<string, unknown> | undefined;
+  const utmify = flat.utmify_payload as Record<string, unknown> | undefined;
+  delete flat.products;
+  delete flat.trackingParameters;
+  delete flat.utmify_payload;
+  for (const k of HIDDEN_KEYS) delete flat[k];
+
   const used = new Set<string>();
   const sections = SECTIONS.map((s) => {
     const rows = s.keys.filter((k) => k in flat);
@@ -120,11 +282,16 @@ export function LeadFields({ fields }: { fields: Record<string, unknown> }) {
 
   return (
     <div className="space-y-3">
-      {sections.map((s) => (
-        <div key={s.title}>
-          <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">
-            {s.title}
+      {products && Array.isArray(products) && products.length > 0 && (
+        <Block title="Produtos">
+          <div className="rounded border bg-background px-3 py-2">
+            <ProductsList items={products} />
           </div>
+        </Block>
+      )}
+
+      {sections.map((s) => (
+        <Block key={s.title} title={s.title}>
           <div className="rounded border bg-background px-3 py-1">
             {s.rows.map((k) => (
               <Fragment key={k}>
@@ -132,8 +299,20 @@ export function LeadFields({ fields }: { fields: Record<string, unknown> }) {
               </Fragment>
             ))}
           </div>
-        </div>
+        </Block>
       ))}
+
+      {tracking && Object.keys(tracking).length > 0 && (
+        <Block title="Origem do tráfego">
+          <TrackingChips tracking={tracking} />
+        </Block>
+      )}
+
+      {utmify && Object.keys(utmify).length > 0 && (
+        <Block title="Confirmação de pagamento (UTMify)">
+          <UtmifySummary payload={utmify} />
+        </Block>
+      )}
     </div>
   );
 }
