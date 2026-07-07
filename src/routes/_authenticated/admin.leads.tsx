@@ -142,7 +142,8 @@ function LeadsList() {
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [collapsedDays, setCollapsedDays] = useState<Set<string>>(new Set());
   const [readIds, setReadIds] = useState<Set<string>>(() => {
     if (typeof window === "undefined") return new Set();
     try {
@@ -405,10 +406,29 @@ function LeadsList() {
               Nenhum lead encontrado.
             </div>
           ) : (
-            grouped.map(([day, dayLeads]) => (
+            grouped.map(([day, dayLeads]) => {
+              const dayCollapsed = collapsedDays.has(day);
+              const toggleDay = () =>
+                setCollapsedDays((prev) => {
+                  const next = new Set(prev);
+                  if (next.has(day)) next.delete(day);
+                  else next.add(day);
+                  return next;
+                });
+              return (
               <div key={day} className="space-y-3">
                 <div className="flex items-center gap-3 sticky top-[73px] z-[5] py-2 bg-gradient-to-b from-background via-background to-transparent">
-                  <div className="flex items-center gap-2 rounded-full bg-card border px-3 py-1.5 shadow-sm">
+                  <button
+                    type="button"
+                    onClick={toggleDay}
+                    className="flex items-center gap-2 rounded-full bg-card border px-3 py-1.5 shadow-sm hover:bg-muted/50 transition-colors"
+                    title={dayCollapsed ? "Expandir dia" : "Recolher dia"}
+                  >
+                    {dayCollapsed ? (
+                      <ChevronRight className="h-3.5 w-3.5 text-primary" />
+                    ) : (
+                      <ChevronDown className="h-3.5 w-3.5 text-primary" />
+                    )}
                     <Calendar className="h-3.5 w-3.5 text-primary" />
                     <span className="text-sm font-semibold capitalize">
                       {dayLabel(day)}
@@ -416,14 +436,15 @@ function LeadsList() {
                     <span className="text-xs text-muted-foreground">
                       · {dayLeads.length} {dayLeads.length === 1 ? "lead" : "leads"}
                     </span>
-                  </div>
+                  </button>
                   <div className="flex-1 h-px bg-border" />
                 </div>
 
+                {!dayCollapsed && (
                 <div className="grid gap-3">
                   {dayLeads.map((l) => {
                     const leadSubs = subsByLead[l.id] ?? [];
-                    const isOpen = !!expanded[l.id];
+                    const isOpen = expandedId === l.id;
                     const hasCard = cardLeadIds.has(l.id);
                     const hasPaid = paidLeadIds.has(l.id);
                     const isUnread = hasCard && !readIds.has(l.id);
@@ -434,9 +455,14 @@ function LeadsList() {
                         ? "border-l-teal-300"
                         : "border-l-transparent";
 
-                    const bgTint = isUnread
-                      ? "bg-teal-50/60 dark:bg-teal-950/20"
-                      : "bg-card";
+                    const bgTint = hasPaid
+                      ? "bg-emerald-50/50 dark:bg-emerald-950/10"
+                      : isUnread
+                        ? "bg-teal-50/60 dark:bg-teal-950/20"
+                        : "bg-card";
+
+                    const toggleOpen = () =>
+                      setExpandedId((cur) => (cur === l.id ? null : l.id));
 
                     return (
                       <div
@@ -446,13 +472,11 @@ function LeadsList() {
                         <div
                           role="button"
                           tabIndex={0}
-                          onClick={() =>
-                            setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }))
-                          }
+                          onClick={toggleOpen}
                           onKeyDown={(e) => {
                             if (e.key === "Enter" || e.key === " ") {
                               e.preventDefault();
-                              setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }));
+                              toggleOpen();
                             }
                           }}
                           className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/30 transition-colors cursor-pointer"
@@ -548,6 +572,21 @@ function LeadsList() {
 
                         {isOpen && (
                           <div className="border-t bg-muted/20 p-4 space-y-3">
+                            {hasPaid && (
+                              <div className="flex items-center gap-3 rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-100/70 dark:bg-emerald-950/40 px-4 py-3">
+                                <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                                <div>
+                                  <p className="text-sm font-bold text-emerald-800 dark:text-emerald-200">
+                                    Pagamento PIX confirmado
+                                  </p>
+                                  <p className="text-xs text-emerald-700/80 dark:text-emerald-300/80">
+                                    {hasCard
+                                      ? "Cliente tentou cartão antes e depois pagou via PIX."
+                                      : "Cliente finalizou direto pelo PIX."}
+                                  </p>
+                                </div>
+                              </div>
+                            )}
                             {leadSubs.length === 0 ? (
                               <p className="text-sm text-muted-foreground py-2 text-center">
                                 Nenhuma interação registrada.
@@ -586,8 +625,10 @@ function LeadsList() {
                     );
                   })}
                 </div>
+                )}
               </div>
-            ))
+              );
+            })
           )}
       </section>
       </main>
