@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState, Fragment } from "react";
 import {
+  BarChart3,
   ChevronDown,
   ChevronRight,
   CreditCard,
@@ -320,10 +321,18 @@ function LeadsList() {
               </p>
             </div>
           </div>
-          <Button variant="outline" size="sm" onClick={logout} className="gap-2">
-            <LogOut className="h-4 w-4" />
-            Sair
-          </Button>
+          <div className="flex items-center gap-2">
+            <Link to="/admin/dashboard">
+              <Button variant="outline" size="sm" className="gap-2">
+                <BarChart3 className="h-4 w-4" />
+                Dashboard
+              </Button>
+            </Link>
+            <Button variant="outline" size="sm" onClick={logout} className="gap-2">
+              <LogOut className="h-4 w-4" />
+              Sair
+            </Button>
+          </div>
         </div>
       </header>
 
