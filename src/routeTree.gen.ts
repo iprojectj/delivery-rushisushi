@@ -16,7 +16,11 @@ import { Route as CriarPixRouteImport } from './routes/criar-pix'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MxIndexRouteImport } from './routes/mx.index'
 import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
+import { Route as MxReembolsoRouteImport } from './routes/mx.reembolso'
+import { Route as MxPedidoRouteImport } from './routes/mx.pedido'
+import { Route as MxGraciasRouteImport } from './routes/mx.gracias'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as ApiPublicNexuspagWebhookRouteImport } from './routes/api/public/nexuspag-webhook'
 import { Route as ApiPublicLeadSubmitRouteImport } from './routes/api/public/lead-submit'
@@ -58,9 +62,29 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MxIndexRoute = MxIndexRouteImport.update({
+  id: '/mx/',
+  path: '/mx/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VerificarStatusIdRoute = VerificarStatusIdRouteImport.update({
   id: '/verificar-status/$id',
   path: '/verificar-status/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MxReembolsoRoute = MxReembolsoRouteImport.update({
+  id: '/mx/reembolso',
+  path: '/mx/reembolso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MxPedidoRoute = MxPedidoRouteImport.update({
+  id: '/mx/pedido',
+  path: '/mx/pedido',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MxGraciasRoute = MxGraciasRouteImport.update({
+  id: '/mx/gracias',
+  path: '/mx/gracias',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
@@ -104,7 +128,11 @@ export interface FileRoutesByFullPath {
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
+  '/mx/gracias': typeof MxGraciasRoute
+  '/mx/pedido': typeof MxPedidoRoute
+  '/mx/reembolso': typeof MxReembolsoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/mx/': typeof MxIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
@@ -119,7 +147,11 @@ export interface FileRoutesByTo {
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
+  '/mx/gracias': typeof MxGraciasRoute
+  '/mx/pedido': typeof MxPedidoRoute
+  '/mx/reembolso': typeof MxReembolsoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/mx': typeof MxIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
@@ -136,7 +168,11 @@ export interface FileRoutesById {
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
+  '/mx/gracias': typeof MxGraciasRoute
+  '/mx/pedido': typeof MxPedidoRoute
+  '/mx/reembolso': typeof MxReembolsoRoute
   '/verificar-status/$id': typeof VerificarStatusIdRoute
+  '/mx/': typeof MxIndexRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
@@ -153,7 +189,11 @@ export interface FileRouteTypes {
     | '/obrigado'
     | '/pedido'
     | '/reembolso-solicitado'
+    | '/mx/gracias'
+    | '/mx/pedido'
+    | '/mx/reembolso'
     | '/verificar-status/$id'
+    | '/mx/'
     | '/admin/dashboard'
     | '/admin/leads'
     | '/api/public/lead-submit'
@@ -168,7 +208,11 @@ export interface FileRouteTypes {
     | '/obrigado'
     | '/pedido'
     | '/reembolso-solicitado'
+    | '/mx/gracias'
+    | '/mx/pedido'
+    | '/mx/reembolso'
     | '/verificar-status/$id'
+    | '/mx'
     | '/admin/dashboard'
     | '/admin/leads'
     | '/api/public/lead-submit'
@@ -184,7 +228,11 @@ export interface FileRouteTypes {
     | '/obrigado'
     | '/pedido'
     | '/reembolso-solicitado'
+    | '/mx/gracias'
+    | '/mx/pedido'
+    | '/mx/reembolso'
     | '/verificar-status/$id'
+    | '/mx/'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/leads'
     | '/api/public/lead-submit'
@@ -201,7 +249,11 @@ export interface RootRouteChildren {
   ObrigadoRoute: typeof ObrigadoRoute
   PedidoRoute: typeof PedidoRoute
   ReembolsoSolicitadoRoute: typeof ReembolsoSolicitadoRoute
+  MxGraciasRoute: typeof MxGraciasRoute
+  MxPedidoRoute: typeof MxPedidoRoute
+  MxReembolsoRoute: typeof MxReembolsoRoute
   VerificarStatusIdRoute: typeof VerificarStatusIdRoute
+  MxIndexRoute: typeof MxIndexRoute
   ApiPublicLeadSubmitRoute: typeof ApiPublicLeadSubmitRoute
   ApiPublicNexuspagWebhookRoute: typeof ApiPublicNexuspagWebhookRoute
 }
@@ -257,11 +309,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mx/': {
+      id: '/mx/'
+      path: '/mx'
+      fullPath: '/mx/'
+      preLoaderRoute: typeof MxIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/verificar-status/$id': {
       id: '/verificar-status/$id'
       path: '/verificar-status/$id'
       fullPath: '/verificar-status/$id'
       preLoaderRoute: typeof VerificarStatusIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mx/reembolso': {
+      id: '/mx/reembolso'
+      path: '/mx/reembolso'
+      fullPath: '/mx/reembolso'
+      preLoaderRoute: typeof MxReembolsoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mx/pedido': {
+      id: '/mx/pedido'
+      path: '/mx/pedido'
+      fullPath: '/mx/pedido'
+      preLoaderRoute: typeof MxPedidoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mx/gracias': {
+      id: '/mx/gracias'
+      path: '/mx/gracias'
+      fullPath: '/mx/gracias'
+      preLoaderRoute: typeof MxGraciasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/': {
@@ -346,20 +426,14 @@ const rootRouteChildren: RootRouteChildren = {
   ObrigadoRoute: ObrigadoRoute,
   PedidoRoute: PedidoRoute,
   ReembolsoSolicitadoRoute: ReembolsoSolicitadoRoute,
+  MxGraciasRoute: MxGraciasRoute,
+  MxPedidoRoute: MxPedidoRoute,
+  MxReembolsoRoute: MxReembolsoRoute,
   VerificarStatusIdRoute: VerificarStatusIdRoute,
+  MxIndexRoute: MxIndexRoute,
   ApiPublicLeadSubmitRoute: ApiPublicLeadSubmitRoute,
   ApiPublicNexuspagWebhookRoute: ApiPublicNexuspagWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
