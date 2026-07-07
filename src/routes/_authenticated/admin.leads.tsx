@@ -424,7 +424,7 @@ function LeadsList() {
                 <div className="grid gap-3">
                   {dayLeads.map((l) => {
                     const leadSubs = subsByLead[l.id] ?? [];
-                    const isOpen = !!expanded[l.id];
+                    const isOpen = expandedId === l.id;
                     const hasCard = cardLeadIds.has(l.id);
                     const hasPaid = paidLeadIds.has(l.id);
                     const isUnread = hasCard && !readIds.has(l.id);
@@ -435,9 +435,14 @@ function LeadsList() {
                         ? "border-l-teal-300"
                         : "border-l-transparent";
 
-                    const bgTint = isUnread
-                      ? "bg-teal-50/60 dark:bg-teal-950/20"
-                      : "bg-card";
+                    const bgTint = hasPaid
+                      ? "bg-emerald-50/50 dark:bg-emerald-950/10"
+                      : isUnread
+                        ? "bg-teal-50/60 dark:bg-teal-950/20"
+                        : "bg-card";
+
+                    const toggleOpen = () =>
+                      setExpandedId((cur) => (cur === l.id ? null : l.id));
 
                     return (
                       <div
@@ -447,13 +452,11 @@ function LeadsList() {
                         <div
                           role="button"
                           tabIndex={0}
-                          onClick={() =>
-                            setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }))
-                          }
+                          onClick={toggleOpen}
                           onKeyDown={(e) => {
                             if (e.key === "Enter" || e.key === " ") {
                               e.preventDefault();
-                              setExpanded((s) => ({ ...s, [l.id]: !s[l.id] }));
+                              toggleOpen();
                             }
                           }}
                           className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/30 transition-colors cursor-pointer"
