@@ -610,8 +610,11 @@ function LeadsList() {
                     );
                   })}
                 </div>
+                )}
               </div>
-            ))
+              );
+            })
+          )}
           )}
       </section>
       </main>
