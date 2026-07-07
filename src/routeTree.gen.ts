@@ -21,9 +21,11 @@ import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status
 import { Route as MxReembolsoRouteImport } from './routes/mx.reembolso'
 import { Route as MxPedidoRouteImport } from './routes/mx.pedido'
 import { Route as MxGraciasRouteImport } from './routes/mx.gracias'
+import { Route as MxCrearPagoRouteImport } from './routes/mx.crear-pago'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as ApiPublicNexuspagWebhookRouteImport } from './routes/api/public/nexuspag-webhook'
 import { Route as ApiPublicLeadSubmitRouteImport } from './routes/api/public/lead-submit'
+import { Route as ApiPublicCooudWebhookRouteImport } from './routes/api/public/cooud-webhook'
 import { Route as AuthenticatedAdminLeadsRouteImport } from './routes/_authenticated/admin.leads'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
 import { Route as AuthenticatedAdminLeadsIdRouteImport } from './routes/_authenticated/admin.leads.$id'
@@ -87,6 +89,11 @@ const MxGraciasRoute = MxGraciasRouteImport.update({
   path: '/mx/gracias',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MxCrearPagoRoute = MxCrearPagoRouteImport.update({
+  id: '/mx/crear-pago',
+  path: '/mx/crear-pago',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
@@ -101,6 +108,11 @@ const ApiPublicNexuspagWebhookRoute =
 const ApiPublicLeadSubmitRoute = ApiPublicLeadSubmitRouteImport.update({
   id: '/api/public/lead-submit',
   path: '/api/public/lead-submit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicCooudWebhookRoute = ApiPublicCooudWebhookRouteImport.update({
+  id: '/api/public/cooud-webhook',
+  path: '/api/public/cooud-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminLeadsRoute = AuthenticatedAdminLeadsRouteImport.update({
@@ -128,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
+  '/mx/crear-pago': typeof MxCrearPagoRoute
   '/mx/gracias': typeof MxGraciasRoute
   '/mx/pedido': typeof MxPedidoRoute
   '/mx/reembolso': typeof MxReembolsoRoute
@@ -135,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/mx/': typeof MxIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
+  '/api/public/cooud-webhook': typeof ApiPublicCooudWebhookRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
@@ -147,6 +161,7 @@ export interface FileRoutesByTo {
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
+  '/mx/crear-pago': typeof MxCrearPagoRoute
   '/mx/gracias': typeof MxGraciasRoute
   '/mx/pedido': typeof MxPedidoRoute
   '/mx/reembolso': typeof MxReembolsoRoute
@@ -154,6 +169,7 @@ export interface FileRoutesByTo {
   '/mx': typeof MxIndexRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
+  '/api/public/cooud-webhook': typeof ApiPublicCooudWebhookRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -168,6 +184,7 @@ export interface FileRoutesById {
   '/obrigado': typeof ObrigadoRoute
   '/pedido': typeof PedidoRoute
   '/reembolso-solicitado': typeof ReembolsoSolicitadoRoute
+  '/mx/crear-pago': typeof MxCrearPagoRoute
   '/mx/gracias': typeof MxGraciasRoute
   '/mx/pedido': typeof MxPedidoRoute
   '/mx/reembolso': typeof MxReembolsoRoute
@@ -175,6 +192,7 @@ export interface FileRoutesById {
   '/mx/': typeof MxIndexRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
+  '/api/public/cooud-webhook': typeof ApiPublicCooudWebhookRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
   '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
@@ -189,6 +207,7 @@ export interface FileRouteTypes {
     | '/obrigado'
     | '/pedido'
     | '/reembolso-solicitado'
+    | '/mx/crear-pago'
     | '/mx/gracias'
     | '/mx/pedido'
     | '/mx/reembolso'
@@ -196,6 +215,7 @@ export interface FileRouteTypes {
     | '/mx/'
     | '/admin/dashboard'
     | '/admin/leads'
+    | '/api/public/cooud-webhook'
     | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
     | '/admin/'
@@ -208,6 +228,7 @@ export interface FileRouteTypes {
     | '/obrigado'
     | '/pedido'
     | '/reembolso-solicitado'
+    | '/mx/crear-pago'
     | '/mx/gracias'
     | '/mx/pedido'
     | '/mx/reembolso'
@@ -215,6 +236,7 @@ export interface FileRouteTypes {
     | '/mx'
     | '/admin/dashboard'
     | '/admin/leads'
+    | '/api/public/cooud-webhook'
     | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
     | '/admin'
@@ -228,6 +250,7 @@ export interface FileRouteTypes {
     | '/obrigado'
     | '/pedido'
     | '/reembolso-solicitado'
+    | '/mx/crear-pago'
     | '/mx/gracias'
     | '/mx/pedido'
     | '/mx/reembolso'
@@ -235,6 +258,7 @@ export interface FileRouteTypes {
     | '/mx/'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/leads'
+    | '/api/public/cooud-webhook'
     | '/api/public/lead-submit'
     | '/api/public/nexuspag-webhook'
     | '/_authenticated/admin/'
@@ -249,11 +273,13 @@ export interface RootRouteChildren {
   ObrigadoRoute: typeof ObrigadoRoute
   PedidoRoute: typeof PedidoRoute
   ReembolsoSolicitadoRoute: typeof ReembolsoSolicitadoRoute
+  MxCrearPagoRoute: typeof MxCrearPagoRoute
   MxGraciasRoute: typeof MxGraciasRoute
   MxPedidoRoute: typeof MxPedidoRoute
   MxReembolsoRoute: typeof MxReembolsoRoute
   VerificarStatusIdRoute: typeof VerificarStatusIdRoute
   MxIndexRoute: typeof MxIndexRoute
+  ApiPublicCooudWebhookRoute: typeof ApiPublicCooudWebhookRoute
   ApiPublicLeadSubmitRoute: typeof ApiPublicLeadSubmitRoute
   ApiPublicNexuspagWebhookRoute: typeof ApiPublicNexuspagWebhookRoute
 }
@@ -344,6 +370,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MxGraciasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mx/crear-pago': {
+      id: '/mx/crear-pago'
+      path: '/mx/crear-pago'
+      fullPath: '/mx/crear-pago'
+      preLoaderRoute: typeof MxCrearPagoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/admin'
@@ -363,6 +396,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/lead-submit'
       fullPath: '/api/public/lead-submit'
       preLoaderRoute: typeof ApiPublicLeadSubmitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/cooud-webhook': {
+      id: '/api/public/cooud-webhook'
+      path: '/api/public/cooud-webhook'
+      fullPath: '/api/public/cooud-webhook'
+      preLoaderRoute: typeof ApiPublicCooudWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/leads': {
@@ -426,24 +466,16 @@ const rootRouteChildren: RootRouteChildren = {
   ObrigadoRoute: ObrigadoRoute,
   PedidoRoute: PedidoRoute,
   ReembolsoSolicitadoRoute: ReembolsoSolicitadoRoute,
+  MxCrearPagoRoute: MxCrearPagoRoute,
   MxGraciasRoute: MxGraciasRoute,
   MxPedidoRoute: MxPedidoRoute,
   MxReembolsoRoute: MxReembolsoRoute,
   VerificarStatusIdRoute: VerificarStatusIdRoute,
   MxIndexRoute: MxIndexRoute,
+  ApiPublicCooudWebhookRoute: ApiPublicCooudWebhookRoute,
   ApiPublicLeadSubmitRoute: ApiPublicLeadSubmitRoute,
   ApiPublicNexuspagWebhookRoute: ApiPublicNexuspagWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
