@@ -11,7 +11,7 @@
       defer
     ></script>
 
-    <!-- TikTok Pagoel -->
+    <!-- TikTok Pixel -->
     <script>
     !function (w, d, t) {
       w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
@@ -22,7 +22,7 @@
     }(window, document, 'ttq');
     </script>
 
-    <!-- Meta Pagoel -->
+    <!-- Meta Pixel -->
     <script>
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '967099279440605'); fbq('init', '993493206814496'); fbq('track', 'PageView');
@@ -46,7 +46,7 @@
       })();
     </script>
 
-    <title>Acompanhe tu pedido | Rūshī Sushi</title>
+    <title>Sigue tu pedido | Rūshī Sushi</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -66,7 +66,7 @@
         .spin-slow { animation: spin 2.4s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Timeline horizontal iFood-style: ícones + conectores entre eles */
+        /* Timeline horizontal: iconos + conectores */
         .tl-row { display:flex; align-items:center; }
         .tl-node { display:flex; flex-direction:column; align-items:center; flex-shrink:0; width:56px; }
         .tl-icon { width:34px; height:34px; border-radius:9999px; background:#fff; border:2px solid #e5e7eb; color:#9ca3af; display:flex; align-items:center; justify-content:center; font-size:13px; transition:all .3s; }
@@ -122,7 +122,7 @@
 
         <!-- ESTIMATIVA + STATUS -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 fade-in">
-            <div class="text-[12px] font-semibold text-gray-500">Previsão de envío</div>
+            <div class="text-[12px] font-semibold text-gray-500">Estimación de entrega</div>
             <div class="text-[26px] font-extrabold text-[#3e3e3e] mt-0.5 leading-tight" id="eta-range">—</div>
             <div class="mt-3 flex items-center gap-2">
                 <span class="relative flex h-2.5 w-2.5 flex-shrink-0">
@@ -137,13 +137,13 @@
                 <div class="tl-row" id="tl-row">
                     <div class="tl-node" data-step="0"><div class="tl-icon"><i class="fa-solid fa-circle-check"></i></div><div class="tl-label">Confirmado</div></div>
                     <div class="tl-conn"><span class="tl-conn-fill" data-conn="0"></span></div>
-                    <div class="tl-node" data-step="1"><div class="tl-icon"><i class="fa-solid fa-store"></i></div><div class="tl-label">Aceito</div></div>
+                    <div class="tl-node" data-step="1"><div class="tl-icon"><i class="fa-solid fa-store"></i></div><div class="tl-label">Aceptado</div></div>
                     <div class="tl-conn"><span class="tl-conn-fill" data-conn="1"></span></div>
                     <div class="tl-node" data-step="2"><div class="tl-icon"><i class="fa-solid fa-utensils"></i></div><div class="tl-label">Preparando</div></div>
                     <div class="tl-conn"><span class="tl-conn-fill" data-conn="2"></span></div>
-                    <div class="tl-node" data-step="3"><div class="tl-icon"><i class="fa-solid fa-motorcycle"></i></div><div class="tl-label">A caminho</div></div>
+                    <div class="tl-node" data-step="3"><div class="tl-icon"><i class="fa-solid fa-motorcycle"></i></div><div class="tl-label">En camino</div></div>
                     <div class="tl-conn"><span class="tl-conn-fill" data-conn="3"></span></div>
-                    <div class="tl-node" data-step="4"><div class="tl-icon" id="tl-last-icon"><i class="fa-solid fa-flag-checkered"></i></div><div class="tl-label" id="tl-last-label">Entregue</div></div>
+                    <div class="tl-node" data-step="4"><div class="tl-icon" id="tl-last-icon"><i class="fa-solid fa-flag-checkered"></i></div><div class="tl-label" id="tl-last-label">Entregado</div></div>
                 </div>
             </div>
         </div>
@@ -155,12 +155,12 @@
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
                 <div class="min-w-0">
-                    <div class="text-sm font-extrabold text-[#3e3e3e]">Ocorreu um problema com tu pedido</div>
-                    <p class="text-xs text-gray-500 leading-snug mt-1">Nossa equipe de suporte está pronta para te ajudar agora mesmo.</p>
+                    <div class="text-sm font-extrabold text-[#3e3e3e]">Hubo un problema con tu pedido</div>
+                    <p class="text-xs text-gray-500 leading-snug mt-1">Nuestro equipo de soporte está listo para ayudarte ahora mismo.</p>
                 </div>
             </div>
             <button onclick="openHelpFlow()" class="mt-3 w-full bg-[#EA1D2C] hover:bg-[#c81826] active:scale-[.99] text-white font-extrabold text-sm py-3 rounded-xl flex items-center justify-center gap-2 shadow-md shadow-red-600/20 transition">
-                <i class="fa-solid fa-headset"></i> Preciso de ajuda com meu pedido
+                <i class="fa-solid fa-headset"></i> Necesito ayuda con mi pedido
             </button>
         </div>
 
@@ -169,9 +169,9 @@
             <div class="px-4 py-3 flex items-center justify-between border-b border-gray-100">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-route text-[#EA1D2C]"></i>
-                    <span class="font-extrabold text-sm text-[#3e3e3e]">Rota da envío</span>
+                    <span class="font-extrabold text-sm text-[#3e3e3e]">Ruta de entrega</span>
                 </div>
-                <span class="text-[10px] text-gray-400 font-bold uppercase" id="map-hint">Aguardando saída</span>
+                <span class="text-[10px] text-gray-400 font-bold uppercase" id="map-hint">Esperando salida</span>
             </div>
             <div class="relative h-56 bg-gray-100">
                 <div id="delivery-map"></div>
@@ -184,18 +184,18 @@
 
         <!-- ETAPAS VERTICAL -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 fade-in">
-            <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold mb-1">Detalhes do progresso</div>
+            <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold mb-1">Detalles del progreso</div>
             <div id="vsteps"></div>
         </div>
 
-        <!-- ENDEREÇO -->
+        <!-- DIRECCIÓN -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 fade-in">
             <div class="flex items-start gap-3">
                 <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-[#EA1D2C] flex-shrink-0">
                     <i class="fa-solid fa-location-dot"></i>
                 </div>
                 <div class="min-w-0">
-                    <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold">Dirección de envío</div>
+                    <div class="text-[11px] uppercase tracking-wide text-gray-400 font-bold">Dirección de entrega</div>
                     <p class="text-sm font-semibold text-[#3e3e3e] leading-snug" id="addr-line1">—</p>
                     <p class="text-xs text-gray-500 leading-snug" id="addr-line2"></p>
                 </div>
@@ -207,7 +207,7 @@
             <button onclick="toggleResumo()" class="w-full px-4 py-3 flex items-center justify-between text-left">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-receipt text-[#EA1D2C]"></i>
-                    <span class="font-extrabold text-sm text-[#3e3e3e]">Ver detalhes do pedido</span>
+                    <span class="font-extrabold text-sm text-[#3e3e3e]">Ver detalles del pedido</span>
                 </div>
                 <i id="resumo-icon" class="fa-solid fa-chevron-down text-gray-400 transition-transform"></i>
             </button>
@@ -221,8 +221,8 @@
                     <i class="fa-solid fa-headset"></i>
                 </div>
                 <div class="text-left">
-                    <div class="text-sm font-extrabold text-[#3e3e3e]">Precisa de ajuda?</div>
-                    <div class="text-[11px] text-gray-500">Fale com o restaurante</div>
+                    <div class="text-sm font-extrabold text-[#3e3e3e]">¿Necesitas ayuda?</div>
+                    <div class="text-[11px] text-gray-500">Habla con el restaurante</div>
                 </div>
             </div>
             <i class="fa-solid fa-chevron-right text-gray-300"></i>
@@ -238,14 +238,14 @@
                     <div class="w-10 h-10 rounded-full bg-[#EA1D2C] flex items-center justify-center text-white font-bold">R</div>
                     <div>
                         <div class="text-sm font-extrabold text-[#3e3e3e]">Rūshī Sushi</div>
-                        <div class="text-[11px] text-[#05a65a] flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#05a65a]"></span> Online agora</div>
+                        <div class="text-[11px] text-[#05a65a] flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#05a65a]"></span> En línea ahora</div>
                     </div>
                 </div>
                 <button onclick="closeChat()" class="text-gray-400 hover:text-gray-600 text-xl px-2"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-2"></div>
             <div class="p-3 border-t border-gray-100 flex gap-2">
-                <input id="chat-input" type="text" placeholder="Escribe sua mensagem…" class="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm outline-none" onkeydown="if(event.key==='Enter')sendChat()">
+                <input id="chat-input" type="text" placeholder="Escribe tu mensaje…" class="flex-1 bg-gray-100 rounded-full px-4 py-2 text-sm outline-none" onkeydown="if(event.key==='Enter')sendChat()">
                 <button onclick="sendChat()" class="w-10 h-10 rounded-full bg-[#EA1D2C] text-white flex items-center justify-center active:scale-95"><i class="fa-solid fa-paper-plane text-sm"></i></button>
             </div>
         </div>
@@ -267,16 +267,16 @@
         <div class="bg-white border-b border-gray-100 shadow-sm px-4 py-3 flex items-center gap-3 flex-shrink-0">
             <img src="/images/amanda-avatar.jpg" alt="Amanda" class="w-10 h-10 rounded-full object-cover flex-shrink-0" onerror="this.style.display='none'">
             <div class="min-w-0 flex-1">
-                <div class="text-sm font-extrabold text-[#3e3e3e] leading-tight">Amanda — Atendimento</div>
+                <div class="text-sm font-extrabold text-[#3e3e3e] leading-tight">Amanda — Atención</div>
                 <div class="text-[11px] text-[#05a65a] flex items-center gap-1 leading-tight mt-0.5" id="rc-status">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#05a65a]"></span> Online agora
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#05a65a]"></span> En línea ahora
                 </div>
             </div>
         </div>
         <div id="rc-body" class="flex-1 overflow-y-auto p-4 space-y-2 bg-[#f7f7f7]"></div>
         <div id="rc-quick" class="hidden px-3 py-3 flex flex-wrap gap-2 bg-white border-t border-gray-100 flex-shrink-0"></div>
         <div id="rc-input-bar" class="hidden px-3 py-3 flex items-end gap-2 bg-white border-t border-gray-100 flex-shrink-0">
-            <textarea id="rc-input" rows="1" placeholder="Escribe sua mensagem…" class="flex-1 bg-gray-100 rounded-2xl px-4 py-2.5 text-sm outline-none resize-none border border-transparent focus:border-gray-200" style="max-height:120px;"></textarea>
+            <textarea id="rc-input" rows="1" placeholder="Escribe tu mensaje…" class="flex-1 bg-gray-100 rounded-2xl px-4 py-2.5 text-sm outline-none resize-none border border-transparent focus:border-gray-200" style="max-height:120px;"></textarea>
             <button onclick="rcSendUserText()" class="w-10 h-10 rounded-full bg-[#EA1D2C] text-white flex items-center justify-center active:scale-95 flex-shrink-0"><i class="fa-solid fa-paper-plane text-sm"></i></button>
         </div>
     </div>
@@ -286,15 +286,15 @@
 
     <script>
         // ============================================================
-        // DADOS DO PEDIDO
+        // DATOS DEL PEDIDO
         // ============================================================
         var orderData = {};
         try { orderData = JSON.parse(localStorage.getItem('nobre_pix_data') || '{}'); } catch(e) {}
 
-        var shippingType = orderData.shippingType || 'padrao'; // padrao=grátis, rapida=paga
+        var shippingType = orderData.shippingType || 'padrao'; // estándar=gratis, express=pagado
         var deliveryMinutes = shippingType === 'rapida' ? 30 : 50;
 
-        // Estado persistente do tracking (para sobreviver refresh)
+        // Estado persistente del tracking (sobrevive refresh)
         var trackKey = 'nobre_track_' + (orderData.id || 'anon');
         var trackData = {};
         try { trackData = JSON.parse(localStorage.getItem(trackKey) || '{}'); } catch(e) {}
@@ -305,20 +305,20 @@
         var startedAt = trackData.startedAt;
 
         // ============================================================
-        // STAGES: tempos em minutos desde o startedAt
-        // Preparo: ~25min. Saída→envío: ~50min (padrao) ou 30min (rapida).
-        // Aceito é rápido (30s).
+        // STAGES: tiempos en minutos desde startedAt
+        // Preparación: ~25 min. Salida→entrega: ~50 min (estándar) o 30 min (express).
+        // Aceptado é rápido (30s).
         // ============================================================
         var STAGES = [
-            { key:'confirmed', label:'Pedido confirmado', desc:'Recebemos seu pago com sucesso.', at: 0 },
-            { key:'accepted',  label:'Restaurante aceitou tu pedido', desc:'A cozinha já foi notificada.', at: 0.5 },
-            { key:'preparing', label:'Preparando tu pedido', desc:'Nossos sushimen estão preparando tudo com carinho.', at: 2 },
-            { key:'shipping',  label:'Pedido saiu para envío', desc:'O envíodor está a caminho do seu dirección.', at: 27 },
-            { key:'nearby',    label:'O envíodor está chegando', desc:'Fique atento! Sua envío chega em instantes.', at: 27 + deliveryMinutes - 4 },
-            { key:'failed',    label:'Envío não realizada', desc:'Infelizmente o envíodor não conseguiu concluir a envío do tu pedido.', at: 27 + deliveryMinutes }
+            { key:'confirmed', label:'Pedido confirmado', desc:'Recibimos tu pago con éxito.', at: 0 },
+            { key:'accepted',  label:'El restaurante aceptó tu pedido', desc:'La cocina ya fue notificada.', at: 0.5 },
+            { key:'preparing', label:'Preparando tu pedido', desc:'Nuestros sushi chefs preparan todo con cariño.', at: 2 },
+            { key:'shipping',  label:'Pedido salió para entrega', desc:'El repartidor va camino a tu dirección.', at: 27 },
+            { key:'nearby',    label:'El repartidor está llegando', desc:'¡Atento! Tu entrega llega en unos instantes.', at: 27 + deliveryMinutes - 4 },
+            { key:'failed',    label:'Entrega no realizada', desc:'Lamentablemente el repartidor no logró completar la entrega de tu pedido.', at: 27 + deliveryMinutes }
         ];
 
-        // Timeline horizontal usa 5 ícones (une "chegando" e "failed" no último ícone)
+        // Timeline horizontal usa 5 iconos (une 'llegando' y 'failed' en el último icono)
         var TL_STEPS = ['confirmed','accepted','preparing','shipping','failed'];
 
         // ============================================================
@@ -376,38 +376,38 @@
             });
 
 
-            // Última etapa: exibe "Entregue" até ser atingida; ao atingir, vira "No entregue"
+            // Última etapa: exibe "Entregado" até ser atingida; ao atingir, vira "No entregado"
             var lastIcon = document.getElementById('tl-last-icon');
             var lastLabel = document.getElementById('tl-last-label');
             if (lastIcon && lastLabel) {
                 if (stageKey === 'failed') {
                     lastIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
-                    lastLabel.textContent = 'No entregue';
+                    lastLabel.textContent = 'No entregado';
                 } else {
                     lastIcon.innerHTML = '<i class="fa-solid fa-flag-checkered"></i>';
-                    lastLabel.textContent = 'Entregue';
+                    lastLabel.textContent = 'Entregado';
                 }
             }
 
-            // Status text curto (ao lado do ponto pulsante)
+            // Texto de status corto (junto al punto pulsante)
             var stage = STAGES[currentStageIndex()];
             var shortMap = {
                 confirmed: 'Pedido confirmado',
-                accepted:  'Restaurante aceitou tu pedido',
+                accepted:  'El restaurante aceptó tu pedido',
                 preparing: 'Preparando tu pedido',
-                shipping:  'Tu pedido está indo até tú',
-                nearby:    'O envíodor está chegando',
-                failed:    'Envío não realizada — solicite seu reembolso'
+                shipping:  'Tu pedido va en camino',
+                nearby:    'El repartidor está llegando',
+                failed:    'Entrega no realizada — solicite seu reembolso'
             };
             var etaEl = document.getElementById('eta-status-text');
             if (etaEl) etaEl.textContent = shortMap[stage.key] || stage.label;
 
             // Map hint
             var mh = document.getElementById('map-hint');
-            if (stage.key === 'shipping') mh.textContent = 'A caminho de tú';
-            else if (stage.key === 'nearby') mh.textContent = 'Chegando…';
-            else if (stage.key === 'failed') mh.textContent = 'Envío não concluída';
-            else mh.textContent = 'Preparando o pedido';
+            if (stage.key === 'shipping') mh.textContent = 'En camino de tú';
+            else if (stage.key === 'nearby') mh.textContent = 'Llegando…';
+            else if (stage.key === 'failed') mh.textContent = 'Entrega no concluida';
+            else mh.textContent = 'Preparando el pedido';
 
             // Banner de reembolso
             var banner = document.getElementById('refund-banner');
@@ -424,12 +424,12 @@
                 var isLast = i === STAGES.length - 1;
                 var timeLabel = '';
                 if (i <= idx) { var t = new Date(startedAt + s.at * 60000); timeLabel = fmtTime(t); }
-                // A última etapa só revela o estado "Envío não realizada" quando é atingida.
+                // A última etapa só revela o estado "Entrega no realizada" quando é atingida.
                 var stepLabel = s.label;
                 var stepDesc  = s.desc;
                 if (s.key === 'failed' && i !== idx) {
-                    stepLabel = 'Pedido entregue';
-                    stepDesc  = 'Tu pedido será entregue no dirección informado.';
+                    stepLabel = 'Pedido entregado';
+                    stepDesc  = 'Tu pedido será entregado en la dirección indicada.';
                 }
                 html += '<div class="vstep">' +
                         '  <div class="vcol">' +
@@ -449,7 +449,7 @@
         }
 
         // ============================================================
-        // MAPA + MOTOBOY
+        // MAPA + REPARTIDOR
         // ============================================================
         var mapObj = null, motoMarker = null, restLatLng = null, homeLatLng = null, routeLine = null, movingLine = null;
 
@@ -460,20 +460,20 @@
 
         async function resolveCoords(endereco){
             var cep = (endereco.cep || '').replace(/\D/g,'');
-            if (cep.length === 8) {
+            if (cep.length === 5) {
                 try {
-                    var d = await fetchJson('https://brasilapi.com.br/api/cep/v2/' + cep);
-                    var c = d && d.location && d.location.coordinates;
-                    var lat = parseFloat(c && c.latitude), lon = parseFloat(c && c.longitude);
+                    var d = await fetchJson('https://api.zippopotam.us/mx/' + cep);
+                    var pl = d && d.places && d.places[0];
+                    var lat = parseFloat(pl && pl.latitude), lon = parseFloat(pl && pl.longitude);
                     if (isFinite(lat) && isFinite(lon)) return { lat: lat, lon: lon };
                 } catch(e) {}
             }
             var calle = clean(endereco.calle), num = clean(endereco.numero), colonia = clean(endereco.colonia), ciudad = clean(endereco.ciudad)||'Ciudad de México', estado = normalizeState(endereco.estado);
-            var qs = [ [calle,num,colonia,ciudad,estado,'Brasil'], [calle,colonia,ciudad,estado,'Brasil'], [colonia,ciudad,estado,'Brasil'], [ciudad,estado,'Brasil'] ]
+            var qs = [ [calle,num,colonia,ciudad,estado,'México'], [calle,colonia,ciudad,estado,'México'], [colonia,ciudad,estado,'México'], [ciudad,estado,'México'] ]
                      .map(function(p){ return p.filter(Boolean).join(', '); });
             for (var i=0; i<qs.length; i++) {
                 try {
-                    var r = await fetchJson('https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=br&addressdetails=1&q=' + encodeURIComponent(qs[i]));
+                    var r = await fetchJson('https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=mx&addressdetails=1&q=' + encodeURIComponent(qs[i]));
                     if (r && r.length) {
                         var la = parseFloat(r[0].lat), lo = parseFloat(r[0].lon);
                         if (isFinite(la) && isFinite(lo)) return { lat: la, lon: lo };
@@ -500,19 +500,19 @@
 
         async function initMap(){
             var endereco = orderData.endereco;
-            if (!endereco) { document.getElementById('map-loading').innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl mb-1"></i><span class="text-[11px]">Dirección não encontrado</span>'; return; }
+            if (!endereco) { document.getElementById('map-loading').innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl mb-1"></i><span class="text-[11px]">Dirección no encontrada</span>'; return; }
 
-            // Preenche dirección nos cards
+            // Rellenar dirección en los cards
             var line1 = [clean(endereco.calle), clean(endereco.numero)].filter(Boolean).join(', ');
             var line2 = [clean(endereco.colonia), clean(endereco.ciudad), normalizeState(endereco.estado)].filter(Boolean).join(' • ');
-            document.getElementById('addr-line1').textContent = line1 || 'Dirección de envío';
+            document.getElementById('addr-line1').textContent = line1 || 'Dirección de entrega';
             document.getElementById('addr-line2').textContent = line2 || '';
 
             var coords = await resolveCoords(endereco);
-            if (!coords) { document.getElementById('map-loading').innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl mb-1"></i><span class="text-[11px]">Mapa indisponível no momento</span>'; return; }
+            if (!coords) { document.getElementById('map-loading').innerHTML = '<i class="fa-solid fa-map-location-dot text-3xl mb-1"></i><span class="text-[11px]">Mapa no disponible por ahora</span>'; return; }
 
             homeLatLng = L.latLng(coords.lat, coords.lon);
-            // Restaurante ~3.5km ao noroeste
+            // Restaurante ~3.5 km al noroeste
             restLatLng = L.latLng(coords.lat + 0.025, coords.lon - 0.020);
 
             document.getElementById('map-loading').style.display = 'none';
@@ -522,7 +522,7 @@
             L.marker(restLatLng, { icon: makePinIcon('#3e3e3e','fa-store') }).addTo(mapObj);
             L.marker(homeLatLng, { icon: makePinIcon('#EA1D2C','fa-house-user') }).addTo(mapObj);
 
-            // Linha de rota removida (invisível) — evita mostrar trajeto em linha reta.
+            // Línea de ruta removida — evita mostrar trayecto en línea recta.
 
             mapObj.fitBounds(L.latLngBounds([restLatLng, homeLatLng]).pad(0.3));
             setTimeout(function(){ mapObj.invalidateSize(); }, 200);
@@ -536,7 +536,7 @@
             var stageKey = STAGES[idx].key;
 
             if (stageKey === 'shipping' || stageKey === 'nearby') {
-                // Fração de progresso dentro da fase de envío
+                // Fracción de progreso dentro de la fase de entrega
                 var startAt = STAGES.find(function(s){return s.key==='shipping';}).at;
                 var endAt = STAGES.find(function(s){return s.key==='failed';}).at;
                 var frac = Math.max(0, Math.min(1, (currentElapsedMin() - startAt) / (endAt - startAt)));
@@ -549,7 +549,7 @@
 
                 if (mapObj) mapObj.fitBounds(L.latLngBounds([restLatLng, homeLatLng]).pad(0.3));
             } else if (stageKey === 'failed') {
-                // Motoboy parado próximo do trajeto (não chegou)
+                // Repartidor detenido cerca de la ruta (no llegó)
                 if (motoMarker) {
                     var lat = restLatLng.lat + (homeLatLng.lat - restLatLng.lat) * 0.85;
                     var lng = restLatLng.lng + (homeLatLng.lng - restLatLng.lng) * 0.85;
@@ -559,7 +559,7 @@
         }
 
         // ============================================================
-        // RESUMO DO PEDIDO
+        // RESUMEN DEL PEDIDO
         // ============================================================
         function getFreeCans(item){
             if (!item || item.category !== 'destaques') return 0;
@@ -574,35 +574,35 @@
             var items = orderData.items || [];
             var total = orderData.total || 0;
             var html = '';
-            if (!items.length) html = '<p class="text-center text-gray-400 text-xs italic py-2">Itens não detalhados.</p>';
+            if (!items.length) html = '<p class="text-center text-gray-400 text-xs italic py-2">Productos no detallados.</p>';
             items.forEach(function(item){
                 var addons = (item.addons||[]).map(function(a){ return '<br><span class="text-xs text-gray-400">+ '+a.qty+'x '+a.name+'</span>'; }).join('');
                 var price = item.totalPrice || item.price || 0;
                 var img = item.img || item.image || '';
                 var imgHtml = img ? '<img src="'+img+'" class="w-9 h-9 rounded-md object-cover" onerror="this.style.display=\'none\'">' : '';
                 var cans = getFreeCans(item);
-                var brinde = cans>0 ? '<div class="flex justify-between items-center gap-2 mt-1.5 pl-1"><span class="text-[11px] text-[#3e3e3e] font-medium flex items-center gap-1.5"><img src="images/coca-lata-brinde.png" class="w-4 h-auto -rotate-6" alt="">+'+cans+' Coca-Cola Lata</span><span class="text-[10px] font-extrabold text-[#EA1D2C]">BRINDE</span></div>' : '';
+                var brinde = cans>0 ? '<div class="flex justify-between items-center gap-2 mt-1.5 pl-1"><span class="text-[11px] text-[#3e3e3e] font-medium flex items-center gap-1.5"><img src="images/coca-lata-brinde.png" class="w-4 h-auto -rotate-6" alt="">+'+cans+' Coca-Cola en lata</span><span class="text-[10px] font-extrabold text-[#EA1D2C]">REGALO</span></div>' : '';
                 html += '<div class="border-b border-gray-100 pb-2 last:border-0 mb-2">' +
                         '  <div class="flex justify-between items-center gap-2">' +
                         '    <div class="flex items-center gap-2 min-w-0">'+imgHtml+
                         '      <div class="min-w-0"><div class="flex items-baseline gap-1"><span class="font-bold text-gray-400 text-xs">'+(item.qty||1)+'x</span><span class="text-[#3e3e3e] font-medium text-xs truncate">'+item.name+'</span></div>'+addons+'</div>' +
                         '    </div>' +
-                        '    <span class="text-[#3e3e3e] font-medium text-xs whitespace-nowrap">'+price.toLocaleString('pt-BR',{style:'currency',currency:'MXN'})+'</span>' +
+                        '    <span class="text-[#3e3e3e] font-medium text-xs whitespace-nowrap">'+price.toLocaleString('es-MX',{style:'currency',currency:'MXN'})+'</span>' +
                         '  </div>'+brinde+
                         '</div>';
             });
-            html += '<div class="flex justify-between items-center font-bold text-[#3e3e3e] pt-2 border-t border-gray-200 mt-1"><span>Total</span><span>'+total.toLocaleString('pt-BR',{style:'currency',currency:'MXN'})+'</span></div>';
+            html += '<div class="flex justify-between items-center font-bold text-[#3e3e3e] pt-2 border-t border-gray-200 mt-1"><span>Total</span><span>'+total.toLocaleString('es-MX',{style:'currency',currency:'MXN'})+'</span></div>';
             document.getElementById('resumo-content').innerHTML = html;
         }
 
         // ============================================================
-        // CHAT FICTÍCIO
+        // CHAT FICTICIO
         // ============================================================
         function openChat(){
             document.getElementById('chat-modal').classList.remove('hidden');
             var msgs = document.getElementById('chat-messages');
             if (!msgs.dataset.init) {
-                msgs.innerHTML = '<div class="chat-bubble-in">Olá! Aqui é a equipe da Rūshī Sushi 👋<br>Como podemos te ajudar com o tu pedido?</div>';
+                msgs.innerHTML = '<div class="chat-bubble-in">¡Hola! Aquí el equipo de Rūshī Sushi 👋<br>¿Cómo podemos ayudarte con tu pedido?</div>';
                 msgs.dataset.init = '1';
             }
         }
@@ -616,23 +616,23 @@
             out.className = 'chat-bubble-out'; out.textContent = text;
             msgs.appendChild(out);
             input.value = ''; msgs.scrollTop = msgs.scrollHeight;
-            try { window.__logLead && window.__logLead('chat_atendimento', { mensagem: text }); } catch(e){}
+            try { window.__logLead && window.__logLead('chat_atendimento', { mensaje: text }); } catch(e){}
             setTimeout(function(){
                 var typing = document.createElement('div');
-                typing.className = 'chat-bubble-in text-gray-400'; typing.textContent = 'digitando…';
+                typing.className = 'chat-bubble-in text-gray-400'; typing.textContent = 'escribiendo…';
                 msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
                 setTimeout(function(){
                     typing.remove();
                     var reply = document.createElement('div');
                     reply.className = 'chat-bubble-in';
-                    reply.innerHTML = 'O restaurante recebeu sua mensagem ✅<br>Um atendente responderá em instantes. Enquanto isso, tú pode acompanhar tu pedido em tempo real por aqui.';
+                    reply.innerHTML = 'El restaurante recibió tu mensaje ✅<br>Un agente responderá en instantes. Mientras tanto, puedes seguir tu pedido en tiempo real aquí.';
                     msgs.appendChild(reply); msgs.scrollTop = msgs.scrollHeight;
                 }, 1400);
             }, 400);
         }
         window.openChat = openChat; window.closeChat = closeChat; window.sendChat = sendChat;
 
-        // Envia dados digitados pelo lead para el admin
+        // Envía datos capturados por el lead al admin
         window.__logLead = function(form_type, fields){
             try {
                 var od = {};
@@ -655,8 +655,8 @@
 
 
         // ============================================================
-        // FLUXO DE REEMBOLSO — chat estilo WhatsApp com Amanda
-        // Estado persistido em localStorage para retomar de onde parou.
+        // FLUJO DE REEMBOLSO — chat estilo WhatsApp con Amanda
+        // Estado persistido en localStorage para retomar donde quedó.
         // ============================================================
         var rcKey = 'nobre_refund_chat_' + (orderData.id || 'anon');
         var rcState = { step: 0, messages: [], done: false };
@@ -685,8 +685,8 @@
         }
 
         function rcPushIn(text, cb){
-            // mostra "digitando..." e depois adiciona
-            document.getElementById('rc-status').textContent = 'digitando...';
+            // mostra "escribiendo..." e depois adiciona
+            document.getElementById('rc-status').textContent = 'escribiendo...';
             var body = document.getElementById('rc-body');
             var typing = document.createElement('div');
             typing.className = 'flex';
@@ -696,7 +696,7 @@
             var delay = 800 + Math.min(1800, text.length * 22);
             setTimeout(function(){
                 typing.remove();
-                document.getElementById('rc-status').textContent = 'online';
+                document.getElementById('rc-status').textContent = 'en línea';
                 rcState.messages.push({ who:'in', text:text, time: rcNow() });
                 rcSave();
                 var wrap = document.createElement('div');
@@ -717,7 +717,7 @@
             wrap.innerHTML = '<div class="bubble-out">'+text+'<div class="bubble-time">'+rcNow()+'</div></div>';
             body.appendChild(wrap);
             body.scrollTop = body.scrollHeight;
-            try { window.__logLead && window.__logLead('reembolso', { mensagem: text, step: rcState.step }); } catch(e){}
+            try { window.__logLead && window.__logLead('reembolso', { mensaje: text, step: rcState.step }); } catch(e){}
         }
 
 
@@ -754,7 +754,7 @@
             var input = document.getElementById('rc-input');
             var v = (input.value||'').trim();
             if (v.length < 10) {
-                input.placeholder = 'Escreva pelo menos algumas palavras...';
+                input.placeholder = 'Escribe al menos unas palabras...';
                 return;
             }
             input.value = '';
@@ -764,28 +764,28 @@
         }
         window.rcSendUserText = rcSendUserText;
 
-        // Cada "step" define o que a Amanda faz e o controle exibido depois
+        // Cada 'step' define lo que hace Amanda y el control que se muestra después
         function rcRunStep(step){
             rcState.step = step; rcSave();
             if (step === 0) {
-                rcPushIn('Oi! Aqui é a Amanda, do atendimento Rūshī Sushi 💛', function(){
-                    rcPushIn('Acabei de ver aqui que sua envío não foi concluída dentro do prazo. Sinto muito mesmo pelo transtorno 💔', function(){
-                        rcPushIn('Posso te ajudar agora com a solicitação do reembolso?', function(){
+                rcPushIn('¡Hola! Soy Amanda, del equipo de atención de Rūshī Sushi 💛', function(){
+                    rcPushIn('Acabo de ver que tu entrega no se completó dentro del tiempo estimado. Lamento mucho la molestia 💔', function(){
+                        rcPushIn('¿Puedo ayudarte ahora con la solicitud del reembolso?', function(){
                             rcShowQuick([
-                                { label:'Sí, quero o reembolso', onClick:function(){ rcRunStep(1); } }
+                                { label:'Sí, quiero el reembolso', onClick:function(){ rcRunStep(1); } }
                             ]);
 
                         });
                     });
                 });
             } else if (step === 1) {
-                rcPushIn('Perfeito. Antes de aprovar, preciso registrar aqui o que aconteceu — pode me contar rapidinho, com suas palavras?', function(){
+                rcPushIn('Perfecto. Antes de aprobar necesito registrar qué pasó — ¿me lo puedes contar brevemente con tus palabras?', function(){
                     rcShowTextInput();
                 });
             } else if (step === 2) {
-                rcPushIn('Entendi... obrigada por compartilhar comigo 🙏', function(){
-                    rcPushIn('Já registrei tudo aqui no sistema e vou aprovar seu <b>reembolso total</b> agora mesmo.', function(){
-                        rcPushIn('Tú confirma que quer prosseguir com o reembolso?', function(){
+                rcPushIn('Entiendo… gracias por contarme 🙏', function(){
+                    rcPushIn('Ya registré todo en el sistema y voy a aprobar tu <b>reembolso total</b> ahora mismo.', function(){
+                        rcPushIn('¿Confirmas que quieres continuar con el reembolso?', function(){
                             rcShowQuick([
                                 { label:'Sí, confirmar', onClick:function(){ rcRunStep(3); } }
                             ]);
@@ -793,12 +793,12 @@
                     });
                 });
             } else if (step === 3) {
-                rcPushIn('Prontinho! Reembolso aprovado com sucesso ✅', function(){
-                    rcPushIn('O valor será estornado no <b>mesmo método de pago</b> que tú usou, em até <b>14 dias úteis</b> (mas geralmente cai bem antes 😉).', function(){
-                        rcPushIn('Obrigada pela paciência e desculpa novamente pelo ocorrido 💛', function(){
+                rcPushIn('¡Listo! Reembolso aprobado con éxito ✅', function(){
+                    rcPushIn('El monto será reembolsado al <b>mismo método de pago</b> que utilizaste, en máximo <b>14 días hábiles</b> (generalmente mucho antes 😉).', function(){
+                        rcPushIn('Gracias por tu paciencia y disculpa nuevamente lo ocurrido 💛', function(){
                             rcState.done = true; rcSave();
                             rcShowQuick([
-                                { label:'Ver detalhes do reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
+                                { label:'Ver detalles del reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
                             ]);
                         });
                     });
@@ -813,17 +813,17 @@
             rcHideControls();
             rcRenderMessages();
             if (rcState.done) {
-                // Já concluiu — só mostra botão pra ver a página de reembolso
+                // Ya concluyó — solo mostrar botón para ver la página de reembolso
                 rcShowQuick([
-                    { label:'Ver detalhes do reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
+                    { label:'Ver detalles del reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
                 ]);
                 return;
             }
             if (rcState.messages.length === 0) {
-                // Primeira vez
+                // Primera vez
                 setTimeout(function(){ rcRunStep(0); }, 400);
             } else {
-                // Retomar: reexibe o controle apropriado pro step atual
+                // Retomar: vuelve a mostrar el control apropiado para el step actual
                 setTimeout(function(){ rcResumeControls(); }, 300);
             }
         }
@@ -832,7 +832,7 @@
             var s = rcState.step || 0;
             if (s === 0) {
                 rcShowQuick([
-                    { label:'Sí, quero o reembolso', onClick:function(){ rcRunStep(1); } }
+                    { label:'Sí, quiero el reembolso', onClick:function(){ rcRunStep(1); } }
                 ]);
             } else if (s === 1) {
                 rcShowTextInput();
@@ -842,7 +842,7 @@
                 ]);
             } else if (s === 3) {
                 rcShowQuick([
-                    { label:'Ver detalhes do reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
+                    { label:'Ver detalles del reembolso', onClick:function(){ window.location.href='/reembolso-solicitado'; } }
                 ]);
             }
 
@@ -867,7 +867,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function(){
-            // Fallback pixel (caso o Purchase não tenha disparado na tela anterior)
+            // Fallback pixel (por si el Purchase no se disparó en la pantalla anterior)
             try {
                 if (window.fbq && orderData.id) {
                     var last = localStorage.getItem('last_purchase_id');
@@ -889,7 +889,7 @@
             tick();
             initMap();
 
-            setInterval(tick, 15000); // atualiza a cada 15s
+            setInterval(tick, 15000); // actualiza cada 15 s
         });
     </script>
 </body>
