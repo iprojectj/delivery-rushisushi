@@ -615,7 +615,6 @@ function LeadsList() {
               );
             })
           )}
-          )}
       </section>
       </main>
 
