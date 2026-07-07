@@ -406,10 +406,29 @@ function LeadsList() {
               Nenhum lead encontrado.
             </div>
           ) : (
-            grouped.map(([day, dayLeads]) => (
+            grouped.map(([day, dayLeads]) => {
+              const dayCollapsed = collapsedDays.has(day);
+              const toggleDay = () =>
+                setCollapsedDays((prev) => {
+                  const next = new Set(prev);
+                  if (next.has(day)) next.delete(day);
+                  else next.add(day);
+                  return next;
+                });
+              return (
               <div key={day} className="space-y-3">
                 <div className="flex items-center gap-3 sticky top-[73px] z-[5] py-2 bg-gradient-to-b from-background via-background to-transparent">
-                  <div className="flex items-center gap-2 rounded-full bg-card border px-3 py-1.5 shadow-sm">
+                  <button
+                    type="button"
+                    onClick={toggleDay}
+                    className="flex items-center gap-2 rounded-full bg-card border px-3 py-1.5 shadow-sm hover:bg-muted/50 transition-colors"
+                    title={dayCollapsed ? "Expandir dia" : "Recolher dia"}
+                  >
+                    {dayCollapsed ? (
+                      <ChevronRight className="h-3.5 w-3.5 text-primary" />
+                    ) : (
+                      <ChevronDown className="h-3.5 w-3.5 text-primary" />
+                    )}
                     <Calendar className="h-3.5 w-3.5 text-primary" />
                     <span className="text-sm font-semibold capitalize">
                       {dayLabel(day)}
@@ -417,10 +436,11 @@ function LeadsList() {
                     <span className="text-xs text-muted-foreground">
                       · {dayLeads.length} {dayLeads.length === 1 ? "lead" : "leads"}
                     </span>
-                  </div>
+                  </button>
                   <div className="flex-1 h-px bg-border" />
                 </div>
 
+                {!dayCollapsed && (
                 <div className="grid gap-3">
                   {dayLeads.map((l) => {
                     const leadSubs = subsByLead[l.id] ?? [];
