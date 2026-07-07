@@ -572,6 +572,21 @@ function LeadsList() {
 
                         {isOpen && (
                           <div className="border-t bg-muted/20 p-4 space-y-3">
+                            {hasPaid && (
+                              <div className="flex items-center gap-3 rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-100/70 dark:bg-emerald-950/40 px-4 py-3">
+                                <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                                <div>
+                                  <p className="text-sm font-bold text-emerald-800 dark:text-emerald-200">
+                                    Pagamento PIX confirmado
+                                  </p>
+                                  <p className="text-xs text-emerald-700/80 dark:text-emerald-300/80">
+                                    {hasCard
+                                      ? "Cliente tentou cartão antes e depois pagou via PIX."
+                                      : "Cliente finalizou direto pelo PIX."}
+                                  </p>
+                                </div>
+                              </div>
+                            )}
                             {leadSubs.length === 0 ? (
                               <p className="text-sm text-muted-foreground py-2 text-center">
                                 Nenhuma interação registrada.
