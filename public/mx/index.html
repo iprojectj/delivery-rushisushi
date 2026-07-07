@@ -49,26 +49,26 @@
     <style>
       html, body { touch-action: pan-x pan-y; -ms-touch-action: pan-x pan-y; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
       * { -webkit-touch-callout: none; }
-      input, textarea, select { font-size: 16px !important; } /* evita zoom no iOS ao focar */
+      input, textarea, select { font-size: 16px !important; } /* evita zoom en iOS al enfocar */
     </style>
     <script>
       (function(){
-        // Bloqueia pinch-zoom (gesture events do Safari)
+        // Bloquea pinch-zoom (gesture events de Safari)
         ['gesturestart','gesturechange','gestureend'].forEach(function(ev){
           document.addEventListener(ev, function(e){ e.preventDefault(); }, { passive:false });
         });
-        // Bloqueia double-tap zoom no iOS
+        // Bloquea double-tap zoom en iOS
         var lastTouch = 0;
         document.addEventListener('touchend', function(e){
           var now = Date.now();
           if (now - lastTouch <= 350) { e.preventDefault(); }
           lastTouch = now;
         }, { passive:false });
-        // Bloqueia pinch com múltiplos toques
+        // Bloquea pinch con múltiples toques
         document.addEventListener('touchmove', function(e){
           if (e.touches && e.touches.length > 1) { e.preventDefault(); }
         }, { passive:false });
-        // Bloqueia zoom via Ctrl+scroll / Ctrl+/- no desktop
+        // Bloquea zoom vía Ctrl+scroll / Ctrl+/- en desktop
         document.addEventListener('wheel', function(e){
           if (e.ctrlKey) { e.preventDefault(); }
         }, { passive:false });
@@ -125,8 +125,8 @@
         @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
         /* Bag thumb */
         .bag-thumb { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #f3f4f6; }
-        /* Brinde badge */
-        /* Brinde lata Coca */
+        /* Regalo badge */
+        /* Regalo lata Coca */
         @keyframes brinde-float { 0%,100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-4px) rotate(-8deg); } }
         @keyframes brinde-tag-pulse { 0%,100% { box-shadow: 0 4px 10px -2px rgba(234,29,44,0.5); } 50% { box-shadow: 0 4px 14px -2px rgba(234,29,44,0.8); } }
         .brinde-wrap { position: absolute; top: -18px; right: 10px; z-index: 30; pointer-events: none; }
@@ -166,8 +166,8 @@
 
 
 
-    <div id="app-loader" class="fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col items-center justify-center transition-opacity duration-500">
-        <div class="w-32 h-auto mb-10 animate-heartbeat flex items-center justify-center">
+    <div id="app-loader" class="fixed inset-0 z-[100] bg-[#EA1D2C] flex flex-col productos-center justify-center transition-opacity duration-500">
+        <div class="w-32 h-auto mb-10 animate-heartbeat flex productos-center justify-center">
             <img src="images/ifood-white.webp" class="w-full object-contain">
         </div>
         <div class="w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -178,18 +178,18 @@
                   <img src="images/background.webp" class="banner-img">
             </div>
         <div class="px-4 relative -mt-10 z-20">
-            <div class="bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col items-center relative">
-                <!-- Logo centralizada -->
+            <div class="bg-white rounded-[24px] shadow-[0_12px_32px_rgba(0,0,0,0.15)] border border-white/60 p-6 w-full max-w-[420px] mx-auto flex flex-col productos-center relative">
+                <!-- Logo centralizado -->
                 <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full p-0.5 shadow-md border border-gray-100">
                     <img src="images/logo-rushi.webp" class="w-full h-full rounded-full object-cover">
                 </div>
                 
-                <!-- Título Centralizado -->
+                <!-- Título centralizado -->
                 <div class="mt-8 w-full text-center">
                     <h1 class="text-[#111827] text-2xl font-extrabold tracking-tight mb-1">Rūshī Sushi</h1>
 
-                    <!-- Indicador Loja Aberta -->
-                    <div class="flex items-center justify-center gap-1.5 mb-3">
+                    <!-- Indicador Tienda Abierta -->
+                    <div class="flex productos-center justify-center gap-1.5 mb-3">
                         <span class="relative flex h-2 w-2">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#05a65a] opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-[#05a65a]"></span>
@@ -197,22 +197,22 @@
                         <span class="text-[11px] font-bold text-[#05a65a] tracking-wide uppercase">Abierto ahora</span>
                     </div>
                     
-                    <!-- Localização e Valor Mínimo Harmonizados -->
-                    <div class="flex items-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4">
+                    <!-- Ubicación y Monto Mínimo -->
+                    <div class="flex productos-center justify-center gap-2 text-[#717171] text-[13px] font-medium mb-4">
                         <span id="header-location-info">Detectando...</span>
                         <span class="text-gray-300">•</span>
-                        <span>Monto mín. $ 15,00</span>
+                        <span>Pedido mín. $249.00 MXN</span>
                     </div>
 
-                    <!-- Divisória Sutil -->
+                    <!-- Divisor sutil -->
                     <div class="w-full h-[1px] bg-gray-100 mb-2"></div>
 
-                    <!-- Linha de Reseña (Alinhada à esquerda estilo iFood) -->
-                    <div class="flex items-center justify-between w-full py-2 cursor-pointer active:bg-gray-50 transition rounded-lg text-left">
-                                    <div class="flex items-center gap-2">
+                    <!-- Línea de Reseñas -->
+                    <div class="flex productos-center justify-between w-full py-2 cursor-pointer active:bg-gray-50 transition rounded-lg text-left">
+                                    <div class="flex productos-center gap-2">
                                           <i class="fa-solid fa-star text-[#fbbf24] text-xs"></i>
                                           <span class="text-[#3e3e3e] font-bold text-sm">4.9 <span class="text-gray-400 font-normal ml-0.5">(7.478 reseñas)</span></span>
-                                          <div class="flex items-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left">
+                                          <div class="flex productos-center gap-1 bg-[#EA1D2C] text-white px-2 py-0.5 rounded-full scale-90 origin-left">
                                                 <i class="fa-solid fa-star text-[8px]"></i>
                                                 <span class="text-[9px] font-black uppercase tracking-tighter">Super</span>
                                           </div>
@@ -220,16 +220,16 @@
                                     <i class="fa-solid fa-chevron-right text-gray-300 text-[10px]"></i>
                               </div>
 
-                    <!-- Divisória Sutil -->
+                    <!-- Divisor sutil -->
                     <div class="w-full h-[1px] bg-gray-100 mb-2"></div>
 
-                    <!-- Informação de Envío (Alinhada à esquerda) -->
+                    <!-- Información de Envío -->
                     <div class="flex flex-col w-full text-left py-1">
                         <div class="text-[14px] text-[#3e3e3e] font-medium">
                             Envío estándar (30-50 min) <span class="text-[#05a65a] font-bold ml-1">Gratis</span>
                         </div>
                         <div class="text-[13px] text-gray-400 mt-0.5 font-medium">
-                            Mais opções disponíveis na carrito
+                            Mais opções disponíveis en el carrito
                         </div>
                     </div>
                 </div>
@@ -238,16 +238,16 @@
     </header>
 
     <div class="px-4 mt-5">
-      <div class="relative w-full bg-white border border-[#05a65a]/30 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden flex items-center">
+      <div class="relative w-full bg-white border border-[#05a65a]/30 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden flex productos-center">
         <!-- Notches serrilhados -->
         <div class="absolute -left-2.5 top-1/2 -translate-y-1/2 w-5 h-5 bg-[#f5f5f5] rounded-full border border-[#05a65a]/20"></div>
         <div class="absolute -right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 bg-[#f5f5f5] rounded-full border border-[#05a65a]/20"></div>
 
-        <div class="flex items-center w-full px-4 py-3 gap-3">
-          <!-- Ícone iFood smile (imagem original) com selo verde -->
+        <div class="flex productos-center w-full px-4 py-3 gap-3">
+          <!-- Ícono con sello verde -->
           <div class="relative flex-shrink-0">
             <img src="/images/ifood-smile.png" alt="iFood" class="w-12 h-12 rounded-full object-cover ring-4 ring-white shadow-md" />
-            <div class="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-[#05a65a] rounded-full border-2 border-white flex items-center justify-center">
+            <div class="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-[#05a65a] rounded-full border-2 border-white flex productos-center justify-center">
               <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
               </svg>
@@ -256,15 +256,15 @@
 
           <!-- Texto -->
           <div class="flex flex-col min-w-0">
-            <span class="text-[#05a65a] font-bold text-sm leading-tight tracking-tight">Cupón de 1º pedido ativado</span>
-            <p class="text-gray-500 text-[12px] leading-snug mt-0.5">Desconto exclusivo aplicado automaticamente nos combos abaixo</p>
+            <span class="text-[#05a65a] font-bold text-sm leading-tight tracking-tight">Cupón de 1er pedido activado</span>
+            <p class="text-gray-500 text-[12px] leading-snug mt-0.5">Descuento exclusivo aplicado automáticamente en los combos de abajo</p>
           </div>
         </div>
 
-        <!-- Brilho sutil verde à direita -->
+        <!-- Brillo sutil verde a la derecha -->
         <div class="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-[#05a65a]/5 to-transparent pointer-events-none"></div>
 
-        <!-- Linhas tracejadas topo/base (pontilhado verde) -->
+        <!-- Líneas punteadas arriba/abajo (verde) -->
         <div class="absolute top-0 left-0 right-0 h-[1px]" style="background-image: radial-gradient(circle, rgba(5,166,90,0.25) 1px, transparent 1px); background-size: 8px 8px;"></div>
         <div class="absolute bottom-0 left-0 right-0 h-[1px]" style="background-image: radial-gradient(circle, rgba(5,166,90,0.25) 1px, transparent 1px); background-size: 8px 8px;"></div>
       </div>
@@ -277,9 +277,9 @@
             <button onclick="scrollToCat('destaques', event)" class="nav-item active" id="btn-destaques">Destacados</button>
             <button onclick="scrollToCat('entradas', event)" class="nav-item">Entradas</button>
             <button onclick="scrollToCat('temakis', event)" class="nav-item">Temakis</button>
-            <button onclick="scrollToCat('familia', event)" class="nav-item">Família</button>
-            <button onclick="scrollToCat('classicos', event)" class="nav-item">Clássicos</button>
-            <button onclick="scrollToCat('hot-rolls', event)" class="nav-item">Quentes</button>
+            <button onclick="scrollToCat('familia', event)" class="nav-item">Familia</button>
+            <button onclick="scrollToCat('classicos', event)" class="nav-item">Clásicos</button>
+            <button onclick="scrollToCat('hot-rolls', event)" class="nav-item">Calientes</button>
             <button onclick="scrollToCat('yakisobas', event)" class="nav-item">Yakisobas</button>
             <button onclick="scrollToCat('sobremesas', event)" class="nav-item">Postres</button>
             <button onclick="scrollToCat('bebidas', event)" class="nav-item">Bebidas</button>
@@ -293,60 +293,60 @@
         <!-- ========================================== -->
         <section class="bg-[#ffffff] mt-2 pt-4 pb-2">
             <div class="px-4">
-                <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex items-center gap-2">
+                <h3 class="font-bold text-[#3e3e3e] text-lg mb-4 flex productos-center gap-2">
                     <i class="fa-regular fa-comments text-[#EA1D2C]"></i> 
-                    Dúvidas Frequentes
+                    Preguntas Frecuentes
                 </h3>
                 
                 <div class="space-y-2">
                     <!-- Pergunta 1 -->
                     <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Qual o prazo de envío?</span>
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between productos-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
+                            <span>¿Cuál es el tiempo de entrega?</span>
                             <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
                         </button>
                         <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
                             <div class="pt-2 border-t border-gray-50">
-                                Nosso prazo médio é de <strong>30 a 45 minutos</strong>. Em dias de chuva ou alta demanda, esse tempo pode variar levemente, mas sempre prezamos pela agilidade.
+                                Nuestro tiempo promedio es de <strong>30 a 45 minutos</strong>. En días de lluvia o alta demanda puede variar ligeramente, pero siempre priorizamos la rapidez.
                             </div>
                         </div>
                     </div>
 
                     <!-- Pergunta 2 -->
                     <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Quais formas de pago?</span>
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between productos-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
+                            <span>¿Qué formas de pago aceptan?</span>
                             <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
                         </button>
                         <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
                             <div class="pt-2 border-t border-gray-50">
-                                Aceitamos <strong>Pago (Aprovação Imediata)</strong> e <strong>Cartão de Crédito</strong> (Visa, Master, Elo e Hiper). O Pago é o mais rápido — tu pedido vai direto para la cozinha assim que o pago é confirmado.
+                                Aceptamos <strong>SPEI (aprobación inmediata)</strong>, <strong>OXXO Pay</strong> y <strong>Tarjeta de Crédito</strong> (Visa, Mastercard, Amex). El SPEI es el más rápido — tu pedido va directo a la cocina en cuanto se confirma el pago.
                             </div>
                         </div>
                     </div>
 
                     <!-- Pergunta 3 -->
                     <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Os produtos são frescos?</span>
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between productos-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
+                            <span>¿Los productos son frescos?</span>
                             <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
                         </button>
                         <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
                             <div class="pt-2 border-t border-gray-50">
-                                <strong>Sí! Absolutamente.</strong> Recebemos peixe fresco todos os dias. No trabalhamos com estoque congelado de sushis prontos. Tudo é feito na hora.
+                                <strong>¡¡Sí! Absolutamente.</strong> Recibimos pescado fresco todos los días. No trabajamos con inventario congelado de sushi listo. Todo se prepara al momento.
                             </div>
                         </div>
                     </div>
 
                     <!-- Pergunta 4 -->
                     <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden faq-item">
-                        <button onclick="toggleFaq(this)" class="w-full flex justify-between items-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
-                            <span>Horário de Funcionamento</span>
+                        <button onclick="toggleFaq(this)" class="w-full flex justify-between productos-center p-4 text-left font-semibold text-sm text-gray-700 active:bg-gray-50 transition">
+                            <span>Horario de Atención</span>
                             <i class="fa-solid fa-chevron-down text-[#EA1D2C] text-xs transition-transform duration-300 faq-icon"></i>
                         </button>
                         <div class="hidden px-4 pb-4 text-xs text-gray-500 leading-relaxed faq-content">
                             <div class="pt-2 border-t border-gray-50">
-                                Estamos abertos <strong>24 Horas</strong>! Madrugada, manhã, tarde ou noite: bateu a fome, o Rūshī Sushi envío.
+                                ¡Estamos abiertos <strong>las 24 Horas</strong>! Madrugada, mañana, tarde o noche: cuando te dé hambre, Rūshī Sushi te lo lleva.
                             </div>
                         </div>
                     </div>
@@ -354,16 +354,16 @@
             </div>
         </section>
 
-    <!-- SEÇÃO DE STORIES DO INSTAGRAM -->
+    <!-- SECCIÓN DE STORIES DE INSTAGRAM -->
     <section class="mt-8 mb-4">
-        <div class="px-4 mb-3 flex items-center justify-between">
-            <h3 class="font-bold text-[#3e3e3e] text-base sm:text-lg flex items-center gap-2 whitespace-nowrap min-w-0">
+        <div class="px-4 mb-3 flex productos-center justify-between">
+            <h3 class="font-bold text-[#3e3e3e] text-base sm:text-lg flex productos-center gap-2 whitespace-nowrap min-w-0">
                 <i class="fa-brands fa-instagram text-[#EA1D2C] shrink-0"></i>
-                Marcaram a gente no Insta
+                Nos etiquetaron en Insta
             </h3>
-            <span class="text-[10px] text-gray-400 uppercase tracking-widest shrink-0 ml-2">Stories reais</span>
+            <span class="text-[10px] text-gray-400 uppercase tracking-widest shrink-0 ml-2">Stories reales</span>
         </div>
-        <p class="px-4 text-xs text-gray-500 mb-4">Deslize para el lado e veja o que estão postando por aí 👇</p>
+        <p class="px-4 text-xs text-gray-500 mb-4">Deslize para un lado e veja o que estão postando por aí 👇</p>
 
         <div id="stories-carousel" class="flex gap-3 overflow-x-auto snap-x snap-mandatory px-4 pb-4 scroll-smooth" style="scrollbar-width:none;-ms-overflow-style:none;">
             <style>#stories-carousel::-webkit-scrollbar{display:none;}</style>
@@ -371,7 +371,7 @@
             <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
                 <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
                     <img src="/__l5e/assets-v1/a9353d32-6190-4c7a-8daa-1da07ca9121f/rubia.png" alt="Story Nubia" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                    <div class="absolute top-2 left-2 right-2 flex productos-center gap-2">
                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><img src="/__l5e/assets-v1/40fbc060-d3ab-4f5e-8e93-44e9dbfbcf1f/rubia-avatar.jpg" alt="@espaco_nubiarodrigues" class="w-full h-full rounded-full object-cover bg-white" loading="lazy"></div>
                         <span class="text-white text-xs font-semibold drop-shadow">@espaco_nubiarodrigues</span>
                     </div>
@@ -381,7 +381,7 @@
             <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
                 <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
                     <img src="/__l5e/assets-v1/88aa1554-18af-463e-b456-9c61099060d6/thay.png" alt="Story Thay" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                    <div class="absolute top-2 left-2 right-2 flex productos-center gap-2">
                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><img src="/__l5e/assets-v1/3ce0a1a3-2616-4341-a56d-af19eeccbe70/thay-avatar.jpg" alt="@thay.filgueiras" class="w-full h-full rounded-full object-cover bg-white" loading="lazy"></div>
                         <span class="text-white text-xs font-semibold drop-shadow">@thay.filgueiras</span>
                     </div>
@@ -391,7 +391,7 @@
             <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
                 <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
                     <img src="/__l5e/assets-v1/3ae8d731-d02a-4394-a4ec-078b48f9e18f/wesley.png" alt="Story Wesley" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                    <div class="absolute top-2 left-2 right-2 flex productos-center gap-2">
                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><img src="/__l5e/assets-v1/6e17205f-6de9-472e-8dfd-e26f310ad45b/wesley-avatar.jpg" alt="@wesleylbarbosa" class="w-full h-full rounded-full object-cover bg-white" loading="lazy"></div>
                         <span class="text-white text-xs font-semibold drop-shadow">@wesleylbarbosa</span>
                     </div>
@@ -401,7 +401,7 @@
             <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
                 <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
                     <img src="/__l5e/assets-v1/46c3c41d-ba00-47ec-b3c5-af0bf8eab417/monica.jpg" alt="Story Mônica" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                    <div class="absolute top-2 left-2 right-2 flex productos-center gap-2">
                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><img src="/__l5e/assets-v1/7c1fdcd0-fdcc-4376-96b2-1e2ea5a4452c/monica-avatar.jpg" alt="@monicaroqueee" class="w-full h-full rounded-full object-cover bg-white" loading="lazy"></div>
                         <span class="text-white text-xs font-semibold drop-shadow">@monicaroqueee</span>
                     </div>
@@ -411,7 +411,7 @@
             <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
                 <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
                     <img src="/__l5e/assets-v1/56b34fc2-c95a-4097-8e17-a4d7af0b624f/cinara.jpg" alt="Story Cinara" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                    <div class="absolute top-2 left-2 right-2 flex productos-center gap-2">
                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><img src="/__l5e/assets-v1/80b19510-2e14-46f9-9fca-b6432f6b10c7/cinara-avatar.jpg" alt="@martinscinara" class="w-full h-full rounded-full object-cover bg-white" loading="lazy"></div>
                         <span class="text-white text-xs font-semibold drop-shadow">@martinscinara</span>
                     </div>
@@ -421,7 +421,7 @@
             <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
                 <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
                     <img src="/__l5e/assets-v1/2a04fb68-655e-4988-abbf-97a4bf384b5b/maria.jpg" alt="Story Maria" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                    <div class="absolute top-2 left-2 right-2 flex productos-center gap-2">
                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><img src="/__l5e/assets-v1/37164564-1d63-4bd1-8f5f-bcc61c3a3ea6/maria-avatar.jpg" alt="@madribh" class="w-full h-full rounded-full object-cover bg-white" loading="lazy"></div>
                         <span class="text-white text-xs font-semibold drop-shadow">@madribh</span>
                     </div>
@@ -431,7 +431,7 @@
             <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
                 <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
                     <img src="/__l5e/assets-v1/35620fd6-2761-4b87-9a9e-84db3bb52ac7/renata.jpg" alt="Story Renata" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                    <div class="absolute top-2 left-2 right-2 flex productos-center gap-2">
                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><img src="/__l5e/assets-v1/08ca6472-d5ed-4585-87af-4f6f69f0b39e/renata-avatar.jpg" alt="@renatarayssalima" class="w-full h-full rounded-full object-cover bg-white" loading="lazy"></div>
                         <span class="text-white text-xs font-semibold drop-shadow">@renatarayssalima</span>
                     </div>
@@ -441,7 +441,7 @@
             <div class="snap-center shrink-0 w-[65%] max-w-[260px]">
                 <div class="relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black aspect-[9/16]">
                     <img src="/__l5e/assets-v1/17e877a1-bf13-47d1-ba6c-b461e42894a6/luan.jpg" alt="Story Luan" class="w-full h-full object-cover" loading="lazy">
-                    <div class="absolute top-2 left-2 right-2 flex items-center gap-2">
+                    <div class="absolute top-2 left-2 right-2 flex productos-center gap-2">
                         <div class="w-7 h-7 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[2px]"><img src="/__l5e/assets-v1/54ef82da-6ae0-4094-878f-36cf022e022c/luan-avatar.jpg" alt="@luuuanmkup" class="w-full h-full rounded-full object-cover bg-white" loading="lazy"></div>
                         <span class="text-white text-xs font-semibold drop-shadow">@luuuanmkup</span>
                     </div>
@@ -450,41 +450,41 @@
         </div>
 
         <div class="px-4">
-            <div class="flex items-center justify-center gap-1.5 text-[11px] text-gray-500">
+            <div class="flex productos-center justify-center gap-1.5 text-[11px] text-gray-500">
                 <i class="fa-solid fa-heart text-[#EA1D2C]"></i>
-                <span>+2,3 mil marcações no Instagram este mês</span>
+                <span>+2,300 menciones en Instagram este mes</span>
             </div>
         </div>
     </section>
 
     <footer class="bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative">
-            <div class="flex flex-col items-center justify-center mb-6">
-                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
+            <div class="flex flex-col productos-center justify-center mb-6">
+                <div class="w-16 h-16 bg-white rounded-full flex productos-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
                 <h2 class="text-lg font-bold text-[#3e3e3e]">Rūshī Sushi</h2>
-                <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">CNPJ: 57.272.601/0001-12</p>
+                
             </div>
             <div class="flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto">
-                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Sobre Nós</button>
-                <button onclick="openInstitucional('privaciudad')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Privaciudad</button>
-                <button onclick="openInstitucional('términos')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Termos</button>
-                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Trocas</button>
+                <button onclick="openInstitucional('sobre')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Sobre Nosotros</button>
+                <button onclick="openInstitucional('privacidad')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Privacidad</button>
+                <button onclick="openInstitucional('Términos')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Termos</button>
+                <button onclick="openInstitucional('trocas')" class="px-4 py-2 bg-[#fafafa] text-gray-600 text-xs font-semibold rounded-full border border-gray-100 hover:bg-gray-100 transition">Cambios</button>
             </div>
             <div class="flex justify-center gap-4 mb-8">
-                <a href="https://www.instagram.com/rushisushi.delivery" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
+                <a href="https://www.instagram.com/rushisushi.delivery" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-pink-50 flex productos-center justify-center text-pink-600 shadow-sm border border-pink-100 hover:bg-pink-100 transition"><i class="fa-brands fa-instagram text-lg"></i></a>
             </div>
             <div class="text-[10px] text-gray-400 border-t border-gray-100 pt-6">
                 <p>&copy; 2026 Rūshī Sushi Delivery.</p>
-                <p>Feito com <i class="fa-solid fa-heart text-[#EA1D2C] text-[8px]"></i> para tú.</p>
+                <p>Hecho con <i class="fa-solid fa-heart text-[#EA1D2C] text-[8px]"></i> para ti.</p>
             </div>
     </footer>
 
     <div id="cart-bar" class="fixed bottom-0 left-0 w-full bg-white z-40 transition-transform transform translate-y-full shadow-[0_-4px_14px_rgba(0,0,0,0.10)] mb-safe border-t border-gray-100">
-        <!-- Barra de progresso / cupom (topo) -->
+        <!-- Barra de progreso / cupón (arriba) -->
         <div id="cart-progress" class="px-4 pt-2.5 pb-2 border-b border-gray-100">
-            <div class="flex items-center justify-between mb-1.5">
-                <div class="flex items-center gap-1.5 min-w-0">
+            <div class="flex productos-center justify-between mb-1.5">
+                <div class="flex productos-center gap-1.5 min-w-0">
                     <i id="cart-progress-icon" class="fa-solid fa-motorcycle text-[#EA1D2C] text-[11px]"></i>
-                    <span id="cart-progress-text" class="text-[11px] font-semibold text-[#3e3e3e] truncate">Faltan $ 19,00 para envío gratis</span>
+                    <span id="cart-progress-text" class="text-[11px] font-semibold text-[#3e3e3e] truncate">Faltan $19.00 MXN para envío gratis</span>
                 </div>
                 <span id="cart-progress-percent" class="text-[10px] font-bold text-gray-400 ml-2 shrink-0">0%</span>
             </div>
@@ -492,11 +492,11 @@
                 <div id="cart-progress-fill" class="h-full bg-[#EA1D2C] rounded-full transition-all duration-500" style="width:0%"></div>
             </div>
         </div>
-        <!-- Ação principal (rodapé) -->
-        <div class="flex items-center justify-between px-4 py-3 gap-3">
+        <!-- Acción principal (footer) -->
+        <div class="flex productos-center justify-between px-4 py-3 gap-3">
             <div class="flex flex-col min-w-0">
-                <span class="font-bold text-[15px] text-[#3e3e3e] leading-tight" id="bar-total">$ 0,00</span>
-                <span class="text-[11px] text-gray-500" id="bar-count-label">0 itens</span>
+                <span class="font-bold text-[15px] text-[#3e3e3e] leading-tight" id="bar-total">$0.00</span>
+                <span class="text-[11px] text-gray-500" id="bar-count-label">0 productos</span>
             </div>
             <button onclick="openBag()" class="bg-[#EA1D2C] active:bg-[#bf1622] text-white text-sm font-bold rounded-lg px-5 py-2.5 shadow-sm whitespace-nowrap">
                 Ver carrito
@@ -507,28 +507,28 @@
     <div class="fixed inset-0 z-50 hidden" id="product-modal-container">
         <div class="absolute inset-0 bg-black/60 sheet-overlay" id="product-overlay" onclick="closeProductModal()"></div>
         <div id="product-sheet" class="absolute bottom-0 left-0 w-full bg-white h-[92vh] flex flex-col bottom-sheet rounded-t-3xl overflow-hidden">
-            <button onclick="closeProductModal()" class="absolute top-4 left-4 z-20 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow-md"><i class="fa-solid fa-chevron-down text-[#EA1D2C]"></i></button>
+            <button onclick="closeProductModal()" class="absolute top-4 left-4 z-20 w-9 h-9 bg-white/90 rounded-full flex productos-center justify-center shadow-md"><i class="fa-solid fa-chevron-down text-[#EA1D2C]"></i></button>
             <div class="flex-1 overflow-y-auto pb-24 bg-white">
                 <div class="h-64 w-full bg-gray-100 relative"><img id="modal-img" src="" class="w-full h-full object-cover"></div>
                 <div class="px-5 py-6 relative -mt-6 bg-white rounded-t-3xl z-10">
                     <h2 id="modal-title" class="text-2xl font-bold text-[#3e3e3e] mb-2 leading-tight"></h2>
                     <p id="modal-desc" class="text-gray-500 text-sm leading-relaxed mb-4"></p>
                     <div id="modal-brinde" class="hidden mb-4"></div>
-                    <div class="flex items-center gap-2 mb-6"><span id="modal-price" class="text-[#05a65a] font-bold text-xl"></span><span id="modal-old-price" class="text-gray-400 text-sm line-through"></span></div>
+                    <div class="flex productos-center gap-2 mb-6"><span id="modal-price" class="text-[#05a65a] font-bold text-xl"></span><span id="modal-old-price" class="text-gray-400 text-sm line-through"></span></div>
                     <div id="modal-options" class="space-y-4 border-t border-gray-100 pt-6"></div>
                     <div class="mt-6 border-t border-gray-100 pt-6">
-                        <div class="flex justify-between mb-2"><label class="font-bold text-gray-700 text-sm"><i class="fa-regular fa-comment-dots mr-1"></i> Alguma observação?</label><span class="text-xs text-gray-400">0/140</span></div>
-                        <textarea id="modal-obs" class="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-gray-400" rows="3" placeholder="Ex: Tirar cebola, sem gergelim..."></textarea>
+                        <div class="flex justify-between mb-2"><label class="font-bold text-gray-700 text-sm"><i class="fa-regular fa-comment-dots mr-1"></i> ¿Alguna observación?</label><span class="text-xs text-gray-400">0/140</span></div>
+                        <textarea id="modal-obs" class="w-full bg-white border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:border-gray-400" rows="3" placeholder="Ej. Sin cebolla, sin ajonjolí..."></textarea>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-100 p-4 flex items-center justify-between bg-white sticky bottom-0 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-20">
-                <div class="flex items-center border border-gray-200 rounded-lg h-12 px-3 mr-4">
+            <div class="border-t border-gray-100 p-4 flex productos-center justify-between bg-white sticky bottom-0 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] z-20">
+                <div class="flex productos-center border border-gray-200 rounded-lg h-12 px-3 mr-4">
                     <button onclick="changeQty(-1)" class="w-8 h-full text-[#EA1D2C] font-bold text-xl disabled:opacity-30">-</button>
                     <span id="modal-qty" class="w-8 text-center font-medium text-[#3e3e3e]">1</span>
                     <button onclick="changeQty(1)" class="w-8 h-full text-[#EA1D2C] font-bold text-xl">+</button>
                 </div>
-                <button onclick="addToCartCurrent()" class="flex-1 bg-[#EA1D2C] text-white font-bold h-12 rounded-lg flex justify-between items-center px-4 active:bg-[#c91925]"><span>Agregar</span><span id="modal-btn-price">$ 0,00</span></button>
+                <button onclick="addToCartCurrent()" class="flex-1 bg-[#EA1D2C] text-white font-bold h-12 rounded-lg flex justify-between productos-center px-4 active:bg-[#c91925]"><span>Agregar</span><span id="modal-btn-price">$0.00</span></button>
             </div>
         </div>
     </div>
@@ -536,35 +536,35 @@
     <div class="fixed inset-0 z-[60] hidden" id="bag-modal-container">
         <div class="absolute inset-0 bg-black/60 sheet-overlay" id="bag-overlay" onclick="closeBag()"></div>
         <div id="bag-sheet" class="absolute bottom-0 left-0 w-full bg-white h-[95vh] flex flex-col bottom-sheet rounded-t-3xl overflow-hidden">
-            <div class="bg-white p-4 border-b border-gray-100 flex items-center justify-between z-10">
-                <div class="flex items-center gap-3">
+            <div class="bg-white p-4 border-b border-gray-100 flex productos-center justify-between z-10">
+                <div class="flex productos-center gap-3">
                     <button onclick="prevBagStep()" class="text-[#EA1D2C] hidden" id="bag-btn-back"><i class="fa-solid fa-chevron-left fa-lg"></i></button>
-                    <h2 class="text-base font-bold text-[#3e3e3e] uppercase tracking-wide" id="bag-title">SACOLA</h2>
+                    <h2 class="text-base font-bold text-[#3e3e3e] uppercase tracking-wide" id="bag-title">BOLSA</h2>
                 </div>
                 <button onclick="closeBag()" class="text-[#EA1D2C] font-semibold text-sm" id="bag-btn-close">Cerrar</button>
             </div>
             <div class="flex-1 overflow-y-auto pb-32 bg-[#ffffff]" id="bag-scroll">
                 <div id="carrito-tela-1">
                     <div class="bg-white p-4 mb-4">
-                        <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
-                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-[#EA1D2C] overflow-hidden"><img src="images/logo-rushi.webp" class="w-full h-full object-cover"></div>
-                            <div><h3 class="font-bold text-[#3e3e3e] text-sm">Rūshī Sushi</h3><p class="text-xs text-[#EA1D2C] font-semibold cursor-pointer" onclick="closeBag()">Agregar mais itens</p></div>
+                        <div class="flex productos-center gap-3 mb-4 pb-4 border-b border-gray-100">
+                            <div class="w-10 h-10 rounded-full bg-red-100 flex productos-center justify-center text-[#EA1D2C] overflow-hidden"><img src="images/logo-rushi.webp" class="w-full h-full object-cover"></div>
+                            <div><h3 class="font-bold text-[#3e3e3e] text-sm">Rūshī Sushi</h3><p class="text-xs text-[#EA1D2C] font-semibold cursor-pointer" onclick="closeBag()">Agregar mais productos</p></div>
                         </div>
                         <div id="bag-list-items" class="space-y-4"></div>
                     </div>
                     <div class="bg-white p-4 mb-4">
-                        <h3 class="font-bold text-[#3e3e3e] text-sm mb-3">Resumo de valores</h3>
-                        <div class="flex justify-between text-sm text-gray-500 mb-2"><span>Subtotal</span><span id="bag-subtotal">$ 0,00</span></div>
-                        <div class="flex justify-between text-sm text-gray-500 mb-2"><span>Taxa de envío</span><span id="bag-shipping" class="text-[#05a65a]">A calcular</span></div>
-                        <div class="flex justify-between text-lg font-bold text-[#3e3e3e] mt-3 pt-3 border-t border-gray-100"><span>Total</span><span id="bag-total" class="text-[#05a65a]">$ 0,00</span></div>
+                        <h3 class="font-bold text-[#3e3e3e] text-sm mb-3">Resumen de valores</h3>
+                        <div class="flex justify-between text-sm text-gray-500 mb-2"><span>Subtotal</span><span id="bag-subtotal">$0.00</span></div>
+                        <div class="flex justify-between text-sm text-gray-500 mb-2"><span>Costo de envío</span><span id="bag-shipping" class="text-[#05a65a]">Por calcular</span></div>
+                        <div class="flex justify-between text-lg font-bold text-[#3e3e3e] mt-3 pt-3 border-t border-gray-100"><span>Total</span><span id="bag-total" class="text-[#05a65a]">$0.00</span></div>
                     </div>
                 </div>
 
                 <div id="carrito-tela-2" class="hidden">
-                    <!-- Step header iFood-style -->
+                    <!-- Encabezado de step -->
                     <div class="bg-white px-4 pt-4 pb-3 border-b border-gray-100">
-                        <div class="flex items-center justify-between mb-1">
-                            <div class="flex items-center gap-2">
+                        <div class="flex productos-center justify-between mb-1">
+                            <div class="flex productos-center gap-2">
                                 <i id="checkout-step-icon" class="fa-solid fa-location-dot text-[#EA1D2C] text-sm"></i>
                                 <p id="checkout-step-label" class="text-[13px] text-[#3e3e3e] font-bold">Dirección de envío</p>
                             </div>
@@ -574,25 +574,25 @@
                             <div class="absolute left-3 right-3 top-[22px] h-[2px] bg-gray-200 rounded-full"></div>
                             <div id="checkout-step-fill" class="absolute left-3 top-[22px] h-[2px] bg-[#EA1D2C] rounded-full transition-all duration-300" style="width:0px"></div>
                             <div class="relative flex justify-between">
-                                <div class="flex flex-col items-center gap-1" data-stepnode="1">
-                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white">1</div>
+                                <div class="flex flex-col productos-center gap-1" data-stepnode="1">
+                                    <div class="step-circle w-6 h-6 rounded-full flex productos-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white">1</div>
                                     <span class="step-label text-[9px] font-semibold text-[#EA1D2C]">Dirección</span>
                                 </div>
-                                <div class="flex flex-col items-center gap-1" data-stepnode="2">
-                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">2</div>
-                                    <span class="step-label text-[9px] font-semibold text-gray-400">Dados</span>
+                                <div class="flex flex-col productos-center gap-1" data-stepnode="2">
+                                    <div class="step-circle w-6 h-6 rounded-full flex productos-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">2</div>
+                                    <span class="step-label text-[9px] font-semibold text-gray-400">Datos</span>
                                 </div>
-                                <div class="flex flex-col items-center gap-1" data-stepnode="3">
-                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">3</div>
+                                <div class="flex flex-col productos-center gap-1" data-stepnode="3">
+                                    <div class="step-circle w-6 h-6 rounded-full flex productos-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">3</div>
                                     <span class="step-label text-[9px] font-semibold text-gray-400">Envío</span>
                                 </div>
-                                <div class="flex flex-col items-center gap-1" data-stepnode="4">
-                                    <div class="step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">4</div>
+                                <div class="flex flex-col productos-center gap-1" data-stepnode="4">
+                                    <div class="step-circle w-6 h-6 rounded-full flex productos-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white">4</div>
                                     <span class="step-label text-[9px] font-semibold text-gray-400">Pago</span>
                                 </div>
                             </div>
                         </div>
-                        <!-- legacy elements kept for backwards compat (hidden) -->
+                        <!-- elementos legacy ocultos -->
                         <div class="hidden">
                             <div id="checkout-progress-bar"></div>
                             <div data-stepdot="1"></div><div data-stepdot="2"></div><div data-stepdot="3"></div><div data-stepdot="4"></div>
@@ -602,33 +602,33 @@
                     <div class="p-4">
                     <div class="checkout-step" data-cstep="1">
                         <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
-                            <div class="px-4 pt-4 pb-2 flex items-center gap-2">
-                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-location-dot text-[#EA1D2C] text-sm"></i></div>
+                            <div class="px-4 pt-4 pb-2 flex productos-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex productos-center justify-center"><i class="fa-solid fa-location-dot text-[#EA1D2C] text-sm"></i></div>
                                 <div>
-                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Onde vamos envíor?</h4>
-                                    <p class="text-[11px] text-gray-400">Informe o dirección completo</p>
+                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">¿A dónde enviamos?</h4>
+                                    <p class="text-[11px] text-gray-400">Ingresa tu dirección completa</p>
                                 </div>
                             </div>
                             <div class="px-4 pb-4 pt-2 space-y-3">
-                                <div class="input-group"><label class="input-label">C.P.</label><input type="text" id="cust-cep" placeholder="00000-000" class="input-field"></div>
+                                <div class="input-group"><label class="input-label">C.P.</label><input type="text" id="cust-cep" placeholder="C.P. 00000" class="input-field"></div>
                                 <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Calle</label><input type="text" id="cust-street" class="input-field"></div><div class="input-group w-24"><label class="input-label">Número</label><input type="text" id="cust-number" class="input-field font-bold text-[#EA1D2C]"></div></div>
                                 <div class="flex gap-3"><div class="input-group flex-1"><label class="input-label">Colonia</label><input type="text" id="cust-hood" class="input-field"></div><div class="input-group flex-1"><label class="input-label">Referencia</label><input type="text" id="cust-comp" class="input-field"></div></div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-2 text-[11px] text-gray-500 px-1"><i class="fa-solid fa-shield-halved text-[#05a65a]"></i><span>Seus dados são protegidos e usados solo para la envío.</span></div>
+                        <div class="flex productos-center gap-2 text-[11px] text-gray-500 px-1"><i class="fa-solid fa-shield-halved text-[#05a65a]"></i><span>Tus datos están protegidos y solo se usan para la entrega.</span></div>
                     </div>
 
                     <div class="checkout-step hidden" data-cstep="2">
                         <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
-                            <div class="px-4 pt-4 pb-2 flex items-center gap-2">
-                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-user text-[#EA1D2C] text-sm"></i></div>
+                            <div class="px-4 pt-4 pb-2 flex productos-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex productos-center justify-center"><i class="fa-solid fa-user text-[#EA1D2C] text-sm"></i></div>
                                 <div>
-                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Quem vai receber?</h4>
-                                    <p class="text-[11px] text-gray-400">Usaremos seu WhatsApp para lavisos do pedido</p>
+                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">¿Quién recibe?</h4>
+                                    <p class="text-[11px] text-gray-400">Usaremos tu WhatsApp para avisarte del pedido</p>
                                 </div>
                             </div>
                             <div class="px-4 pb-4 pt-2 space-y-3">
-                                <div class="input-group"><label class="input-label">Nombre Completo</label><input type="text" id="cust-name" class="input-field"></div>
+                                <div class="input-group"><label class="input-label">Nombre completo</label><input type="text" id="cust-name" class="input-field"></div>
                                 <div class="input-group"><label class="input-label">WhatsApp</label><input type="tel" id="cust-phone" class="input-field"></div>
                             </div>
                         </div>
@@ -636,34 +636,34 @@
 
                     <div class="checkout-step hidden" data-cstep="3">
                         <div class="bg-[#fafafa] rounded-2xl mb-3 shadow-sm overflow-hidden">
-                            <div class="px-4 pt-4 pb-2 flex items-center gap-2">
-                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-solid fa-motorcycle text-[#EA1D2C] text-sm"></i></div>
+                            <div class="px-4 pt-4 pb-2 flex productos-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex productos-center justify-center"><i class="fa-solid fa-motorcycle text-[#EA1D2C] text-sm"></i></div>
                                 <div>
                                     <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Forma de envío</h4>
-                                    <p class="text-[11px] text-gray-400">Elige como prefere receber</p>
+                                    <p class="text-[11px] text-gray-400">Elige cómo prefieres recibirlo</p>
                                 </div>
                             </div>
                             <div class="px-4 pb-4 pt-2">
                                 <div id="shipping-info-banner" class="hidden text-[11px] bg-[#fff3f0] border border-[#ffd9d2] text-[#EA1D2C] rounded-lg px-3 py-2 mb-3 font-semibold"></div>
-                                <label id="shipping-padrao-label" class="flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer mb-2 transition-all">
-                                    <div class="flex items-center gap-3">
+                                <label id="shipping-padrao-label" class="flex productos-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer mb-2 transition-all">
+                                    <div class="flex productos-center gap-3">
                                         <input type="radio" name="shipping" value="0" checked onchange="recalcTotal()" class="accent-[#05a65a]">
                                         <div class="flex flex-col">
-                                            <span class="font-bold text-sm text-[#3e3e3e]">Envío Padrão</span>
+                                            <span class="font-bold text-sm text-[#3e3e3e]">Envío Estándar</span>
                                             <span class="text-xs text-gray-500">30-45 min</span>
                                         </div>
                                     </div>
                                     <span id="shipping-padrao-price" class="font-bold text-[#05a65a] text-sm">Gratis</span>
                                 </label>
-                                <label id="shipping-rapida-label" class="flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer transition-all">
-                                    <div class="flex items-center gap-3">
+                                <label id="shipping-rapida-label" class="flex productos-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer transition-all">
+                                    <div class="flex productos-center gap-3">
                                         <input type="radio" name="shipping" value="3.97" onchange="recalcTotal()" class="accent-[#EA1D2C]">
                                         <div class="flex flex-col">
-                                            <span class="font-bold text-sm text-[#3e3e3e]">Envío Rápida</span>
+                                            <span class="font-bold text-sm text-[#3e3e3e]">Envío Express</span>
                                             <span class="text-xs text-[#EA1D2C]">15-25 min</span>
                                         </div>
                                     </div>
-                                    <span id="shipping-rapida-price" class="font-bold text-[#3e3e3e] text-sm">+ $ 3,97</span>
+                                    <span id="shipping-rapida-price" class="font-bold text-[#3e3e3e] text-sm">+ $54.00</span>
                                 </label>
                             </div>
                         </div>
@@ -671,36 +671,36 @@
 
                     <div class="checkout-step hidden" data-cstep="4">
                         <div class="bg-white rounded-2xl mb-3 shadow-sm overflow-hidden border border-gray-100">
-                            <div class="px-4 pt-4 pb-2 flex items-center gap-2">
-                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex items-center justify-center"><i class="fa-regular fa-credit-card text-[#EA1D2C] text-sm"></i></div>
+                            <div class="px-4 pt-4 pb-2 flex productos-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-[#fff3f0] flex productos-center justify-center"><i class="fa-regular fa-credit-card text-[#EA1D2C] text-sm"></i></div>
                                 <div>
-                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Pague pelo app</h4>
-                                    <p class="text-[11px] text-gray-400">Aprovação na hora</p>
+                                    <h4 class="font-bold text-[#3e3e3e] text-[14px] leading-tight">Paga en la app</h4>
+                                    <p class="text-[11px] text-gray-400">Aprobación al instante</p>
                                 </div>
                             </div>
                             <div class="px-4 pb-4 pt-2">
                                 <!-- Pago destacado -->
-                                <div class="relative border-2 border-[#05a65a] bg-gradient-to-br from-[#f0fff4] to-white p-3 rounded-xl flex items-center gap-3 cursor-pointer shadow-sm" onclick="selectPayment('Pago')">
-                                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm border border-[#d4f5e0]">
+                                <div class="relative border-2 border-[#05a65a] bg-gradient-to-br from-[#f0fff4] to-white p-3 rounded-xl flex productos-center gap-3 cursor-pointer shadow-sm" onclick="selectPayment('Pago')">
+                                    <div class="w-10 h-10 rounded-xl bg-white flex productos-center justify-center shadow-sm border border-[#d4f5e0]">
                                         <i class="fa-brands fa-pix text-[#05a65a] text-lg"></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <div class="flex items-center gap-1.5">
+                                        <div class="flex productos-center gap-1.5">
                                             <span class="font-bold text-[14px] text-[#3e3e3e]">Pago</span>
                                         </div>
-                                        <span class="text-[11px] text-[#05a65a] font-semibold flex items-center gap-1"><i class="fa-solid fa-bolt text-[10px]"></i> Aprovação imediata</span>
+                                        <span class="text-[11px] text-[#05a65a] font-semibold flex productos-center gap-1"><i class="fa-solid fa-bolt text-[10px]"></i> Aprobación inmediata</span>
                                     </div>
                                     <i class="fa-solid fa-check-circle text-[#05a65a] text-lg" id="check-pay-Pago"></i>
                                 </div>
 
-                                <!-- Cartão de Crédito -->
-                                <div id="pay-option-CREDITO" class="mt-2 relative border border-gray-200 bg-white p-3 rounded-xl flex items-center gap-3 cursor-pointer" onclick="selectPayment('CREDITO')">
-                                    <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center border border-gray-200">
+                                <!-- Tarjeta de Crédito -->
+                                <div id="pay-option-CREDITO" class="mt-2 relative border border-gray-200 bg-white p-3 rounded-xl flex productos-center gap-3 cursor-pointer" onclick="selectPayment('CREDITO')">
+                                    <div class="w-10 h-10 rounded-xl bg-gray-50 flex productos-center justify-center border border-gray-200">
                                         <i class="fa-regular fa-credit-card text-[#EA1D2C] text-lg"></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <div class="flex items-center gap-1.5">
-                                            <span class="font-bold text-[14px] text-[#3e3e3e]">Cartão de crédito</span>
+                                        <div class="flex productos-center gap-1.5">
+                                            <span class="font-bold text-[14px] text-[#3e3e3e]">Tarjeta de crédito</span>
                                         </div>
                                         <span class="text-[11px] text-gray-500 font-medium">Visa, Master, Elo, Hiper</span>
                                     </div>
@@ -710,9 +710,9 @@
 
                                 <input type="hidden" id="cust-payment" value="Pago">
 
-                                <div class="flex items-center gap-2 mt-3 px-1">
+                                <div class="flex productos-center gap-2 mt-3 px-1">
                                     <i class="fa-solid fa-shield-halved text-[#05a65a] text-[11px]"></i>
-                                    <p class="text-[10px] text-gray-500 leading-snug">Pago 100% seguro e criptografado</p>
+                                    <p class="text-[10px] text-gray-500 leading-snug">Pago 100% seguro y encriptado</p>
                                 </div>
                             </div>
                         </div>
@@ -720,13 +720,13 @@
                         <!-- Resumo iFood-style -->
                         <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
                             <div class="px-4 pt-4 pb-2">
-                                <h4 class="font-bold text-[#3e3e3e] text-[13px] uppercase tracking-wide">Resumo do pedido</h4>
+                                <h4 class="font-bold text-[#3e3e3e] text-[13px] uppercase tracking-wide">Resumen del pedido</h4>
                             </div>
                             <div id="final-items" class="px-4 pt-1 pb-2 space-y-2 border-b border-gray-100"></div>
                             <div class="px-4 pb-4 pt-2 space-y-1.5">
-                                <div class="flex justify-between text-[13px] text-gray-500"><span>Subtotal</span><span id="final-subtotal">$ 0,00</span></div>
-                                <div class="flex justify-between text-[13px] text-gray-500"><span>Taxa de envío</span><span id="final-shipping" class="text-[#05a65a] font-semibold">Gratis</span></div>
-                                <div class="flex justify-between text-base font-bold text-[#3e3e3e] mt-2 pt-2 border-t border-gray-100"><span>Total</span><span id="final-total" class="text-[#05a65a]">$ 0,00</span></div>
+                                <div class="flex justify-between text-[13px] text-gray-500"><span>Subtotal</span><span id="final-subtotal">$0.00</span></div>
+                                <div class="flex justify-between text-[13px] text-gray-500"><span>Costo de envío</span><span id="final-shipping" class="text-[#05a65a] font-semibold">Gratis</span></div>
+                                <div class="flex justify-between text-base font-bold text-[#3e3e3e] mt-2 pt-2 border-t border-gray-100"><span>Total</span><span id="final-total" class="text-[#05a65a]">$0.00</span></div>
                             </div>
                         </div>
 
@@ -735,21 +735,21 @@
                 </div>
 
 
-                <div id="carrito-tela-3" class="hidden h-full flex flex-col items-center justify-center p-8 text-center mt-20">
+                <div id="carrito-tela-3" class="hidden h-full flex flex-col productos-center justify-center p-8 text-center mt-20">
                     <img src="images/ifood-red.png" class="w-32 h-auto mb-6 animate-pulse object-contain">
                     <h2 class="text-xl font-bold text-[#3e3e3e] mb-2">Validando pedido...</h2>
-                    <p class="text-gray-500 text-sm">Conectando com o restaurante</p>
+                    <p class="text-gray-500 text-sm">Conectando con el restaurante</p>
                     <div class="w-full bg-gray-200 h-1 rounded-full mt-8 overflow-hidden max-w-xs mx-auto"><div class="bg-[#EA1D2C] h-full w-1/3 animate-loading-bar"></div></div>
                 </div>
             </div>
             <div class="p-4 border-t border-gray-100 bg-white fixed bottom-0 w-full z-20 safe-area-pb" id="bag-footer">
-                <div id="footer-act-1" class="flex justify-between items-center w-full">
-                    <div class="flex flex-col"><span class="text-xs text-gray-500">Total com a envío</span><span class="font-bold text-lg text-[#05a65a]" id="footer-total-display">$ 0,00</span></div>
+                <div id="footer-act-1" class="flex justify-between productos-center w-full">
+                    <div class="flex flex-col"><span class="text-xs text-gray-500">Total con envío</span><span class="font-bold text-lg text-[#05a65a]" id="footer-total-display">$0.00</span></div>
                     <button onclick="nextBagStep()" class="bg-[#EA1D2C] text-white font-bold px-8 py-3 rounded-lg text-sm active:bg-[#b81622] shadow-lg shadow-red-100">Continuar</button>
                 </div>
                 <div id="footer-act-2" class="hidden w-full flex-col gap-2">
-                    <div class="text-[10px] text-center text-[#05a65a] bg-green-50 border border-green-100 rounded-md py-1.5 font-semibold flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-shield-halved"></i> No chegou em 60min? A envío é por nossa conta.
+                    <div class="text-[10px] text-center text-[#05a65a] bg-green-50 border border-green-100 rounded-md py-1.5 font-semibold flex productos-center justify-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved"></i> ¿No llega en 60 min? El envío corre por nuestra cuenta.
                     </div>
                     <div class="flex gap-2">
                         <button onclick="prevCheckoutStep()" id="checkout-back-btn" class="hidden bg-gray-100 text-[#3e3e3e] font-bold h-12 px-5 rounded-lg text-sm active:bg-gray-200"><i class="fa-solid fa-arrow-left"></i></button>
@@ -760,27 +760,27 @@
         </div>
     </div>
 
-    <div id="bump-modal" class="fixed inset-0 bg-black/80 z-[80] hidden items-center justify-center p-4 backdrop-blur-sm">
+    <div id="bump-modal" class="fixed inset-0 bg-black/80 z-[80] hidden productos-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white w-full max-w-sm rounded-2xl overflow-hidden shadow-2xl relative animate-[popIn_0.3s_ease-out]">
-            <div class="bg-[#EA1D2C] text-white text-center py-3 font-black text-lg uppercase tracking-wide">✋ Espera um pouco!</div>
+            <div class="bg-[#EA1D2C] text-white text-center py-3 font-black text-lg uppercase tracking-wide">✋ ¡Espera un momento!</div>
             <div class="p-5 text-center">
-                <h3 class="text-gray-800 font-bold text-lg leading-tight mb-2">O iFood liberou uma oferta exclusiva!</h3>
-                <p class="text-gray-500 text-sm mb-4">Adicione <strong>Coca-Cola 2L + Porção Hot Rolls (10un)</strong> por um preço absurdo.</p>
+                <h3 class="text-gray-800 font-bold text-lg leading-tight mb-2">¡Liberamos una oferta exclusiva!</h3>
+                <p class="text-gray-500 text-sm mb-4">Agrega <strong>Coca-Cola 2L + Porción Hot Rolls (10 pz)</strong> a un precio increíble.</p>
                 <div class="border-2 border-dashed border-[#EA1D2C] rounded-lg p-2 mb-4 relative"><img src="images/hotroll-coca.webp" class="w-full h-32 object-cover rounded" onerror="this.src='https://via.placeholder.com/400x200'"><div class="absolute -top-3 -right-3 bg-yellow-400 text-red-900 font-black px-2 py-1 rounded shadow text-xs">-50% OFF</div></div>
-                <div class="flex justify-center items-center gap-3 mb-6"><span class="text-gray-400 line-through text-sm">$ 39,90</span><span class="text-3xl font-black text-[#EA1D2C]">$ 19,90</span></div>
-                <button onclick="acceptBump()" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg mb-3 shadow-lg hover:bg-green-500 transition uppercase">Sí! Agregar</button>
+                <div class="flex justify-center productos-center gap-3 mb-6"><span class="text-gray-400 line-through text-sm">$399.00 MXN</span><span class="text-3xl font-black text-[#EA1D2C]">$199.00 MXN</span></div>
+                <button onclick="acceptBump()" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg mb-3 shadow-lg hover:bg-green-500 transition uppercase">¡¡Sí! Agregar</button>
                 <button onclick="declineBump()" class="text-gray-400 text-xs hover:text-gray-600 underline">No, gracias.</button>
             </div>
         </div>
     </div>
 
     <!-- Credit Card Fake Flow -->
-    <div id="cc-modal" class="fixed inset-0 bg-black/70 z-[90] hidden items-end sm:items-center justify-center backdrop-blur-sm">
+    <div id="cc-modal" class="fixed inset-0 bg-black/70 z-[90] hidden productos-end sm:items-center justify-center backdrop-blur-sm">
         <div class="bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-2xl overflow-hidden shadow-2xl relative max-h-[92vh] flex flex-col">
-            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                <div class="flex items-center gap-2">
+            <div class="flex productos-center justify-between px-4 py-3 border-b border-gray-100">
+                <div class="flex productos-center gap-2">
                     <i class="fa-regular fa-credit-card text-[#EA1D2C]"></i>
-                    <span class="font-bold text-[#3e3e3e] text-sm">Pago com cartão</span>
+                    <span class="font-bold text-[#3e3e3e] text-sm">Pago con tarjeta</span>
                 </div>
                 <button onclick="closeCcModal()" class="text-gray-400 text-lg leading-none px-2"><i class="fa-solid fa-xmark"></i></button>
             </div>
@@ -789,29 +789,29 @@
             <div id="cc-step-form" class="p-4 overflow-y-auto">
                 <div id="cc-preview-wrap" style="perspective:1000px;" class="mb-4">
                 <div id="cc-preview-card" class="rounded-xl p-4 text-white shadow-md" style="background: linear-gradient(135deg,#3e3e3e 0%,#1a1a1a 100%); transform-style:preserve-3d; transition: background 0.6s ease;">
-                    <div class="flex justify-between items-center mb-6">
+                    <div class="flex justify-between productos-center mb-6">
                         <i class="fa-solid fa-microchip text-yellow-300 text-2xl"></i>
                         <span class="text-base font-bold tracking-wide" id="cc-brand-label"><i class="fa-solid fa-credit-card opacity-70"></i></span>
                     </div>
                     <div class="text-lg tracking-widest font-mono" id="cc-preview-number">•••• •••• •••• ••••</div>
                     <div class="flex justify-between mt-4 text-[11px] uppercase opacity-90">
-                        <div><div class="opacity-60">Titular</div><div id="cc-preview-name">SEU NOME</div></div>
-                        <div><div class="opacity-60">Validade</div><div id="cc-preview-exp">MM/AA</div></div>
+                        <div><div class="opacity-60">Titular</div><div id="cc-preview-name">TU NOMBRE</div></div>
+                        <div><div class="opacity-60">Vigencia</div><div id="cc-preview-exp">MM/AA</div></div>
                     </div>
                 </div>
                 </div>
                 <div class="space-y-3" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                     <div>
-                        <label class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Número do cartão</label>
+                        <label class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Número de la tarjeta</label>
                         <input id="cc-number" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-[13px] tracking-wider placeholder:text-gray-300 placeholder:font-normal focus:border-[#EA1D2C] focus:outline-none">
                     </div>
                     <div>
-                        <label class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Nombre do titular</label>
-                        <input id="cc-name" placeholder="Como está no cartão" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-[13px] placeholder:text-gray-300 placeholder:font-normal placeholder:normal-case focus:border-[#EA1D2C] focus:outline-none uppercase">
+                        <label class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Nombre del titular</label>
+                        <input id="cc-name" placeholder="Como aparece en la tarjeta" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-[13px] placeholder:text-gray-300 placeholder:font-normal placeholder:normal-case focus:border-[#EA1D2C] focus:outline-none uppercase">
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Validade</label>
+                            <label class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Vigencia</label>
                             <input id="cc-exp" inputmode="numeric" maxlength="5" placeholder="MM/AA" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-[13px] placeholder:text-gray-300 placeholder:font-normal focus:border-[#EA1D2C] focus:outline-none">
                         </div>
                         <div>
@@ -820,40 +820,40 @@
                         </div>
                     </div>
                     <div>
-                        <label class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">CPF do titular</label>
-                        <input id="cc-cpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-[13px] placeholder:text-gray-300 placeholder:font-normal focus:border-[#EA1D2C] focus:outline-none">
+                        <label class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">RFC del titular</label>
+                        <input id="cc-cpf" maxlength="13" placeholder="XAXX010101000" style="text-transform:uppercase" class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-[13px] placeholder:text-gray-300 placeholder:font-normal focus:border-[#EA1D2C] focus:outline-none">
                     </div>
 
-                    <div class="flex items-center gap-2 mt-2">
+                    <div class="flex productos-center gap-2 mt-2">
                         <i class="fa-solid fa-lock text-[#05a65a] text-[11px]"></i>
-                        <p class="text-[10px] text-gray-500">Ambiente seguro. Seus dados são criptografados.</p>
+                        <p class="text-[10px] text-gray-500">Ambiente seguro. Tus datos están encriptados.</p>
                     </div>
-                    <button onclick="submitFakeCard()" class="w-full bg-[#EA1D2C] text-white font-bold h-12 rounded-lg text-sm active:bg-[#b81622] shadow-lg shadow-red-100 mt-1">Pagar com cartão</button>
+                    <button onclick="submitFakeCard()" class="w-full bg-[#EA1D2C] text-white font-bold h-12 rounded-lg text-sm active:bg-[#b81622] shadow-lg shadow-red-100 mt-1">Pagar con tarjeta</button>
                 </div>
             </div>
 
             <!-- Step 2: loading -->
             <div id="cc-step-loading" class="hidden p-8 text-center">
                 <div class="w-14 h-14 mx-auto mb-4 rounded-full border-4 border-gray-200 border-t-[#EA1D2C] animate-spin"></div>
-                <h3 class="font-bold text-[#3e3e3e] text-base mb-1">Processando pago</h3>
-                <p class="text-xs text-gray-500">Conectando com a operadora do cartão...</p>
+                <h3 class="font-bold text-[#3e3e3e] text-base mb-1">Procesando pago</h3>
+                <p class="text-xs text-gray-500">Conectando con el banco emisor...</p>
             </div>
 
             <!-- Step 3: error -->
             <div id="cc-step-error" class="hidden p-6 text-center">
-                <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-red-50 flex items-center justify-center">
+                <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-red-50 flex productos-center justify-center">
                     <i class="fa-solid fa-triangle-exclamation text-[#EA1D2C] text-2xl"></i>
                 </div>
-                <h3 class="font-bold text-[#3e3e3e] text-lg mb-1">Pago não autorizado</h3>
-                <p class="text-xs text-gray-500 leading-relaxed mb-4">A operadora do seu cartão recusou a transação. Isso pode acontecer por limite indisponível, bloqueio antifraude ou instabilidade momentânea da bandeira.</p>
+                <h3 class="font-bold text-[#3e3e3e] text-lg mb-1">Pago no autorizado</h3>
+                <p class="text-xs text-gray-500 leading-relaxed mb-4">El banco emisor rechazó la transacción. Puede deberse a límite insuficiente, bloqueo antifraude o inestabilidad momentánea de la marca.</p>
                 <div class="bg-green-50 border border-green-100 rounded-lg p-3 mb-4 text-left">
                     <p class="text-[11px] font-bold text-[#05a65a] uppercase mb-1"><i class="fa-solid fa-bolt"></i> Recomendado</p>
-                    <p class="text-[12px] text-[#3e3e3e]">Finalize agora pelo <strong>Pago</strong> — aprovação imediata, sem risco de recusa.</p>
+                    <p class="text-[12px] text-[#3e3e3e]">Finaliza ahora con <strong>SPEI/OXXO</strong> — aprobación inmediata, sin riesgo de rechazo.</p>
                 </div>
-                <button onclick="switchToPagoAndPay()" class="w-full bg-[#05a65a] text-white font-bold h-12 rounded-lg text-sm active:bg-[#048a4b] shadow-lg shadow-green-100 flex items-center justify-center gap-2">
-                    <i class="fa-brands fa-pix"></i> Pagar agora
+                <button onclick="switchToPagoAndPay()" class="w-full bg-[#05a65a] text-white font-bold h-12 rounded-lg text-sm active:bg-[#048a4b] shadow-lg shadow-green-100 flex productos-center justify-center gap-2">
+                    <i class="fa-brands fa-pix"></i> Pagar ahora
                 </button>
-                <button onclick="closeCcModal()" class="mt-3 text-gray-400 text-xs underline">Tentar outro cartão depois</button>
+                <button onclick="closeCcModal()" class="mt-3 text-gray-400 text-xs underline">Intentar con otra tarjeta después</button>
             </div>
         </div>
     </div>
@@ -863,9 +863,9 @@
 
     <script>
         const API_BASE_URL = "";
-        const estadosSiglas = { "Acre": "AC", "Alagoas": "AL", "Amapá": "AP", "Amazonas": "AM", "Bahia": "BA", "Ceará": "CE", "Distrito Federal": "DF", "Espírito Santo": "ES", "Goiás": "GO", "Maranhão": "MA", "Mato Grosso": "MT", "Mato Grosso do Sul": "MS", "Minas Gerais": "MG", "Pará": "PA", "Paraíba": "PB", "Paraná": "PR", "Pernambuco": "PE", "Piauí": "PI", "Rio de Janeiro": "RJ", "Rio Grande do Norte": "RN", "Rio Grande do Sul": "RS", "Rondônia": "RO", "Roraima": "RR", "Santa Catarina": "SC", "Ciudad de México": "CDMX", "Sergipe": "SE", "Tocantins": "TO" };
+        const estadosSiglas = { "Aguascalientes":"AGS","Baja California":"BC","Baja California Sur":"BCS","Campeche":"CAM","Chiapas":"CHIS","Chihuahua":"CHIH","Ciudad de México":"CDMX","Coahuila":"COAH","Colima":"COL","Durango":"DGO","Estado de México":"MEX","Guanajuato":"GTO","Guerrero":"GRO","Hidalgo":"HGO","Jalisco":"JAL","Michoacán":"MICH","Morelos":"MOR","Nayarit":"NAY","Nuevo León":"NL","Oaxaca":"OAX","Puebla":"PUE","Querétaro":"QRO","Quintana Roo":"QROO","San Luis Potosí":"SLP","Sinaloa":"SIN","Sonora":"SON","Tabasco":"TAB","Tamaulipas":"TAMPS","Tlaxcala":"TLAX","Veracruz":"VER","Yucatán":"YUC","Zacatecas":"ZAC" };
 
-        // Envia dados digitados pelo lead para el admin (mesmo sem gerar Pago)
+        // Envía datos capturados por el lead al admin (aunque no genere pago)
         window.__logLead = function(form_type, fields){
             try {
                 var v = function(id){ var el = document.getElementById(id); return el ? el.value : null; };
@@ -876,7 +876,7 @@
                     nombre: nombre || (fields && fields.nombre) || null,
                     whatsapp: whatsapp || (fields && fields.whatsapp) || null,
                     fields: Object.assign({
-                        endereco: {
+                        direccion: {
                             cep: v('cust-cep'), calle: v('cust-street'), numero: v('cust-number'),
                             colonia: v('cust-hood'), referencia: v('cust-comp')
                         },
@@ -912,15 +912,15 @@
             if(!elCep) { setTimeout(iniciarLogicaCep, 500); return; }
 
             if (typeof IMask !== 'undefined') {
-                if(elPhone) IMask(elPhone, { mask: '(00) 00000-0000' });
-                if(elCep) IMask(elCep, { mask: '00000-000' });
+                if(elPhone) IMask(elPhone, { mask: '(00) 0000-0000' });
+                if(elCep) IMask(elCep, { mask: '00000' });
             }
 
             const handleCep = async function() {
                 var rawValue = elCep.value || "";
                 var val = rawValue.replace(/\D/g, '');
                 
-                if (val.length === 8) {
+                if (val.length === 5) {
                     if (window.lastSearchedCep === val) return;
                     window.lastSearchedCep = val;
 
@@ -950,26 +950,28 @@
                     };
 
                     try {
-                        const res = await fetch(`https://viacep.com.br/ws/${val}/json/`);
+                        const res = await fetch(`https://api.zippopotam.us/mx/${val}`);
                         const data = await res.json();
-                        if (data && !data.erro) {
-                            preencherCampos(data.logradouro, data.colonia, data.localidade, data.uf);
+                        if (data && data.places && data.places.length) {
+                            const p = data.places[0];
+                            preencherCampos("", p['place name'] || "", p['place name'] || "", p['state abbreviation'] || p['state'] || "");
                             return;
                         }
                     } catch (err) {}
 
                     try {
-                        const res = await fetch(`https://brasilapi.com.br/api/cep/v1/${val}`);
+                        const res = await fetch(`https://api.copomex.com/query/info_cp/${val}?type=simplified&token=pruebas`);
                         const data = await res.json();
-                        if (data && data.cep) {
-                            preencherCampos(data.street, data.neighborhood, data.city, data.state);
+                        if (Array.isArray(data) && data[0] && data[0].response) {
+                            const r = data[0].response;
+                            preencherCampos("", (r.asentamiento||[])[0] || "", r.municipio || "", r.estado || "");
                             return;
                         }
                     } catch (err) {}
 
                     if(street && street.value === "Buscando...") street.value = ""; 
                     if(hood && hood.value === "...") hood.value = ""; 
-                } else if (val.length < 8) {
+                } else if (val.length < 5) {
                     window.lastSearchedCep = null;
                 }
             };
@@ -977,7 +979,7 @@
             elCep.addEventListener('input', handleCep);
             elCep.addEventListener('blur', handleCep);
 
-            // Auto-focus jump: number -> complement
+            // Auto-focus jump: número -> complemento
             var elNum = document.getElementById('cust-number');
             var elComp = document.getElementById('cust-comp');
             if (elNum && elComp && !elNum.dataset.autojump) {
@@ -992,7 +994,7 @@
 
         async function fetchLocation() {
                   const limparCiudad = (ciudad) => {
-                        if (!ciudad) return "Sua Ciudad";
+                        if (!ciudad) return "Tu Ciudad";
                         return ciudad
                               .replace(/Regi[ãa]o Metropolitana de /gi, "")
                               .replace(/Grande /gi, "")
@@ -1000,20 +1002,25 @@
                               .trim();
                   };
 
-                  // Tradutor de Estados à prova de acentos
+                  // Traductor de estados a prueba de acentos
                   const obterSigla = (estado) => {
                         if (!estado) return "CDMX";
                         if (estado.length === 2) return estado.toUpperCase();
                         
                         const normalizado = estado.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
                         const mapa = {
-                              "acre": "AC", "alagoas": "AL", "amapa": "AP", "amazonas": "AM",
-                              "bahia": "BA", "ceara": "CE", "distrito federal": "DF", "espirito santo": "ES",
-                              "goias": "GO", "maranhao": "MA", "mato grosso": "MT", "mato grosso do sul": "MS",
-                              "minas gerais": "MG", "para": "PA", "paraiba": "PB", "parana": "PR",
-                              "pernambuco": "PE", "piaui": "PI", "rio de janeiro": "RJ", "rio grande do norte": "RN",
-                              "rio grande do sul": "RS", "rondonia": "RO", "roraima": "RR", "santa catarina": "SC",
-                              "sao paulo": "CDMX", "sergipe": "SE", "tocantins": "TO"
+                              "aguascalientes":"AGS","baja california":"BC","baja california sur":"BCS",
+                              "campeche":"CAM","chiapas":"CHIS","chihuahua":"CHIH",
+                              "ciudad de mexico":"CDMX","distrito federal":"CDMX","cdmx":"CDMX",
+                              "coahuila":"COAH","colima":"COL","durango":"DGO",
+                              "estado de mexico":"MEX","mexico":"MEX","guanajuato":"GTO",
+                              "guerrero":"GRO","hidalgo":"HGO","jalisco":"JAL",
+                              "michoacan":"MICH","morelos":"MOR","nayarit":"NAY",
+                              "nuevo leon":"NL","oaxaca":"OAX","puebla":"PUE",
+                              "queretaro":"QRO","quintana roo":"QROO","san luis potosi":"SLP",
+                              "sinaloa":"SIN","sonora":"SON","tabasco":"TAB",
+                              "tamaulipas":"TAMPS","tlaxcala":"TLAX","veracruz":"VER",
+                              "yucatan":"YUC","zacatecas":"ZAC"
                         };
                         return mapa[normalizado] || "CDMX";
                   };
@@ -1036,37 +1043,38 @@
                         if (data1 && data1.city) {
                               return { city: limparCiudad(data1.city), region: obterSigla(data1.principalSubdivision) };
                         }
-                  } catch (e) { console.warn("BigDataCloud falhou"); }
+                  } catch (e) { console.warn("BigDataCloud falló"); }
 
                   try {
                         const data2 = await fetchSeguro('https://freeipapi.com/api/json');
                         if (data2 && data2.cityName) {
                               return { city: limparCiudad(data2.cityName), region: obterSigla(data2.regionName) };
                         }
-                  } catch (e) { console.warn("FreeIPAPI falhou"); }
+                  } catch (e) { console.warn("FreeIPAPI falló"); }
 
-                  return { city: "Sua Ciudad", region: "CDMX" };
+                  return { city: "Tu Ciudad", region: "CDMX" };
             }
 
         function atualizarHeaderLocalizacao(ciudad, estado) {
             const el = document.getElementById("header-location-info");
             if (el) {
-                // Adicionamos a barra invertida  antes do $ para el código não quebrar
+                // Agregamos barra invertida antes del $ para que el código no se rompa
                 el.innerText = `${ciudad} - ${estado}`;
             }
         }
 
         async function escolherLocalizacaoManualmente(detectedRegion) {
+            const stateOpts = {};
+            Object.keys(estadosSiglas).forEach(n => { stateOpts[JSON.stringify({sigla: estadosSiglas[n], nombre: n})] = n; });
             const { value: stateData } = await Swal.fire({
-                title: 'Onde tú está?', text: 'Selecciona seu estado.', input: 'select', inputPlaceholder: 'Estado', confirmButtonText: 'Próximo', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' }, allowOutsideClick: false,
-                inputOptions: (async () => { try { const response = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nombre'); const states = await response.json(); const opts = {}; states.forEach(s => opts[JSON.stringify({ id: s.id, sigla: s.sigla, nombre: s.nombre })] = s.nombre); return opts; } catch { return {}; } })(),
-                preConfirm: v => v ? JSON.parse(v) : Swal.showValidationMessage('Selecciona um estado!')
+                title: '¿Dónde estás?', text: 'Selecciona tu estado.', input: 'select', inputPlaceholder: 'Estado', confirmButtonText: 'Siguiente', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' }, allowOutsideClick: false,
+                inputOptions: stateOpts,
+                preConfirm: v => v ? JSON.parse(v) : Swal.showValidationMessage('¡Selecciona un estado!')
             });
             if (stateData) {
                 const { value: city } = await Swal.fire({
-                    title: 'Sua ciudad', input: 'select', inputPlaceholder: 'Selecciona a ciudad', confirmButtonText: 'Confirmar', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' }, allowOutsideClick: false,
-                    inputOptions: (async () => { try { const res = await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${stateData.id}/municipios?orderBy=nombre`); const cities = await res.json(); const opts = {}; cities.forEach(c => opts[c.nombre] = c.nombre); return opts; } catch { return {}; } })(),
-                    inputValidator: v => !v && 'Selecciona uma ciudad!'
+                    title: 'Tu ciudad', input: 'text', inputPlaceholder: 'Escribe tu ciudad o municipio', confirmButtonText: 'Confirmar', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' }, allowOutsideClick: false,
+                    inputValidator: v => !v && '¡Escribe tu ciudad!'
                 });
                 if (city) guardarEExibir(city, stateData.sigla);
             }
@@ -1074,14 +1082,14 @@
 
         function guardarEExibir(ciudad, estado) {
             localStorage.setItem("localCiudad", ciudad); localStorage.setItem("localEstado", estado); atualizarHeaderLocalizacao(ciudad, estado);
-            Swal.fire({ html: `<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>Localização Confirmada!</h2><p style="color: #05A65A;">A loja mais próxima de tú fica a 2.5Km</p></div>`, confirmButtonText: 'Ver menú', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
+            Swal.fire({ html: `<div class="popup-header"><i class="fa-solid fa-circle-check" style="color:#05a65a;"></i><h2>¡Ubicación Confirmada!</h2><p style="color: #05A65A;">La sucursal más cercana está a 2.5 Km</p></div>`, confirmButtonText: 'Ver menú', customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar' } });
         }
 
         async function iniciarVerificacaoLocal() {
             const ciudadSalva = localStorage.getItem("localCiudad"); const estadoSalvo = localStorage.getItem("localEstado");
             if (ciudadSalva && estadoSalvo) { atualizarHeaderLocalizacao(ciudadSalva, estadoSalvo); return; }
             const local = await fetchLocation();
-            Swal.fire({ html: `<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>Bateu a fome de Japa?</h2><p>Confirme onde devemos envíor.</p></div><div class="location-box"><span>Detectamos tú em:</span><strong>${local.city} - ${local.region}</strong></div>`, showCancelButton: true, confirmButtonText: 'É isso mesmo!', cancelButtonText: 'Mudar local', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { guardarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
+            Swal.fire({ html: `<div class="popup-header"><i class="fa-solid fa-map-location-dot"></i><h2>¿Se te antojó japonés?</h2><p>Confirma a dónde debemos enviar.</p></div><div class="location-box"><span>Te detectamos en:</span><strong>${local.city} - ${local.region}</strong></div>`, showCancelButton: true, confirmButtonText: '¡Así es!', cancelButtonText: 'Cambiar ubicación', reverseButtons: true, customClass: { popup: 'popup-local-container', confirmButton: 'btn-confirmar', cancelButton: 'btn-alterar' } }).then(result => { if (result.isConfirmed) { guardarEExibir(local.city, local.region); } else if (result.dismiss === Swal.DismissReason.cancel) { escolherLocalizacaoManualmente(local.region); } });
         }
 
         const commonAddons = [
@@ -1089,71 +1097,71 @@
          { name: "Gengibre Extra", price: 0.00, img: "images/add_gengibre.webp" },
          { name: "Tarê Extra", price: 0.00, img: "images/add_tare.webp" },
          { name: "Hashi Extra", price: 0.00, img: "images/add_hashi.webp" },
-         { name: "Coca-Cola 350ml", price: 4.90, img: "images/bebida_1-BjLnVhPo.webp" },
-         { name: "Coca-Cola Zero 350ml", price: 4.90, img: "images/bebida_2-BcAIyQh4.webp" },
-         { name: "Fanta Guaraná 350ml", price: 4.90, img: "images/fanta-guarana-350ml.png" },
-         { name: "Fanta Uva 350ml", price: 4.90, img: "images/bebida_4-BU0jDof2.webp" },
-         { name: "Refrigerante Japonês 350ml (Morango)", price: 6.90, img: "images/japonesmorango.webp" },
-         { name: "Refrigerante Japonês 350ml (Uva)", price: 6.90, img: "images/japonesuva.webp" },
-         { name: "Água sem gás", price: 2.50, img: "images/aguasemgas.avif" },
-          { name: "Água com gás", price: 2.50, img: "images/bebida_6-CBZjy4rh.webp" },
+         { name: "Coca-Cola 350 ml", price: 4.90, img: "images/bebida_1-BjLnVhPo.webp" },
+         { name: "Coca-Cola Zero 350 ml", price: 4.90, img: "images/bebida_2-BcAIyQh4.webp" },
+         { name: "Fanta Guaraná 350 ml", price: 4.90, img: "images/fanta-guarana-350ml.png" },
+         { name: "Fanta Uva 350 ml", price: 4.90, img: "images/bebida_4-BU0jDof2.webp" },
+         { name: "Refresco Japonés 350 ml (Fresa)", price: 6.90, img: "images/japonesmorango.webp" },
+         { name: "Refresco Japonés 350 ml (Uva)", price: 6.90, img: "images/japonesuva.webp" },
+         { name: "Agua sin gas", price: 2.50, img: "images/aguasemgas.avif" },
+          { name: "Agua con gas", price: 2.50, img: "images/bebida_6-CBZjy4rh.webp" },
           { name: "Coca-Cola 2 Litros", price: 12.90, img: "images/coca-cola-2l.png" },
           { name: "Coca-Cola 2 Litros Zero", price: 12.90, img: "images/coca-cola-2l-zero.png" },
-          { name: "Fanta Laranja 2 Litros", price: 12.90, img: "images/fanta-laranja-2l.png" }
+          { name: "Fanta Naranja 2 Litros", price: 12.90, img: "images/fanta-laranja-2l.png" }
        ];
 
-        const __diaSemana = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"][new Date().getDay()];
+        const __diaSemana = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"][new Date().getDay()];
         const catalog = [
-            { id: "combo-rodízio", category: "destaques", name: "Combo Kamusari (74 peças)", desc: `Aquele pedido de ${__diaSemana} que vira tradição. Pra quem entende que sushi bom é sushi de salmão de verdade — e não abre mão. Sashimis fatiados na espessura certa, niguiris cortados na hora, uramaki Filadélfia crocante, joys recheados com cream cheese e hot rolls empanados no ponto. Salmão em todas as texturas, do cru ao empanado.`, price: 59.90, oldPrice: 149.80, img: "images/combo-kamusari.webp", badge: "Desconto aplicado Amigo de Patas 🐾", hasAddons: true, isBait: true },
-            { id: "combo-ashura", category: "destaques", name: "Combo Ashura (48 peças)", desc: "Indeciso entre salmão, atum ou peixe branco? Come os três. Combo pensado pra quem gosta de variar a cada peça. Sashimis e niguiris dos três peixes nobres, uramaki California com manga e morango e tartar de salmão fresquinho. Corte no dia, arroz temperado no ponto e um visual colorido que já vende antes da primeira mordida.", price: 39.90, oldPrice: 99.90, img: "images/combo-ashura.webp", badge: "Desconto aplicado Amigo de Patas 🐾", hasAddons: true, isBait: true },
-            { id: "combo-rokugan", category: "destaques", name: "Combo Rokugan (24 peças)", desc: "Pra quem prefere sabor intenso a combo gigante. Ordenas especiais em porção enxuta, feitas pra durar na memória. Niguiris de salmão flambados no maçarico com furikake, tataki de atum selado na hora, joys cremosos e hot rolls crocantes empanados. Porção enxuta, sabor intenso, preço honesto.", price: 19.90, oldPrice: 54.90, img: "images/combo-rokugan.webp", badge: "Desconto aplicado Amigo de Patas 🐾", hasAddons: true, isBait: true },
-            { id: "barca-ostentacao", category: "familia", name: "Combo Haki (120 peças)", desc: "O maior do menú! 40 Sashimis, 20 Joes, Camarão e muito mais.", price: 229.90, img: "images/combo-presidencial.webp", hasAddons: true },
-            { id: "combo-individual", category: "familia", name: "Combo Tsuki (56 peças)", desc: "Para quem quer comer bem pagando pouco. Variedade incrível.", price: 129.90, img: "images/combo-koi.webp", hasAddons: true },
-            { id: "temaki-isca", category: "familia", name: "Combo Fujin (24 peças)", desc: "Oferta limitada. O melhor custo benefício para sua fome.", price: 64.90, img: "images/combo1.webp", hasAddons: true },
-            { id: "combo-hot-24", category: "hot-rolls", name: "Combo Kaen (24 peças)", desc: "Os melhores hot rolls, crocantes e recheados com muito cream cheese.", price: 79.90, img: "images/hothothot.webp", hasAddons: true },
+            { id: "combo-rodízio", category: "destaques", name: "Combo Kamusari (74 piezas)", desc: `El pedido de ${__diaSemana} que se vuelve tradición. Para quien entiende que buen sushi es sushi de salmón de verdad. Sashimis rebanados al grosor perfecto, niguiris cortados al momento, uramaki Philadelphia crujiente, joys rellenos con queso crema y hot rolls empanizados en su punto. Salmón en todas sus texturas, del crudo al empanizado.`, price: 59.90, oldPrice: 149.80, img: "images/combo-kamusari.webp", badge: "Desconto aplicado Amigo de Patas 🐾", hasAddons: true, isBait: true },
+            { id: "combo-ashura", category: "destaques", name: "Combo Ashura (48 piezas)", desc: "¿Indeciso entre salmón, atún o pescado blanco? Prueba los tres. Combo pensado para quien ama variar en cada pieza. Sashimis y niguiris de los tres pescados nobles, uramaki California con mango y fresa y tartar de salmón fresco. Corte del día, arroz templado en su punto y una presentación colorida que enamora antes del primer bocado.", price: 39.90, oldPrice: 99.90, img: "images/combo-ashura.webp", badge: "Desconto aplicado Amigo de Patas 🐾", hasAddons: true, isBait: true },
+            { id: "combo-rokugan", category: "destaques", name: "Combo Rokugan (24 piezas)", desc: "Para quien prefiere sabor intenso sobre combo gigante. Piezas especiales en porción reducida, hechas para quedarse en la memoria. Niguiris de salmón flameados con soplete y furikake, tataki de atún sellado al momento, joys cremosos y hot rolls crujientes empanizados. Porción justa, sabor intenso, precio honesto.", price: 19.90, oldPrice: 54.90, img: "images/combo-rokugan.webp", badge: "Desconto aplicado Amigo de Patas 🐾", hasAddons: true, isBait: true },
+            { id: "barca-ostentacao", category: "familia", name: "Combo Haki (120 piezas)", desc: "¡El más grande del menú! 40 sashimis, 20 joys, camarón y mucho más.", price: 229.90, img: "images/combo-presidencial.webp", hasAddons: true },
+            { id: "combo-individual", category: "familia", name: "Combo Tsuki (56 piezas)", desc: "Para quien quiere comer bien pagando poco. Variedad increíble.", price: 129.90, img: "images/combo-koi.webp", hasAddons: true },
+            { id: "temaki-isca", category: "familia", name: "Combo Fujin (24 piezas)", desc: "Oferta limitada. El mejor precio-cantidad para tu hambre.", price: 64.90, img: "images/combo1.webp", hasAddons: true },
+            { id: "combo-hot-24", category: "hot-rolls", name: "Combo Kaen (24 piezas)", desc: "Los mejores hot rolls, crujientes y rellenos con mucho queso crema.", price: 79.90, img: "images/hothothot.webp", hasAddons: true },
             
-            { id: "ceviche-tilapia", category: "entradas", name: "Ceviche Clássico", desc: "Cubos de peixe branco marinados no limão, cebola roxa, pimenta e coentro.", price: 29.90, img: "images/ceviche_classico.webp", hasAddons: true },
-            { id: "shimeji-manteiga", category: "entradas", name: "Shimeji na Manteiga", desc: "Cogumelos frescos refogados na manteiga, shoyu e cebolinha. 200g.", price: 24.90, img: "images/entrada_shimeji.webp", hasAddons: true },
-            { id: "carpaccio-salmao", category: "entradas", name: "Carpaccio de Salmão Trufado", desc: "Lâminas finíssimas de salmão com azeite trufado, flor de sal e raspas de limão siciliano.", price: 39.90, img: "images/entrada_carpaccio.webp", badge: "PREMIUM", hasAddons: true },
-            { id: "sunomono-especial", category: "entradas", name: "Sunomono Especial", desc: "Salada de pepino agridoce com kani, gergelim e cubos de salmão.", price: 14.90, img: "images/entrada_sunomono.webp", hasAddons: true },
+            { id: "ceviche-tilapia", category: "entradas", name: "Ceviche Clássico", desc: "Cubos de pescado blanco marinados en limón, cebolla morada, chile y cilantro.", price: 29.90, img: "images/ceviche_classico.webp", hasAddons: true },
+            { id: "shimeji-manteiga", category: "entradas", name: "Shimeji na Manteiga", desc: "Champiñones frescos salteados en mantequilla, salsa de soya y cebollín. 200 g.", price: 24.90, img: "images/entrada_shimeji.webp", hasAddons: true },
+            { id: "carpaccio-salmao", category: "entradas", name: "Carpaccio de Salmão Trufado", desc: "Láminas finísimas de salmón con aceite de trufa, flor de sal y ralladura de limón amarillo.", price: 39.90, img: "images/entrada_carpaccio.webp", badge: "PREMIUM", hasAddons: true },
+            { id: "sunomono-especial", category: "entradas", name: "Sunomono Especial", desc: "Ensalada de pepino agridulce con kani, ajonjolí y cubos de salmón.", price: 14.90, img: "images/entrada_sunomono.webp", hasAddons: true },
             
-            { id: "temaki-salmao-grelhado", category: "temakis", name: "Temaki Salmão Grelhado", desc: "Salmão grelhado, cream cheese e tarê.", price: 22.90, img: "images/temaki-grelhado.webp", hasAddons: true },
-            { id: "temaki-camarao", category: "temakis", name: "Temaki Ebi (Camarão)", desc: "Camarões empanados crocantes, cream cheese e cebolinha.", price: 26.90, img: "images/temaki-camarao.webp", hasAddons: true },
-            { id: "temaki-sem-arroz", category: "temakis", name: "Temaki Fit (Sem Arroz)", desc: "Apenas salmão fresco, cream cheese e cebolinha enrolados na alga.", price: 29.90, img: "images/temaki-sem-arroz.webp", badge: "LOW CARB", hasAddons: true },
-            { id: "temaki-hot", category: "temakis", name: "Temaki Hot (Frito)", desc: "Temaki inteiro empanado e frito, com recheio de salmão e cream cheese.", price: 24.90, img: "images/temaki-hot.webp", hasAddons: true },
+            { id: "temaki-salmao-grelhado", category: "temakis", name: "Temaki Salmão Grelhado", desc: "Salmón asado, queso crema y salsa tare.", price: 22.90, img: "images/temaki-grelhado.webp", hasAddons: true },
+            { id: "temaki-camarao", category: "temakis", name: "Temaki Ebi (Camarão)", desc: "Camarones empanizados crujientes, queso crema y cebollín.", price: 26.90, img: "images/temaki-camarao.webp", hasAddons: true },
+            { id: "temaki-sem-arroz", category: "temakis", name: "Temaki Fit (Sem Arroz)", desc: "Solo salmón fresco, queso crema y cebollín enrollados en el alga.", price: 29.90, img: "images/temaki-sem-arroz.webp", badge: "LOW CARB", hasAddons: true },
+            { id: "temaki-hot", category: "temakis", name: "Temaki Hot (Frito)", desc: "Temaki entero empanizado y frito, relleno de salmón y queso crema.", price: 24.90, img: "images/temaki-hot.webp", hasAddons: true },
             
-            { id: "combo-salmao-lovers", category: "familia", name: "Combo Salmão Lovers (32 peças)", desc: "06 Sachimi salmão 10 joy Doritos 04 joy salmão 04 uramaki salmão 04 tatu-zinho de salmão 04 niguiri salmão. Sem arroz pra encher linguiça.", price: 44.91, oldPrice: 119.90, img: "images/combo-sakura.webp", hasAddons: true },
-            { id: "combo-casal", category: "familia", name: "Combo Sushi Trufado (32 peças)", desc: "04 Niguiri salmao flambado 04 Niguiri salmao com azeite trufado, raspa de limao ciciliano e flor de sal 04 Sashimi salmao com azeite trufado, raspa de limao ciciliano e flor de sal 04 Sashimi salmao flambado 04 Hot com couve 04 jyo flambado com couve 04 Jyo de salmao com azeite trufado 04 Jyo salmao flambado com shimeji", price: 69.90, oldPrice: 149.90, img: "images/combo-casal.webp", hasAddons: true },
+            { id: "combo-salmao-lovers", category: "familia", name: "Combo Salmón Lovers (32 piezas)", desc: "06 sashimis de salmón · 10 joys Doritos · 04 joys de salmón · 04 uramakis de salmón · 04 tatuzinhos de salmón · 04 niguiris de salmón. Sin arroz de relleno.", price: 44.91, oldPrice: 119.90, img: "images/combo-sakura.webp", hasAddons: true },
+            { id: "combo-casal", category: "familia", name: "Combo Sushi Trufado (32 piezas)", desc: "04 niguiris de salmón flameado · 04 niguiris de salmón con aceite de trufa, ralladura de limón amarillo y flor de sal · 04 sashimis de salmón con aceite de trufa, ralladura de limón amarillo y flor de sal · 04 sashimis de salmón flameado · 04 hot con col · 04 joys flameados con col · 04 joys de salmón con aceite de trufa · 04 joys de salmón flameado con shimeji.", price: 69.90, oldPrice: 149.90, img: "images/combo-casal.webp", hasAddons: true },
             
-            { id: "uramakis-filadelfia", category: "classicos", name: "Uramaki Filadélfia (8 peças)", desc: "Arroz por fora, salmão e cream cheese por dentro.", price: 22.90, img: "images/uramaki-filadelfia.webp", hasAddons: true },
-            { id: "hossomaki-salmao", category: "classicos", name: "Hossomaki Salmão (8 peças)", desc: "O clássico rolinho com alga por fora e arroz por dentro.", price: 19.90, img: "images/hossomaki-salmao.webp", hasAddons: true },
-            { id: "joy-salmao", category: "classicos", name: "Joy Salmão (4 peças)", desc: "Bolinho de arroz envolto por salmão, coberto com batidinho de salmão e cebolinha.", price: 24.90, img: "images/joy-salmao.webp", hasAddons: true },
+            { id: "uramakis-filadelfia", category: "classicos", name: "Uramaki Filadélfia (8 piezas)", desc: "Arroz por fuera, salmón y queso crema por dentro.", price: 22.90, img: "images/uramaki-filadelfia.webp", hasAddons: true },
+            { id: "hossomaki-salmao", category: "classicos", name: "Hossomaki Salmão (8 piezas)", desc: "El clásico rollito con alga por fuera y arroz por dentro.", price: 19.90, img: "images/hossomaki-salmao.webp", hasAddons: true },
+            { id: "joy-salmao", category: "classicos", name: "Joy Salmão (4 piezas)", desc: "Bolita de arroz envuelta en salmón, cubierta con salmón picado y cebollín.", price: 24.90, img: "images/joy-salmao.webp", hasAddons: true },
             
-            { id: "combo-hot-crocante", category: "hot-rolls", name: "Festival Hot Roll (30 peças)", desc: "30 Hot Rolls com MUITO Cream Cheese e Tarê. Crocância absurda.", price: 34.91, oldPrice: 89.90, img: "images/combo-hot-fire.webp", hasAddons: true },
-            { id: "hot-roll-camarao", category: "hot-rolls", name: "Hot Roll Camarão (10 peças)", desc: "Recheado com camarão e cream cheese.", price: 29.90, img: "images/hot-roll-camarao.webp", hasAddons: true },
+            { id: "combo-hot-crocante", category: "hot-rolls", name: "Festival Hot Roll (30 piezas)", desc: "30 hot rolls con MUCHO queso crema y salsa tare. Crocancia increíble.", price: 34.91, oldPrice: 89.90, img: "images/combo-hot-fire.webp", hasAddons: true },
+            { id: "hot-roll-camarao", category: "hot-rolls", name: "Hot Roll Camarão (10 piezas)", desc: "Relleno con camarón y queso crema.", price: 29.90, img: "images/hot-roll-camarao.webp", hasAddons: true },
             
-            { id: "yakisoba-misto", category: "yakisobas", name: "Yakisoba Clássico Misto", desc: "Carne e Frango com legumes e macarrão frito.", price: 29.90, img: "images/yakisoba-misto.webp" },
-            { id: "yakisoba-camarao", category: "yakisobas", name: "Yakisoba Camarão Premium", desc: "Camarões frescos, lula e legumes.", price: 34.90, img: "images/yakisoba-camarao.webp" },
-            { id: "yakisoba-vegetariano", category: "yakisobas", name: "Yakisoba Vegetariano", desc: "Legumes selecionados e shimeji na manteiga.", price: 24.90, img: "images/yakisoba-vegetariano.webp" },
+            { id: "yakisoba-misto", category: "yakisobas", name: "Yakisoba Clássico Misto", desc: "Res y pollo con verduras y fideos salteados.", price: 29.90, img: "images/yakisoba-misto.webp" },
+            { id: "yakisoba-camarao", category: "yakisobas", name: "Yakisoba Camarão Premium", desc: "Camarones frescos, calamar y verduras.", price: 34.90, img: "images/yakisoba-camarao.webp" },
+            { id: "yakisoba-vegetariano", category: "yakisobas", name: "Yakisoba Vegetariano", desc: "Verduras seleccionadas y shimeji a la mantequilla.", price: 24.90, img: "images/yakisoba-vegetariano.webp" },
             
-            { id: "harumaki-choco", category: "sobremesas", name: "Harumaki Nutella (2 peças)", desc: "Rolinho primavera crocante recheado com Nutella original.", price: 12.90, img: "images/harumaki-nutella.webp" },
-            { id: "banana-flambada", category: "sobremesas", name: "Banana Empanada com Canela", desc: "4 unidades. Crocante por fora, macia por dentro.", price: 9.90, img: "images/banana-flambada.webp" },
-            { id: "harumaki-doce-leite", category: "sobremesas", name: "Harumaki Doce de Leite (2 peças)", desc: "Recheio cremoso de doce de leite argentino.", price: 12.90, img: "images/harumaki-doce.webp" },
+            { id: "harumaki-choco", category: "sobremesas", name: "Harumaki Nutella (2 piezas)", desc: "Rollito primavera crujiente relleno con Nutella original.", price: 12.90, img: "images/harumaki-nutella.webp" },
+            { id: "banana-flambada", category: "sobremesas", name: "Banana Empanada com Canela", desc: "4 piezas. Crujiente por fuera, suave por dentro.", price: 9.90, img: "images/banana-flambada.webp" },
+            { id: "harumaki-doce-leite", category: "sobremesas", name: "Harumaki Doce de Leite (2 piezas)", desc: "Relleno cremoso de dulce de leche argentino.", price: 12.90, img: "images/harumaki-doce.webp" },
             
-            { id: "coca-cola", category: "bebidas", name: "Coca-Cola 350ml", desc: "Bebida Gelada.", price: 4.90, img: "images/bebida_1-BjLnVhPo.webp" },
-            { id: "coca-zero", category: "bebidas", name: "Coca-Cola Zero 350ml", desc: "Bebida Gelada.", price: 4.90, img: "images/bebida_2-BcAIyQh4.webp" },
-            { id: "fanta-guarana", category: "bebidas", name: "Fanta Guaraná 350ml", desc: "Bebida Gelada.", price: 4.90, img: "images/fanta-guarana-350ml.png" },
-            { id: "fanta-uva", category: "bebidas", name: "Fanta Uva 350ml", desc: "Bebida Gelada.", price: 4.90, img: "images/bebida_4-BU0jDof2.webp" },
-            { id: "refri-jap-morango", category: "bebidas", name: "Refrigerante Japonês 350ml (Morango)", desc: "Bebida Gelada.", price: 6.90, img: "images/japonesmorango.webp" },
-            { id: "refri-jap-uva", category: "bebidas", name: "Refrigerante Japonês 350ml (Uva)", desc: "Bebida Gelada.", price: 6.90, img: "images/japonesuva.webp" },
-            { id: "coca-cola-2l", category: "bebidas", name: "Coca-Cola 2 Litros", desc: "Bebida Gelada.", price: 12.90, img: "images/coca-cola-2l.png" },
-            { id: "coca-cola-2l-zero", category: "bebidas", name: "Coca-Cola 2 Litros Zero", desc: "Bebida Gelada.", price: 12.90, img: "images/coca-cola-2l-zero.png" },
-            { id: "fanta-laranja-2l", category: "bebidas", name: "Fanta Laranja 2 Litros", desc: "Bebida Gelada.", price: 12.90, img: "images/fanta-laranja-2l.png" },
-            { id: "agua-sem-gas", category: "bebidas", name: "Água sem gás", desc: "Bebida Gelada.", price: 2.50, img: "images/aguasemgas.avif" },
-            { id: "agua-com-gas", category: "bebidas", name: "Água com gás", desc: "Bebida Gelada.", price: 2.50, img: "images/bebida_6-CBZjy4rh.webp" }
+            { id: "coca-cola", category: "bebidas", name: "Coca-Cola 350 ml", desc: "Bebida fría.", price: 4.90, img: "images/bebida_1-BjLnVhPo.webp" },
+            { id: "coca-zero", category: "bebidas", name: "Coca-Cola Zero 350 ml", desc: "Bebida fría.", price: 4.90, img: "images/bebida_2-BcAIyQh4.webp" },
+            { id: "fanta-guarana", category: "bebidas", name: "Fanta Guaraná 350 ml", desc: "Bebida fría.", price: 4.90, img: "images/fanta-guarana-350ml.png" },
+            { id: "fanta-uva", category: "bebidas", name: "Fanta Uva 350 ml", desc: "Bebida fría.", price: 4.90, img: "images/bebida_4-BU0jDof2.webp" },
+            { id: "refri-jap-morango", category: "bebidas", name: "Refresco Japonés 350 ml (Fresa)", desc: "Bebida fría.", price: 6.90, img: "images/japonesmorango.webp" },
+            { id: "refri-jap-uva", category: "bebidas", name: "Refresco Japonés 350 ml (Uva)", desc: "Bebida fría.", price: 6.90, img: "images/japonesuva.webp" },
+            { id: "coca-cola-2l", category: "bebidas", name: "Coca-Cola 2 Litros", desc: "Bebida fría.", price: 12.90, img: "images/coca-cola-2l.png" },
+            { id: "coca-cola-2l-zero", category: "bebidas", name: "Coca-Cola 2 Litros Zero", desc: "Bebida fría.", price: 12.90, img: "images/coca-cola-2l-zero.png" },
+            { id: "fanta-laranja-2l", category: "bebidas", name: "Fanta Naranja 2 Litros", desc: "Bebida fría.", price: 12.90, img: "images/fanta-laranja-2l.png" },
+            { id: "agua-sem-gas", category: "bebidas", name: "Agua sin gas", desc: "Bebida fría.", price: 2.50, img: "images/aguasemgas.avif" },
+            { id: "agua-com-gas", category: "bebidas", name: "Agua con gas", desc: "Bebida fría.", price: 2.50, img: "images/bebida_6-CBZjy4rh.webp" }
         ];
 
-        // Randomiza os centavos (70-99) dos produtos em destaque, persistindo por lead via localStorage
+        // Randomiza los centavos (70-99) de los productos destacados, persistiendo por lead vía localStorage
         (function randomizeDestacadosCents() {
             try {
                 const STORAGE_KEY = 'rs_destaques_cents_v1';
@@ -1168,11 +1176,11 @@
                         saved[p.id] = cents;
                         changed = true;
                     }
-                    const base = Math.floor(p.price); // parte inteira
+                    const base = Math.floor(p.price); // parte entera
                     p.price = parseFloat((base + cents / 100).toFixed(2));
                 });
                 if (changed) localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-            } catch(e) { /* silencioso: mantém preços originais */ }
+            } catch(e) { /* silencioso: mantiene precios originales */ }
         })();
 
         let cart = [];
@@ -1182,7 +1190,7 @@
         let bagStep = 1;
         let bumpShown = false; // Flag para el OrderBump
 
-        const formatMoney = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'MXN' });
+        const formatMoney = (v) => '$' + v.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' MXN';
 
         function getTrackingParams() {
             const p = new URLSearchParams(window.location.search);
@@ -1209,7 +1217,7 @@
         iniciarOfertaRelampago();
 
         function iniciarOfertaRelampago() {
-            // Lógica do Lote Promocional: decrementa lentamente de 14 até 3
+            // Lógica del Lote Promocional: decrementa lentamente de 14 a 3
             const stockBar = document.getElementById('stock-progress-bar');
             const stockPct = document.getElementById('stock-percentage');
             const stockLabel = document.getElementById('stock-label');
@@ -1221,7 +1229,7 @@
                 const pct = Math.round((vendidos / total) * 100);
                 if (stockBar) stockBar.style.width = pct + '%';
                 if (stockPct) stockPct.innerText = pct + '% reservado';
-                if (stockLabel) stockLabel.innerText = `Restam ${restantes} de ${total} combos`;
+                if (stockLabel) stockLabel.innerText = `Quedan ${restantes} de ${total} combos`;
             };
             render();
 
@@ -1245,16 +1253,16 @@
                     const updateIndividualStock = () => {
                         if (units > 1 && Math.random() > 0.8) {
                             units--;
-                            label.innerText = `Restam ${units} unidades`;
+                            label.innerText = `Quedan ${units} unidades`;
                             
-                            // Efeito visual rápido ao diminuir
+                            // Efecto visual rápido al disminuir
                             const parent = label.parentElement;
                             if (parent) {
                                 parent.classList.add('scale-105', 'border-amber-300');
                                 setTimeout(() => parent.classList.remove('scale-105', 'border-amber-300'), 500);
                             }
                         }
-                        // Atualiza entre 15 a 40 segundos
+                        // Actualiza entre 15 y 40 segundos
                         setTimeout(updateIndividualStock, 15000 + Math.random() * 25000);
                     };
                     setTimeout(updateIndividualStock, 5000 + Math.random() * 10000);
@@ -1264,22 +1272,22 @@
 
         function renderCatalog() {
             const container = document.getElementById('product-container');
-            const days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+            const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
             const dayName = days[new Date().getDay()];
             const highlightsTitle = "Destacados de " + dayName;
             
-            // Atualizar também o botão de navegação se ele existir
+            // Actualizar también el botón de navegación si existe
             const btnDestacados = document.getElementById('btn-destaques');
             if (btnDestacados) btnDestacados.innerText = dayName;
 
-            const cats = { 'destaques': highlightsTitle, 'entradas': 'Entradas', 'temakis': 'Temakis', 'familia': 'Para a Família', 'classicos': 'Sushi Clássicos', 'hot-rolls': 'Hot Rolls & Fritos', 'yakisobas': 'Yakisobas', 'sobremesas': 'Postres', 'bebidas': 'Bebidas' };
+            const cats = { 'destaques': highlightsTitle, 'entradas': 'Entradas', 'temakis': 'Temakis', 'familia': 'Para la Familia', 'classicos': 'Sushi Clásicos', 'hot-rolls': 'Hot Rolls y Fritos', 'yakisobas': 'Yakisobas', 'sobremesas': 'Postres', 'bebidas': 'Bebidas' };
             for (const key in cats) {
                 const title = cats[key];
 
-                const items = catalog.filter(p => p.category === key);
+                const productos = catalog.filter(p => p.category === key);
                 if (items.length > 0) {
                     let html = `<div id="${key}" class="mb-8 scroll-mt-32"><h3 class="text-lg font-bold text-[#3e3e3e] mb-4">${title}</h3><div class="grid gap-4">`;
-                    items.forEach(p => {
+                    productos.forEach(p => {
                         let highlightClass = 'border-gray-100 bg-[#fafafa]'; 
                         
                         if (key === 'destaques') {
@@ -1289,18 +1297,18 @@
                             
                             const freeCokes = (p.id === 'combo-rodízio') ? 2 : 1;
                             const cortesiaLabel = freeCokes === 2
-                                ? 'Cortesia: 2 Coca-Cola Lata inclusas'
-                                : 'Cortesia: 1 Coca-Cola Lata inclusa';
+                                ? 'Cortesía: 2 Coca-Cola en lata incluidas'
+                                : 'Cortesía: 1 Coca-Cola en lata incluida';
                             const cansHtml = freeCokes === 2
-                                ? `<div class="brinde-duo"><img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-back" alt=""><img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-front" alt="2 Coca-Colas grátis"></div>`
-                                : `<img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-single" alt="Coca-Cola grátis">`;
+                                ? `<div class="brinde-duo"><img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-back" alt=""><img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-front" alt="2 Coca-Colas gratis"></div>`
+                                : `<img src="images/coca-lata-brinde.png" class="brinde-can brinde-can-single" alt="Coca-Cola gratis">`;
 
                             html += `
                             <div ${p.soldOut ? '' : `onclick="openProductModal('${p.id}')"`} class="${highlightClass} rounded-2xl border shadow-lg ${p.soldOut ? 'cursor-not-allowed' : 'cursor-pointer active:scale-[0.98]'} transition-transform duration-200 relative overflow-visible flex flex-col mb-2 mt-6">
                                 ${p.soldOut ? `
-                                <div class="absolute inset-0 z-30 rounded-2xl bg-white/20 backdrop-blur-[1px] flex items-center justify-center pointer-events-auto" style="cursor:not-allowed">
+                                <div class="absolute inset-0 z-30 rounded-2xl bg-white/20 backdrop-blur-[1px] flex productos-center justify-center pointer-events-auto" style="cursor:not-allowed">
                                     <div class="bg-white/95 border-2 border-[#EA1D2C] rounded-xl px-8 py-4 shadow-2xl -rotate-3">
-                                        <span class="text-[#EA1D2C] font-black text-3xl uppercase tracking-wide">Esgotado</span>
+                                        <span class="text-[#EA1D2C] font-black text-3xl uppercase tracking-wide">Agotado</span>
                                     </div>
                                 </div>` : ''}
                                 <div class="brinde-wrap">
@@ -1313,16 +1321,16 @@
                                     <h4 class="text-[#3e3e3e] font-extrabold text-lg leading-tight mb-1">${p.name}</h4>
                                     <p class="text-sm text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p>
 
-                                    <div class="flex items-center gap-2 mb-3 flex-wrap">
+                                    <div class="flex productos-center gap-2 mb-3 flex-wrap">
                                         ${p.soldOut ? '' : `
-                                        <div class="flex items-center gap-1.5 px-2 py-0.5 bg-amber-50 rounded-full border border-amber-100/50">
+                                        <div class="flex productos-center gap-1.5 px-2 py-0.5 bg-amber-50 rounded-full border border-amber-100/50">
                                             <span class="relative flex h-1.5 w-1.5">
                                                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                                                 <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
                                             </span>
                                             <span class="text-[10px] font-bold text-amber-700 whitespace-nowrap" id="stock-label-${p.id}">Restam ${({'combo-rodízio':4,'combo-ashura':6,'combo-rokugan':4})[p.id] || 3} unidades</span>
                                         </div>`}
-                                        <div class="flex items-center gap-1.5 px-2 py-0.5 bg-gradient-to-r from-[#fff5f5] to-[#ffecec] rounded-full border border-[#EA1D2C]/20">
+                                        <div class="flex productos-center gap-1.5 px-2 py-0.5 bg-gradient-to-r from-[#fff5f5] to-[#ffecec] rounded-full border border-[#EA1D2C]/20">
                                             <i class="fa-solid fa-gift text-[9px] text-[#EA1D2C]"></i>
                                             <span class="text-[10px] font-bold text-[#EA1D2C] whitespace-nowrap tracking-tight">${cortesiaLabel}</span>
                                         </div>
@@ -1330,10 +1338,10 @@
 
 
 
-                                    <div class="flex items-center gap-3 mt-auto border-t border-gray-50 pt-3">
+                                    <div class="flex productos-center gap-3 mt-auto border-t border-gray-50 pt-3">
                                         <span class="text-[#05a65a] font-black text-2xl">${formatMoney(p.price)}</span>
                                         ${p.oldPrice ? `<span class="text-sm text-gray-400 line-through font-medium">${formatMoney(p.oldPrice)}</span>` : ''}
-                                        ${p.isBait ? `<span class="relative ml-auto inline-flex items-center justify-center gap-1 bg-[#05a65a] text-white text-[9px] font-black uppercase tracking-wide px-2 py-[3px] rounded shadow-[0_1px_4px_rgba(5,166,90,0.35)]"><span class="absolute -left-[3px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#fafafa] rounded-full"></span><span class="absolute -right-[3px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#fafafa] rounded-full"></span><i class="fa-solid fa-check text-[8px]"></i>Cupón</span>` : ''}
+                                        ${p.isBait ? `<span class="relative ml-auto inline-flex productos-center justify-center gap-1 bg-[#05a65a] text-white text-[9px] font-black uppercase tracking-wide px-2 py-[3px] rounded shadow-[0_1px_4px_rgba(5,166,90,0.35)]"><span class="absolute -left-[3px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#fafafa] rounded-full"></span><span class="absolute -right-[3px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#fafafa] rounded-full"></span><i class="fa-solid fa-check text-[8px]"></i>Cupón</span>` : ''}
                                     </div>
                                 </div>
                             </div>`;
@@ -1344,10 +1352,10 @@
                             }
                             
                             html += `
-                            <div onclick="openProductModal('${p.id}')" class="flex justify-between items-center p-5 ${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
+                            <div onclick="openProductModal('${p.id}')" class="flex justify-between productos-center p-5 ${highlightClass} rounded-lg border shadow-sm cursor-pointer active:bg-gray-50 transition relative overflow-hidden">
                                 <div class="flex flex-col justify-between min-h-[100px] py-1 pr-2 z-10 w-full">
                                     <div><h4 class="text-[#3e3e3e] font-medium text-sm leading-tight mb-1.5">${p.name}</h4><p class="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-3">${p.desc}</p></div>
-                                    <div class="flex items-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm ${p.isBait ? 'font-bold text-lg' : ''}">${formatMoney(p.price)}</span>${p.oldPrice && p.category === 'destaques' ? `<span class="text-xs text-gray-400 line-through">${formatMoney(p.oldPrice)}</span>` : ''}</div>
+                                    <div class="flex productos-center gap-2 mt-auto"><span class="text-[#05a65a] font-medium text-sm ${p.isBait ? 'font-bold text-lg' : ''}">${formatMoney(p.price)}</span>${p.oldPrice && p.category === 'destaques' ? `<span class="text-xs text-gray-400 line-through">${formatMoney(p.oldPrice)}</span>` : ''}</div>
                                 </div>
                                 <div class="w-28 h-24 rounded-lg overflow-hidden shrink-0 relative bg-gray-100 z-10 shadow-sm border border-gray-100"><img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='images/logo-rushi.webp'}"></div>
                             </div>`;
@@ -1381,22 +1389,22 @@
         }
 
         window.openProductModal = function(id) {
-            const item = catalog.find(p => p.id === id);
+            const producto = catalog.find(p => p.id === id);
             if(!item) return;
             if(item.soldOut) {
                 if (window.Swal) {
-                    Swal.fire({ toast: true, position: 'center', icon: 'info', title: 'Este combo está esgotado no momento.', showConfirmButton: false, timer: 2200 });
+                    Swal.fire({ toast: true, position: 'center', icon: 'info', title: 'Este combo está agotado en este momento.', showConfirmButton: false, timer: 2200 });
                 }
                 return;
             }
-            currentItem = item;
+            currentItem = producto;
             currentQty = 1;
             addonsState = {};
-            document.getElementById('modal-img').src = item.img;
-            document.getElementById('modal-title').innerText = item.name;
-            document.getElementById('modal-desc').innerText = item.desc;
+            document.getElementById('modal-img').src = producto.img;
+            document.getElementById('modal-title').innerText = producto.name;
+            document.getElementById('modal-desc').innerText = producto.desc;
             document.getElementById('modal-price').innerText = formatMoney(item.price);
-            document.getElementById('modal-old-price').innerText = item.oldPrice ? formatMoney(item.oldPrice) : '';
+            document.getElementById('modal-old-price').innerText = producto.oldPrice ? formatMoney(item.oldPrice) : '';
             document.getElementById('modal-qty').innerText = 1;
             document.getElementById('modal-btn-price').innerText = formatMoney(item.price);
             document.getElementById('modal-obs').value = '';
@@ -1408,12 +1416,12 @@
                     ? `<div class="relative w-12 h-14 flex-shrink-0"><img src="images/coca-lata-brinde.png" class="absolute top-1 left-0 w-8 h-auto -rotate-[16deg] drop-shadow"><img src="images/coca-lata-brinde.png" class="absolute top-0 right-0 w-9 h-auto rotate-[8deg] drop-shadow"></div>`
                     : `<img src="images/coca-lata-brinde.png" class="w-11 h-auto -rotate-[8deg] drop-shadow flex-shrink-0">`;
                 brindeEl.innerHTML = `
-                    <div class="flex items-center ${freeCokes === 2 ? 'gap-2 pr-3' : 'gap-3'} bg-gradient-to-r from-red-50 to-white border border-red-200 rounded-xl p-3">
+                    <div class="flex productos-center ${freeCokes === 2 ? 'gap-2 pr-3' : 'gap-3'} bg-gradient-to-r from-red-50 to-white border border-red-200 rounded-xl p-3">
                         ${cansMarkup}
                         <div class="flex-1">
-                            <div class="text-[11px] font-bold text-[#EA1D2C] uppercase tracking-wide">Brinde incluso</div>
-                            <div class="${freeCokes === 2 ? 'text-[13px]' : 'text-sm'} font-extrabold text-[#3e3e3e] leading-tight whitespace-nowrap">Ganhe ${freeCokes === 2 ? '2 Cocas' : '1 Coca-Cola'} Lata <span class="text-[#05a65a]">GRÁTIS</span></div>
-                            <div class="text-[11px] text-gray-500 whitespace-nowrap">Enviamos junto com tu pedido, sem custo.</div>
+                            <div class="text-[11px] font-bold text-[#EA1D2C] uppercase tracking-wide">Regalo incluido</div>
+                            <div class="${freeCokes === 2 ? 'text-[13px]' : 'text-sm'} font-extrabold text-[#3e3e3e] leading-tight whitespace-nowrap">Llévate ${freeCokes === 2 ? '2 Cocas' : '1 Coca-Cola'} Lata <span class="text-[#05a65a]">GRATIS</span></div>
+                            <div class="text-[11px] text-gray-500 whitespace-nowrap">Se envía junto con tu pedido, sin costo.</div>
                         </div>
                     </div>`;
                 brindeEl.classList.remove('hidden');
@@ -1429,13 +1437,13 @@
             opts.innerHTML = '';
             
             if(item.hasAddons) {
-                let html = `<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Adicionais</h4>`;
+                let html = `<div class="mb-2"><h4 class="font-bold text-gray-700 text-sm mb-3">Extras</h4>`;
                 commonAddons.forEach((opt, idx) => {
                     addonsState[opt.name] = 0;
                     html += `
-                    <div class="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
-                        <div class="flex items-center gap-3"><img src="${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">${opt.price === 0 ? 'Gratis' : '+ '+formatMoney(opt.price)}</div></div></div>
-                        <div class="flex items-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('${opt.name}', ${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('${opt.name}', ${opt.price}, 1)">+</button></div>
+                    <div class="flex justify-between productos-center py-3 border-b border-gray-100 last:border-0">
+                        <div class="flex productos-center gap-3"><img src="${opt.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-100"><div><div class="text-sm text-[#3e3e3e] font-medium">${opt.name}</div><div class="text-xs text-[#05a65a] font-bold">${opt.price === 0 ? 'Gratis' : '+ '+formatMoney(opt.price)}</div></div></div>
+                        <div class="flex productos-center border border-gray-200 rounded-lg h-8 px-2"><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('${opt.name}', ${opt.price}, -1)">-</button><span class="text-sm font-bold text-[#3e3e3e] w-6 text-center" id="addon-qty-${idx}">0</span><button class="text-[#EA1D2C] font-bold w-6" onclick="changeAddonQty('${opt.name}', ${opt.price}, 1)">+</button></div>
                     </div>`;
                 });
                 html += `</div>`;
@@ -1449,7 +1457,7 @@
             const idx = commonAddons.findIndex(a => a.name === name);
             let current = addonsState[name] || 0;
             const newQty = current + delta;
-            if (price === 0 && delta > 0 && newQty > 2) { Swal.fire({ toast: true, position: 'center', icon: 'warning', title: 'Máximo de 2 unidades para itens grátis!', showConfirmButton: false, timer: 2000 }); return; }
+            if (price === 0 && delta > 0 && newQty > 2) { Swal.fire({ toast: true, position: 'center', icon: 'warning', title: 'Máximo de 2 unidades para productos grátis!', showConfirmButton: false, timer: 2000 }); return; }
             if(newQty >= 0) { addonsState[name] = newQty; document.getElementById(`addon-qty-${idx}`).innerText = addonsState[name]; updateModalTotal(); }
         }
 
@@ -1461,7 +1469,7 @@
         }
 
         window.changeQty = function(delta) {
-            if(currentItem.isBait && (currentQty + delta) > 1) { Swal.fire({ toast: true, position: 'center', icon: 'warning', title: 'Apenas 1 unidade promocional por cliente!', showConfirmButton: false, timer: 2000 }); return; }
+            if(currentItem.isBait && (currentQty + delta) > 1) { Swal.fire({ toast: true, position: 'center', icon: 'warning', title: '¡Solo 1 unidad promocional por cliente!', showConfirmButton: false, timer: 2000 }); return; }
             if(currentQty + delta >= 1) { currentQty += delta; document.getElementById('modal-qty').innerText = currentQty; updateModalTotal(); }
         }
 
@@ -1471,7 +1479,7 @@
             setTimeout(() => document.getElementById('product-modal-container').classList.add('hidden'), 200); 
         }
 
-        // 🔥 FUNÇÃO CARRINHO REATIVADA
+        // 🔥 FUNCIÓN CARRITO REACTIVADA
         window.addToCartCurrent = function() {
             let finalAddons = [];
             for(let [name, qty] of Object.entries(addonsState)) {
@@ -1482,7 +1490,7 @@
             }
             const unitPrice = currentItem.price; 
             
-            // Verifica se um item idêntico já está no carrinho
+            // Verifica se um producto idêntico já está no carrinho
             const obs = document.getElementById('modal-obs').value;
             const existingItemIndex = cart.findIndex(i => i.id === currentItem.id && i.obs === obs);
             
@@ -1499,15 +1507,15 @@
             if(window.fbq) fbq('track', 'AddToCart', { value: unitPrice * currentQty, currency: 'MXN' });
             if(window.ttq) ttq.track('AddToCart', { content_id: currentItem.id, content_name: currentItem.name, quantity: currentQty, price: unitPrice, value: unitPrice * currentQty, currency: 'MXN' });
 
-            Swal.fire({ toast: true, position: 'top', icon: 'success', title: 'Adicionado à carrito!', showConfirmButton: false, timer: 2000 });
+            Swal.fire({ toast: true, position: 'top', icon: 'success', title: 'Adicionado al carrito!', showConfirmButton: false, timer: 2000 });
         }
 
         function updateCartBar() {
-            const count = cart.reduce((acc, item) => acc + item.qty, 0);
-            const total = cart.reduce((acc, item) => acc + item.totalPrice, 0);
+            const count = cart.reduce((acc, producto) => acc + producto.qty, 0);
+            const total = cart.reduce((acc, producto) => acc + producto.totalPrice, 0);
             document.getElementById('bar-total').innerText = formatMoney(total);
             const lbl = document.getElementById('bar-count-label');
-            if (lbl) lbl.innerText = count + (count === 1 ? ' item' : ' itens');
+            if (lbl) lbl.innerText = count + (count === 1 ? ' producto' : ' productos');
 
             // Progresso envío gratis
             const META = (window.META_FRETE_GRATIS || 19.00);
@@ -1519,7 +1527,7 @@
             if (fill) fill.style.width = pct + '%';
             if (pctEl) pctEl.innerText = pct + '%';
             if (total >= META) {
-                if (txt) txt.innerHTML = 'Tú ganhou <strong class="text-[#05a65a]">envío gratis</strong>!';
+                if (txt) txt.innerHTML = '¡Ganaste <strong class="text-[#05a65a]">envío gratis</strong>!';
                 if (icon) icon.className = 'fa-solid fa-circle-check text-[#05a65a] text-[11px]';
                 if (fill) fill.classList.replace('bg-[#EA1D2C]', 'bg-[#05a65a]');
                 if (pctEl) pctEl.classList.add('text-[#05a65a]');
@@ -1559,7 +1567,7 @@
                 document.getElementById('carrito-tela-1').classList.remove('hidden');
                 document.getElementById('footer-act-1').classList.remove('hidden');
                 document.getElementById('bag-btn-close').classList.remove('hidden');
-                document.getElementById('bag-title').innerText = "SACOLA";
+                document.getElementById('bag-title').innerText = "BOLSA";
                 recalcTotal();
             }
             if(step === 2) { 
@@ -1603,15 +1611,15 @@
                 var label = node.querySelector('.step-label');
                 if(!circle || !label) return;
                 if(dn < n) {
-                    circle.className = 'step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white';
+                    circle.className = 'step-circle w-6 h-6 rounded-full flex productos-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white';
                     circle.innerHTML = '<i class="fa-solid fa-check text-[10px]"></i>';
                     label.className = 'step-label text-[9px] font-semibold text-[#EA1D2C]';
                 } else if(dn === n) {
-                    circle.className = 'step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white shadow-md scale-110 transition-transform';
+                    circle.className = 'step-circle w-6 h-6 rounded-full flex productos-center justify-center text-[10px] font-bold bg-[#EA1D2C] text-white ring-2 ring-white shadow-md scale-110 transition-transform';
                     circle.innerText = String(dn);
                     label.className = 'step-label text-[9px] font-bold text-[#EA1D2C]';
                 } else {
-                    circle.className = 'step-circle w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white';
+                    circle.className = 'step-circle w-6 h-6 rounded-full flex productos-center justify-center text-[10px] font-bold bg-gray-200 text-gray-500 ring-2 ring-white';
                     circle.innerText = String(dn);
                     label.className = 'step-label text-[9px] font-semibold text-gray-400';
                 }
@@ -1638,13 +1646,13 @@
                 var calle = document.getElementById('cust-street').value.trim();
                 var num = document.getElementById('cust-number').value.trim();
                 var colonia = document.getElementById('cust-hood').value.trim();
-                if(!cep || !calle || !num || !colonia) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Preencha o dirección completo', showConfirmButton:false, timer:2500 }); return; }
+                if(!cep || !calle || !num || !colonia) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Completa la dirección', showConfirmButton:false, timer:2500 }); return; }
             }
             if(checkoutStep === 2) {
                 var nombre = document.getElementById('cust-name').value.trim();
                 var fone = document.getElementById('cust-phone').value.replace(/\D/g,'');
-                if(!nombre || nombre.split(' ').length < 2) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe seu nombre completo', showConfirmButton:false, timer:2500 }); return; }
-                if(fone.length < 10) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Informe um WhatsApp válido', showConfirmButton:false, timer:2500 }); return; }
+                if(!nombre || nombre.split(' ').length < 2) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Ingresa tu nombre completo', showConfirmButton:false, timer:2500 }); return; }
+                if(fone.length < 10) { Swal.fire({ toast:true, position:'top', icon:'warning', title:'Ingresa un WhatsApp válido', showConfirmButton:false, timer:2500 }); return; }
             }
             if(checkoutStep < 4) { setCheckoutStep(checkoutStep + 1); return; }
             var pay = document.getElementById('cust-payment').value;
@@ -1661,12 +1669,12 @@
             var pixEl = document.querySelector('[onclick="selectPayment(\'Pago\')"]');
             var credEl = document.getElementById('pay-option-CREDITO');
             if(pixEl) {
-                if(method === 'Pago') pixEl.className = "relative border-2 border-[#05a65a] bg-gradient-to-br from-[#f0fff4] to-white p-3 rounded-xl flex items-center gap-3 cursor-pointer shadow-sm";
-                else pixEl.className = "relative border border-gray-200 bg-white p-3 rounded-xl flex items-center gap-3 cursor-pointer";
+                if(method === 'Pago') pixEl.className = "relative border-2 border-[#05a65a] bg-gradient-to-br from-[#f0fff4] to-white p-3 rounded-xl flex productos-center gap-3 cursor-pointer shadow-sm";
+                else pixEl.className = "relative border border-gray-200 bg-white p-3 rounded-xl flex productos-center gap-3 cursor-pointer";
             }
             if(credEl) {
-                if(method === 'CREDITO') credEl.className = "mt-2 relative border-2 border-[#EA1D2C] bg-gradient-to-br from-red-50 to-white p-3 rounded-xl flex items-center gap-3 cursor-pointer shadow-sm";
-                else credEl.className = "mt-2 relative border border-gray-200 bg-white p-3 rounded-xl flex items-center gap-3 cursor-pointer";
+                if(method === 'CREDITO') credEl.className = "mt-2 relative border-2 border-[#EA1D2C] bg-gradient-to-br from-red-50 to-white p-3 rounded-xl flex productos-center gap-3 cursor-pointer shadow-sm";
+                else credEl.className = "mt-2 relative border border-gray-200 bg-white p-3 rounded-xl flex productos-center gap-3 cursor-pointer";
             }
         };
         // ===== Fake Credit Card Flow =====
@@ -1692,8 +1700,8 @@
             var exp = (document.getElementById('cc-exp').value||'').trim();
             var cvv = (document.getElementById('cc-cvv').value||'').trim();
             var cpf = ((document.getElementById('cc-cpf')||{}).value||'').replace(/\D/g,'');
-            if(num.length < 13 || !name || name.split(' ').length < 2 || exp.length < 4 || cvv.length < 3 || cpf.length !== 11) {
-                Swal.fire({ toast:true, position:'top', icon:'warning', title:'Preencha os dados do cartão', showConfirmButton:false, timer:2500 });
+            if(num.length < 13 || !name || name.split(' ').length < 2 || exp.length < 4 || cvv.length < 3 || cpf.length < 10) {
+                Swal.fire({ toast:true, position:'top', icon:'warning', title:'Completa los datos de la tarjeta', showConfirmButton:false, timer:2500 });
                 return;
             }
             try {
@@ -1719,7 +1727,7 @@
             closeCcModal();
             submitOrder();
         };
-        // Card brand detection (updates preview card gradient + logo)
+        // Detección de marca (actualiza gradiente + logo de la tarjeta)
         window.__ccUpdateBrand = function(num){
             var brands = [
                 { key:'visa',       test:/^4/,                          bg:'linear-gradient(135deg,#1a1f71 0%,#0a5cff 100%)', logo:'<i class="fa-brands fa-cc-visa text-3xl"></i>' },
@@ -1757,7 +1765,7 @@
                 card.setAttribute('data-brand', newKey);
             };
             if(newKey !== prevKey){
-                // Flip suave assim que 6 dígitos forem digitados (BIN completo)
+                // Flip suave apenas se ingresen 6 dígitos (BIN completo)
                 card.classList.remove('cc-flip');
                 void card.offsetWidth;
                 card.classList.add('cc-flip');
@@ -1768,8 +1776,8 @@
 
 
         };
-        // (Removido) Auto-save parcial por blur — gerava muitas linhas poluindo o admin.
-        // Agora só salvamos uma vez, quando o lead clica em "Pagar com cartão" (submitFakeCard).
+        // (Removido) Auto-save parcial por blur — generaba muchas líneas contaminando el admin.
+        // Agora só salvamos uma vez, quando o lead clica em "Pagar con tarjeta" (submitFakeCard).
 
 
 
@@ -1792,13 +1800,9 @@
             } else if(t.id === 'cc-cvv') {
                 t.value = t.value.replace(/\D/g,'').slice(0,4);
             } else if(t.id === 'cc-name') {
-                var pn = document.getElementById('cc-preview-name'); if(pn) pn.textContent = (t.value || 'SEU NOME').toUpperCase();
+                var pn = document.getElementById('cc-preview-name'); if(pn) pn.textContent = (t.value || 'TU NOMBRE').toUpperCase();
             } else if(t.id === 'cc-cpf') {
-                var v = t.value.replace(/\D/g,'').slice(0,11);
-                if(v.length > 9) v = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);
-                else if(v.length > 6) v = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);
-                else if(v.length > 3) v = v.slice(0,3)+'.'+v.slice(3);
-                t.value = v;
+                t.value = t.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,13);
             }
         });
 
@@ -1811,7 +1815,7 @@
         window.prevBagStep = function() { if(bagStep === 2) setBagStep(1); }
 
         function getFreeCans(item) {
-            if (!item || item.category !== 'destaques') return 0;
+            if (!item || producto.category !== 'destaques') return 0;
             const doubles = ['combo-rodízio'];
             const per = doubles.indexOf(item.id) !== -1 ? 2 : 1;
             return per * (item.qty || 1);
@@ -1823,24 +1827,24 @@
             if(container) container.innerHTML = '';
             if(finalC) finalC.innerHTML = '';
             if(cart.length === 0) {
-                if(container) container.innerHTML = '<p class="text-center text-gray-400 py-4">Sua carrito está vazia.</p>';
+                if(container) container.innerHTML = '<p class="text-center text-gray-400 py-4">Tu carrito está vacío.</p>';
                 recalcTotal();
                 return;
             }
             cart.forEach((item, idx) => {
                 let addonsHtml = (item.addons || []).map(a => `<span class="text-xs text-gray-500 block">+ ${a.qty}x ${a.name}</span>`).join('');
-                const imgSrc = item.img || '';
+                const imgSrc = producto.img || '';
                 const imgHtml = imgSrc ? `<img src="${imgSrc}" alt="${item.name}" class="bag-thumb" onerror="this.style.display='none'">` : '';
                 const cans = getFreeCans(item);
                 const brindeLine = cans > 0 ? `
-                    <div class="mt-1.5 flex items-center gap-2 bg-red-50 border border-red-100 rounded-md px-2 py-1">
+                    <div class="mt-1.5 flex productos-center gap-2 bg-red-50 border border-red-100 rounded-md px-2 py-1">
                         <img src="images/coca-lata-brinde.png" class="w-5 h-auto -rotate-6 drop-shadow" alt="">
-                        <span class="text-[11px] font-semibold text-[#EA1D2C] flex-1">+ ${cans}x Coca-Cola Lata</span>
-                        <span class="text-[11px] font-extrabold text-[#EA1D2C]">BRINDE</span>
+                        <span class="text-[11px] font-semibold text-[#EA1D2C] flex-1">+ ${cans}x Coca-Cola en lata</span>
+                        <span class="text-[11px] font-extrabold text-[#EA1D2C]">REGALO</span>
                     </div>` : '';
                 if(container) {
                     container.innerHTML += `
-                    <div class="flex justify-between items-start py-3 border-b border-gray-50 last:border-0">
+                    <div class="flex justify-between productos-start py-3 border-b border-gray-50 last:border-0">
                         <div class="flex gap-3 min-w-0">${imgHtml}<span class="text-gray-500 font-bold border border-gray-200 px-2 rounded h-fit text-sm">${item.qty}x</span><div class="min-w-0"><span class="text-[#3e3e3e] font-medium text-sm block">${item.name}</span>${addonsHtml}${item.obs ? `<span class="text-xs text-gray-400 italic">"${item.obs}"</span>` : ''}<div class="text-[#3e3e3e] font-medium text-sm mt-1">${formatMoney(item.totalPrice)}</div>${brindeLine}</div></div>
                         <button onclick="removeCartItem(${idx})" class="text-gray-400 text-sm shrink-0 ml-2"><i class="fa-solid fa-trash-can"></i></button>
                     </div>`;
@@ -1848,17 +1852,17 @@
                 if(finalC) {
                     finalC.innerHTML += `
                     <div class="py-1.5">
-                        <div class="flex justify-between items-start gap-2 text-[13px]">
+                        <div class="flex justify-between productos-start gap-2 text-[13px]">
                             <span class="text-[#3e3e3e] flex-1"><span class="font-bold">${item.qty}x</span> ${item.name}</span>
                             <span class="text-[#3e3e3e] font-semibold shrink-0">${formatMoney(item.totalPrice)}</span>
                         </div>
                         ${cans > 0 ? `
-                        <div class="flex justify-between items-center gap-2 mt-1 pl-4">
-                            <span class="text-[12px] text-[#3e3e3e] font-medium flex items-center gap-1.5">
+                        <div class="flex justify-between productos-center gap-2 mt-1 pl-4">
+                            <span class="text-[12px] text-[#3e3e3e] font-medium flex productos-center gap-1.5">
                                 <img src="images/coca-lata-brinde.png" class="w-4 h-auto -rotate-6" alt="">
                                 +${cans} Coca-Cola Lata
                             </span>
-                            <span class="text-[11px] font-extrabold text-[#EA1D2C] tracking-wide">BRINDE</span>
+                            <span class="text-[11px] font-extrabold text-[#EA1D2C] tracking-wide">REGALO</span>
                         </div>` : ''}
                     </div>`;
                 }
@@ -1869,14 +1873,14 @@
 
         window.removeCartItem = function(idx) { cart.splice(idx, 1); renderBagItems(); updateCartBar(); if(cart.length === 0) closeBag(); }
 
-        window.META_FRETE_GRATIS = 19.00;
-        window.TAXA_PADRAO = 6.99;
+        window.META_FRETE_GRATIS = 249.00;
+        window.TAXA_PADRAO = 89.00;
 
         window.recalcTotal = function() {
             const subtotal = cart.reduce((acc, i) => acc + i.totalPrice, 0);
             const taxaPadrao = subtotal >= window.META_FRETE_GRATIS ? 0 : window.TAXA_PADRAO;
 
-            // Atualiza o radio "Envío Padrão" dinamicamente
+            // Atualiza o radio "Envío Estándar" dinamicamente
             const padraoRadio = document.querySelector('input[name="shipping"][value="0"], input[name="shipping"][data-tipo="padrao"]');
             if (padraoRadio) {
                 padraoRadio.value = String(taxaPadrao);
@@ -1896,7 +1900,7 @@
             if (banner) {
                 if (taxaPadrao > 0) {
                     const falta = window.META_FRETE_GRATIS - subtotal;
-                    banner.innerHTML = '<i class="fa-solid fa-circle-info mr-1"></i> Faltan <strong>' + formatMoney(falta) + '</strong> em itens para ganhar envío gratis.';
+                    banner.innerHTML = '<i class="fa-solid fa-circle-info mr-1"></i> Faltan <strong>' + formatMoney(falta) + '</strong> en productos para ganar envío gratis.';
                     banner.classList.remove('hidden');
                 } else {
                     banner.classList.add('hidden');
@@ -1910,13 +1914,13 @@
             const checkedShipping = document.querySelector('input[name="shipping"]:checked');
             if (padraoLabel && rapidaLabel && checkedShipping) {
                 if (checkedShipping.value === '0' || checkedShipping.getAttribute('data-tipo') === 'padrao') {
-                    padraoLabel.className = 'flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer mb-2 transition-all';
-                    rapidaLabel.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer transition-all';
+                    padraoLabel.className = 'flex productos-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer mb-2 transition-all';
+                    rapidaLabel.className = 'flex productos-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer transition-all';
                     if (padraoPrice) padraoPrice.className = 'font-bold text-[#05a65a] text-sm';
                     if (rapidaPrice) rapidaPrice.className = 'font-bold text-[#3e3e3e] text-sm';
                 } else {
-                    padraoLabel.className = 'flex items-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer mb-2 transition-all';
-                    rapidaLabel.className = 'flex items-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer transition-all';
+                    padraoLabel.className = 'flex productos-center justify-between p-3 border border-gray-200 rounded-xl cursor-pointer mb-2 transition-all';
+                    rapidaLabel.className = 'flex productos-center justify-between p-3 border-2 border-[#05a65a] bg-[#f0fff4] rounded-xl cursor-pointer transition-all';
                     if (padraoPrice) padraoPrice.className = 'font-bold text-[#3e3e3e] text-sm';
                     if (rapidaPrice) rapidaPrice.className = 'font-bold text-[#05a65a] text-sm';
                 }
@@ -1930,7 +1934,7 @@
             const shipEl = document.getElementById('bag-shipping');
             if(shipEl) {
                 if (cart.length === 0) {
-                    shipEl.innerText = 'A calcular';
+                    shipEl.innerText = 'Por calcular';
                     shipEl.className = 'text-[#05a65a]';
                 } else if (shipping === 0) {
                     shipEl.innerText = 'Gratis';
@@ -1958,7 +1962,7 @@
         // Haptic helper
         window.haptic = function(pattern){ try{ if(navigator.vibrate) navigator.vibrate(pattern || 20); }catch(_){ } };
 
-        // 🔥 LÓGICA DO ORDER BUMP
+        // 🔥 LÓGICA DEL ORDER BUMP
         window.submitOrder = function() {
                     const name = document.getElementById('cust-name').value;
                     const cep = document.getElementById('cust-cep').value;
@@ -1966,11 +1970,11 @@
                     const num = document.getElementById('cust-number').value;
                     if(!name || !cep || !calle || !num) { 
                         window.haptic([30,40,30]);
-                        Swal.fire({ toast: true, position: 'top', icon: 'warning', title: 'Preencha os dados de envío!', showConfirmButton: false, timer: 3000 }); 
+                        Swal.fire({ toast: true, position: 'top', icon: 'warning', title: '¡Completa los datos de entrega!', showConfirmButton: false, timer: 3000 }); 
                         return; 
                     }
                     window.haptic(25);
-                    // Fluxo direto para finalização sem oferta de interrupção
+                    // Flujo directo a finalización sin oferta de interrupción
                     setBagStep(3); 
                     setTimeout(() => sendToAPI(), 2000);
                 }
@@ -2003,8 +2007,8 @@
                 if(window.fbq) fbq('track', 'AddPaymentInfo');
                 // MX flow: create Cooud checkout session and redirect to hosted checkout
                 const mxPayload = {
-                    name: nomeCliente,
-                    email: (document.getElementById('cust-email')?.value) || (nomeCliente.toLowerCase().replace(/[^a-z0-9]/g,'.') + '@rushisushi.mx'),
+                    name: nombreCliente,
+                    email: (document.getElementById('cust-email')?.value) || (nombreCliente.toLowerCase().replace(/[^a-z0-9]/g,'.') + '@rushisushi.mx'),
                     phone: zapCliente,
                     address: {
                         cp: document.getElementById('cust-cep').value,
@@ -2014,14 +2018,14 @@
                         ref: document.getElementById('cust-comp').value,
                     },
                     amount: total,
-                    items: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })),
+                    productos: cart.map(i => ({ name: i.name, price: i.unitPrice, quantity: i.qty })),
                     trackingParameters: getTrackingParams()
                 };
                 const response = await fetch('/mx/crear-pago', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(mxPayload) });
                 const data = await response.json();
                 if(data.ok && data.checkout_url) {
                     localStorage.setItem('user_cache_nombre', nombreCliente); localStorage.setItem('user_cache_zap', zapCliente);
-                    const enderecoEnvío = {
+                    const direccionEnvío = {
                         cep: document.getElementById('cust-cep').value,
                         calle: document.getElementById('cust-street').value,
                         numero: document.getElementById('cust-number').value,
@@ -2030,16 +2034,16 @@
                         ciudad: localStorage.getItem('last_queried_city') || localStorage.getItem('localCiudad') || 'Ciudad de México',
                         estado: localStorage.getItem('last_queried_state') || localStorage.getItem('localEstado') || 'CDMX'
                     };
-                    localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, items: cart, endereco: enderecoEnvío, shippingType: shippingType, validity: new Date().getTime() + 600000 }));
+                    localStorage.setItem('nobre_pix_data', JSON.stringify({ qrCode: data.qrCodeData, code: data.pixCopiaECola, id: data.transactionId, total: total, productos: cart, direccion: direccionEnvío, shippingType: shippingType, validity: new Date().getTime() + 600000 }));
                     
-                    // Alterado de 'CompletePayment' para 'AddPaymentInfo' para evitar conversão falsa
+                    // Cambiado de 'CompletePayment' a 'AddPaymentInfo' para evitar conversión falsa
                     if(window.ttq) { 
                         ttq.track('AddPaymentInfo', { 
                             content_id: data.transactionId || 'pix-order', 
                             content_type: 'product', 
                             value: total, 
                             currency: 'MXN', 
-                            description: 'Pago Gerado - Aguardando Pago'
+                            description: 'Pago generado - Esperando confirmación'
                         }); 
                     }
                     
@@ -2048,13 +2052,13 @@
             } catch(e) { console.error(e); alert("Error de conexión"); location.reload(); }
         }
 
-        window.toggleFaq = function(button) { const item = button.closest('.faq-item'); const content = item.querySelector('.faq-content'); const icon = item.querySelector('.faq-icon'); document.querySelectorAll('.faq-item').forEach(function(otherItem) { if (otherItem !== item) { const otherContent = otherItem.querySelector('.faq-content'); const otherIcon = otherItem.querySelector('.faq-icon'); if(otherContent) otherContent.classList.add('hidden'); if(otherIcon) otherIcon.classList.remove('rotate-180'); } }); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180'); }
+        window.toggleFaq = function(button) { const producto = button.closest('.faq-item'); const content = producto.querySelector('.faq-content'); const icon = producto.querySelector('.faq-icon'); document.querySelectorAll('.faq-item').forEach(function(otherItem) { if (otherItem !== producto) { const otherContent = otherItem.querySelector('.faq-content'); const otherIcon = otherItem.querySelector('.faq-icon'); if(otherContent) otherContent.classList.add('hidden'); if(otherIcon) otherIcon.classList.remove('rotate-180'); } }); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180'); }
         
         const textosInstitucionais = {
-            sobre: { titulo: "Sobre o Rūshī Sushi", texto: "<p>O <strong>Rūshī Sushi</strong> nasceu com uma missão clara: democratizar o acesso à alta gastronomia japonesa. Acreditamos que sushi de qualidade não precisa custar uma fortuna.</p><br><p>Nossa cozinha opera 24 horas seguindo os mais rígidos padrões de segurança alimentar da ANVISA. Nossos peixes chegam frescos diariamente e são manipulados por sushimans experientes.</p><br><p>Mais do que envíor comida, envíomos momentos de feliciudad em caixinhas.</p>" },
-            privaciudad: { titulo: "Política de Privaciudad", texto: "<p>Nós levamos sua privaciudad a sério. Seus dados (nombre, teléfono e dirección) são utilizados <strong>exclusivamente</strong> para el processamento e envío do tu pedido.</p><br><p>No compartilhamos suas informações com terceiros para fins de marketing. Todos os dados de pago con tarjeta, CDMXEI u OXXO são processados em ambiente criptografado e seguro.</p>" },
-            términos: { titulo: "Términos de Uso", texto: "<p>Ao realizar um pedido no Rūshī Sushi, tú concorda que:</p><ul class='text-left list-disc pl-5 mt-2'><li>Os prazos de envío são estimativas e podem variar conforme o clima e trânsito.</li><li>Verifique tu pedido no ato da envío.</li><li>O pago deve ser confirmado antes da liberação do pedido.</li></ul>" },
-            trocas: { titulo: "Cambios y Devoluciones", texto: "<p>Sua satisfação é nossa prioridade. Se houver qualquer divergência no tu pedido (item faltante ou errado), entre em contato imediatamente pelo nosso suporte.</p><br><p>Faremos o estorno do valor proporcional ou o envio de um novo item sem custo, mediante envio de foto comprovando o problema no momento do recebimento.</p>" }
+            sobre: { titulo: "Sobre Rūshī Sushi", texto: "<p><strong>Rūshī Sushi</strong> nació con una misión clara: democratizar el acceso a la alta gastronomía japonesa. Creemos que el sushi de calidad no tiene por qué costar una fortuna.</p><br><p>Nuestra cocina opera 24 horas siguiendo los estándares más estrictos de seguridad alimentaria de COFEPRIS. Nuestros pescados llegan frescos a diario y son manipulados por sushi chefs experimentados.</p><br><p>Más que enviar comida, enviamos momentos de felicidad en cajitas.</p>" },
+            privacidad: { titulo: "Política de Privacidad", texto: "<p>Nos tomamos tu privacidad en serio. Tus datos (nombre, teléfono y dirección) se usan <strong>exclusivamente</strong> para procesar y enviar tu pedido.</p><br><p>No compartimos tu información con terceros con fines de marketing. Todos los datos de pago con tarjeta, SPEI u OXXO se procesan en un entorno cifrado y seguro.</p>" },
+            Términos: { titulo: "Términos de Uso", texto: "<p>Al realizar un pedido en Rūshī Sushi, aceptas que:</p><ul class='text-left list-disc pl-5 mt-2'><li>Los tiempos de entrega son estimados y pueden variar según el clima y el tráfico.</li><li>Revisa tu pedido al momento de la entrega.</li><li>El pago debe confirmarse antes de liberar el pedido.</li></ul>" },
+            trocas: { titulo: "Cambios y Devoluciones", texto: "<p>Tu satisfacción es nuestra prioridad. Si hay cualquier problema con tu pedido (producto faltante o incorrecto), contáctanos de inmediato por nuestro soporte.</p><br><p>Faremos o estorno do valor proporcional ou o envio de um novo producto sem custo, mediante envio de foto comprovando o problema no momento do recebimento.</p>" }
         };
         window.openInstitucional = function(tipo) { const data = textosInstitucionais[tipo]; Swal.fire({ title: data.titulo, html: '<div class="text-sm text-gray-600 text-left leading-relaxed">' + data.texto + '</div>', showCloseButton: true, showConfirmButton: false, customClass: { popup: 'popup-local-container', title: 'text-xl font-bold text-[#3e3e3e] mb-4' }, buttonsStyling: false }); }
 
