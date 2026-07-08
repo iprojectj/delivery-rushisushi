@@ -31,6 +31,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { LeadFields } from "@/lib/lead-fields";
+import { AdminShell } from "@/components/admin/AdminShell";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/leads")({
