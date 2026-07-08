@@ -908,9 +908,9 @@ function DashboardPage() {
                 })}
               </div>
             )}
+          </div>
         </section>
       </div>
     </AdminShell>
-  );
   );
 }
