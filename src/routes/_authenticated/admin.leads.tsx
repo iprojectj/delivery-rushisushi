@@ -614,7 +614,7 @@ function LeadsList() {
             })
           )}
       </section>
-      </main>
+      </div>
 
       <AlertDialog
         open={!!pendingDelete}
