@@ -77,6 +77,7 @@ const presenceListeners = new Set<() => void>();
 let presenceSnapshot: PresenceSnapshot = { visitors: [], connected: false };
 let presenceChannel: PresenceChannel | null = null;
 let presenceStarted = false;
+let presencePollId: ReturnType<typeof setInterval> | null = null;
 
 function emitPresenceSnapshot(next: PresenceSnapshot) {
   presenceSnapshot = next;
@@ -128,31 +129,31 @@ function startPresenceSubscription() {
     });
     presenceChannel = channel;
 
-    const rebuild = () => {
-      emitPresenceSnapshot({
-        connected: presenceSnapshot.connected,
-        visitors: readVisitorsFromChannel(channel),
-      });
+    const rebuild = (connected = presenceSnapshot.connected) => {
+      try {
+        emitPresenceSnapshot({ connected, visitors: readVisitorsFromChannel(channel) });
+      } catch (error) {
+        console.warn("[LivePresence] failed to read presence state:", error);
+      }
     };
 
-    channel
-      .on("presence", { event: "sync" }, rebuild)
-      .on("presence", { event: "join" }, rebuild)
-      .on("presence", { event: "leave" }, rebuild)
-      .subscribe((status) => {
-        const connected = status === "SUBSCRIBED";
-        const disconnected =
-          status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED";
-
-        if (connected || disconnected) {
-          emitPresenceSnapshot({
-            connected,
-            visitors: connected ? readVisitorsFromChannel(channel) : presenceSnapshot.visitors,
-          });
+    try {
+      channel.subscribe((status) => {
+        if (status === "SUBSCRIBED") rebuild(true);
+        if (status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
+          emitPresenceSnapshot({ connected: false, visitors: presenceSnapshot.visitors });
         }
       });
+    } catch (error) {
+      console.warn("[LivePresence] presence channel was already subscribed:", error);
+    }
+
+    presencePollId = setInterval(() => rebuild(), 2500);
+    rebuild();
   } catch (error) {
     console.warn("[LivePresence] failed to start realtime presence:", error);
+    if (presencePollId) clearInterval(presencePollId);
+    presencePollId = null;
     if (presenceChannel) supabase.removeChannel(presenceChannel);
     presenceChannel = null;
     presenceStarted = false;
