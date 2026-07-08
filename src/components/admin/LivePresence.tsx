@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useRef, useState, lazy, Suspense, Component, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Radio } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -190,9 +190,11 @@ export function LiveGlobeCard() {
 
       <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-black md:aspect-[16/10]">
         {mounted ? (
-          <Suspense fallback={<GlobeSkeleton />}>
-            <GlobeClient visitors={visitors} />
-          </Suspense>
+          <GlobeErrorBoundary fallback={<GlobeSkeleton />}>
+            <Suspense fallback={<GlobeSkeleton />}>
+              <GlobeClient visitors={visitors} />
+            </Suspense>
+          </GlobeErrorBoundary>
         ) : (
           <GlobeSkeleton />
         )}
@@ -227,4 +229,21 @@ function GlobeSkeleton() {
       <div className="text-xs text-[var(--muted-foreground)]">Carregando globo 3D...</div>
     </div>
   );
+}
+
+class GlobeErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(err: unknown) {
+    console.warn("[LiveGlobe] failed to render, falling back:", err);
+  }
+  render() {
+    if (this.state.hasError) return this.props.fallback;
+    return this.props.children;
+  }
 }
