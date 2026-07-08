@@ -66,40 +66,73 @@ export type PresenceVisitor = {
   city: string;
 };
 
-export function usePresence() {
-  const [visitors, setVisitors] = useState<PresenceVisitor[]>([]);
-  const [connected, setConnected] = useState(false);
+type PresenceSnapshot = {
+  visitors: PresenceVisitor[];
+  connected: boolean;
+};
 
-  useEffect(() => {
+type PresenceChannel = ReturnType<typeof supabase.channel>;
+
+const presenceListeners = new Set<() => void>();
+let presenceSnapshot: PresenceSnapshot = { visitors: [], connected: false };
+let presenceChannel: PresenceChannel | null = null;
+let presenceStarted = false;
+
+function emitPresenceSnapshot(next: PresenceSnapshot) {
+  presenceSnapshot = next;
+  presenceListeners.forEach((listener) => listener());
+}
+
+function readVisitorsFromChannel(channel: PresenceChannel): PresenceVisitor[] {
+  const state = channel.presenceState();
+  const list: PresenceVisitor[] = [];
+
+  for (const key of Object.keys(state)) {
+    const metas = state[key] as unknown as Array<{
+      tz?: string;
+      path?: string;
+      at?: number;
+    }>;
+
+    for (const m of metas) {
+      const tz = m.tz ?? "";
+      const coord = TZ_COORDS[tz];
+      if (!coord) continue;
+
+      list.push({
+        key,
+        tz,
+        path: m.path ?? "/",
+        at: m.at ?? Date.now(),
+        lat: coord.lat + (Math.random() - 0.5) * 0.6,
+        lng: coord.lng + (Math.random() - 0.5) * 0.6,
+        city: coord.city,
+      });
+    }
+  }
+
+  return list;
+}
+
+function startPresenceSubscription() {
+  if (presenceStarted) return;
+  presenceStarted = true;
+
+  try {
     const channel = supabase.channel("site-presence", {
-      config: { presence: { key: "admin-viewer-" + Math.random().toString(36).slice(2, 8) } },
+      config: {
+        presence: {
+          key: "admin-monitor-" + Math.random().toString(36).slice(2, 8),
+        },
+      },
     });
+    presenceChannel = channel;
 
     const rebuild = () => {
-      const state = channel.presenceState();
-      const list: PresenceVisitor[] = [];
-      for (const key of Object.keys(state)) {
-        const metas = state[key] as unknown as Array<{
-          tz?: string;
-          path?: string;
-          at?: number;
-        }>;
-        for (const m of metas) {
-          const tz = m.tz ?? "";
-          const coord = TZ_COORDS[tz];
-          if (!coord) continue;
-          list.push({
-            key,
-            tz,
-            path: m.path ?? "/",
-            at: m.at ?? Date.now(),
-            lat: coord.lat + (Math.random() - 0.5) * 0.6,
-            lng: coord.lng + (Math.random() - 0.5) * 0.6,
-            city: coord.city,
-          });
-        }
-      }
-      setVisitors(list);
+      emitPresenceSnapshot({
+        connected: presenceSnapshot.connected,
+        visitors: readVisitorsFromChannel(channel),
+      });
     };
 
     channel
@@ -107,15 +140,40 @@ export function usePresence() {
       .on("presence", { event: "join" }, rebuild)
       .on("presence", { event: "leave" }, rebuild)
       .subscribe((status) => {
-        if (status === "SUBSCRIBED") setConnected(true);
-      });
+        const connected = status === "SUBSCRIBED";
+        const disconnected =
+          status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED";
 
+        if (connected || disconnected) {
+          emitPresenceSnapshot({
+            connected,
+            visitors: connected ? readVisitorsFromChannel(channel) : presenceSnapshot.visitors,
+          });
+        }
+      });
+  } catch (error) {
+    console.warn("[LivePresence] failed to start realtime presence:", error);
+    if (presenceChannel) supabase.removeChannel(presenceChannel);
+    presenceChannel = null;
+    presenceStarted = false;
+    emitPresenceSnapshot({ visitors: [], connected: false });
+  }
+}
+
+export function usePresence() {
+  const [snapshot, setSnapshot] = useState<PresenceSnapshot>(presenceSnapshot);
+
+  useEffect(() => {
+    const update = () => setSnapshot(presenceSnapshot);
+    presenceListeners.add(update);
+    startPresenceSubscription();
+    update();
     return () => {
-      supabase.removeChannel(channel);
+      presenceListeners.delete(update);
     };
   }, []);
 
-  return { visitors, connected };
+  return snapshot;
 }
 
 export function LivePresenceBadge({ inline = false }: { inline?: boolean }) {
