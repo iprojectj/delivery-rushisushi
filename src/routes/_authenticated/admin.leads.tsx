@@ -31,6 +31,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { LeadFields } from "@/lib/lead-fields";
+import { AdminShell } from "@/components/admin/AdminShell";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/leads")({
@@ -306,37 +307,11 @@ function LeadsList() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
-      {/* Header */}
-      <header className="border-b bg-card/60 backdrop-blur-xl sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg shadow-primary/20">
-              <Users className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold tracking-tight">Painel de Leads</h1>
-              <p className="text-xs text-muted-foreground">
-                Acompanhe cada interação em tempo real
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link to="/admin/dashboard">
-              <Button variant="outline" size="sm" className="gap-2">
-                <BarChart3 className="h-4 w-4" />
-                Dashboard
-              </Button>
-            </Link>
-            <Button variant="outline" size="sm" onClick={logout} className="gap-2">
-              <LogOut className="h-4 w-4" />
-              Sair
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto p-6 space-y-6">
+    <AdminShell
+      title="Painel de Leads"
+      subtitle="Acompanhe cada interação em tempo real"
+    >
+      <div className="mx-auto max-w-7xl space-y-6">
         {/* Stats */}
         <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
@@ -640,7 +615,7 @@ function LeadsList() {
             })
           )}
       </section>
-      </main>
+      </div>
 
       <AlertDialog
         open={!!pendingDelete}
@@ -670,6 +645,6 @@ function LeadsList() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </AdminShell>
   );
 }

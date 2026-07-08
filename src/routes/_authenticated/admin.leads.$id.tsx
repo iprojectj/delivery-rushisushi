@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LeadFields } from "@/lib/lead-fields";
+import { AdminShell } from "@/components/admin/AdminShell";
 
 
 export const Route = createFileRoute("/_authenticated/admin/leads/$id")({
@@ -77,28 +78,29 @@ function LeadDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-card px-6 py-4">
-        <Link to="/admin/leads" className="text-sm text-muted-foreground hover:underline">
-          ← Todos os leads
-        </Link>
-        <h1 className="text-2xl font-bold mt-2">{lead.nome || "(sem nome)"}</h1>
-        <div className="text-sm text-muted-foreground mt-1 flex gap-4 flex-wrap">
+    <AdminShell
+      title={lead.nome || "(sem nome)"}
+      subtitle={
+        <span className="flex flex-wrap gap-3 text-xs">
           <span>WhatsApp: {formatPhone(lead.whatsapp)}</span>
           <span>
-            Primeira interação: {new Date(lead.first_seen_at).toLocaleString("pt-BR")}
+            Primeira: {new Date(lead.first_seen_at).toLocaleString("pt-BR")}
           </span>
           <span>
-            Última interação: {new Date(lead.last_seen_at).toLocaleString("pt-BR")}
+            Última: {new Date(lead.last_seen_at).toLocaleString("pt-BR")}
           </span>
-        </div>
-      </header>
-      <main className="p-6 max-w-4xl mx-auto space-y-4">
+        </span>
+      }
+    >
+      <div className="mx-auto max-w-4xl space-y-4">
+        <Link to="/admin/leads" className="text-sm text-[var(--muted-foreground)] hover:underline">
+          ← Todos os leads
+        </Link>
         <h2 className="text-lg font-semibold">
           Interações ({subs.length})
         </h2>
         {subs.length === 0 && (
-          <p className="text-muted-foreground text-sm">
+          <p className="text-[var(--muted-foreground)] text-sm">
             Este lead ainda não enviou nada.
           </p>
         )}
@@ -128,7 +130,7 @@ function LeadDetail() {
             </CardContent>
           </Card>
         ))}
-      </main>
-    </div>
+      </div>
+    </AdminShell>
   );
 }
