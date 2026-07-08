@@ -40,7 +40,7 @@ import {
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { AdminShell } from "@/components/admin/AdminShell";
-import { LiveGlobeCard } from "@/components/admin/LivePresence";
+import { LivePresenceBadge } from "@/components/admin/LivePresence";
 
 export const Route = createFileRoute("/_authenticated/admin/dashboard")({
   component: DashboardPage,
@@ -463,8 +463,8 @@ function DashboardPage() {
       }
     >
       <div className="mx-auto max-w-7xl space-y-6">
-        {/* Live globe — visitors right now */}
-        <LiveGlobeCard />
+        {/* Live presence badge — visitors right now */}
+        <LivePresenceBadge />
         {/* Filters */}
         <section className="rounded-2xl border bg-card p-4 shadow-sm flex flex-wrap items-center gap-2">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mr-1">
