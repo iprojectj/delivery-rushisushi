@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useRef, useState, lazy, Suspense, Component, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Radio } from "lucide-react";
 import { cn } from "@/lib/utils";
