@@ -39,6 +39,8 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { AdminShell } from "@/components/admin/AdminShell";
+import { LiveGlobeCard } from "@/components/admin/LivePresence";
 
 export const Route = createFileRoute("/_authenticated/admin/dashboard")({
   component: DashboardPage,
