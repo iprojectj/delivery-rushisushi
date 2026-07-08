@@ -190,9 +190,11 @@ export function LiveGlobeCard() {
 
       <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-black md:aspect-[16/10]">
         {mounted ? (
-          <Suspense fallback={<GlobeSkeleton />}>
-            <GlobeClient visitors={visitors} />
-          </Suspense>
+          <GlobeErrorBoundary fallback={<GlobeSkeleton />}>
+            <Suspense fallback={<GlobeSkeleton />}>
+              <GlobeClient visitors={visitors} />
+            </Suspense>
+          </GlobeErrorBoundary>
         ) : (
           <GlobeSkeleton />
         )}
