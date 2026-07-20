@@ -1162,7 +1162,8 @@
             { id: "agua-com-gas", category: "bebidas", name: "Agua con gas", desc: "Bebida fría.", price: 2.50, img: "images/bebida_6-CBZjy4rh.webp" }
         ];
 
-        // Randomiza los centavos (70-99) de los productos destacados, persistiendo por lead vía localStorage
+        /* Randomización de centavos desactivada según solicitud */
+        /*
         (function randomizeDestacadosCents() {
             try {
                 const STORAGE_KEY = 'rs_destaques_cents_v1';
@@ -1181,8 +1182,9 @@
                     p.price = parseFloat((base + cents / 100).toFixed(2));
                 });
                 if (changed) localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-            } catch(e) { /* silencioso: mantiene precios originales */ }
+            } catch(e) { }
         })();
+        */
 
         let cart = [];
         let currentItem = null;
