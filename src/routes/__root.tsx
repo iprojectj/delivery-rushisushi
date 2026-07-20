@@ -94,6 +94,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css",
       },
+      {
+        rel: "stylesheet",
+        href: "data:text/css,#lovable-badge,.lovable-badge,[id^='lovable-badge'],[class^='lovable-badge'],.edit-with-lovable,#edit-with-lovable{display:none!important;}",
+      },
     ],
   }),
   shellComponent: RootShell,

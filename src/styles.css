@@ -1,4 +1,9 @@
-#lovable-badge {
+#lovable-badge,
+.lovable-badge,
+[id^="lovable-badge"],
+[class^="lovable-badge"],
+.edit-with-lovable,
+#edit-with-lovable {
   display: none !important;
 }
 
