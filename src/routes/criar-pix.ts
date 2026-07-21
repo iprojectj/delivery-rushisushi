@@ -28,19 +28,23 @@ export const Route = createFileRoute("/criar-pix")({
           const descricaoPedido = montarDescricaoPedido(products);
 
           const payloadVeno = {
-            amount: valorEmCentavos, // Algumas APIs usam centavos, outras reais. Docs sugerem centavos para "amount" em muitos gateways brasileiros.
+            amount: valorEmCentavos,
             description: descricaoPedido,
             external_id: `rushi-${Date.now()}`,
-            payer_name: nome,
-            payer_email: emailCliente,
-            payer_document: cpfCliente,
-            postback_url: `${new URL(request.url).origin}/api/public/venopay-webhook`,
+            callback_url: `${new URL(request.url).origin}/api/public/venopay-webhook`,
+            payer: {
+              name: nome,
+              email: emailCliente,
+              document: cpfCliente,
+              phone: telefoneLimpo,
+            },
+            ...trackingParameters
           };
 
-          const venoRes = await fetch(`${VENOPAY_API_URL}/api/v1/pix/create`, {
+          const venoRes = await fetch(`${VENOPAY_API_URL}/api/v1/pix`, {
             method: "POST",
             headers: {
-              "token": auth.replace("Bearer ", ""), // VenoPay usa header 'token' sem 'Bearer'
+              "Authorization": auth,
               "Content-Type": "application/json",
             },
             body: JSON.stringify(payloadVeno),

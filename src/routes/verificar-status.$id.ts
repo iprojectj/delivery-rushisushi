@@ -7,7 +7,7 @@ export const Route = createFileRoute("/verificar-status/$id")({
       GET: async ({ params }) => {
         try {
           const auth = getVenopayAuth();
-          const res = await fetch(`${VENOPAY_API_URL}/api/v1/pix/${params.id}/status`, {
+          const res = await fetch(`${VENOPAY_API_URL}/api/v1/pix/${params.id}`, {
             headers: { "Authorization": auth },
           });
           const data = await res.json();

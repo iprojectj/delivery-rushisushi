@@ -1,7 +1,7 @@
-// VenoPay Gateway helpers. Docs: https://dash.venopayments.com/docs/api/index
-// Base URL: https://dash.venopayments.com
+// VenoPay Gateway helpers. Docs: https://beta.venopayments.com/llms.txt
+// Base URL: https://beta.venopayments.com
 
-export const VENOPAY_API_URL = "https://dash.venopayments.com";
+export const VENOPAY_API_URL = "https://beta.venopayments.com";
 export const UTMIFY_API_URL = "https://api.utmify.com.br/api-credentials/orders";
 
 // Rate limit map
