@@ -72,13 +72,12 @@ interface UtmifyPayload {
 }
 
 export function getVenopayAuth() {
-  const accountId = process.env.VENOPAY_ACCOUNT_ID || "";
   const apiKey = process.env.VENOPAY_API_KEY || "";
   const liveToken = process.env.VENOPAY_LIVE_TOKEN || "";
   
-  // Se tiver o token formatado (pk_live:sk_live), usa ele
+  // A VenoPay geralmente espera o token no formato Bearer
+  // Se houver liveToken, ele tem precedência
   if (liveToken) return `Bearer ${liveToken}`;
-  // Caso contrário, tenta compor (ajustar conforme necessidade da VenoPay)
   return `Bearer ${apiKey}`;
 }
 
