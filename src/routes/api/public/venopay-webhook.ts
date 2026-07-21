@@ -35,7 +35,7 @@ export const Route = createFileRoute("/api/public/venopay-webhook")({
         try {
           const rawBody = await request.text();
           const secret = process.env.VENOPAY_WEBHOOK_SECRET || "";
-          const signature = request.headers.get("x-venopay-signature") || request.headers.get("signature");
+          const signature = request.headers.get("x-venopay-signature") || request.headers.get("signature") || request.headers.get("x-signature");
 
           if (!verificarAssinatura(rawBody, signature, secret)) {
             console.warn("[VENOPAY] Assinatura de webhook inválida.");
