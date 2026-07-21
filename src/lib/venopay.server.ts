@@ -1,9 +1,30 @@
 // VenoPay Gateway helpers. Docs: https://dash.venopayments.com/docs/api/index
 // Base URL: https://dash.venopayments.com
-// Auth: Bearer Token (pk_live:sk_live) ou X-API-Key
 
 export const VENOPAY_API_URL = "https://dash.venopayments.com";
 export const UTMIFY_API_URL = "https://api.utmify.com.br/api-credentials/orders";
+
+// Rate limit map
+const rateLimit = new Map<string, { count: number; lastReset: number }>();
+
+export function checkRateLimit(key: string, limit: number, windowMs: number) {
+  const now = Date.now();
+  const state = rateLimit.get(key) || { count: 0, lastReset: now };
+
+  if (now - state.lastReset > windowMs) {
+    state.count = 0;
+    state.lastReset = now;
+  }
+
+  state.count++;
+  rateLimit.set(key, state);
+
+  return {
+    allowed: state.count <= limit,
+    retryAfterSec: Math.ceil(Math.max(0, (state.lastReset + windowMs - now) / 1000)),
+  };
+}
+
 
 type UtmifyPaymentMethod = "credit_card" | "boleto" | "pix" | "paypal" | "free_price";
 type UtmifyStatus = "waiting_payment" | "paid" | "refused" | "refunded" | "chargedback";

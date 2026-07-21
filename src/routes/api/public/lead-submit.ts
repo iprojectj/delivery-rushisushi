@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { checkRateLimit } from "@/lib/nexuspag.server";
+import { checkRateLimit } from "@/lib/venopay.server";
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
