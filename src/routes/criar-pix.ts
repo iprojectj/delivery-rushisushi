@@ -40,7 +40,7 @@ export const Route = createFileRoute("/criar-pix")({
           const venoRes = await fetch(`${VENOPAY_API_URL}/api/v1/pix/create`, {
             method: "POST",
             headers: {
-              "Authorization": auth,
+              "token": auth.replace("Bearer ", ""), // VenoPay usa header 'token' sem 'Bearer'
               "Content-Type": "application/json",
             },
             body: JSON.stringify(payloadVeno),
