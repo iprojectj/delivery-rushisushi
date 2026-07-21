@@ -2,6 +2,7 @@
 // Base URL: https://beta.venopayments.com
 
 export const VENOPAY_API_URL = "https://beta.venopayments.com";
+export const UTMIFY_API_URL = "https://api.utmify.com.br/api-credentials/orders";
 
 // Rate limit map
 const rateLimit = new Map<string, { count: number; lastReset: number }>();
