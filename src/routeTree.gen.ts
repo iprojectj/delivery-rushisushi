@@ -23,7 +23,7 @@ import { Route as MxPedidoRouteImport } from './routes/mx.pedido'
 import { Route as MxGraciasRouteImport } from './routes/mx.gracias'
 import { Route as MxCrearPagoRouteImport } from './routes/mx.crear-pago'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
-import { Route as ApiPublicNexuspagWebhookRouteImport } from './routes/api/public/nexuspag-webhook'
+import { Route as ApiPublicVenopayWebhookRouteImport } from './routes/api/public/venopay-webhook'
 import { Route as ApiPublicLeadSubmitRouteImport } from './routes/api/public/lead-submit'
 import { Route as ApiPublicCooudWebhookRouteImport } from './routes/api/public/cooud-webhook'
 import { Route as AuthenticatedAdminLeadsRouteImport } from './routes/_authenticated/admin.leads'
@@ -99,12 +99,11 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ApiPublicNexuspagWebhookRoute =
-  ApiPublicNexuspagWebhookRouteImport.update({
-    id: '/api/public/nexuspag-webhook',
-    path: '/api/public/nexuspag-webhook',
-    getParentRoute: () => rootRouteImport,
-  } as any)
+const ApiPublicVenopayWebhookRoute = ApiPublicVenopayWebhookRouteImport.update({
+  id: '/api/public/venopay-webhook',
+  path: '/api/public/venopay-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicLeadSubmitRoute = ApiPublicLeadSubmitRouteImport.update({
   id: '/api/public/lead-submit',
   path: '/api/public/lead-submit',
@@ -150,7 +149,7 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/cooud-webhook': typeof ApiPublicCooudWebhookRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
-  '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
+  '/api/public/venopay-webhook': typeof ApiPublicVenopayWebhookRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/leads/$id': typeof AuthenticatedAdminLeadsIdRoute
 }
@@ -171,7 +170,7 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/cooud-webhook': typeof ApiPublicCooudWebhookRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
-  '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
+  '/api/public/venopay-webhook': typeof ApiPublicVenopayWebhookRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/leads/$id': typeof AuthenticatedAdminLeadsIdRoute
 }
@@ -194,7 +193,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/cooud-webhook': typeof ApiPublicCooudWebhookRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
-  '/api/public/nexuspag-webhook': typeof ApiPublicNexuspagWebhookRoute
+  '/api/public/venopay-webhook': typeof ApiPublicVenopayWebhookRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/leads/$id': typeof AuthenticatedAdminLeadsIdRoute
 }
@@ -217,7 +216,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/api/public/cooud-webhook'
     | '/api/public/lead-submit'
-    | '/api/public/nexuspag-webhook'
+    | '/api/public/venopay-webhook'
     | '/admin/'
     | '/admin/leads/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -238,7 +237,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/api/public/cooud-webhook'
     | '/api/public/lead-submit'
-    | '/api/public/nexuspag-webhook'
+    | '/api/public/venopay-webhook'
     | '/admin'
     | '/admin/leads/$id'
   id:
@@ -260,7 +259,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/leads'
     | '/api/public/cooud-webhook'
     | '/api/public/lead-submit'
-    | '/api/public/nexuspag-webhook'
+    | '/api/public/venopay-webhook'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/leads/$id'
   fileRoutesById: FileRoutesById
@@ -281,7 +280,7 @@ export interface RootRouteChildren {
   MxIndexRoute: typeof MxIndexRoute
   ApiPublicCooudWebhookRoute: typeof ApiPublicCooudWebhookRoute
   ApiPublicLeadSubmitRoute: typeof ApiPublicLeadSubmitRoute
-  ApiPublicNexuspagWebhookRoute: typeof ApiPublicNexuspagWebhookRoute
+  ApiPublicVenopayWebhookRoute: typeof ApiPublicVenopayWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -384,11 +383,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/api/public/nexuspag-webhook': {
-      id: '/api/public/nexuspag-webhook'
-      path: '/api/public/nexuspag-webhook'
-      fullPath: '/api/public/nexuspag-webhook'
-      preLoaderRoute: typeof ApiPublicNexuspagWebhookRouteImport
+    '/api/public/venopay-webhook': {
+      id: '/api/public/venopay-webhook'
+      path: '/api/public/venopay-webhook'
+      fullPath: '/api/public/venopay-webhook'
+      preLoaderRoute: typeof ApiPublicVenopayWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/lead-submit': {
@@ -474,7 +473,7 @@ const rootRouteChildren: RootRouteChildren = {
   MxIndexRoute: MxIndexRoute,
   ApiPublicCooudWebhookRoute: ApiPublicCooudWebhookRoute,
   ApiPublicLeadSubmitRoute: ApiPublicLeadSubmitRoute,
-  ApiPublicNexuspagWebhookRoute: ApiPublicNexuspagWebhookRoute,
+  ApiPublicVenopayWebhookRoute: ApiPublicVenopayWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
