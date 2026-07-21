@@ -10,28 +10,37 @@ export const Route = createFileRoute("/api/public/venopay-webhook")({
     handlers: {
       POST: async ({ request }) => {
         try {
-          const body = await request.json();
+          const body = (await request.json()) as any;
           const transactionId = String(body.idTransaction || body.id);
           const status = String(body.status).toLowerCase();
 
           let pedidoPendente = pendingOrders[transactionId];
 
           if (!pedidoPendente) {
-            const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+            const { supabaseAdmin } = await import(
+              "@/integrations/supabase/client.server"
+            );
             const { data } = await supabaseAdmin
               .from("lead_submissions")
               .select("fields")
               .eq("order_id", transactionId)
               .maybeSingle();
-            pedidoPendente = data?.fields?.utmify_payload;
+
+            const fields = data?.fields as any;
+            pedidoPendente = fields?.utmify_payload;
           }
 
-          if (pedidoPendente && (status === "paid" || status === "completed" || status === "success")) {
+          if (
+            pedidoPendente &&
+            (status === "paid" || status === "completed" || status === "success")
+          ) {
             pedidoPendente.status = "paid";
             pedidoPendente.approvedDate = nowUtcSqlString();
             await enviarPedidoParaUtmify(pedidoPendente);
 
-            const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+            const { supabaseAdmin } = await import(
+              "@/integrations/supabase/client.server"
+            );
             await supabaseAdmin.from("lead_submissions").insert({
               form_type: "pix_paid",
               order_id: transactionId,
@@ -41,6 +50,7 @@ export const Route = createFileRoute("/api/public/venopay-webhook")({
 
           return new Response("ok", { status: 200 });
         } catch (e) {
+          console.error("[VENOPAY WEBHOOK] Error:", e);
           return new Response("error", { status: 500 });
         }
       },
