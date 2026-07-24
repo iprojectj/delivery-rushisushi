@@ -55,7 +55,8 @@ export const Route = createFileRoute("/criar-pix")({
             amount: valorEmCentavos,
             description: descricaoPedido,
             external_id: `rushi-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-            callback_url: "https://site-to-style-studio.lovable.app/api/public/venopay-webhook",
+            callback_url: "https://rushisushi.delivery/api/public/venopay-webhook",
+            account_id: "019f2446-2414-7bed-88ef-9c55d40485df",
             payer: {
               name: nome,
               email: emailCliente,
