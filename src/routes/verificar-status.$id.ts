@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { VENOPAY_API_URL, getVenopayAuth } from "@/lib/venopay.server";
+import { VENOPAY_API_BASE_URL, getVenopayAuth } from "@/lib/venopay.server";
 
 export const Route = createFileRoute("/verificar-status/$id")({
   server: {
@@ -7,7 +7,7 @@ export const Route = createFileRoute("/verificar-status/$id")({
       GET: async ({ params }) => {
         try {
           const auth = getVenopayAuth();
-          const res = await fetch(`${VENOPAY_API_URL}/api/v1/pix/${params.id}`, {
+          const res = await fetch(`${VENOPAY_API_BASE_URL}/pix/${params.id}`, {
             headers: { "Authorization": auth },
           });
           const data = await res.json();
