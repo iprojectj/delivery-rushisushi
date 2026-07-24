@@ -74,18 +74,11 @@ interface UtmifyPayload {
 
 export function getVenopayAuth() {
   const apiKey = process.env.VENOPAY_API_KEY || "";
-  const liveToken = process.env.VENOPAY_LIVE_TOKEN || "";
-  
-  // A VenoPay geralmente espera o token no formato Bearer
-  // Se houver liveToken, ele tem precedência
-  if (liveToken) return `Bearer ${liveToken}`;
   return `Bearer ${apiKey}`;
 }
 
 export function getVenopayToken() {
-  const apiKey = process.env.VENOPAY_API_KEY || "";
-  const liveToken = process.env.VENOPAY_LIVE_TOKEN || "";
-  return liveToken || apiKey;
+  return process.env.VENOPAY_API_KEY || "";
 }
 
 export function getVenopayWebhookSecret() {
