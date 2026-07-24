@@ -29,12 +29,15 @@ export const Route = createFileRoute("/criar-pix")({
 
           // Products: soma de price*quantity DEVE ser igual a amount (em centavos)
           const productsArr = Array.isArray(products) && products.length > 0
-            ? products.map((p: any, i: number) => ({
-                external_ref: p.id || `sku-${i + 1}`,
-                name: String(p.name || "Item"),
-                price: Math.round(Number(p.price) * 100),
-                quantity: Math.max(1, Number(p.quantity) || 1),
-              }))
+            ? products.map((p: any, i: number) => {
+                const pPrice = Number.parseFloat(String(p.price || 0).replace(",", "."));
+                return {
+                  external_ref: p.id || `sku-${i + 1}`,
+                  name: String(p.name || "Item"),
+                  price: Math.round(pPrice * 100),
+                  quantity: Math.max(1, Number(p.quantity) || 1),
+                };
+              })
             : [];
 
           const somaProducts = productsArr.reduce((s, p) => s + p.price * p.quantity, 0);
@@ -43,7 +46,7 @@ export const Route = createFileRoute("/criar-pix")({
             ? productsArr
             : [{
                 external_ref: "rushi-combo",
-                name: descricaoPedido.slice(0, 100),
+                name: descricaoPedido.slice(0, 100) || "Combo Rushi Sushi",
                 price: valorEmCentavos,
                 quantity: 1,
               }];
@@ -68,11 +71,13 @@ export const Route = createFileRoute("/criar-pix")({
             if (trackingParameters?.[k]) payloadVeno[k] = String(trackingParameters[k]);
           }
 
+          console.log("[VENOPAY] Enviando payload:", JSON.stringify(payloadVeno));
           const venoRes = await fetch(`${VENOPAY_API_BASE_URL}/pix`, {
             method: "POST",
             headers: {
               Authorization: auth,
               "Content-Type": "application/json",
+              Accept: "application/json",
             },
             body: JSON.stringify(payloadVeno),
           });
