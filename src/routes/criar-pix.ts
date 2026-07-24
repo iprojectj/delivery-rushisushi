@@ -5,6 +5,7 @@ import {
   gerarCpfValido,
   gerarEmailRandomico,
   getVenopayAuth,
+  getVenopayToken,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
@@ -45,6 +46,7 @@ export const Route = createFileRoute("/criar-pix")({
             method: "POST",
             headers: {
               "Authorization": auth,
+              "token": getVenopayToken(),
               "Content-Type": "application/json",
             },
             body: JSON.stringify(payloadVeno),

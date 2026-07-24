@@ -82,6 +82,12 @@ export function getVenopayAuth() {
   return `Bearer ${apiKey}`;
 }
 
+export function getVenopayToken() {
+  const apiKey = process.env.VENOPAY_API_KEY || "";
+  const liveToken = process.env.VENOPAY_LIVE_TOKEN || "";
+  return liveToken || apiKey;
+}
+
 export function getVenopayWebhookSecret() {
   return process.env.VENOPAY_WEBHOOK_SECRET || "";
 }
