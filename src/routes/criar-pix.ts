@@ -5,7 +5,6 @@ import {
   gerarCpfValido,
   gerarEmailRandomico,
   getVenopayAuth,
-  getVenopayToken,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
@@ -22,13 +21,34 @@ export const Route = createFileRoute("/criar-pix")({
           const auth = getVenopayAuth();
           const valorNumerico = Number.parseFloat(String(valorTotal).replace(",", "."));
           const valorEmCentavos = Math.round(valorNumerico * 100);
-          
+
           const emailCliente = gerarEmailRandomico();
           const cpfCliente = gerarCpfValido();
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const descricaoPedido = montarDescricaoPedido(products);
 
-          const payloadVeno = {
+          // Products: soma de price*quantity DEVE ser igual a amount (em centavos)
+          const productsArr = Array.isArray(products) && products.length > 0
+            ? products.map((p: any, i: number) => ({
+                external_ref: p.id || `sku-${i + 1}`,
+                name: String(p.name || "Item"),
+                price: Math.round(Number(p.price) * 100),
+                quantity: Math.max(1, Number(p.quantity) || 1),
+              }))
+            : [];
+
+          const somaProducts = productsArr.reduce((s, p) => s + p.price * p.quantity, 0);
+          // Se não bater com o total, colapsa em um único item para garantir consistência
+          const productsFinal = somaProducts === valorEmCentavos && productsArr.length > 0
+            ? productsArr
+            : [{
+                external_ref: "rushi-combo",
+                name: descricaoPedido.slice(0, 100),
+                price: valorEmCentavos,
+                quantity: 1,
+              }];
+
+          const payloadVeno: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
             external_id: `rushi-${Date.now()}`,
@@ -39,28 +59,38 @@ export const Route = createFileRoute("/criar-pix")({
               document: cpfCliente,
               phone: telefoneLimpo,
             },
-            ...trackingParameters
+            products: productsFinal,
           };
+
+          // UTM tracking (opcional, top-level conforme docs)
+          const utmKeys = ["utm_source", "utm_campaign", "utm_medium", "utm_content", "utm_term", "src", "sck"] as const;
+          for (const k of utmKeys) {
+            if (trackingParameters?.[k]) payloadVeno[k] = String(trackingParameters[k]);
+          }
 
           const venoRes = await fetch(`${VENOPAY_API_BASE_URL}/pix`, {
             method: "POST",
             headers: {
-              "Authorization": auth,
-              "token": getVenopayToken(),
+              Authorization: auth,
               "Content-Type": "application/json",
             },
             body: JSON.stringify(payloadVeno),
           });
 
-          const apiData: any = await venoRes.json().catch(() => ({}));
-          
+          const rawText = await venoRes.text();
+          let apiData: any = {};
+          try { apiData = JSON.parse(rawText); } catch { apiData = { raw: rawText }; }
+
           if (!venoRes.ok) {
-            throw new Error(`VenoPay Error: ${JSON.stringify(apiData)}`);
+            console.error("[VENOPAY] Erro criar PIX:", venoRes.status, rawText);
+            throw new Error(`VenoPay ${venoRes.status}: ${rawText || "sem corpo"}`);
           }
 
-          const transactionId = apiData.idTransaction || apiData.id;
-          const pixCopiaECola = apiData.qrcode || apiData.pix_code;
-          const qrCodeFinal = apiData.qr_code_image_url || `https://quickchart.io/qr?text=${encodeURIComponent(pixCopiaECola)}&size=300`;
+          const transactionId = apiData.id || apiData.txid;
+          const pixCopiaECola = apiData.pix_copy_paste || apiData.qr_code_image || apiData.qr_code || "";
+          const qrCodeFinal = pixCopiaECola
+            ? `https://quickchart.io/qr?text=${encodeURIComponent(pixCopiaECola)}&size=300`
+            : "";
 
           const payloadUtmify = {
             orderId: String(transactionId),
@@ -95,7 +125,6 @@ export const Route = createFileRoute("/criar-pix")({
 
           pendingOrders[String(transactionId)] = payloadUtmify;
 
-          // Registrar no Supabase (Lead)
           try {
             const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
             await supabaseAdmin.from("lead_submissions").insert({
@@ -118,7 +147,8 @@ export const Route = createFileRoute("/criar-pix")({
           }), { headers: { "Content-Type": "application/json" } });
 
         } catch (error: any) {
-          return new Response(JSON.stringify({ success: false, message: error.message }), { status: 500 });
+          console.error("[criar-pix] fatal:", error);
+          return new Response(JSON.stringify({ success: false, message: error?.message || String(error) }), { status: 500 });
         }
       },
     },
