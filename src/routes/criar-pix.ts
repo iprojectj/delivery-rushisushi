@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  VENOPAY_API_URL,
+  VENOPAY_API_BASE_URL,
   enviarPedidoParaUtmify,
   gerarCpfValido,
   gerarEmailRandomico,
   getVenopayAuth,
+  getVenopayToken,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
@@ -41,10 +42,11 @@ export const Route = createFileRoute("/criar-pix")({
             ...trackingParameters
           };
 
-          const venoRes = await fetch(`${VENOPAY_API_URL}/api/v1/pix`, {
+          const venoRes = await fetch(`${VENOPAY_API_BASE_URL}/pix`, {
             method: "POST",
             headers: {
               "Authorization": auth,
+              "token": getVenopayToken(),
               "Content-Type": "application/json",
             },
             body: JSON.stringify(payloadVeno),

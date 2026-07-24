@@ -2,6 +2,7 @@
 // Base URL: https://beta.venopayments.com
 
 export const VENOPAY_API_URL = "https://beta.venopayments.com";
+export const VENOPAY_API_BASE_URL = "https://beta.venopayments.com/api/v1";
 export const UTMIFY_API_URL = "https://api.utmify.com.br/api-credentials/orders";
 
 // Rate limit map
@@ -79,6 +80,12 @@ export function getVenopayAuth() {
   // Se houver liveToken, ele tem precedência
   if (liveToken) return `Bearer ${liveToken}`;
   return `Bearer ${apiKey}`;
+}
+
+export function getVenopayToken() {
+  const apiKey = process.env.VENOPAY_API_KEY || "";
+  const liveToken = process.env.VENOPAY_LIVE_TOKEN || "";
+  return liveToken || apiKey;
 }
 
 export function getVenopayWebhookSecret() {
