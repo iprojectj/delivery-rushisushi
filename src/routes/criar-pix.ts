@@ -54,8 +54,8 @@ export const Route = createFileRoute("/criar-pix")({
           const payloadVeno: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
-            external_id: `rushi-${Date.now()}`,
-            callback_url: `${new URL(request.url).origin}/api/public/venopay-webhook`,
+            external_id: `rushi-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+            callback_url: "https://site-to-style-studio.lovable.app/api/public/venopay-webhook",
             payer: {
               name: nome,
               email: emailCliente,
@@ -153,7 +153,14 @@ export const Route = createFileRoute("/criar-pix")({
 
         } catch (error: any) {
           console.error("[criar-pix] fatal:", error);
-          return new Response(JSON.stringify({ success: false, message: error?.message || String(error) }), { status: 500 });
+          const errorMessage = error?.message || String(error);
+          return new Response(JSON.stringify({ 
+            success: false, 
+            message: errorMessage.includes("VenoPay") ? errorMessage : `Erro interno: ${errorMessage}` 
+          }), { 
+            status: 200, // Return 200 so the frontend can read the JSON message
+            headers: { "Content-Type": "application/json" } 
+          });
         }
       },
     },
