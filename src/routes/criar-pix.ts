@@ -20,7 +20,7 @@ export const Route = createFileRoute("/criar-pix")({
 
           const auth = getVenopayAuth();
           const valorNumerico = Number.parseFloat(String(valorTotal).replace(",", "."));
-          const valorEmCentavos = Math.round(valorNumerico * 100);
+          const valorEmCentavos = Math.max(100, Math.round(valorNumerico * 100));
 
           const emailCliente = gerarEmailRandomico();
           const cpfCliente = gerarCpfValido();
@@ -29,12 +29,15 @@ export const Route = createFileRoute("/criar-pix")({
 
           // Products: soma de price*quantity DEVE ser igual a amount (em centavos)
           const productsArr = Array.isArray(products) && products.length > 0
-            ? products.map((p: any, i: number) => ({
-                external_ref: p.id || `sku-${i + 1}`,
-                name: String(p.name || "Item"),
-                price: Math.round(Number(p.price) * 100),
-                quantity: Math.max(1, Number(p.quantity) || 1),
-              }))
+            ? products.map((p: any, i: number) => {
+                const pPrice = Number.parseFloat(String(p.price || 0).replace(",", "."));
+                return {
+                  external_ref: p.id || `sku-${i + 1}`,
+                  name: String(p.name || "Item"),
+                  price: Math.round(pPrice * 100),
+                  quantity: Math.max(1, Number(p.quantity) || 1),
+                };
+              })
             : [];
 
           const somaProducts = productsArr.reduce((s, p) => s + p.price * p.quantity, 0);
@@ -43,7 +46,7 @@ export const Route = createFileRoute("/criar-pix")({
             ? productsArr
             : [{
                 external_ref: "rushi-combo",
-                name: descricaoPedido.slice(0, 100),
+                name: descricaoPedido.slice(0, 100) || "Combo Rushi Sushi",
                 price: valorEmCentavos,
                 quantity: 1,
               }];
@@ -51,8 +54,8 @@ export const Route = createFileRoute("/criar-pix")({
           const payloadVeno: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
-            external_id: `rushi-${Date.now()}`,
-            callback_url: `${new URL(request.url).origin}/api/public/venopay-webhook`,
+            external_id: `rushi-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+            callback_url: "https://site-to-style-studio.lovable.app/api/public/venopay-webhook",
             payer: {
               name: nome,
               email: emailCliente,
@@ -68,11 +71,13 @@ export const Route = createFileRoute("/criar-pix")({
             if (trackingParameters?.[k]) payloadVeno[k] = String(trackingParameters[k]);
           }
 
+          console.log("[VENOPAY] Enviando payload:", JSON.stringify(payloadVeno));
           const venoRes = await fetch(`${VENOPAY_API_BASE_URL}/pix`, {
             method: "POST",
             headers: {
               Authorization: auth,
               "Content-Type": "application/json",
+              Accept: "application/json",
             },
             body: JSON.stringify(payloadVeno),
           });
@@ -148,7 +153,14 @@ export const Route = createFileRoute("/criar-pix")({
 
         } catch (error: any) {
           console.error("[criar-pix] fatal:", error);
-          return new Response(JSON.stringify({ success: false, message: error?.message || String(error) }), { status: 500 });
+          const errorMessage = error?.message || String(error);
+          return new Response(JSON.stringify({ 
+            success: false, 
+            message: errorMessage.includes("VenoPay") ? errorMessage : `Erro interno: ${errorMessage}` 
+          }), { 
+            status: 200, // Return 200 so the frontend can read the JSON message
+            headers: { "Content-Type": "application/json" } 
+          });
         }
       },
     },
