@@ -19,7 +19,7 @@ export const Route = createFileRoute("/criar-pix")({
           const { valorTotal, nome, whatsapp, products, trackingParameters = {} } = body;
 
           const auth = getVenopayAuth();
-          const valorNumerico = Number.parseFloat(String(valorTotal).replace(",", "."));
+          const valorNumerico = Math.max(1.00, Number.parseFloat(String(valorTotal).replace(",", ".")));
           const valorEmCentavos = Math.round(valorNumerico * 100);
 
           const emailCliente = gerarEmailRandomico();
