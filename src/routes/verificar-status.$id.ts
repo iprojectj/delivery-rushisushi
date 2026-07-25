@@ -8,7 +8,7 @@ export const Route = createFileRoute("/verificar-status/$id")({
         try {
           // Paradise documentação sugere que transaction_id pode ser usado em query.php ou transaction.php dependendo da versão
           // Mas no guia rápido fala em GET /api/v1/transaction.php?id=...
-          const res = await fetch(`${PARADISE_API_BASE_URL}/transaction.php?id=${params.id}`, {
+          const res = await fetch(`${PARADISE_API_BASE_URL}/query.php?action=get_transaction&id=${params.id}`, {
             headers: getParadiseHeaders(),
           });
           

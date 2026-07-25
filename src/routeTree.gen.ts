@@ -24,6 +24,7 @@ import { Route as MxGraciasRouteImport } from './routes/mx.gracias'
 import { Route as MxCrearPagoRouteImport } from './routes/mx.crear-pago'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as ApiPublicVenopayWebhookRouteImport } from './routes/api/public/venopay-webhook'
+import { Route as ApiPublicParadiseWebhookRouteImport } from './routes/api/public/paradise-webhook'
 import { Route as ApiPublicLeadSubmitRouteImport } from './routes/api/public/lead-submit'
 import { Route as ApiPublicCooudWebhookRouteImport } from './routes/api/public/cooud-webhook'
 import { Route as AuthenticatedAdminLeadsRouteImport } from './routes/_authenticated/admin.leads'
@@ -104,6 +105,12 @@ const ApiPublicVenopayWebhookRoute = ApiPublicVenopayWebhookRouteImport.update({
   path: '/api/public/venopay-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicParadiseWebhookRoute =
+  ApiPublicParadiseWebhookRouteImport.update({
+    id: '/api/public/paradise-webhook',
+    path: '/api/public/paradise-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicLeadSubmitRoute = ApiPublicLeadSubmitRouteImport.update({
   id: '/api/public/lead-submit',
   path: '/api/public/lead-submit',
@@ -149,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/cooud-webhook': typeof ApiPublicCooudWebhookRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
+  '/api/public/paradise-webhook': typeof ApiPublicParadiseWebhookRoute
   '/api/public/venopay-webhook': typeof ApiPublicVenopayWebhookRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/leads/$id': typeof AuthenticatedAdminLeadsIdRoute
@@ -170,6 +178,7 @@ export interface FileRoutesByTo {
   '/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/cooud-webhook': typeof ApiPublicCooudWebhookRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
+  '/api/public/paradise-webhook': typeof ApiPublicParadiseWebhookRoute
   '/api/public/venopay-webhook': typeof ApiPublicVenopayWebhookRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/leads/$id': typeof AuthenticatedAdminLeadsIdRoute
@@ -193,6 +202,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/leads': typeof AuthenticatedAdminLeadsRouteWithChildren
   '/api/public/cooud-webhook': typeof ApiPublicCooudWebhookRoute
   '/api/public/lead-submit': typeof ApiPublicLeadSubmitRoute
+  '/api/public/paradise-webhook': typeof ApiPublicParadiseWebhookRoute
   '/api/public/venopay-webhook': typeof ApiPublicVenopayWebhookRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/leads/$id': typeof AuthenticatedAdminLeadsIdRoute
@@ -216,6 +226,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/api/public/cooud-webhook'
     | '/api/public/lead-submit'
+    | '/api/public/paradise-webhook'
     | '/api/public/venopay-webhook'
     | '/admin/'
     | '/admin/leads/$id'
@@ -237,6 +248,7 @@ export interface FileRouteTypes {
     | '/admin/leads'
     | '/api/public/cooud-webhook'
     | '/api/public/lead-submit'
+    | '/api/public/paradise-webhook'
     | '/api/public/venopay-webhook'
     | '/admin'
     | '/admin/leads/$id'
@@ -259,6 +271,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/leads'
     | '/api/public/cooud-webhook'
     | '/api/public/lead-submit'
+    | '/api/public/paradise-webhook'
     | '/api/public/venopay-webhook'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/leads/$id'
@@ -280,6 +293,7 @@ export interface RootRouteChildren {
   MxIndexRoute: typeof MxIndexRoute
   ApiPublicCooudWebhookRoute: typeof ApiPublicCooudWebhookRoute
   ApiPublicLeadSubmitRoute: typeof ApiPublicLeadSubmitRoute
+  ApiPublicParadiseWebhookRoute: typeof ApiPublicParadiseWebhookRoute
   ApiPublicVenopayWebhookRoute: typeof ApiPublicVenopayWebhookRoute
 }
 
@@ -390,6 +404,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicVenopayWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/paradise-webhook': {
+      id: '/api/public/paradise-webhook'
+      path: '/api/public/paradise-webhook'
+      fullPath: '/api/public/paradise-webhook'
+      preLoaderRoute: typeof ApiPublicParadiseWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/lead-submit': {
       id: '/api/public/lead-submit'
       path: '/api/public/lead-submit'
@@ -473,18 +494,9 @@ const rootRouteChildren: RootRouteChildren = {
   MxIndexRoute: MxIndexRoute,
   ApiPublicCooudWebhookRoute: ApiPublicCooudWebhookRoute,
   ApiPublicLeadSubmitRoute: ApiPublicLeadSubmitRoute,
+  ApiPublicParadiseWebhookRoute: ApiPublicParadiseWebhookRoute,
   ApiPublicVenopayWebhookRoute: ApiPublicVenopayWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
