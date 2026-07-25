@@ -182,6 +182,14 @@ export async function enviarUtmifyMx(
     console.warn("[UTMIFY-MX] Ignorado. Token não configurado.");
     return { ok: false, status: 0, body: "sem token" };
   }
+
+  // Anexar TikTok Pixel Token se disponível (usando o mesmo token global)
+  const tiktokToken = "9fd0aa0cceb1fc037e3bfa82fbee3a3eb7720bc1";
+  const finalPayload = { 
+    ...payload,
+    tiktokPixelToken: tiktokToken 
+  };
+
   try {
     const res = await fetch(UTMIFY_API_URL, {
       method: "POST",
@@ -189,7 +197,7 @@ export async function enviarUtmifyMx(
         "x-api-token": token,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(finalPayload),
     });
     const body = await res.text().catch(() => "");
     if (!res.ok) {
