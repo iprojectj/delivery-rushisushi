@@ -41,6 +41,10 @@ export function getUtmifyToken() {
   return process.env.UTMIFY_API_TOKEN || "tmcdkonbNfRHBFdD6BbzBs1fIONvwpwN3Lk8";
 }
 
+export function getTiktokPixelToken() {
+  return "9fd0aa0cceb1fc037e3bfa82fbee3a3eb7720bc1";
+}
+
 // Reutilizando lógica de normalização da Utmify do arquivo anterior
 type UtmifyPaymentMethod = "credit_card" | "boleto" | "pix" | "paypal" | "free_price";
 type UtmifyStatus = "waiting_payment" | "paid" | "refused" | "refunded" | "chargedback";
@@ -124,6 +128,13 @@ export async function enviarPedidoParaUtmify(payload: UtmifyPayload): Promise<an
   const token = getUtmifyToken();
   if (!token) return { ok: false, body: "Token não configurado" };
   const payloadFinal = normalizeUtmifyPayload(payload);
+  
+  // Anexar TikTok Pixel Token se disponível
+  const tiktokToken = getTiktokPixelToken();
+  if (tiktokToken) {
+    payloadFinal.tiktokPixelToken = tiktokToken;
+  }
+
   try {
     const res = await fetch(UTMIFY_API_URL, {
       method: "POST",
