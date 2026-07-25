@@ -7,6 +7,27 @@ export const UTMIFY_API_URL = "https://api.utmify.com.br/api-credentials/orders"
 export const PARADISE_ACCOUNT_ID = "4838";
 export const PARADISE_PRODUCT_HASH = "prod_d9f9e0dcba8c763c";
 
+// Rate limit map
+const rateLimit = new Map<string, { count: number; lastReset: number }>();
+
+export function checkRateLimit(key: string, limit: number, windowMs: number) {
+  const now = Date.now();
+  const state = rateLimit.get(key) || { count: 0, lastReset: now };
+
+  if (now - state.lastReset > windowMs) {
+    state.count = 0;
+    state.lastReset = now;
+  }
+
+  state.count++;
+  rateLimit.set(key, state);
+
+  return {
+    allowed: state.count <= limit,
+    retryAfterSec: Math.ceil(Math.max(0, (state.lastReset + windowMs - now) / 1000)),
+  };
+}
+
 export function getParadiseHeaders() {
   const apiKey = process.env.PARADISE_API_KEY || "sk_786bdaeb9a5c572a3e54b82a51b6462eb637f216822e12c11bcdf3c24dc066ce";
   return {
