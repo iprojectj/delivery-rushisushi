@@ -1,9 +1,11 @@
-// VenoPay Gateway helpers. Docs: https://beta.venopayments.com/llms.txt
-// Base URL: https://beta.venopayments.com
+// Paradise Gateway helpers. Docs: https://multi.paradisepags.com/documentation
 
-export const VENOPAY_API_URL = "https://beta.venopayments.com";
-export const VENOPAY_API_BASE_URL = "https://beta.venopayments.com/api/v1";
+export const PARADISE_API_BASE_URL = "https://multi.paradisepags.com/api/v1";
 export const UTMIFY_API_URL = "https://api.utmify.com.br/api-credentials/orders";
+
+// Chaves e IDs fornecidos
+export const PARADISE_ACCOUNT_ID = "4838";
+export const PARADISE_PRODUCT_HASH = "prod_d9f9e0dcba8c763c";
 
 // Rate limit map
 const rateLimit = new Map<string, { count: number; lastReset: number }>();
@@ -26,7 +28,20 @@ export function checkRateLimit(key: string, limit: number, windowMs: number) {
   };
 }
 
+export function getParadiseHeaders() {
+  const apiKey = process.env.PARADISE_API_KEY || "sk_786bdaeb9a5c572a3e54b82a51b6462eb637f216822e12c11bcdf3c24dc066ce";
+  return {
+    "X-API-Key": apiKey,
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  };
+}
 
+export function getUtmifyToken() {
+  return process.env.UTMIFY_API_TOKEN || "tmcdkonbNfRHBFdD6BbzBs1fIONvwpwN3Lk8";
+}
+
+// Reutilizando lógica de normalização da Utmify do arquivo anterior
 type UtmifyPaymentMethod = "credit_card" | "boleto" | "pix" | "paypal" | "free_price";
 type UtmifyStatus = "waiting_payment" | "paid" | "refused" | "refunded" | "chargedback";
 
@@ -54,62 +69,28 @@ interface UtmifyPayload {
     quantity: number;
     priceInCents: number;
   }>;
-  trackingParameters: {
-    src: string | null;
-    sck: string | null;
-    utm_source: string | null;
-    utm_campaign: string | null;
-    utm_medium: string | null;
-    utm_content: string | null;
-    utm_term: string | null;
-  };
+  trackingParameters: any;
   commission: {
     totalPriceInCents: number;
     gatewayFeeInCents: number;
     userCommissionInCents: number;
-    currency?: "BRL" | "USD" | "EUR" | "GBP" | "ARS" | "CAD" | "COP" | "MXN" | "PYG" | "CLP" | "PEN" | "PLN";
+    currency?: string;
   };
-  isTest?: boolean;
-}
-
-export function getVenopayAuth() {
-  const apiKey = process.env.VENOPAY_API_KEY || "";
-  return `Bearer ${apiKey}`;
-}
-
-export function getVenopayToken() {
-  return process.env.VENOPAY_API_KEY || "";
-}
-
-export function getVenopayWebhookSecret() {
-  return process.env.VENOPAY_WEBHOOK_SECRET || "";
-}
-
-export function getUtmifyToken() {
-  return process.env.UTMIFY_API_TOKEN || "";
 }
 
 function normalizeUtmifyStatus(status: unknown): UtmifyStatus {
   const normalized = String(status || "").toLowerCase();
-  if (normalized === "paid" || normalized === "success" || normalized === "completed") return "paid";
+  if (["paid", "success", "completed", "approved"].includes(normalized)) return "paid";
   if (normalized === "refunded") return "refunded";
-  if (normalized === "chargedback" || normalized === "chargeback") return "chargedback";
-  if (normalized === "failed" || normalized === "refused" || normalized === "denied") return "refused";
+  if (["chargedback", "chargeback"].includes(normalized)) return "chargedback";
+  if (["failed", "refused", "denied"].includes(normalized)) return "refused";
   return "waiting_payment";
 }
 
-function normalizeStringOrNull(value: unknown): string | null {
-  if (value === null || value === undefined) return null;
-  const text = String(value).trim();
-  return text || null;
-}
-
-function normalizeUtmifyPayload(payload: UtmifyPayload): UtmifyPayload {
+function normalizeUtmifyPayload(payload: UtmifyPayload): any {
   const customer = { ...(payload?.customer ?? {}) };
   const rawIp = String(customer.ip || "").split(",")[0].trim();
-  const tracking = payload?.trackingParameters ?? ({} as UtmifyPayload["trackingParameters"]);
-  const commission = payload?.commission ?? ({} as UtmifyPayload["commission"]);
-
+  
   return {
     orderId: String(payload.orderId),
     platform: payload.platform || "RushiSushi",
@@ -121,28 +102,19 @@ function normalizeUtmifyPayload(payload: UtmifyPayload): UtmifyPayload {
     customer: {
       name: customer.name || "Cliente Rushi Sushi",
       email: customer.email,
-      phone: normalizeStringOrNull(customer.phone),
-      document: normalizeStringOrNull(customer.document),
+      phone: customer.phone ? String(customer.phone).replace(/\D/g, "") : null,
+      document: customer.document ? String(customer.document).replace(/\D/g, "") : null,
       country: customer.country || "BR",
       ip: rawIp || "127.0.0.1",
     },
-    products: Array.isArray(payload.products) ? payload.products : [],
-    trackingParameters: {
-      src: normalizeStringOrNull(tracking.src),
-      sck: normalizeStringOrNull(tracking.sck),
-      utm_source: normalizeStringOrNull(tracking.utm_source),
-      utm_campaign: normalizeStringOrNull(tracking.utm_campaign),
-      utm_medium: normalizeStringOrNull(tracking.utm_medium),
-      utm_content: normalizeStringOrNull(tracking.utm_content),
-      utm_term: normalizeStringOrNull(tracking.utm_term),
-    },
+    products: payload.products,
+    trackingParameters: payload.trackingParameters,
     commission: {
-      totalPriceInCents: Number(commission.totalPriceInCents) || 0,
-      gatewayFeeInCents: Math.max(0, Number(commission.gatewayFeeInCents) || 0),
-      userCommissionInCents: Number(commission.userCommissionInCents) || Number(commission.totalPriceInCents) || 0,
-      currency: commission.currency || "BRL",
+      totalPriceInCents: Number(payload.commission.totalPriceInCents),
+      gatewayFeeInCents: 0,
+      userCommissionInCents: Number(payload.commission.totalPriceInCents),
+      currency: "BRL",
     },
-    isTest: payload.isTest ?? false,
   };
 }
 
@@ -150,7 +122,7 @@ export const pendingOrders: Record<string, any> = {};
 
 export async function enviarPedidoParaUtmify(payload: UtmifyPayload): Promise<any> {
   const token = getUtmifyToken();
-  if (!token) return { ok: false, status: 0, body: "Token não configurado" };
+  if (!token) return { ok: false, body: "Token não configurado" };
   const payloadFinal = normalizeUtmifyPayload(payload);
   try {
     const res = await fetch(UTMIFY_API_URL, {
@@ -160,7 +132,7 @@ export async function enviarPedidoParaUtmify(payload: UtmifyPayload): Promise<an
     });
     return { ok: res.ok, status: res.status, body: await res.text().catch(() => "") };
   } catch (error: any) {
-    return { ok: false, status: 0, body: error?.message ?? String(error) };
+    return { ok: false, body: error?.message ?? String(error) };
   }
 }
 

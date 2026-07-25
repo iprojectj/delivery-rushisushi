@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  VENOPAY_API_BASE_URL,
+  PARADISE_API_BASE_URL,
   enviarPedidoParaUtmify,
   gerarCpfValido,
   gerarEmailRandomico,
-  getVenopayAuth,
+  getParadiseHeaders,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
-} from "@/lib/venopay.server";
+} from "@/lib/paradise.server";
 
 export const Route = createFileRoute("/criar-pix")({
   server: {
@@ -18,7 +18,6 @@ export const Route = createFileRoute("/criar-pix")({
           const body = (await request.json()) as any;
           const { valorTotal, nome, whatsapp, products, trackingParameters = {} } = body;
 
-          const auth = getVenopayAuth();
           const valorNumerico = Number.parseFloat(String(valorTotal).replace(",", "."));
           const valorEmCentavos = Math.max(100, Math.round(valorNumerico * 100));
 
@@ -27,75 +26,59 @@ export const Route = createFileRoute("/criar-pix")({
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
           const descricaoPedido = montarDescricaoPedido(products);
 
-          // Products: soma de price*quantity DEVE ser igual a amount (em centavos)
-          const productsArr = Array.isArray(products) && products.length > 0
-            ? products.map((p: any, i: number) => {
-                const pPrice = Number.parseFloat(String(p.price || 0).replace(",", "."));
-                return {
-                  external_ref: p.id || `sku-${i + 1}`,
-                  name: String(p.name || "Item"),
-                  price: Math.round(pPrice * 100),
-                  quantity: Math.max(1, Number(p.quantity) || 1),
-                };
-              })
-            : [];
+          const reference = `rushi-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-          const somaProducts = productsArr.reduce((s, p) => s + p.price * p.quantity, 0);
-          // Se não bater com o total, colapsa em um único item para garantir consistência
-          const productsFinal = somaProducts === valorEmCentavos && productsArr.length > 0
-            ? productsArr
-            : [{
-                external_ref: "rushi-combo",
-                name: descricaoPedido.slice(0, 100) || "Combo Rushi Sushi",
-                price: valorEmCentavos,
-                quantity: 1,
-              }];
-
-          const payloadVeno: any = {
+          const payloadParadise: any = {
             amount: valorEmCentavos,
             description: descricaoPedido,
-            external_id: `rushi-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-            callback_url: "https://rushisushi.delivery/api/public/venopay-webhook",
-            payer: {
+            reference: reference,
+            productHash: "prod_d9f9e0dcba8c763c",
+            offer_link: "https://rushisushi.delivery",
+            customer: {
               name: nome,
               email: emailCliente,
-              document: cpfCliente,
               phone: telefoneLimpo,
+              document: cpfCliente,
             },
-            products: productsFinal,
           };
 
-          // UTM tracking (opcional, top-level conforme docs)
-          const utmKeys = ["utm_source", "utm_campaign", "utm_medium", "utm_content", "utm_term", "src", "sck"] as const;
-          for (const k of utmKeys) {
-            if (trackingParameters?.[k]) payloadVeno[k] = String(trackingParameters[k]);
+          // Adicionar tracking se houver
+          if (trackingParameters && typeof trackingParameters === "object") {
+            const utmKeys = ["utm_source", "utm_campaign", "utm_medium", "utm_content", "utm_term", "src", "sck"] as const;
+            const tracking: any = {};
+            let hasTracking = false;
+            for (const k of utmKeys) {
+              if (trackingParameters[k]) {
+                tracking[k] = String(trackingParameters[k]);
+                hasTracking = true;
+              }
+            }
+            if (hasTracking) {
+              payloadParadise.tracking = tracking;
+            }
           }
 
-          console.log("[VENOPAY] Enviando payload:", JSON.stringify(payloadVeno));
-          const venoRes = await fetch(`${VENOPAY_API_BASE_URL}/pix`, {
+          console.log("[PARADISE] Enviando payload:", JSON.stringify(payloadParadise));
+          const response = await fetch(`${PARADISE_API_BASE_URL}/transaction.php`, {
             method: "POST",
-            headers: {
-              Authorization: auth,
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify(payloadVeno),
+            headers: getParadiseHeaders(),
+            body: JSON.stringify(payloadParadise),
           });
 
-          const rawText = await venoRes.text();
+          const rawText = await response.text();
           let apiData: any = {};
           try { apiData = JSON.parse(rawText); } catch { apiData = { raw: rawText }; }
 
-          if (!venoRes.ok) {
-            console.error("[VENOPAY] Erro criar PIX:", venoRes.status, rawText);
-            throw new Error(`VenoPay ${venoRes.status}: ${rawText || "sem corpo"}`);
+          if (!response.ok || apiData.status !== "success") {
+            console.error("[PARADISE] Erro criar PIX:", response.status, rawText);
+            throw new Error(`Paradise ${response.status}: ${apiData.message || rawText || "Erro desconhecido"}`);
           }
 
-          const transactionId = apiData.id || apiData.txid;
-          const pixCopiaECola = apiData.pix_copy_paste || apiData.qr_code_image || apiData.qr_code || "";
-          const qrCodeFinal = pixCopiaECola
-            ? `https://quickchart.io/qr?text=${encodeURIComponent(pixCopiaECola)}&size=300`
-            : "";
+          const transactionId = apiData.transaction_id || apiData.id;
+          const pixCopiaECola = apiData.qr_code || "";
+          const qrCodeFinal = apiData.qr_code_base64 || (pixCopiaECola 
+            ? `https://quickchart.io/qr?text=${encodeURIComponent(pixCopiaECola)}&size=300` 
+            : "");
 
           const payloadUtmify = {
             orderId: String(transactionId),
@@ -138,7 +121,7 @@ export const Route = createFileRoute("/criar-pix")({
               nome,
               whatsapp: telefoneLimpo,
               email: emailCliente,
-              fields: { products, valorTotal: valorNumerico, utmify_payload: payloadUtmify },
+              fields: { products, valorTotal: valorNumerico, utmify_payload: payloadUtmify, gateway: "paradise" },
             });
           } catch (e) { console.error("Supabase Error:", e); }
 
@@ -156,9 +139,9 @@ export const Route = createFileRoute("/criar-pix")({
           const errorMessage = error?.message || String(error);
           return new Response(JSON.stringify({ 
             success: false, 
-            message: errorMessage.includes("VenoPay") ? errorMessage : `Erro interno: ${errorMessage}` 
+            message: errorMessage.includes("Paradise") ? errorMessage : `Erro interno: ${errorMessage}` 
           }), { 
-            status: 200, // Return 200 so the frontend can read the JSON message
+            status: 200,
             headers: { "Content-Type": "application/json" } 
           });
         }
