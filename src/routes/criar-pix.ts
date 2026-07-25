@@ -5,6 +5,7 @@ import {
   gerarCpfValido,
   gerarEmailRandomico,
   getParadiseHeaders,
+  limparNomeProduto,
   montarDescricaoPedido,
   nowUtcSqlString,
   pendingOrders,
@@ -97,7 +98,7 @@ export const Route = createFileRoute("/criar-pix")({
             },
             products: Array.isArray(products) ? products.map((p: any) => ({
               id: p.id || "SKU",
-              name: p.name,
+              name: limparNomeProduto(p.name),
               planId: null,
               planName: null,
               quantity: p.quantity || 1,

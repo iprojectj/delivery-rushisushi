@@ -168,8 +168,16 @@ export function gerarCpfValido(): string {
   return [...n, dv1, dv2].join("");
 }
 
+export function limparNomeProduto(nome: string): string {
+  // Remove prefixo "Combo" (case insensitive, opcionalmente com espaço)
+  let limpo = nome.replace(/^combo\s*/i, "");
+  // Remove informações entre parênteses
+  limpo = limpo.replace(/\s*\([^)]*\)/g, "");
+  return limpo.trim();
+}
+
 export function montarDescricaoPedido(products: any[] | undefined): string {
   if (!products || products.length === 0) return "Pedido Rushi Sushi";
-  const names = products.map(p => p.name).join(", ");
+  const names = products.map(p => limparNomeProduto(p.name)).join(", ");
   return names.length > 180 ? names.substring(0, 177) + "..." : names;
 }
