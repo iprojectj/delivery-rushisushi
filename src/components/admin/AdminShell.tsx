@@ -33,18 +33,14 @@ export function AdminShell({
 
   return (
     <div className="admin-shell min-h-screen">
-      {/* Ambient gradient background */}
+      {/* Ambient soft background (Light iFood Style) */}
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
       >
         <div
-          className="absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full opacity-40 blur-[120px]"
+          className="absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full opacity-5 blur-[120px]"
           style={{ background: "radial-gradient(closest-side, var(--primary), transparent)" }}
-        />
-        <div
-          className="absolute bottom-0 right-0 h-[400px] w-[500px] rounded-full opacity-20 blur-[120px]"
-          style={{ background: "radial-gradient(closest-side, var(--accent), transparent)" }}
         />
       </div>
 
@@ -52,10 +48,9 @@ export function AdminShell({
       <aside className="fixed left-0 top-0 z-30 hidden h-screen w-60 flex-col border-r border-[var(--border)] glass p-4 md:flex">
         <div className="mb-8 flex items-center gap-2">
           <div
-            className="grid h-10 w-10 place-items-center rounded-xl glow-primary"
-            style={{ background: "linear-gradient(135deg, var(--primary), var(--accent))" }}
+            className="grid h-10 w-10 place-items-center rounded-xl bg-[var(--primary)] shadow-sm"
           >
-            <Sparkles className="h-5 w-5 text-black" />
+            <Sparkles className="h-5 w-5 text-white" />
           </div>
           <div>
             <p className="text-sm font-bold tracking-tight">Rushi</p>
@@ -171,10 +166,9 @@ export function AdminShell({
             <div className="mb-6 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div
-                  className="grid h-9 w-9 place-items-center rounded-xl"
-                  style={{ background: "linear-gradient(135deg, var(--primary), var(--accent))" }}
+                  className="grid h-9 w-9 place-items-center rounded-xl bg-[var(--primary)]"
                 >
-                  <Sparkles className="h-4 w-4 text-black" />
+                  <Sparkles className="h-4 w-4 text-white" />
                 </div>
                 <p className="font-bold">Rushi Admin</p>
               </div>

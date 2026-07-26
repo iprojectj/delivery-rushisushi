@@ -440,9 +440,9 @@ function LeadsList() {
                         : "border-l-transparent";
 
                     const bgTint = hasPaid
-                      ? "bg-emerald-50/50 dark:bg-emerald-950/10"
+                      ? "bg-emerald-50/50"
                       : isUnread
-                        ? "bg-teal-50/60 dark:bg-teal-950/20"
+                        ? "bg-teal-50/60"
                         : "bg-card";
 
                     const toggleOpen = () =>
