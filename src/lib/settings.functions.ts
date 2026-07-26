@@ -28,12 +28,9 @@ export const getActiveGateway = createServerFn({ method: "GET" })
   });
 
 export const setActiveGateway = createServerFn({ method: "POST" })
-  .validator((data: unknown) => z.string().parse(data))
-  .handler(async ({ data: gateway }) => {
-    if (!["paradise", "nexus"].includes(gateway)) {
-      throw new Error("Gateway inválido");
-    }
-
+  .handler(async ({ data }: { data: string }) => {
+    const gateway = gatewaySchema.parse(data);
+    
     const { error } = await supabaseAdmin
       .from("app_settings")
       .upsert({ key: "active_gateway", value: JSON.stringify(gateway) });
@@ -45,3 +42,5 @@ export const setActiveGateway = createServerFn({ method: "POST" })
 
     return { success: true, gateway };
   });
+
+const gatewaySchema = z.enum(["paradise", "nexus"]);
