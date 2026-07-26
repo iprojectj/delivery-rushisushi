@@ -15,12 +15,21 @@ export const getActiveGateway = createServerFn({ method: "GET" })
       return "paradise";
     }
     
-    return (data?.value as string) || "paradise";
+    let value = data?.value;
+    // value is JSONB, if it was stored as "paradise" it might be just that string
+    if (typeof value === 'string') {
+      try {
+        value = JSON.parse(value);
+      } catch {
+        // ignore
+      }
+    }
+    
+    return (value as string) || "paradise";
   });
 
 export const setActiveGateway = createServerFn({ method: "POST" })
-  .validator((data: unknown) => z.string().parse(data))
-  .handler(async ({ data: gateway }) => {
+  .handler(async ({ data: gateway }: { data: string }) => {
     // Basic validation
     if (!["paradise", "nexus"].includes(gateway)) {
       throw new Error("Gateway inválido");
