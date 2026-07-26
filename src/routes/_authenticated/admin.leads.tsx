@@ -376,6 +376,54 @@ function LeadsList() {
           />
         </section>
 
+        {/* Quick Settings: Gateway Selector */}
+        <section className="rounded-2xl border bg-card p-4 shadow-sm flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="rounded-full bg-primary/10 p-2 text-primary">
+              <Settings className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold">Gateway Ativo</p>
+              <p className="text-xs text-muted-foreground">Escolha qual gateway processará os novos pedidos PIX</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="min-w-[140px] justify-between" disabled={isGatewayLoading}>
+                  {isGatewayLoading ? "Alterando..." : activeGateway === "paradise" ? "Paradise Pags" : "Nexus Pag"}
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[200px]">
+                <DropdownMenuLabel>Gateway de Pagamento</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  onClick={() => handleGatewayChange("paradise")}
+                  className={activeGateway === "paradise" ? "bg-primary/10 font-bold" : ""}
+                >
+                  <div className="flex flex-col">
+                    <span>Paradise Pags</span>
+                    <span className="text-[10px] text-muted-foreground">Configurado e ativo</span>
+                  </div>
+                </MenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleGatewayChange("nexus")}
+                  className={activeGateway === "nexus" ? "bg-primary/10 font-bold" : ""}
+                >
+                  <div className="flex flex-col">
+                    <span>Nexus Pag</span>
+                    <span className="text-[10px] text-muted-foreground">Integração legada</span>
+                  </div>
+                </MenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-none">
+              Online
+            </Badge>
+          </div>
+        </section>
+
         {/* Search + filters */}
         <section className="rounded-2xl border bg-card p-4 shadow-sm space-y-3">
           <div className="relative">
