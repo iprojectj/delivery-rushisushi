@@ -15,6 +15,7 @@ import {
   Mail,
   MailOpen,
   Trash2,
+  Settings,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -30,9 +31,20 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { LeadFields } from "@/lib/lead-fields";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { toast } from "sonner";
+import { getActiveGateway, setActiveGateway } from "@/lib/settings.functions";
+import { useServerFn } from "@tanstack/react-start";
+
 
 export const Route = createFileRoute("/_authenticated/admin/leads")({
   component: LeadsList,
