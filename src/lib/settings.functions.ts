@@ -16,7 +16,6 @@ export const getActiveGateway = createServerFn({ method: "GET" })
     }
     
     let value = data?.value;
-    // value is JSONB, if it was stored as "paradise" it might be just that string
     if (typeof value === 'string') {
       try {
         value = JSON.parse(value);
@@ -29,8 +28,8 @@ export const getActiveGateway = createServerFn({ method: "GET" })
   });
 
 export const setActiveGateway = createServerFn({ method: "POST" })
-  .handler(async ({ data: gateway }: { data: string }) => {
-    // Basic validation
+  .validator((data: unknown) => z.string().parse(data))
+  .handler(async ({ data: gateway }) => {
     if (!["paradise", "nexus"].includes(gateway)) {
       throw new Error("Gateway inválido");
     }
