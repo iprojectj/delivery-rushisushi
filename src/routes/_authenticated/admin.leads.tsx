@@ -163,7 +163,7 @@ function LeadsList() {
     if (newGateway === activeGateway) return;
     setIsGatewayLoading(true);
     try {
-      await setGatewayFn({ data: newGateway });
+      await setGatewayFn({ data: newGateway } as any);
       setActiveGatewayState(newGateway);
       toast.success(`Gateway alterado para ${newGateway === "paradise" ? "Paradise" : "Nexus"}`);
     } catch (error) {
