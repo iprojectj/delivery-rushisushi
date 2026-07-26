@@ -19,7 +19,7 @@ export const getActiveGateway = createServerFn({ method: "GET" })
   });
 
 export const setActiveGateway = createServerFn({ method: "POST" })
-  .input(z.string())
+  .validator((data: string) => z.string().parse(data))
   .handler(async ({ data: gateway }) => {
     // Basic validation
     if (!["paradise", "nexus"].includes(gateway)) {
