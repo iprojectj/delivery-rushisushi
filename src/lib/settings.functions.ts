@@ -28,8 +28,8 @@ export const getActiveGateway = createServerFn({ method: "GET" })
   });
 
 export const setActiveGateway = createServerFn({ method: "POST" })
-  .handler(async ({ data }: { data: string }) => {
-    const gateway = gatewaySchema.parse(data);
+  .handler(async (ctx: { data: any }) => {
+    const gateway = z.enum(["paradise", "nexus"]).parse(ctx.data);
     
     const { error } = await supabaseAdmin
       .from("app_settings")
@@ -42,5 +42,3 @@ export const setActiveGateway = createServerFn({ method: "POST" })
 
     return { success: true, gateway };
   });
-
-const gatewaySchema = z.enum(["paradise", "nexus"]);
