@@ -398,7 +398,8 @@ function LeadsList() {
               <DropdownMenuContent align="end" className="w-[200px]">
                 <DropdownMenuLabel>Gateway de Pagamento</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem 
+                <DropdownMenuItem
+                  key="paradise"
                   onClick={() => handleGatewayChange("paradise")}
                   className={activeGateway === "paradise" ? "bg-primary/10 font-bold" : ""}
                 >
@@ -406,8 +407,9 @@ function LeadsList() {
                     <span>Paradise Pags</span>
                     <span className="text-[10px] text-muted-foreground">Configurado e ativo</span>
                   </div>
-                </MenuItem>
-                <DropdownMenuItem 
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  key="nexus"
                   onClick={() => handleGatewayChange("nexus")}
                   className={activeGateway === "nexus" ? "bg-primary/10 font-bold" : ""}
                 >
@@ -415,7 +417,7 @@ function LeadsList() {
                     <span>Nexus Pag</span>
                     <span className="text-[10px] text-muted-foreground">Integração legada</span>
                   </div>
-                </MenuItem>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-none">
