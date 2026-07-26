@@ -150,6 +150,30 @@ function StatCard({
 }
 
 function LeadsList() {
+  const [activeGateway, setActiveGatewayState] = useState<string>("paradise");
+  const [isGatewayLoading, setIsGatewayLoading] = useState(false);
+  const getGatewayFn = useServerFn(getActiveGateway);
+  const setGatewayFn = useServerFn(setActiveGateway);
+
+  useEffect(() => {
+    getGatewayFn().then(setActiveGatewayState).catch(console.error);
+  }, []);
+
+  async function handleGatewayChange(newGateway: string) {
+    if (newGateway === activeGateway) return;
+    setIsGatewayLoading(true);
+    try {
+      await setGatewayFn({ data: newGateway });
+      setActiveGatewayState(newGateway);
+      toast.success(`Gateway alterado para ${newGateway === "paradise" ? "Paradise" : "Nexus"}`);
+    } catch (error) {
+      toast.error("Erro ao alterar gateway");
+      console.error(error);
+    } finally {
+      setIsGatewayLoading(false);
+    }
+  }
+
   const navigate = useNavigate();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [subs, setSubs] = useState<Submission[]>([]);
