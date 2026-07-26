@@ -10,6 +10,7 @@ import {
   nowUtcSqlString,
   pendingOrders,
 } from "@/lib/paradise.server";
+import { getNexusHeaders, NEXUS_API_BASE_URL, limparNomeProdutoNexus } from "@/lib/nexus.server";
 
 export const Route = createFileRoute("/criar-pix")({
   server: {
@@ -25,62 +26,125 @@ export const Route = createFileRoute("/criar-pix")({
           const emailCliente = gerarEmailRandomico();
           const cpfCliente = gerarCpfValido();
           const telefoneLimpo = String(whatsapp).replace(/\D/g, "");
-          const descricaoPedido = montarDescricaoPedido(products);
-
           const reference = `rushi-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-          const payloadParadise: any = {
-            amount: valorEmCentavos,
-            description: descricaoPedido,
-            reference: reference,
-            productHash: "prod_d9f9e0dcba8c763c",
-            offer_link: "https://rushisushi.delivery",
-            customer: {
-              name: nome,
-              email: emailCliente,
-              phone: telefoneLimpo,
-              document: cpfCliente,
-            },
-          };
+          // 1. Identificar gateway ativo
+          let activeGateway = "paradise";
+          try {
+            const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+            const { data } = await supabaseAdmin
+              .from("app_settings")
+              .select("value")
+              .eq("key", "active_gateway")
+              .maybeSingle();
+            if (data?.value) {
+              const val = data.value;
+              activeGateway = typeof val === 'string' ? JSON.parse(val) : val;
+            }
+          } catch (e) {
+            console.error("[criar-pix] Erro ao buscar gateway ativo:", e);
+          }
 
-          // Adicionar tracking se houver
-          if (trackingParameters && typeof trackingParameters === "object") {
-            const utmKeys = ["utm_source", "utm_campaign", "utm_medium", "utm_content", "utm_term", "src", "sck"] as const;
-            const tracking: any = {};
-            let hasTracking = false;
-            for (const k of utmKeys) {
-              if (trackingParameters[k]) {
-                tracking[k] = String(trackingParameters[k]);
-                hasTracking = true;
+          let transactionId: string = "";
+          let pixCopiaECola: string = "";
+          let qrCodeFinal: string = "";
+
+          if (activeGateway === "nexus") {
+            // Lógica NEXUS PAG
+            const payloadNexus = {
+              amount: valorEmCentavos,
+              description: montarDescricaoPedido(products),
+              external_id: reference,
+              customer: {
+                name: nome,
+                email: emailCliente,
+                document: cpfCliente,
+                phone: telefoneLimpo,
+              },
+              payment_method: "pix",
+              items: Array.isArray(products) ? products.map(p => ({
+                name: limparNomeProdutoNexus(p.name),
+                price: Math.round(p.price * 100),
+                quantity: p.quantity || 1
+              })) : []
+            };
+
+            console.log("[NEXUS] Enviando payload:", JSON.stringify(payloadNexus));
+            const response = await fetch(`${NEXUS_API_BASE_URL}/orders`, {
+              method: "POST",
+              headers: getNexusHeaders(),
+              body: JSON.stringify(payloadNexus),
+            });
+
+            const rawText = await response.text();
+            let apiData: any = {};
+            try { apiData = JSON.parse(rawText); } catch { apiData = { raw: rawText }; }
+
+            if (!response.ok) {
+              console.error("[NEXUS] Erro criar PIX:", response.status, rawText);
+              throw new Error(`Nexus ${response.status}: ${apiData.message || rawText || "Erro desconhecido"}`);
+            }
+
+            transactionId = apiData.id;
+            pixCopiaECola = apiData.pix?.qrcode || apiData.checkout_url || "";
+            qrCodeFinal = apiData.pix?.qrcode_image || (pixCopiaECola 
+              ? `https://quickchart.io/qr?text=${encodeURIComponent(pixCopiaECola)}&size=300` 
+              : "");
+
+          } else {
+            // Lógica PARADISE PAGS (Default)
+            const payloadParadise: any = {
+              amount: valorEmCentavos,
+              description: montarDescricaoPedido(products),
+              reference: reference,
+              productHash: "prod_d9f9e0dcba8c763c",
+              offer_link: "https://rushisushi.delivery",
+              customer: {
+                name: nome,
+                email: emailCliente,
+                phone: telefoneLimpo,
+                document: cpfCliente,
+              },
+            };
+
+            // Adicionar tracking
+            if (trackingParameters && typeof trackingParameters === "object") {
+              const utmKeys = ["utm_source", "utm_campaign", "utm_medium", "utm_content", "utm_term", "src", "sck"] as const;
+              const tracking: any = {};
+              let hasTracking = false;
+              for (const k of utmKeys) {
+                if (trackingParameters[k]) {
+                  tracking[k] = String(trackingParameters[k]);
+                  hasTracking = true;
+                }
               }
+              if (hasTracking) payloadParadise.tracking = tracking;
             }
-            if (hasTracking) {
-              payloadParadise.tracking = tracking;
+
+            console.log("[PARADISE] Enviando payload:", JSON.stringify(payloadParadise));
+            const response = await fetch(`${PARADISE_API_BASE_URL}/transaction.php`, {
+              method: "POST",
+              headers: getParadiseHeaders(),
+              body: JSON.stringify(payloadParadise),
+            });
+
+            const rawText = await response.text();
+            let apiData: any = {};
+            try { apiData = JSON.parse(rawText); } catch { apiData = { raw: rawText }; }
+
+            if (!response.ok || apiData.status !== "success") {
+              console.error("[PARADISE] Erro criar PIX:", response.status, rawText);
+              throw new Error(`Paradise ${response.status}: ${apiData.message || rawText || "Erro desconhecido"}`);
             }
+
+            transactionId = apiData.transaction_id || apiData.id;
+            pixCopiaECola = apiData.qr_code || "";
+            qrCodeFinal = apiData.qr_code_base64 || (pixCopiaECola 
+              ? `https://quickchart.io/qr?text=${encodeURIComponent(pixCopiaECola)}&size=300` 
+              : "");
           }
 
-          console.log("[PARADISE] Enviando payload:", JSON.stringify(payloadParadise));
-          const response = await fetch(`${PARADISE_API_BASE_URL}/transaction.php`, {
-            method: "POST",
-            headers: getParadiseHeaders(),
-            body: JSON.stringify(payloadParadise),
-          });
-
-          const rawText = await response.text();
-          let apiData: any = {};
-          try { apiData = JSON.parse(rawText); } catch { apiData = { raw: rawText }; }
-
-          if (!response.ok || apiData.status !== "success") {
-            console.error("[PARADISE] Erro criar PIX:", response.status, rawText);
-            throw new Error(`Paradise ${response.status}: ${apiData.message || rawText || "Erro desconhecido"}`);
-          }
-
-          const transactionId = apiData.transaction_id || apiData.id;
-          const pixCopiaECola = apiData.qr_code || "";
-          const qrCodeFinal = apiData.qr_code_base64 || (pixCopiaECola 
-            ? `https://quickchart.io/qr?text=${encodeURIComponent(pixCopiaECola)}&size=300` 
-            : "");
-
+          // 2. Preparar Utmify
           const payloadUtmify = {
             orderId: String(transactionId),
             platform: "RushiSushi",
@@ -98,7 +162,7 @@ export const Route = createFileRoute("/criar-pix")({
             },
             products: Array.isArray(products) ? products.map((p: any) => ({
               id: p.id || "SKU",
-              name: limparNomeProduto(p.name),
+              name: activeGateway === "nexus" ? limparNomeProdutoNexus(p.name) : limparNomeProduto(p.name),
               planId: null,
               planName: null,
               quantity: p.quantity || 1,
@@ -114,6 +178,7 @@ export const Route = createFileRoute("/criar-pix")({
 
           pendingOrders[String(transactionId)] = payloadUtmify;
 
+          // 3. Persistir Lead
           try {
             const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
             await supabaseAdmin.from("lead_submissions").insert({
@@ -122,10 +187,16 @@ export const Route = createFileRoute("/criar-pix")({
               nome,
               whatsapp: telefoneLimpo,
               email: emailCliente,
-              fields: { products, valorTotal: valorNumerico, utmify_payload: payloadUtmify, gateway: "paradise" },
+              fields: { 
+                products, 
+                valorTotal: valorNumerico, 
+                utmify_payload: payloadUtmify, 
+                gateway: activeGateway 
+              },
             });
           } catch (e) { console.error("Supabase Error:", e); }
 
+          // 4. Notificar Utmify
           await enviarPedidoParaUtmify(payloadUtmify);
 
           return new Response(JSON.stringify({
@@ -133,6 +204,7 @@ export const Route = createFileRoute("/criar-pix")({
             qrCodeData: qrCodeFinal,
             pixCopiaECola,
             transactionId,
+            gateway: activeGateway
           }), { headers: { "Content-Type": "application/json" } });
 
         } catch (error: any) {
@@ -140,7 +212,7 @@ export const Route = createFileRoute("/criar-pix")({
           const errorMessage = error?.message || String(error);
           return new Response(JSON.stringify({ 
             success: false, 
-            message: errorMessage.includes("Paradise") ? errorMessage : `Erro interno: ${errorMessage}` 
+            message: errorMessage
           }), { 
             status: 200,
             headers: { "Content-Type": "application/json" } 

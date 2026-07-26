@@ -15,6 +15,7 @@ import {
   Mail,
   MailOpen,
   Trash2,
+  Settings,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -30,9 +31,20 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { LeadFields } from "@/lib/lead-fields";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { toast } from "sonner";
+import { getActiveGateway, setActiveGateway } from "@/lib/settings.functions";
+import { useServerFn } from "@tanstack/react-start";
+
 
 export const Route = createFileRoute("/_authenticated/admin/leads")({
   component: LeadsList,
@@ -138,6 +150,30 @@ function StatCard({
 }
 
 function LeadsList() {
+  const [activeGateway, setActiveGatewayState] = useState<string>("paradise");
+  const [isGatewayLoading, setIsGatewayLoading] = useState(false);
+  const getGatewayFn = useServerFn(getActiveGateway);
+  const setGatewayFn = useServerFn(setActiveGateway);
+
+  useEffect(() => {
+    getGatewayFn().then(setActiveGatewayState).catch(console.error);
+  }, []);
+
+  async function handleGatewayChange(newGateway: string) {
+    if (newGateway === activeGateway) return;
+    setIsGatewayLoading(true);
+    try {
+      await setGatewayFn({ data: newGateway } as any);
+      setActiveGatewayState(newGateway);
+      toast.success(`Gateway alterado para ${newGateway === "paradise" ? "Paradise" : "Nexus"}`);
+    } catch (error) {
+      toast.error("Erro ao alterar gateway");
+      console.error(error);
+    } finally {
+      setIsGatewayLoading(false);
+    }
+  }
+
   const navigate = useNavigate();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [subs, setSubs] = useState<Submission[]>([]);
@@ -338,6 +374,56 @@ function LeadsList() {
             icon={CheckCircle2}
             gradient="bg-emerald-500"
           />
+        </section>
+
+        {/* Quick Settings: Gateway Selector */}
+        <section className="rounded-2xl border bg-card p-4 shadow-sm flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="rounded-full bg-primary/10 p-2 text-primary">
+              <Settings className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold">Gateway Ativo</p>
+              <p className="text-xs text-muted-foreground">Escolha qual gateway processará os novos pedidos PIX</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="min-w-[140px] justify-between" disabled={isGatewayLoading}>
+                  {isGatewayLoading ? "Alterando..." : activeGateway === "paradise" ? "Paradise Pags" : "Nexus Pag"}
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[200px]">
+                <DropdownMenuLabel>Gateway de Pagamento</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  key="paradise"
+                  onClick={() => handleGatewayChange("paradise")}
+                  className={activeGateway === "paradise" ? "bg-primary/10 font-bold" : ""}
+                >
+                  <div className="flex flex-col">
+                    <span>Paradise Pags</span>
+                    <span className="text-[10px] text-muted-foreground">Configurado e ativo</span>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  key="nexus"
+                  onClick={() => handleGatewayChange("nexus")}
+                  className={activeGateway === "nexus" ? "bg-primary/10 font-bold" : ""}
+                >
+                  <div className="flex flex-col">
+                    <span>Nexus Pag</span>
+                    <span className="text-[10px] text-muted-foreground">Integração legada</span>
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-none">
+              Online
+            </Badge>
+          </div>
         </section>
 
         {/* Search + filters */}
