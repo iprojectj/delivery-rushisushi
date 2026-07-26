@@ -1,70 +1,61 @@
-/* Scoped dark premium palette for the admin only.
+/* iFood-inspired Light Theme for Admin
    Applies exclusively to elements inside .admin-shell.
-   Does NOT affect public site (BR/MX). */
+   Uses iFood's characteristic red (#EA1D2C) and clean white/gray surfaces. */
 
 .admin-shell {
-  --background: oklch(0.145 0.01 260);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.185 0.012 260);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.19 0.012 260);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.82 0.18 155); /* neon wasabi green */
-  --primary-foreground: oklch(0.15 0.02 155);
-  --secondary: oklch(0.24 0.014 260);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.23 0.012 260);
-  --muted-foreground: oklch(0.7 0.02 260);
-  --accent: oklch(0.78 0.16 75); /* amber */
-  --accent-foreground: oklch(0.15 0.02 75);
-  --destructive: oklch(0.65 0.24 25);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.82 0.18 155);
-  --success: oklch(0.82 0.18 155);
+  --background: oklch(0.98 0.005 260); /* Very light gray/white */
+  --foreground: oklch(0.15 0.02 260);
+  --card: oklch(1 0 0); /* Pure white */
+  --card-foreground: oklch(0.15 0.02 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.02 260);
+  --primary: oklch(0.603 0.231 25.132); /* iFood Red (#EA1D2C) */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.01 260);
+  --secondary-foreground: oklch(0.15 0.02 260);
+  --muted: oklch(0.95 0.01 260);
+  --muted-foreground: oklch(0.45 0.02 260);
+  --accent: oklch(0.92 0.02 260);
+  --accent-foreground: oklch(0.603 0.231 25.132);
+  --destructive: oklch(0.603 0.231 25.132);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.9 0.01 260);
+  --input: oklch(0.95 0.01 260);
+  --ring: oklch(0.603 0.231 25.132);
+  --success: oklch(0.627 0.194 149.215); /* iFood Success Green */
 
   background-color: var(--background);
   color: var(--foreground);
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 .admin-shell .glass {
-  background: linear-gradient(
-    180deg,
-    color-mix(in oklab, var(--card) 90%, transparent),
-    color-mix(in oklab, var(--card) 70%, transparent)
-  );
-  backdrop-filter: blur(20px) saturate(140%);
+  background: var(--card);
+  backdrop-filter: none;
   border: 1px solid var(--border);
 }
 
 .admin-shell .glow-primary {
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--primary) 30%, transparent),
-    0 10px 40px -10px color-mix(in oklab, var(--primary) 50%, transparent);
+  box-shadow: 0 4px 12px color-mix(in oklab, var(--primary) 15%, transparent);
 }
 
 @keyframes admin-pulse-ring {
-  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 55%, transparent); }
-  70% { box-shadow: 0 0 0 12px color-mix(in oklab, var(--primary) 0%, transparent); }
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 40%, transparent); }
+  70% { box-shadow: 0 0 0 10px color-mix(in oklab, var(--primary) 0%, transparent); }
   100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 0%, transparent); }
 }
+
 .admin-shell .pulse-dot {
-  animation: admin-pulse-ring 1.8s ease-out infinite;
+  animation: admin-pulse-ring 2s ease-out infinite;
 }
 
-@keyframes admin-shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
 .admin-shell .shimmer {
   background: linear-gradient(
     90deg,
     transparent,
-    color-mix(in oklab, var(--primary) 25%, transparent),
+    color-mix(in oklab, var(--primary) 10%, transparent),
     transparent
   );
   background-size: 200% 100%;
-  animation: admin-shimmer 2.4s linear infinite;
+  animation: admin-shimmer 2.5s linear infinite;
 }
