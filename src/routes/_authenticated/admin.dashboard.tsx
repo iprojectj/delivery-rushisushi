@@ -80,8 +80,8 @@ function fmtPct(n: number) {
 }
 
 const COLORS = [
-  "hsl(217 91% 60%)",
-  "hsl(142 76% 45%)",
+  "var(--primary)",
+  "var(--success)",
   "hsl(38 92% 55%)",
   "hsl(292 84% 61%)",
   "hsl(0 84% 60%)",

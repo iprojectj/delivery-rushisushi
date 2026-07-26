@@ -318,25 +318,25 @@ function LeadsList() {
             label="Total de leads"
             value={stats.total}
             icon={Users}
-            gradient="bg-gradient-to-br from-blue-500 to-indigo-600"
+            gradient="bg-[var(--primary)]"
           />
           <StatCard
             label="Hoje"
             value={stats.todayCount}
             icon={TrendingUp}
-            gradient="bg-gradient-to-br from-fuchsia-500 to-pink-600"
+            gradient="bg-amber-500"
           />
           <StatCard
             label="Tentaram cartão"
             value={stats.cardCount}
             icon={CreditCard}
-            gradient="bg-gradient-to-br from-amber-500 to-orange-600"
+            gradient="bg-blue-500"
           />
           <StatCard
             label="Pagaram PIX"
             value={stats.paidCount}
             icon={CheckCircle2}
-            gradient="bg-gradient-to-br from-emerald-500 to-green-600"
+            gradient="bg-emerald-500"
           />
         </section>
 
