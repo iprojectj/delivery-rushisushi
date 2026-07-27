@@ -86,10 +86,11 @@ export const Route = createFileRoute("/criar-pix")({
               throw new Error(`Nexus ${response.status}: ${apiData.message || rawText || "Erro desconhecido"}`);
             }
 
-            transactionId = apiData.id;
-            pixCopiaECola = apiData.pix?.qrcode || apiData.checkout_url || "";
-            qrCodeFinal = apiData.pix?.qrcode_image || (pixCopiaECola 
-              ? `https://quickchart.io/qr?text=${encodeURIComponent(pixCopiaECola)}&size=300` 
+            const tx = apiData.transaction || apiData;
+            transactionId = tx.id || tx.txid;
+            pixCopiaECola = tx.pix_copia_cola || tx.pix?.qrcode || tx.qr_code || "";
+            qrCodeFinal = tx.qr_code_base64 || tx.pix?.qrcode_image || (pixCopiaECola
+              ? `https://quickchart.io/qr?text=${encodeURIComponent(pixCopiaECola)}&size=300`
               : "");
 
           } else {
