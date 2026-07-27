@@ -17,7 +17,7 @@
       w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
     var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
     ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-      ttq.load('D5MLIM3C77U85R08N62G');
+      ttq.load('D9BDA73C77UFCF7AQ1QG');
       ttq.page();
     }(window, document, 'ttq');
     </script>
@@ -867,18 +867,33 @@
         }
 
         document.addEventListener('DOMContentLoaded', function(){
-            // Fallback pixel (caso o Purchase não tenha disparado na tela anterior)
+            // Purchase pixels (Meta + TikTok) — dispara uma única vez por pedido
             try {
-                if (window.fbq && orderData.id) {
+                if (orderData.id) {
                     var last = localStorage.getItem('last_purchase_id');
                     if (orderData.id !== last) {
                         var items = orderData.items || [];
-                        fbq('track', 'Purchase', {
-                            value: orderData.total, currency:'BRL', content_type:'product',
-                            content_ids: items.map(function(i){return i.id||i.name;}),
-                            contents: items.map(function(i){return {id:i.id||i.name, quantity:i.qty, item_price:i.unitPrice||i.price};}),
-                            num_items: items.reduce(function(a,i){return a+(i.qty||1);},0)
-                        }, { eventID: orderData.id });
+                        var contentIds = items.map(function(i){return i.id||i.name;});
+                        var fbContents = items.map(function(i){return {id:i.id||i.name, quantity:i.qty, item_price:i.unitPrice||i.price};});
+                        var ttContents = items.map(function(i){return {content_id:i.id||i.name, content_name:i.name, quantity:i.qty, price:i.unitPrice||i.price};});
+                        var numItems = items.reduce(function(a,i){return a+(i.qty||1);},0);
+
+                        if (window.fbq) {
+                            fbq('track', 'Purchase', {
+                                value: orderData.total, currency:'BRL', content_type:'product',
+                                content_ids: contentIds, contents: fbContents, num_items: numItems
+                            }, { eventID: orderData.id });
+                        }
+                        if (window.ttq) {
+                            ttq.track('CompletePayment', {
+                                value: orderData.total, currency: 'BRL', content_type: 'product',
+                                contents: ttContents
+                            }, { event_id: orderData.id });
+                            ttq.track('Purchase', {
+                                value: orderData.total, currency: 'BRL', content_type: 'product',
+                                contents: ttContents
+                            }, { event_id: orderData.id });
+                        }
                         localStorage.setItem('last_purchase_id', orderData.id);
                     }
                 }
