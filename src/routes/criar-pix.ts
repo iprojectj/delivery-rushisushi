@@ -70,7 +70,7 @@ export const Route = createFileRoute("/criar-pix")({
             };
 
             console.log("[NEXUS] Enviando payload:", JSON.stringify(payloadNexus));
-            const response = await fetch(`${NEXUS_API_BASE_URL}/orders`, {
+            const response = await fetch(`${NEXUS_API_BASE_URL}/pix/create`, {
               method: "POST",
               headers: getNexusHeaders(),
               body: JSON.stringify(payloadNexus),

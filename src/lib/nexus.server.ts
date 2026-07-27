@@ -1,16 +1,15 @@
 // Nexus Gateway helpers. Docs: https://nexuspag.com/docs
 
-export const NEXUS_API_BASE_URL = "https://api.nexuspag.com/v1";
+export const NEXUS_API_BASE_URL = "https://nexuspag.com/api";
 
 export function getNexusHeaders() {
-  const apiKey = process.env.NEXUS_API_KEY || "sk_live_85c35aae9e766226aecba7fad68915d9dd5589f2c9f3f06f";
-  const accountId = "019f2446-2414-7bed-88ef-9c55d40485df";
+  // Use a chave nxp_live encontrada no histórico do chat
+  const apiKey = process.env.NEXUSPAG_API_KEY || "nxp_live_f922d01154a31d2de0b9edaecb209c39cbfcc7d43234f33aa5efc3c7a2535b4f";
   
   return {
-    "Authorization": `Bearer ${apiKey}`,
+    "x-api-key": apiKey,
     "Content-Type": "application/json",
-    "Accept": "application/json",
-    "X-Account-Id": accountId
+    "Accept": "application/json"
   };
 }
 
