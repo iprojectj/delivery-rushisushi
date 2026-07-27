@@ -50,9 +50,9 @@ export const Route = createFileRoute("/criar-pix")({
           let qrCodeFinal: string = "";
 
           if (activeGateway === "nexus") {
-            // Lógica NEXUS PAG
+            // Lógica NEXUS PAG - amount em REAIS (decimal), não centavos
             const payloadNexus = {
-              amount: valorEmCentavos,
+              amount: Number(valorNumerico.toFixed(2)),
               description: montarDescricaoPedido(products),
               external_id: reference,
               customer: {
@@ -64,10 +64,11 @@ export const Route = createFileRoute("/criar-pix")({
               payment_method: "pix",
               items: Array.isArray(products) ? products.map(p => ({
                 name: limparNomeProdutoNexus(p.name),
-                price: Math.round(p.price * 100),
+                price: Number(Number(p.price).toFixed(2)),
                 quantity: p.quantity || 1
               })) : []
             };
+
 
             console.log("[NEXUS] Enviando payload:", JSON.stringify(payloadNexus));
             const response = await fetch(`${NEXUS_API_BASE_URL}/api/pix/create`, {
