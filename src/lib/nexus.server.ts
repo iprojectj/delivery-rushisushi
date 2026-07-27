@@ -1,6 +1,6 @@
 // Nexus Gateway helpers. Docs: https://nexuspag.com/docs
 
-export const NEXUS_API_BASE_URL = "https://nexuspag.com/api";
+export const NEXUS_API_BASE_URL = "https://nexuspag.com";
 
 export function getNexusHeaders() {
   // Use a chave nxp_live encontrada no histórico do chat
