@@ -867,18 +867,33 @@
         }
 
         document.addEventListener('DOMContentLoaded', function(){
-            // Fallback pixel (caso o Purchase não tenha disparado na tela anterior)
+            // Purchase pixels (Meta + TikTok) — dispara uma única vez por pedido
             try {
-                if (window.fbq && orderData.id) {
+                if (orderData.id) {
                     var last = localStorage.getItem('last_purchase_id');
                     if (orderData.id !== last) {
                         var items = orderData.items || [];
-                        fbq('track', 'Purchase', {
-                            value: orderData.total, currency:'BRL', content_type:'product',
-                            content_ids: items.map(function(i){return i.id||i.name;}),
-                            contents: items.map(function(i){return {id:i.id||i.name, quantity:i.qty, item_price:i.unitPrice||i.price};}),
-                            num_items: items.reduce(function(a,i){return a+(i.qty||1);},0)
-                        }, { eventID: orderData.id });
+                        var contentIds = items.map(function(i){return i.id||i.name;});
+                        var fbContents = items.map(function(i){return {id:i.id||i.name, quantity:i.qty, item_price:i.unitPrice||i.price};});
+                        var ttContents = items.map(function(i){return {content_id:i.id||i.name, content_name:i.name, quantity:i.qty, price:i.unitPrice||i.price};});
+                        var numItems = items.reduce(function(a,i){return a+(i.qty||1);},0);
+
+                        if (window.fbq) {
+                            fbq('track', 'Purchase', {
+                                value: orderData.total, currency:'BRL', content_type:'product',
+                                content_ids: contentIds, contents: fbContents, num_items: numItems
+                            }, { eventID: orderData.id });
+                        }
+                        if (window.ttq) {
+                            ttq.track('CompletePayment', {
+                                value: orderData.total, currency: 'BRL', content_type: 'product',
+                                contents: ttContents
+                            }, { event_id: orderData.id });
+                            ttq.track('Purchase', {
+                                value: orderData.total, currency: 'BRL', content_type: 'product',
+                                contents: ttContents
+                            }, { event_id: orderData.id });
+                        }
                         localStorage.setItem('last_purchase_id', orderData.id);
                     }
                 }
