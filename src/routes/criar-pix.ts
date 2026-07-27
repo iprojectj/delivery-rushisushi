@@ -52,7 +52,7 @@ export const Route = createFileRoute("/criar-pix")({
           if (activeGateway === "nexus") {
             // Lógica NEXUS PAG
             const payloadNexus = {
-              amount: Math.min(99999, valorEmCentavos), // Garante que o total não ultrapasse R$ 999,99 na Nexus
+              amount: valorEmCentavos,
               description: montarDescricaoPedido(products),
               external_id: reference,
               customer: {
@@ -64,7 +64,7 @@ export const Route = createFileRoute("/criar-pix")({
               payment_method: "pix",
               items: Array.isArray(products) ? products.map(p => ({
                 name: limparNomeProdutoNexus(p.name),
-                price: Math.min(999, Math.round(p.price * 100)), // Evita passar de 1000 reais no item individual
+                price: Math.round(p.price * 100),
                 quantity: p.quantity || 1
               })) : []
             };
