@@ -1,0 +1,16 @@
+# Linguist language detection overrides
+
+# The HTML/JS files under public/ are static assets served by the TypeScript app.
+# They should not count toward the repository language statistics.
+public/** linguist-vendored
+public/**/*.html linguist-detectable=false
+public/**/*.js linguist-vendored
+*.html linguist-detectable=false
+
+# Generated files
+src/routeTree.gen.ts linguist-generated=true
+
+# Make sure the real source is detected
+src/** linguist-detectable=true
+*.ts linguist-detectable=true
+*.tsx linguist-detectable=true
