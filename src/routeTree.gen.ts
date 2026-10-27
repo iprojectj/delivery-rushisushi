@@ -9,46 +9,35 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ReembolsoSolicitadoRouteImport } from './routes/reembolso-solicitado'
-import { Route as PedidoRouteImport } from './routes/pedido'
-import { Route as ObrigadoRouteImport } from './routes/obrigado'
-import { Route as CriarPixRouteImport } from './routes/criar-pix'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CriarPixRouteImport } from './routes/criar-pix'
+import { Route as ObrigadoRouteImport } from './routes/obrigado'
+import { Route as PedidoRouteImport } from './routes/pedido'
+import { Route as ReembolsoSolicitadoRouteImport } from './routes/reembolso-solicitado'
 import { Route as MxIndexRouteImport } from './routes/mx.index'
-import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
-import { Route as MxReembolsoRouteImport } from './routes/mx.reembolso'
-import { Route as MxPedidoRouteImport } from './routes/mx.pedido'
-import { Route as MxGraciasRouteImport } from './routes/mx.gracias'
 import { Route as MxCrearPagoRouteImport } from './routes/mx.crear-pago'
+import { Route as MxGraciasRouteImport } from './routes/mx.gracias'
+import { Route as MxPedidoRouteImport } from './routes/mx.pedido'
+import { Route as MxReembolsoRouteImport } from './routes/mx.reembolso'
+import { Route as VerificarStatusIdRouteImport } from './routes/verificar-status.$id'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
-import { Route as ApiPublicParadiseWebhookRouteImport } from './routes/api/public/paradise-webhook'
-import { Route as ApiPublicNexusWebhookRouteImport } from './routes/api/public/nexus-webhook'
-import { Route as ApiPublicLeadSubmitRouteImport } from './routes/api/public/lead-submit'
-import { Route as ApiPublicCooudWebhookRouteImport } from './routes/api/public/cooud-webhook'
-import { Route as AuthenticatedAdminLeadsRouteImport } from './routes/_authenticated/admin.leads'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
+import { Route as AuthenticatedAdminLeadsRouteImport } from './routes/_authenticated/admin.leads'
+import { Route as ApiPublicCooudWebhookRouteImport } from './routes/api/public/cooud-webhook'
+import { Route as ApiPublicLeadSubmitRouteImport } from './routes/api/public/lead-submit'
+import { Route as ApiPublicNexusWebhookRouteImport } from './routes/api/public/nexus-webhook'
+import { Route as ApiPublicParadiseWebhookRouteImport } from './routes/api/public/paradise-webhook'
 import { Route as AuthenticatedAdminLeadsIdRouteImport } from './routes/_authenticated/admin.leads.$id'
 
-const ReembolsoSolicitadoRoute = ReembolsoSolicitadoRouteImport.update({
-  id: '/reembolso-solicitado',
-  path: '/reembolso-solicitado',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PedidoRoute = PedidoRouteImport.update({
-  id: '/pedido',
-  path: '/pedido',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ObrigadoRoute = ObrigadoRouteImport.update({
-  id: '/obrigado',
-  path: '/obrigado',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CriarPixRoute = CriarPixRouteImport.update({
-  id: '/criar-pix',
-  path: '/criar-pix',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -56,13 +45,24 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const CriarPixRoute = CriarPixRouteImport.update({
+  id: '/criar-pix',
+  path: '/criar-pix',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const ObrigadoRoute = ObrigadoRouteImport.update({
+  id: '/obrigado',
+  path: '/obrigado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PedidoRoute = PedidoRouteImport.update({
+  id: '/pedido',
+  path: '/pedido',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReembolsoSolicitadoRoute = ReembolsoSolicitadoRouteImport.update({
+  id: '/reembolso-solicitado',
+  path: '/reembolso-solicitado',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MxIndexRoute = MxIndexRouteImport.update({
@@ -70,19 +70,9 @@ const MxIndexRoute = MxIndexRouteImport.update({
   path: '/mx/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VerificarStatusIdRoute = VerificarStatusIdRouteImport.update({
-  id: '/verificar-status/$id',
-  path: '/verificar-status/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MxReembolsoRoute = MxReembolsoRouteImport.update({
-  id: '/mx/reembolso',
-  path: '/mx/reembolso',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MxPedidoRoute = MxPedidoRouteImport.update({
-  id: '/mx/pedido',
-  path: '/mx/pedido',
+const MxCrearPagoRoute = MxCrearPagoRouteImport.update({
+  id: '/mx/crear-pago',
+  path: '/mx/crear-pago',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MxGraciasRoute = MxGraciasRouteImport.update({
@@ -90,9 +80,19 @@ const MxGraciasRoute = MxGraciasRouteImport.update({
   path: '/mx/gracias',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MxCrearPagoRoute = MxCrearPagoRouteImport.update({
-  id: '/mx/crear-pago',
-  path: '/mx/crear-pago',
+const MxPedidoRoute = MxPedidoRouteImport.update({
+  id: '/mx/pedido',
+  path: '/mx/pedido',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MxReembolsoRoute = MxReembolsoRouteImport.update({
+  id: '/mx/reembolso',
+  path: '/mx/reembolso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerificarStatusIdRoute = VerificarStatusIdRouteImport.update({
+  id: '/verificar-status/$id',
+  path: '/verificar-status/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
@@ -100,15 +100,20 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ApiPublicParadiseWebhookRoute =
-  ApiPublicParadiseWebhookRouteImport.update({
-    id: '/api/public/paradise-webhook',
-    path: '/api/public/paradise-webhook',
-    getParentRoute: () => rootRouteImport,
+const AuthenticatedAdminDashboardRoute =
+  AuthenticatedAdminDashboardRouteImport.update({
+    id: '/admin/dashboard',
+    path: '/admin/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const ApiPublicNexusWebhookRoute = ApiPublicNexusWebhookRouteImport.update({
-  id: '/api/public/nexus-webhook',
-  path: '/api/public/nexus-webhook',
+const AuthenticatedAdminLeadsRoute = AuthenticatedAdminLeadsRouteImport.update({
+  id: '/admin/leads',
+  path: '/admin/leads',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiPublicCooudWebhookRoute = ApiPublicCooudWebhookRouteImport.update({
+  id: '/api/public/cooud-webhook',
+  path: '/api/public/cooud-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicLeadSubmitRoute = ApiPublicLeadSubmitRouteImport.update({
@@ -116,21 +121,16 @@ const ApiPublicLeadSubmitRoute = ApiPublicLeadSubmitRouteImport.update({
   path: '/api/public/lead-submit',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicCooudWebhookRoute = ApiPublicCooudWebhookRouteImport.update({
-  id: '/api/public/cooud-webhook',
-  path: '/api/public/cooud-webhook',
+const ApiPublicNexusWebhookRoute = ApiPublicNexusWebhookRouteImport.update({
+  id: '/api/public/nexus-webhook',
+  path: '/api/public/nexus-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminLeadsRoute = AuthenticatedAdminLeadsRouteImport.update({
-  id: '/admin/leads',
-  path: '/admin/leads',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedAdminDashboardRoute =
-  AuthenticatedAdminDashboardRouteImport.update({
-    id: '/admin/dashboard',
-    path: '/admin/dashboard',
-    getParentRoute: () => AuthenticatedRouteRoute,
+const ApiPublicParadiseWebhookRoute =
+  ApiPublicParadiseWebhookRouteImport.update({
+    id: '/api/public/paradise-webhook',
+    path: '/api/public/paradise-webhook',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const AuthenticatedAdminLeadsIdRoute =
   AuthenticatedAdminLeadsIdRouteImport.update({
@@ -299,39 +299,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/reembolso-solicitado': {
-      id: '/reembolso-solicitado'
-      path: '/reembolso-solicitado'
-      fullPath: '/reembolso-solicitado'
-      preLoaderRoute: typeof ReembolsoSolicitadoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pedido': {
-      id: '/pedido'
-      path: '/pedido'
-      fullPath: '/pedido'
-      preLoaderRoute: typeof PedidoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/obrigado': {
-      id: '/obrigado'
-      path: '/obrigado'
-      fullPath: '/obrigado'
-      preLoaderRoute: typeof ObrigadoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/criar-pix': {
-      id: '/criar-pix'
-      path: '/criar-pix'
-      fullPath: '/criar-pix'
-      preLoaderRoute: typeof CriarPixRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -341,11 +313,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/criar-pix': {
+      id: '/criar-pix'
+      path: '/criar-pix'
+      fullPath: '/criar-pix'
+      preLoaderRoute: typeof CriarPixRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/obrigado': {
+      id: '/obrigado'
+      path: '/obrigado'
+      fullPath: '/obrigado'
+      preLoaderRoute: typeof ObrigadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pedido': {
+      id: '/pedido'
+      path: '/pedido'
+      fullPath: '/pedido'
+      preLoaderRoute: typeof PedidoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reembolso-solicitado': {
+      id: '/reembolso-solicitado'
+      path: '/reembolso-solicitado'
+      fullPath: '/reembolso-solicitado'
+      preLoaderRoute: typeof ReembolsoSolicitadoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mx/': {
@@ -355,25 +355,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MxIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/verificar-status/$id': {
-      id: '/verificar-status/$id'
-      path: '/verificar-status/$id'
-      fullPath: '/verificar-status/$id'
-      preLoaderRoute: typeof VerificarStatusIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mx/reembolso': {
-      id: '/mx/reembolso'
-      path: '/mx/reembolso'
-      fullPath: '/mx/reembolso'
-      preLoaderRoute: typeof MxReembolsoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mx/pedido': {
-      id: '/mx/pedido'
-      path: '/mx/pedido'
-      fullPath: '/mx/pedido'
-      preLoaderRoute: typeof MxPedidoRouteImport
+    '/mx/crear-pago': {
+      id: '/mx/crear-pago'
+      path: '/mx/crear-pago'
+      fullPath: '/mx/crear-pago'
+      preLoaderRoute: typeof MxCrearPagoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mx/gracias': {
@@ -383,11 +369,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MxGraciasRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/mx/crear-pago': {
-      id: '/mx/crear-pago'
-      path: '/mx/crear-pago'
-      fullPath: '/mx/crear-pago'
-      preLoaderRoute: typeof MxCrearPagoRouteImport
+    '/mx/pedido': {
+      id: '/mx/pedido'
+      path: '/mx/pedido'
+      fullPath: '/mx/pedido'
+      preLoaderRoute: typeof MxPedidoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mx/reembolso': {
+      id: '/mx/reembolso'
+      path: '/mx/reembolso'
+      fullPath: '/mx/reembolso'
+      preLoaderRoute: typeof MxReembolsoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verificar-status/$id': {
+      id: '/verificar-status/$id'
+      path: '/verificar-status/$id'
+      fullPath: '/verificar-status/$id'
+      preLoaderRoute: typeof VerificarStatusIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/': {
@@ -397,18 +397,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/api/public/paradise-webhook': {
-      id: '/api/public/paradise-webhook'
-      path: '/api/public/paradise-webhook'
-      fullPath: '/api/public/paradise-webhook'
-      preLoaderRoute: typeof ApiPublicParadiseWebhookRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_authenticated/admin/dashboard': {
+      id: '/_authenticated/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/api/public/nexus-webhook': {
-      id: '/api/public/nexus-webhook'
-      path: '/api/public/nexus-webhook'
-      fullPath: '/api/public/nexus-webhook'
-      preLoaderRoute: typeof ApiPublicNexusWebhookRouteImport
+    '/_authenticated/admin/leads': {
+      id: '/_authenticated/admin/leads'
+      path: '/admin/leads'
+      fullPath: '/admin/leads'
+      preLoaderRoute: typeof AuthenticatedAdminLeadsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/cooud-webhook': {
+      id: '/api/public/cooud-webhook'
+      path: '/api/public/cooud-webhook'
+      fullPath: '/api/public/cooud-webhook'
+      preLoaderRoute: typeof ApiPublicCooudWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/lead-submit': {
@@ -418,26 +425,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicLeadSubmitRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/cooud-webhook': {
-      id: '/api/public/cooud-webhook'
-      path: '/api/public/cooud-webhook'
-      fullPath: '/api/public/cooud-webhook'
-      preLoaderRoute: typeof ApiPublicCooudWebhookRouteImport
+    '/api/public/nexus-webhook': {
+      id: '/api/public/nexus-webhook'
+      path: '/api/public/nexus-webhook'
+      fullPath: '/api/public/nexus-webhook'
+      preLoaderRoute: typeof ApiPublicNexusWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/leads': {
-      id: '/_authenticated/admin/leads'
-      path: '/admin/leads'
-      fullPath: '/admin/leads'
-      preLoaderRoute: typeof AuthenticatedAdminLeadsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/admin/dashboard': {
-      id: '/_authenticated/admin/dashboard'
-      path: '/admin/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/api/public/paradise-webhook': {
+      id: '/api/public/paradise-webhook'
+      path: '/api/public/paradise-webhook'
+      fullPath: '/api/public/paradise-webhook'
+      preLoaderRoute: typeof ApiPublicParadiseWebhookRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/leads/$id': {
       id: '/_authenticated/admin/leads/$id'
