@@ -78,7 +78,7 @@
       })();
     </script>
 
-    <title>KŌRA SUSHI</title>
+    <title>Rūshī Sushi</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -188,7 +188,7 @@
                 
                 <!-- Título Centralizado -->
                 <div class="mt-8 w-full text-center">
-                    <h1 class="text-[#111827] text-2xl font-extrabold tracking-tight mb-1">KŌRA SUSHI</h1>
+                    <h1 class="text-[#111827] text-2xl font-extrabold tracking-tight mb-1">Rūshī Sushi</h1>
 
                     <!-- Indicador Loja Aberta -->
                     <div class="flex items-center justify-center gap-1.5 mb-3">
@@ -462,7 +462,7 @@
     <footer class="bg-white border-t border-gray-200 mt-8 pt-10 pb-32 px-6 text-center relative">
             <div class="flex flex-col items-center justify-center mb-6">
                 <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm border border-gray-100 p-1"><img src="images/logo-rushi.webp" class="w-full h-full object-cover rounded-full"></div>
-                <h2 class="text-lg font-bold text-[#3e3e3e]">KŌRA SUSHI</h2>
+                <h2 class="text-lg font-bold text-[#3e3e3e]">Rūshī Sushi</h2>
                 <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">CNPJ: 57.272.601/0001-12</p>
             </div>
             <div class="flex flex-wrap justify-center gap-2 mb-8 max-w-xs mx-auto">
@@ -550,7 +550,7 @@
                     <div class="bg-white p-4 mb-4">
                         <div class="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
                             <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-[#EA1D2C] overflow-hidden"><img src="images/logo-rushi.webp" class="w-full h-full object-cover"></div>
-                            <div><h3 class="font-bold text-[#3e3e3e] text-sm">KŌRA SUSHI</h3><p class="text-xs text-[#EA1D2C] font-semibold cursor-pointer" onclick="closeBag()">Adicionar mais itens</p></div>
+                            <div><h3 class="font-bold text-[#3e3e3e] text-sm">Rūshī Sushi</h3><p class="text-xs text-[#EA1D2C] font-semibold cursor-pointer" onclick="closeBag()">Adicionar mais itens</p></div>
                         </div>
                         <div id="bag-list-items" class="space-y-4"></div>
                     </div>
@@ -2039,7 +2039,7 @@
         window.toggleFaq = function(button) { const item = button.closest('.faq-item'); const content = item.querySelector('.faq-content'); const icon = item.querySelector('.faq-icon'); document.querySelectorAll('.faq-item').forEach(function(otherItem) { if (otherItem !== item) { const otherContent = otherItem.querySelector('.faq-content'); const otherIcon = otherItem.querySelector('.faq-icon'); if(otherContent) otherContent.classList.add('hidden'); if(otherIcon) otherIcon.classList.remove('rotate-180'); } }); content.classList.toggle('hidden'); icon.classList.toggle('rotate-180'); }
         
         const textosInstitucionais = {
-            sobre: { titulo: "Sobre o KŌRA SUSHI", texto: "<p>O <strong>KŌRA SUSHI</strong> nasceu com uma missão clara: democratizar o acesso à alta gastronomia japonesa. Acreditamos que sushi de qualidade não precisa custar uma fortuna.</p><br><p>Nossa cozinha opera 24 horas seguindo os mais rígidos padrões de segurança alimentar da ANVISA. Nossos peixes chegam frescos diariamente e são manipulados por sushimans experientes.</p><br><p>Mais do que entregar comida, entregamos momentos de felicidade em caixinhas.</p>" },
+            sobre: { titulo: "Sobre o Rūshī Sushi", texto: "<p>O <strong>Rūshī Sushi</strong> nasceu com uma missão clara: democratizar o acesso à alta gastronomia japonesa. Acreditamos que sushi de qualidade não precisa custar uma fortuna.</p><br><p>Nossa cozinha opera 24 horas seguindo os mais rígidos padrões de segurança alimentar da ANVISA. Nossos peixes chegam frescos diariamente e são manipulados por sushimans experientes.</p><br><p>Mais do que entregar comida, entregamos momentos de felicidade em caixinhas.</p>" },
             privacidade: { titulo: "Política de Privacidade", texto: "<p>Nós levamos sua privacidade a sério. Seus dados (nome, telefone e endereço) são utilizados <strong>exclusivamente</strong> para o processamento e entrega do seu pedido.</p><br><p>Não compartilhamos suas informações com terceiros para fins de marketing. Todos os dados de pagamento via PIX são processados em ambiente criptografado e seguro.</p>" },
             termos: { titulo: "Termos de Uso", texto: "<p>Ao realizar um pedido no Rūshī Sushi, você concorda que:</p><ul class='text-left list-disc pl-5 mt-2'><li>Os prazos de entrega são estimativas e podem variar conforme o clima e trânsito.</li><li>Verifique seu pedido no ato da entrega.</li><li>O pagamento deve ser confirmado antes da liberação do pedido.</li></ul>" },
             trocas: { titulo: "Trocas e Devoluções", texto: "<p>Sua satisfação é nossa prioridade. Se houver qualquer divergência no seu pedido (item faltante ou errado), entre em contato imediatamente pelo nosso suporte.</p><br><p>Faremos o estorno do valor proporcional ou o envio de um novo item sem custo, mediante envio de foto comprovando o problema no momento do recebimento.</p>" }
